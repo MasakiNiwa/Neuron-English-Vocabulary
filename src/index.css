@@ -1,0 +1,151 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ===== デザイントークン =====
+ * 色は全てここで定義し、コンポーネントでは bg-bg / text-fg などのトークン名で使う。
+ * ダークモードは「徹底的に落ち着いた配色」：純白・純黒を避け、低彩度・低コントラスト寄り。
+ */
+:root {
+  --bg: #f6f6f3;
+  --surface: #ffffff;
+  --surface-2: #efefea;
+  --fg: #1f2328;
+  --muted: #69707a;
+  --border: #e2e2dc;
+  --accent: #3d6e8c;
+  --accent-soft: #e3edf3;
+  --accent-fg: #ffffff;
+  --danger: #b4534f;
+  --success: #4f8a62;
+  --warn: #a07a2c;
+  --node-root: #8a6fa8;
+  --node-word: #3d6e8c;
+  --node-phrase: #4f8a62;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg: #121416;
+  --surface: #171a1d;
+  --surface-2: #1d2124;
+  --fg: #cfd3d6;
+  --muted: #858c93;
+  --border: #272b2f;
+  --accent: #7d9fb3;
+  --accent-soft: #1c272e;
+  --accent-fg: #101315;
+  --danger: #c08a86;
+  --success: #8bb196;
+  --warn: #c4ab78;
+  --node-root: #a593bb;
+  --node-word: #7d9fb3;
+  --node-phrase: #8bb196;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warn: var(--warn);
+  --font-sans:
+    'Inter', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', system-ui,
+    sans-serif;
+  --font-en: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  overscroll-behavior-y: none;
+}
+
+/* フォーカスリング（キーボード操作時のみ） */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== View Transitions API ===== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms;
+  animation-timing-function: ease-out;
+}
+::view-transition-old(main-content) {
+  animation: 140ms ease-in both vt-fade-out;
+}
+::view-transition-new(main-content) {
+  animation: 200ms ease-out both vt-fade-in;
+}
+.vt-main {
+  view-transition-name: main-content;
+}
+.vt-headword {
+  view-transition-name: headword;
+}
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Radix Accordion の開閉アニメーション */
+.accordion-content {
+  overflow: hidden;
+}
+.accordion-content[data-state='open'] {
+  animation: acc-down 200ms ease-out;
+}
+.accordion-content[data-state='closed'] {
+  animation: acc-up 160ms ease-in;
+}
+@keyframes acc-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+@keyframes acc-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
