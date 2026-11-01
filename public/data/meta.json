@@ -1,6 +1,6 @@
 {
  "version": "20261101",
- "generatedAt": "2026-11-01T03:37:24.376306+00:00",
+ "generatedAt": "2026-11-01T03:42:44.983619+00:00",
  "counts": {
   "words": 10000,
   "phrases": 1092,
@@ -8,7 +8,7 @@
   "withParts": 3638,
   "withExamples": 9215,
   "pieRoots": 92,
-  "withNote": 1777,
+  "withNote": 1982,
   "manual": 1008,
   "withPie": 1336
  },
