@@ -250,7 +250,7 @@ export function AiSettings() {
             <div className="flex items-center gap-2">
               <Fingerprint className="size-4 shrink-0" />
               <span className="flex-1">
-                生体認証：{v.passkeys ? <span className="text-success">登録済み{v.passkeys > 1 && `（${v.passkeys} 件）`}</span> : <span className="text-muted">未登録</span>}
+                生体認証：{v.passkeys ? <span className="text-success">登録済み</span> : <span className="text-muted">未登録</span>}
               </span>
               {v.passkeys > 0 && (
                 <Button
@@ -285,26 +285,7 @@ export function AiSettings() {
                 <Fingerprint className="size-4" /> 生体認証を登録
               </Button>
             ) : (
-              <p className="mt-1.5 text-xs leading-relaxed text-muted">
-                この端末のこのブラウザで、指紋・顔認証などでロックを解除できます。
-                <button
-                  type="button"
-                  className="ml-1 underline hover:text-fg"
-                  onClick={async () => {
-                    setMsg('')
-                    try {
-                      await registerPasskey()
-                      v.refresh()
-                      setMsg('別の認証方法を追加しました')
-                    } catch (e) {
-                      setMsg(e instanceof Error ? e.message : String(e))
-                    }
-                  }}
-                >
-                  別の認証方法を追加
-                </button>
-                （USB セキュリティキーなど、もう一つの方法でも解除できるようにしたいときだけ使います）
-              </p>
+              <p className="mt-1.5 text-xs leading-relaxed text-muted">この端末のこのブラウザで、指紋・顔認証などでロックを解除できます。</p>
             )}
           </div>
         )}

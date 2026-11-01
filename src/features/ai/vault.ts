@@ -208,7 +208,8 @@ export async function registerPasskey() {
   const key = await prfKey(prf)
   await setMeta({
     ...meta,
-    passkeys: [...meta.passkeys, { credentialId, prfSalt, wrapped: await encrypt(key, dekRaw), createdAt: Date.now() }],
+    // 生体認証は 1 件だけ持つ（登録し直したときは置き換える）
+    passkeys: [{ credentialId, prfSalt, wrapped: await encrypt(key, dekRaw), createdAt: Date.now() }],
   })
 }
 
