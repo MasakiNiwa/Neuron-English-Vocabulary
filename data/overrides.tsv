@@ -2,6 +2,7 @@
 # 自動抽出の誤りや不自然な訳を、頻出語から順に直していくためのファイル。
 #   gloss	見出し語	品詞:訳、訳|品詞:訳        … 訳語を置き換える（品詞: noun verb adj adv prep conj pron det intj num phrase）
 #   exclude	形態素ID	見出し語,見出し語            … 語源分解の誤判定を取り除く
+#   noparts	見出し語,見出し語                     … 語源分解をまとめて取り除く（形態素IDを問わない）
 gloss	the	det:その、例の
 gloss	to	prep:〜へ、〜に、〜まで
 gloss	and	conj:〜と、そして、それから
@@ -1280,3 +1281,6 @@ gloss	twist	verb:ねじる、ひねる|noun:ねじれ、意外な展開
 gloss	ugh	intj:うえっ、げっ
 gloss	metropolitan	adj:大都市の、首都の|noun:大都市の住民
 gloss	matrix	noun:母体、基盤、行列
+#
+# ---- 第10弾: 語源分解の誤判定（noparts でまとめて除外）
+noparts	allege,tiger,integrate,motel,remembrance,colon,mural,gravy,moderation,sandal,mara,mania,parry,prism,riddle,corona,cactus,germ,ditto,colossal,pigment,scorpion,bonnet,maroon,heresy,parlor,vandalism,potion,narration,jug,volt,feral,overt,masturbation,masturbate,modulation,solemn,existential,ordeal,incarceration,illustrator,registrar,deterrent,occult,lux,prostate,amplifier
