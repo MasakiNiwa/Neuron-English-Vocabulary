@@ -113,6 +113,9 @@ export async function isInitialized() {
 export async function hasPasskey() {
   return !!(await getMeta())?.passkeys.length
 }
+export async function passkeyCount() {
+  return (await getMeta())?.passkeys.length ?? 0
+}
 
 export async function setupPassphrase(pass: string) {
   if (pass.length < 6) throw new Error('パスフレーズは 6 文字以上にしてください')
