@@ -8,7 +8,7 @@ import { SearchField } from '@/components/ui/SearchField'
 import { PageSpinner } from '@/components/ui/Spinner'
 import { Segmented } from '@/components/ui/Form'
 import { EntryRow } from '@/features/dictionary/components/EntryRow'
-import { morphLabel } from '@/features/dictionary/components/links'
+import { MORPH_TYPE_LABEL, morphLabel } from '@/features/dictionary/components/links'
 import { useDictionary } from '@/features/dictionary/hooks'
 import { searchDictionary, type SearchFilter, type SearchHit } from '@/features/dictionary/search'
 import type { Morpheme } from '@/features/dictionary/types'
@@ -32,7 +32,7 @@ function Browse({ filter }: { filter: SearchFilter }) {
     setLimit(100)
   }, [filter])
   if (filter === 'm') {
-    const groups = (['root', 'prefix', 'suffix'] as const).map((type) => ({
+    const groups = (['root', 'prefix', 'suffix', 'pie'] as const).map((type) => ({
       type,
       list: dict.morphemes.filter((m) => m.type === type && m.words.length > 0).sort((a, b) => b.words.length - a.words.length),
     }))
@@ -41,7 +41,7 @@ function Browse({ filter }: { filter: SearchFilter }) {
         {groups.map((g) => (
           <section key={g.type}>
             <h2 className="mb-2 text-sm font-semibold text-muted">
-              {t(g.type === 'root' ? 'words.root' : g.type === 'prefix' ? 'words.prefix' : 'words.suffix')}（{g.list.length}）
+              {MORPH_TYPE_LABEL[g.type]}（{g.list.length}）
             </h2>
             <Card className="divide-y divide-border p-0">
               {g.list.map((m) => (

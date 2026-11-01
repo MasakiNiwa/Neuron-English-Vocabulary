@@ -1,6 +1,6 @@
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Loader2, Mic, Send, Settings, Trash2, Volume2, Wrench, X } from 'lucide-react'
+import { Loader2, Mic, Send, Settings, Square, Trash2, Volume2, Wrench, X } from 'lucide-react'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
@@ -30,7 +30,7 @@ function speakJa(text: string) {
 }
 
 /** 日本語の文中にある英単語をリンク化（LinkedText は英字部分だけを判定する） */
-function Bubble({ m }: { m: ChatRecord }) {
+function Bubble({ m, live }: { m: ChatRecord; live?: boolean }) {
   if (m.role === 'user')
     return (
       <div className="flex justify-end">
@@ -62,12 +62,12 @@ function Bubble({ m }: { m: ChatRecord }) {
           </div>
         </div>
       ))}
-      <div className="flex items-center gap-2 pl-10 text-[10px] text-muted">
+      {!live && <div className="flex items-center gap-2 pl-10 text-[10px] text-muted">
         <button type="button" onClick={() => speakJa(m.content)} className="hover:text-accent" aria-label="読み上げ">
           <Volume2 className="size-3.5" />
         </button>
         {m.model}
-      </div>
+      </div>}
     </div>
   )
 }
@@ -81,6 +81,8 @@ function ChatView() {
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
   const [tools, setTools] = useState<string[]>([])
+  const [streaming, setStreaming] = useState('')
+  const abortRef = useRef<AbortController | null>(null)
   const [error, setError] = useState('')
   const [listening, setListening] = useState(false)
   const about = search.about
@@ -98,6 +100,9 @@ function ChatView() {
     setInput('')
     setBusy(true)
     setTools([])
+    setStreaming('')
+    const ac = new AbortController()
+    abortRef.current = ac
     const now = Date.now()
     await db.chats.add({ thread: THREAD, role: 'user', content, createdAt: now })
     const history = [...(messages ?? []), { role: 'user' as const, content }].slice(-20).map((m) => ({ role: m.role, content: m.content }))
@@ -112,12 +117,24 @@ function ChatView() {
           used.push(n)
           setTools([...used])
         },
+        onText: (d) => setStreaming((t) => t + d),
+        signal: ac.signal,
       })
       await db.chats.add({ thread: THREAD, role: 'assistant', content: res.text || '（応答が空でした）', createdAt: Date.now(), tools: used, model: res.model })
     } catch (e) {
+      if (ac.signal.aborted) {
+        // 停止した場合は、そこまでの応答を保存する
+        setStreaming((partial) => {
+          if (partial) void db.chats.add({ thread: THREAD, role: 'assistant', content: partial + '\n（停止しました）', createdAt: Date.now(), tools: used })
+          return ''
+        })
+        return
+      }
       setError(e instanceof AiNotReadyError ? e.message : `エラー: ${e instanceof Error ? e.message : String(e)}`)
     } finally {
       setBusy(false)
+      setStreaming('')
+      abortRef.current = null
     }
   }
 
@@ -212,15 +229,22 @@ function ChatView() {
           </div>
         )}
         {messages?.map((m) => <Bubble key={m.id} m={m} />)}
+        {busy && streaming && (
+          <Bubble m={{ thread: THREAD, role: 'assistant', content: streaming, createdAt: 0, tools }} live />
+        )}
         {busy && (
           <div className="flex items-center gap-2 text-xs text-muted">
             <Loader2 className="size-4 animate-spin" />
-            {cast.map((id) => personaById(id)?.emoji).join('')} 考え中…
-            {tools.map((t, i) => (
-              <span key={i} className="inline-flex items-center gap-1 rounded bg-surface-2 px-1">
-                <Wrench className="size-3" /> {t}
-              </span>
-            ))}
+            {cast.map((id) => personaById(id)?.emoji).join('')} {streaming ? '入力中…' : '考え中…'}
+            {!streaming &&
+              tools.map((t, i) => (
+                <span key={i} className="inline-flex items-center gap-1 rounded bg-surface-2 px-1">
+                  <Wrench className="size-3" /> {t}
+                </span>
+              ))}
+            <button type="button" onClick={() => abortRef.current?.abort()} className="ml-auto inline-flex items-center gap-1 rounded-md border border-border px-2 py-0.5 hover:text-danger">
+              <Square className="size-3" /> 停止
+            </button>
           </div>
         )}
         {error && <p className="text-sm text-danger">{error}</p>}

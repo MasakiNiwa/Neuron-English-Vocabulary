@@ -1,5 +1,5 @@
 import { Check, Eye, Mic, X } from 'lucide-react'
-import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { PageSpinner } from '@/components/ui/Spinner'
@@ -9,6 +9,7 @@ import { useSettings } from '@/stores/settings'
 import { EntryLink, LinkedText, SpeakButton } from '@/features/dictionary/components/links'
 import { useDictionary, useEntry, recordView } from '@/features/dictionary/hooks'
 import { formatInterval, previewIntervals, Rating, review, type Grade } from './cards'
+import { ChoicePrompt, ClozePrompt, JaPrompt, resolveFormat, type StudyFormat } from './formats'
 
 const GRADES: { g: Grade; label: string; key: string; cls: string }[] = [
   { g: Rating.Again, label: 'もう一度', key: '1', cls: 'border-danger/40 text-danger' },
@@ -113,7 +114,17 @@ function CardBack({ entryKey }: { entryKey: string }) {
   )
 }
 
-export function ReviewSession({ queue, onDone, mode = 'review' }: { queue: StudyCard[]; onDone: (n: number) => void; mode?: string }) {
+export function ReviewSession({
+  queue,
+  onDone,
+  mode = 'review',
+  format = 'en2ja',
+}: {
+  queue: StudyCard[]
+  onDone: (n: number) => void
+  mode?: string
+  format?: StudyFormat
+}) {
   const dict = useDictionary()
   const autoSpeak = useSettings((s) => s.autoSpeak)
   const [idx, setIdx] = useState(0)
@@ -123,6 +134,7 @@ export function ReviewSession({ queue, onDone, mode = 'review' }: { queue: Study
   const backRef = useRef<HTMLDivElement>(null)
   const cardRef = useRef<HTMLDivElement>(null)
   const [count, setCount] = useState(0)
+  const [suggested, setSuggested] = useState<Grade | null>(null)
 
   // 学習中は画面スリープを防止（Screen Wake Lock API）
   useEffect(() => {
@@ -137,6 +149,7 @@ export function ReviewSession({ queue, onDone, mode = 'review' }: { queue: Study
     // 最新の状態を DB から取得（同セッション内で「もう一度」になったカードの再出題に対応）
     void db.cards.get(c.entryId).then((x) => setCard(x ?? c))
     setShown(false)
+    setSuggested(null)
     startRef.current = Date.now()
     if (autoSpeak) speak(c.entryId.replace(/_/g, ' '))
     // カードの登場アニメーション（Web Animations API）
@@ -167,14 +180,14 @@ export function ReviewSession({ queue, onDone, mode = 'review' }: { queue: Study
     async (g: Grade) => {
       if (!card) return
       navigator.vibrate?.(g === Rating.Again ? [20, 40, 20] : 10)
-      await review(card.entryId, g, { durationMs: Date.now() - startRef.current, mode })
+      await review(card.entryId, g, { durationMs: Date.now() - startRef.current, mode: `${mode}:${format}` })
       setCount((n) => n + 1)
       // 「もう一度」は数枚後に再出題
       if (g === Rating.Again) queue.splice(Math.min(queue.length, idx + 4), 0, card)
       if (idx + 1 >= queue.length) onDone(count + 1)
       else setIdx(idx + 1)
     },
-    [card, idx, queue, onDone, count, mode],
+    [card, idx, queue, onDone, count, mode, format],
   )
 
   useEffect(() => {
@@ -195,7 +208,6 @@ export function ReviewSession({ queue, onDone, mode = 'review' }: { queue: Study
   if (!card) return null
   const ie = dict.byKey.get(card.entryId)
   const intervals = previewIntervals(card)
-  const head = card.entryId.replace(/_/g, ' ')
 
   return (
     <div className="flex flex-col gap-3">
@@ -216,25 +228,17 @@ export function ReviewSession({ queue, onDone, mode = 'review' }: { queue: Study
             {card.state === 0 ? '新規' : '復習'}
             {ie && ` ・ ${ie.type === 'p' ? '熟語' : '#' + ie.rank}`}
           </span>
-          <div className="flex items-center gap-1">
-            <h2 className="font-en text-4xl font-semibold tracking-tight">{head}</h2>
-            <SpeakButton text={head} />
-          </div>
-          {!shown ? (
-            <>
-              <PronunciationCheck target={head} />
-              <Button variant="primary" size="lg" className="mt-2 w-full max-w-xs" onClick={reveal}>
-                <Eye className="size-5" /> 答えを見る
-              </Button>
-              <span className="hidden text-[11px] text-muted md:block">Space</span>
-            </>
-          ) : (
-            <div ref={backRef} className="w-full origin-top">
-              <Suspense fallback={<PageSpinner />}>
-                <CardBack entryKey={card.entryId} />
-              </Suspense>
-            </div>
-          )}
+          <Suspense fallback={<PageSpinner />}>
+            <CardFace
+              key={`${idx}-${card.entryId}`}
+              entryKey={card.entryId}
+              format={format}
+              shown={shown}
+              onReveal={reveal}
+              onSuggest={setSuggested}
+              backRef={backRef}
+            />
+          </Suspense>
         </Card>
       </div>
       {shown && (
@@ -244,7 +248,7 @@ export function ReviewSession({ queue, onDone, mode = 'review' }: { queue: Study
               key={x.g}
               type="button"
               onClick={() => void rate(x.g)}
-              className={`flex flex-col items-center rounded-xl border bg-surface py-2.5 hover:bg-surface-2 ${x.cls}`}
+              className={`flex flex-col items-center rounded-xl border bg-surface py-2.5 hover:bg-surface-2 ${x.cls} ${suggested === x.g ? 'ring-2 ring-current' : ''}`}
             >
               <span className="text-sm font-medium">{x.label}</span>
               <span className="text-[11px] opacity-80">{formatInterval(intervals[x.g])}</span>
@@ -255,5 +259,67 @@ export function ReviewSession({ queue, onDone, mode = 'review' }: { queue: Study
       )}
       <p className="text-center text-xs text-muted">回答 {count}</p>
     </div>
+  )
+}
+
+/** カードの表面（出題形式ごと）と裏面 */
+function CardFace({
+  entryKey,
+  format,
+  shown,
+  onReveal,
+  onSuggest,
+  backRef,
+}: {
+  entryKey: string
+  format: StudyFormat
+  shown: boolean
+  onReveal: () => void
+  onSuggest: (g: Grade | null) => void
+  backRef: React.RefObject<HTMLDivElement | null>
+}) {
+  const entry = useEntry(entryKey)
+  const fmt = useMemo(() => resolveFormat(format, entry), [format, entry])
+  const [answered, setAnswered] = useState<number | null>(null)
+  const head = entryKey.replace(/_/g, ' ')
+  const showHead = fmt === 'en2ja' || fmt === 'choice' || shown
+  return (
+    <>
+      {showHead && (
+        <div className="flex items-center gap-1">
+          <h2 className="font-en text-4xl font-semibold tracking-tight">{head}</h2>
+          <SpeakButton text={head} />
+        </div>
+      )}
+      {entry && fmt === 'ja2en' && !shown && <JaPrompt entry={entry} />}
+      {entry && fmt === 'cloze' && <ClozePrompt entry={entry} revealed={shown} />}
+      {entry && fmt === 'choice' && (
+        <ChoicePrompt
+          entry={entry}
+          answered={answered}
+          onAnswer={(i, correct) => {
+            setAnswered(i)
+            onSuggest(correct ? Rating.Good : Rating.Again)
+            navigator.vibrate?.(correct ? 10 : [20, 40, 20])
+            onReveal()
+          }}
+        />
+      )}
+      {!shown && fmt !== 'choice' && (
+        <>
+          {fmt === 'en2ja' && <PronunciationCheck target={head} />}
+          <Button variant="primary" size="lg" className="mt-2 w-full max-w-xs" onClick={onReveal}>
+            <Eye className="size-5" /> 答えを見る
+          </Button>
+          <span className="hidden text-[11px] text-muted md:block">Space</span>
+        </>
+      )}
+      {shown && (
+        <div ref={backRef} className="w-full origin-top">
+          {fmt !== 'en2ja' && fmt !== 'choice' && <PronunciationCheck target={head} />}
+          <CardBack entryKey={entryKey} />
+        </div>
+      )}
+    </>
   )
 }

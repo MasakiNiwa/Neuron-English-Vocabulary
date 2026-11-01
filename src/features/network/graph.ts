@@ -9,7 +9,7 @@ import type { Entry } from '@/features/dictionary/types'
  * ノードID: "e:<key>"（単語・熟語） / "m:<id>"（語根・接辞）
  */
 
-export type NodeKind = 'word' | 'phrase' | 'root' | 'prefix' | 'suffix'
+export type NodeKind = 'word' | 'phrase' | 'root' | 'prefix' | 'suffix' | 'pie'
 export type EdgeKind = 'morph' | 'syn' | 'ant' | 'der' | 'phrase' | 'rel' | 'co'
 
 export interface NodeAttrs {
@@ -38,6 +38,7 @@ export interface Palette {
   root: string
   prefix: string
   suffix: string
+  pie: string
   edge: string
   edgeStrong: string
 }
@@ -51,6 +52,7 @@ export function readPalette(): Palette {
     root: v('--node-root'),
     prefix: v('--node-affix'),
     suffix: v('--node-affix'),
+    pie: v('--node-pie'),
     edge: v('--edge'),
     edgeStrong: v('--edge-strong'),
   }
@@ -120,7 +122,7 @@ export function buildEntryGraph(dict: Dictionary, entry: Entry, pal: Palette, pe
     const m = dict.morphById.get(mid)
     if (!m) continue
     // 接尾辞は語数が多くノイズになりやすいので少なめに
-    const n = m.type === 'suffix' ? 4 : m.type === 'prefix' ? 6 : perMorph
+    const n = m.type === 'suffix' ? 4 : m.type === 'prefix' || m.type === 'pie' ? 6 : perMorph
     const mn = addMorphNode(g, dict, mid, pal, 12)
     link(g, center, mn, 'morph', pal, 3)
     for (const w of m.words.filter((x) => x !== entry.k).slice(0, n)) {
@@ -164,6 +166,10 @@ export function buildMorphGraph(dict: Dictionary, mid: string, pal: Palette, lim
       link(g, wn, addMorphNode(g, dict, other, pal, 10), 'co', pal, 1)
     }
   }
+  // 語源の語源: 成り立ち・それを含む語源・祖語ファミリー・祖語から生まれた語根
+  for (const rel of [m.parts, m.partOf, m.family, m.members]) {
+    for (const x of rel ?? []) link(g, center, addMorphNode(g, dict, x, pal, 13), 'morph', pal, 3)
+  }
   layout(g)
   return g
 }
@@ -171,7 +177,7 @@ export function buildMorphGraph(dict: Dictionary, mid: string, pal: Palette, lim
 /** 全体図: 語根・接頭辞を、共有する単語数で結んだマップ */
 export function buildMorphemeMap(dict: Dictionary, pal: Palette, minShared = 1): NetGraph {
   const g: NetGraph = new Graph({ type: 'undirected' })
-  const ms = dict.morphemes.filter((m) => m.type !== 'suffix' && m.words.length >= 2)
+  const ms = dict.morphemes.filter((m) => (m.type === 'root' || m.type === 'prefix') && m.words.length >= 2)
   const allowed = new Set(ms.map((m) => m.id))
   ms.forEach((m, i) => {
     const a = (i / ms.length) * Math.PI * 2

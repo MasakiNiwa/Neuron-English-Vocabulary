@@ -21,7 +21,8 @@ claim	claim,clam	clamare,clāmāre,clamo,clāmō	叫ぶ	ラテン語 clamare
 clar	clar	clarus,clārus	明るい・明らかな	ラテン語 clarus
 clin	clin,clen	clinare,clīnāre,klinein,clino	傾く	ラテン語 -clinare
 clud	clud,clus,clos,clos	claudere,clausus,cludere,clūdere,clūsus,clusus	閉じる	ラテン語 claudere
-cogn	cogn,gnos,gnor,know	cognoscere,gnoscere,gnōscere,gignōskein,gnosis,ignorare	知る	ラテン語 cognoscere
+cogn	cogn,cognit,cognis	cognoscere,cognōscere,cognitus,cognitio,cognitiō	認識する	ラテン語 cognoscere（com + gnoscere）
+gno	gnos,gnor,gno	gnoscere,gnōscere,gignōskein,gignṓskein,gnosis,gnōsis,ignorare,ignōrāre,ignarus	知る	ラテン語 gnoscere / ギリシャ語 gignōskein
 cor	cord,cor,cour	cor,cordis	心臓・心	ラテン語 cor
 corp	corp,corps	corpus,corporis	体	ラテン語 corpus
 cred	cred,creed	credere,crēdere,credo,crēdō	信じる	ラテン語 credere
@@ -58,7 +59,8 @@ her	her,hes	haerere,haerēre,haesus	くっつく	ラテン語 haerere
 it	it	ire,īre,itus,itum,eo,iter	行く	ラテン語 ire
 ject	ject,jet	iacere,jacere,iactus,jactus,icere,iectus,jectus	投げる	ラテン語 iacere
 junct	junct,join,jug	iungere,jungere,iunctus,junctus,iugum	結ぶ	ラテン語 iungere
-jus	jus,jur,jud	ius,jus,iudex,judex,iūdex,iurare,iūs,iudicium	法・正義	ラテン語 ius
+jus	jus,jur	ius,jus,iurare,iūs,iūrāre,iustus,iūstus,iustitia	法・正義	ラテン語 ius
+jud	jud,judg,judic	iudex,judex,iūdex,iudicium,iūdicium,iudicare,iūdicāre,judicare	裁く	ラテン語 iudex（ius + dicere）
 labor	labor,labour	labor,labōrāre,laborare	働く・労働	ラテン語 labor
 lat	lat	latus,lātus	運ばれた	ラテン語 latus（ferre の過去分詞）
 lect	lect,leg,lig	legere,lectus,lēctus,legō,lego,eligere,ligere	選ぶ・集める・読む	ラテン語 legere
@@ -197,3 +199,6 @@ viv	viv,vit,vig	vivere,vīvere,vita,vīta,vivus,vīvus	生きる	ラテン語 vi
 voc	voc,vok,vow,voic	vocare,vocāre,vox,vōx,vocis	呼ぶ・声	ラテン語 vocare / vox
 vol	vol	volo,volō,velle,voluntas,voluntās	望む・意志	ラテン語 velle
 volv	volv,volu,volt	volvere,volutus,volūtus	転がる・回る	ラテン語 volvere
+dat	dat,don,dot	dare,dāre,datus,dātus,datum,dātum,donare,dōnāre,donum,dōnum,dos,dōs	与える	ラテン語 dare
+hend			つかむ	ラテン語 -hendere（単独では使われない）
+crat	crat,crac	kratos,krátos,κράτος,kratia,-kratia,krateia	力・支配	ギリシャ語 kratos

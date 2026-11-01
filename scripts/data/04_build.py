@@ -107,6 +107,8 @@ for r in read_tsv(os.path.join(REPO, 'data', 'affixes.tsv')):
             'forms': sorted({x for x in forms.split(',') if x}, key=len, reverse=True), 'meaning': meaning, 'origin': origin}
     (prefixes if typ == 'prefix' else suffixes).append(item)
 def _etymon_re(ets):
+    if not ets:
+        return re.compile(r'(?!)')  # 語源判定キーがない語根（構成要素専用）は単語と照合しない
     strict = '|'.join(re.escape(e) for e in ets)
     # 5文字以上の語源語は前に接頭辞が付いた形（exportare → portare）も許容する
     loose = '|'.join(re.escape(e) for e in ets if len(e) >= 5) or '(?!)'
@@ -298,6 +300,39 @@ for w, c in pcount.most_common():
         continue
     phr_sel.append((w, c, es, tr))
 print('phrases', len(phr_sel))
+
+
+# ---------------------------------------------------------------- 印欧祖語（PIE）の語根
+def pie_slug(form: str) -> str:
+    t = strip_accents(form).translate(str.maketrans({'₁': '1', '₂': '2', '₃': '3', 'ʰ': 'h', 'ʷ': 'w', 'ǵ': 'g', 'ḱ': 'k'}))
+    t = re.sub(r'[^A-Za-z0-9]+', '-', t).strip('-').lower()
+    return 'pie:' + t
+
+
+pie_defs = {}
+for r in read_tsv(os.path.join(REPO, 'data', 'pie_roots.tsv')):
+    form, meaning = r[0], r[1]
+    members = [x for x in (r[2].split(',') if len(r) > 2 else []) if x]
+    pie_defs[form] = {'id': pie_slug(form), 'form': form, 'meaning': meaning, 'members': members}
+
+
+def pie_of(es: list[dict]) -> list[str]:
+    out = []
+    for e in es:
+        for tp in e.get('etymology_templates') or []:
+            a = tp.get('args') or {}
+            if tp['name'] == 'root' and a.get('2') == 'ine-pro':
+                for k in sorted((k for k in a if k.isdigit() and int(k) >= 3), key=int):
+                    d = pie_defs.get(a[k])
+                    if d and d['id'] not in out:
+                        out.append(d['id'])
+    return out
+
+
+# 形態素自体の成り立ち（語源の語源分解）
+morph_parts = {}
+for r in read_tsv(os.path.join(REPO, 'data', 'morpheme_parts.tsv')):
+    morph_parts[r[0]] = {'parts': [x for x in r[1].split('+') if x], 'note': r[2] if len(r) > 2 else ''}
 
 
 # ---------------------------------------------------------------- 語源分解
@@ -572,6 +607,7 @@ for rank, (L, v) in enumerate(lemma_list, 1):
         'ex': pick_examples(fset),
         'ngsl': L in ngsl_rank,
         'z': round(zipf_frequency(L, 'en'), 2),
+        'pie': pie_of(es),
     }
 
 for prank, (w, c, es, tr) in enumerate(phr_sel, 1):
@@ -596,6 +632,30 @@ for prank, (w, c, es, tr) in enumerate(phr_sel, 1):
         'ex': pick_examples(vforms, toks),
         'freq': c,
     }
+
+# ---------------------------------------------------------------- 手動での修正（data/overrides.tsv）
+overrides_gloss, overrides_exclude = {}, defaultdict(set)
+for r in read_tsv(os.path.join(REPO, 'data', 'overrides.tsv')):
+    if r[0] == 'gloss' and len(r) >= 3:
+        groups = []
+        for part in r[2].split('|'):
+            pos, _, words = part.partition(':')
+            groups.append((pos.strip(), [w.strip() for w in words.split('、') if w.strip()]))
+        overrides_gloss[r[1]] = groups
+    elif r[0] == 'exclude' and len(r) >= 3:
+        overrides_exclude[r[1]].update(x.strip() for x in r[2].split(','))
+for key, groups in overrides_gloss.items():
+    e = entries.get(key_of(key))
+    if not e:
+        continue
+    old = {g['p']: g for g in e['g']}
+    e['g'] = [{**{k: v for k, v in old.get(pos, {}).items() if k in ('ko', 'zh')}, 'p': pos, 'ja': words} for pos, words in groups]
+    e['manual'] = True
+for mid, words in overrides_exclude.items():
+    for w in words:
+        e = entries.get(key_of(w))
+        if e and e.get('parts') and any(p['m'] == mid for p in e['parts']):
+            e['parts'] = None  # 誤った分解は丸ごと取り除く（部分的に残すと不自然になるため）
 
 # 関連語をデータ内に存在するものだけに解決
 lower_key = {k.lower().replace('_', ' '): k for k in entries}
@@ -650,6 +710,37 @@ for typ, lst in (('root', roots), ('prefix', prefixes), ('suffix', suffixes)):
         morphemes.append({'id': m['id'], 'type': typ, 'label': m['label'], 'forms': m['forms'],
                           'meaning': {'ja': m['meaning']}, 'origin': m['origin'], 'words': ws})
 
+# 印欧祖語の語根: その祖語から来た見出し語と、そこから生まれた語根
+pie_words = defaultdict(list)
+for k, e in entries.items():
+    for pid in e.get('pie') or []:
+        pie_words[pid].append(k)
+known_ids = {m['id'] for m in morphemes}
+for d in pie_defs.values():
+    ws = sorted(pie_words.get(d['id'], []), key=sort_key)
+    members = [x for x in d['members'] if x in known_ids]
+    if not ws and not members:
+        continue
+    morphemes.append({'id': d['id'], 'type': 'pie', 'label': d['form'], 'forms': [],
+                      'meaning': {'ja': d['meaning']}, 'origin': '印欧祖語', 'words': ws, 'members': members})
+
+# 語源の語源: 成り立ち（parts）・それを含む語源（partOf）・祖語ファミリー（family）
+by_id = {m['id']: m for m in morphemes}
+for mid, v in morph_parts.items():
+    m = by_id.get(mid)
+    parts = [x for x in v['parts'] if x in by_id]
+    if not m or not parts:
+        continue
+    m['parts'] = parts
+    if v['note']:
+        m['partsNote'] = {'ja': v['note']}
+    for x in parts:
+        by_id[x].setdefault('partOf', []).append(mid)
+for m in morphemes:
+    if m['type'] == 'pie':
+        for x in m['members']:
+            by_id[x].setdefault('family', []).append(m['id'])
+
 # ---------------------------------------------------------------- 出力
 if os.path.isdir(OUT):
     shutil.rmtree(OUT)
@@ -666,7 +757,7 @@ for k, e in entries.items():
     short = '、'.join(flat[:3])
     pos = ''.join(sorted({g['p'][:4] for g in e['g']}))
     index_rows.append([k, 0 if e['t'] == 'w' else 1, e['r'], short, [g['p'] for g in e['g']], shard,
-                       [p['m'] for p in (e.get('parts') or []) if p['m'] and not p['m'].startswith('w:')]])
+                       [p['m'] for p in (e.get('parts') or []) if p['m'] and not p['m'].startswith('w:')] + (e.get('pie') or [])])
 for name, data in shards.items():
     with open(os.path.join(OUT, 'entries', name + '.json'), 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, separators=(',', ':'))
@@ -685,6 +776,8 @@ meta = {
         'morphemes': len(morphemes),
         'withParts': sum(1 for e in entries.values() if e.get('parts')),
         'withExamples': sum(1 for e in entries.values() if e.get('ex')),
+        'pieRoots': sum(1 for m in morphemes if m['type'] == 'pie'),
+        'withPie': sum(1 for e in entries.values() if e.get('pie')),
     },
     'shardSize': SHARD,
 }

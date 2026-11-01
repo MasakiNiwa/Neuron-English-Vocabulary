@@ -26,6 +26,8 @@ export interface RunOptions {
   extraSystem?: string
   useTools?: boolean
   onToolCall?: (name: string) => void
+  /** ストリーミング表示用 */
+  onText?: (delta: string) => void
   signal?: AbortSignal
 }
 
@@ -54,6 +56,7 @@ export async function runTask(o: RunOptions) {
     tools: o.useTools === false ? undefined : appTools,
     runTool: runAppTool,
     onToolCall: (n) => o.onToolCall?.(n),
+    onText: o.onText,
     signal: o.signal,
   })
   return { text, model: `${route.key.label} / ${route.model}` }
