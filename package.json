@@ -18,6 +18,10 @@
     "comlink": "^4.4.2",
     "dexie": "^4.4.7",
     "dexie-react-hooks": "^4.4.0",
+    "graphology": "^0.26.0",
+    "graphology-layout": "^0.6.1",
+    "graphology-layout-forceatlas2": "^0.10.1",
+    "graphology-types": "^0.24.8",
     "i18next": "^26.6.0",
     "lucide-react": "^1.66.0",
     "minisearch": "^7.2.0",
@@ -25,6 +29,7 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-i18next": "^17.1.9",
+    "sigma": "^3.0.3",
     "ts-fsrs": "^5.4.2",
     "zustand": "^5.0.16"
   },

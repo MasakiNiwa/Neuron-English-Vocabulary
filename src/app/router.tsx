@@ -9,6 +9,8 @@ import {
 import { useTranslation } from 'react-i18next'
 import { Page } from '@/components/ui/Page'
 import { RootLayout } from './RootLayout'
+import { validateWordsSearch } from '@/features/words/search'
+import { validateNetworkSearch } from '@/features/network/search'
 
 function NotFound() {
   const { t } = useTranslation()
@@ -34,8 +36,21 @@ const page = <P extends string>(path: P, load: () => Promise<Record<string, unkn
 
 const routeTree = rootRoute.addChildren([
   page('/', () => import('@/features/home/HomePage'), 'HomePage'),
-  page('/words', () => import('@/features/words/WordsPage'), 'WordsPage'),
-  page('/network', () => import('@/features/network/NetworkPage'), 'NetworkPage'),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/words',
+    validateSearch: validateWordsSearch,
+    component: lazyRouteComponent(() => import('@/features/words/WordsPage'), 'WordsPage'),
+  }),
+  page('/e/$key', () => import('@/features/dictionary/EntryPage'), 'EntryPage'),
+  page('/m/$id', () => import('@/features/dictionary/MorphemePage'), 'MorphemePage'),
+  page('/history', () => import('@/features/history/HistoryPage'), 'HistoryPage'),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/network',
+    validateSearch: validateNetworkSearch,
+    component: lazyRouteComponent(() => import('@/features/network/NetworkPage'), 'NetworkPage'),
+  }),
   page('/study', () => import('@/features/study/StudyPage'), 'StudyPage'),
   page('/analytics', () => import('@/features/analytics/AnalyticsPage'), 'AnalyticsPage'),
   page('/ai', () => import('@/features/ai/AiPage'), 'AiPage'),

@@ -30,6 +30,13 @@ export const dataSources: DataSource[] = [
     usage: '品詞・発音記号・語源の構造・訳語・関連語 (Wiktionary contributors / Tatu Ylonen)',
   },
   {
+    name: 'JMdict',
+    url: 'https://www.edrdg.org/jmdict/j_jmdict.html',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    usage: '日本語訳の補完（Electronic Dictionary Research and Development Group）',
+  },
+  {
     name: 'Tatoeba',
     url: 'https://tatoeba.org/',
     license: 'CC BY 2.0 FR',

@@ -1,4 +1,6 @@
-import { Link, Outlet, useRouterState } from '@tanstack/react-router'
+import { Link, Outlet, useNavigate, useRouterState } from '@tanstack/react-router'
+import { useEffect } from 'react'
+import { warmupSearch } from '@/features/dictionary/search'
 import { CircleHelp, Moon, Sun } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { IconButton } from '@/components/ui/Button'
@@ -94,6 +96,20 @@ function BottomNav({ pathname }: { pathname: string }) {
 
 export function RootLayout() {
   useApplyTheme()
+  const navigate = useNavigate()
+  useEffect(() => {
+    warmupSearch()
+    // キーボードショートカット: "/" で検索へ
+    const onKey = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement
+      if (e.key === '/' && !/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) && !el.isContentEditable) {
+        e.preventDefault()
+        void navigate({ to: '/words' })
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [navigate])
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   return (
     <div className="flex min-h-dvh flex-col">
