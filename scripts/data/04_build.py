@@ -665,6 +665,11 @@ for r in read_tsv(os.path.join(REPO, 'data', 'overrides.tsv')):
         overrides_gloss[r[1]] = groups
     elif r[0] == 'exclude' and len(r) >= 3:
         overrides_exclude[r[1]].update(x.strip() for x in r[2].split(','))
+    elif r[0] == 'noparts' and len(r) >= 2:
+        for w in r[1].split(','):
+            e = entries.get(key_of(w.strip()))
+            if e:
+                e['parts'] = None
 for key, groups in overrides_gloss.items():
     e = entries.get(key_of(key))
     if not e:
