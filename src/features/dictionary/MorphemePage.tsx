@@ -11,6 +11,7 @@ import { MORPH_TYPE_LABEL, MorphemeLink, morphLabel } from './components/links'
 import { EntryRow } from './components/EntryRow'
 import { useDictionary } from './hooks'
 import type { Morpheme } from './types'
+import { usePersistentState } from '@/lib/persist'
 
 /** 語源の成り立ち: jud = jus（法）+ dic（言う） */
 function PartsTree({ m }: { m: Morpheme }) {
@@ -67,7 +68,7 @@ function MorphemeView({ id }: { id: string }) {
   const { t } = useTranslation()
   const dict = useDictionary()
   const m = dict.morphById.get(id)
-  const [limit, setLimit] = useState(60)
+  const [limit, setLimit] = usePersistentState('morph:limit:' + id, 60)
   const [added, setAdded] = useState<number | null>(null)
   if (!m) return <p className="text-muted">{t('common.notFound')}</p>
   const words = m.words.map((k) => dict.byKey.get(k)).filter((e) => !!e)

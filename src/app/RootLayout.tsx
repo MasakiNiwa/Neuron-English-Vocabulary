@@ -7,6 +7,7 @@ import { IconButton } from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
 import { toggleTheme, useApplyTheme, useResolvedTheme } from '@/lib/theme'
 import { navItems } from './nav'
+import { ScrollRestorer } from './ScrollRestorer'
 
 function isActive(pathname: string, to: string) {
   return to === '/' ? pathname === '/' : pathname === to || pathname.startsWith(to + '/')
@@ -113,6 +114,7 @@ export function RootLayout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   return (
     <div className="flex min-h-dvh flex-col">
+      <ScrollRestorer />
       <Header />
       <div className="flex flex-1">
         <SideNav pathname={pathname} />

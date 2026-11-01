@@ -65,6 +65,16 @@ export interface ChatRecord {
   model?: string
 }
 
+/** AI チャットのスレッド（会話のまとまり） */
+export interface ChatThread {
+  id: string
+  title: string
+  /** 話題にしている見出し語 */
+  about?: string
+  createdAt: number
+  updatedAt: number
+}
+
 /** 外部 AI などで作成し取り込んだ追加解説 */
 export interface EnrichmentRecord {
   entryId: string
@@ -84,6 +94,7 @@ export class NeuronDB extends Dexie {
   secrets!: EntityTable<SecretRecord, 'id'>
   chats!: EntityTable<ChatRecord, 'id'>
   enrichments!: EntityTable<EnrichmentRecord, 'entryId'>
+  threads!: EntityTable<ChatThread, 'id'>
 
   constructor(name = 'neuron-english-vocabulary') {
     super(name)
@@ -99,6 +110,16 @@ export class NeuronDB extends Dexie {
       chats: '++id, thread, createdAt',
       enrichments: 'entryId, importedAt',
     })
+    this.version(3)
+      .stores({ threads: 'id, updatedAt' })
+      .upgrade(async (tx) => {
+        // v2 までの単一スレッド（main）を履歴の1件として引き継ぐ
+        const n = await tx.table('chats').where('thread').equals('main').count()
+        if (n) {
+          const now = Date.now()
+          await tx.table('threads').put({ id: 'main', title: '以前のチャット', createdAt: now, updatedAt: now })
+        }
+      })
   }
 }
 

@@ -1,14 +1,31 @@
 import { Accordion as A } from 'radix-ui'
 import { ChevronDown } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { usePersistentState } from '@/lib/persist'
 
 /**
  * 見出しごとに折りたためるセクション群。既定では全て閉じる（defaultValue = []）。
  * 設定ページ・ヘルプページで共通利用。
  */
-export function Accordion({ children, defaultOpen = [] }: { children: ReactNode; defaultOpen?: string[] }) {
+export function Accordion({
+  children,
+  defaultOpen = [],
+  persistKey,
+}: {
+  children: ReactNode
+  defaultOpen?: string[]
+  /** 指定すると、ページを移動して戻っても開閉状態を保つ */
+  persistKey?: string
+}) {
+  const [open, setOpen] = usePersistentState<string[]>('acc:' + (persistKey ?? ''), defaultOpen)
+  if (!persistKey)
+    return (
+      <A.Root type="multiple" defaultValue={defaultOpen} className="flex flex-col gap-2">
+        {children}
+      </A.Root>
+    )
   return (
-    <A.Root type="multiple" defaultValue={defaultOpen} className="flex flex-col gap-2">
+    <A.Root type="multiple" value={open} onValueChange={setOpen} className="flex flex-col gap-2">
       {children}
     </A.Root>
   )

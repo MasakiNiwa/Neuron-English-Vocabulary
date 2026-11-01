@@ -12,8 +12,10 @@ import { EntryLink } from '@/features/dictionary/components/links'
 import { useDictionary } from '@/features/dictionary/hooks'
 import { Segmented, selectClass } from '@/components/ui/Form'
 import { useSettings } from '@/stores/settings'
+import { usePersistentState } from '@/lib/persist'
 import { formatInterval, removeFromStudy, retrievability } from './cards'
 import { ReviewSession } from './ReviewSession'
+import { useStudySession } from './sessionStore'
 import { FORMAT_OPTIONS, type StudyFormat } from './formats'
 const StudyReaction = lazy(() => import('@/features/ai/StudyReaction').then((m) => ({ default: m.StudyReaction })))
 import { buildPracticeQueue, buildQueue, getStudyStats, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
@@ -96,10 +98,10 @@ function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
   const dict = useDictionary()
   const startRank = useSettings((s) => s.studyStartRank)
   const setSetting = useSettings((s) => s.set)
-  const [source, setSource] = useState<LearnSource>('frequency')
-  const [type, setType] = useState<'w' | 'p'>('w')
-  const [rootId, setRootId] = useState('')
-  const [count, setCount] = useState(10)
+  const [source, setSource] = usePersistentState<LearnSource>('study:source', 'frequency')
+  const [type, setType] = usePersistentState<'w' | 'p'>('study:type', 'w')
+  const [rootId, setRootId] = usePersistentState('study:root', '')
+  const [count, setCount] = usePersistentState('study:count', 10)
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState('')
   const roots = useMemo(
@@ -215,8 +217,8 @@ function ReviewCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => vo
 
 function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
   const total = useLiveQuery(() => db.cards.count(), [])
-  const [mode, setMode] = useState<PracticeMode>('random')
-  const [count, setCount] = useState(10)
+  const [mode, setMode] = usePersistentState<PracticeMode>('study:practiceMode', 'random')
+  const [count, setCount] = usePersistentState('study:practiceCount', 10)
   return (
     <Card>
       <SectionTitle className="flex items-center gap-1.5">
@@ -287,7 +289,7 @@ function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
         <Stat label="今日の回答" value={stats?.reviewedToday ?? '–'} />
         <Stat label="今日の新規" value={stats?.newToday ?? '–'} />
       </div>
-      <Accordion>
+      <Accordion persistKey="study">
         <AccordionSection value="cards" title={`${t('study.title')}カード一覧`}>
           <Suspense fallback={<PageSpinner />}>
             <CardList />
@@ -300,11 +302,8 @@ function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
 
 export function StudyPage() {
   const { t } = useTranslation()
-  const [queue, setQueue] = useState<StudyCard[] | null>(null)
-  const [mode, setMode] = useState('review')
   const format = useSettings((s) => s.studyFormat)
-  const [done, setDone] = useState<number | null>(null)
-  const [startedAt, setStartedAt] = useState(0)
+  const { queue, idx, count, mode, startedAt, done, start, progress, finish } = useStudySession()
   return (
     <Page title={t('study.title')}>
       <Suspense fallback={<PageSpinner />}>
@@ -313,10 +312,10 @@ export function StudyPage() {
             queue={queue}
             mode={mode}
             format={format}
-            onDone={(n) => {
-              setQueue(null)
-              setDone(n)
-            }}
+            initialIdx={idx}
+            initialCount={count}
+            onProgress={progress}
+            onDone={finish}
           />
         ) : (
           <>
@@ -331,14 +330,7 @@ export function StudyPage() {
                 </Suspense>
               </Card>
             )}
-            <StudyHome
-              onStart={(q, m) => {
-                setMode(m)
-                setDone(null)
-                setStartedAt(Date.now())
-                setQueue(q)
-              }}
-            />
+            <StudyHome onStart={start} />
           </>
         )}
       </Suspense>
