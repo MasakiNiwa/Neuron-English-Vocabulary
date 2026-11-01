@@ -245,30 +245,71 @@ export function AiSettings() {
       </p>
       <Sub title="ロック">
         <UnlockPanel />
-        {v.unlocked && (
-          <div className="mt-3 flex flex-wrap gap-2">
-            {webauthnSupported() && (
+        {v.unlocked && webauthnSupported() && (
+          <div className="mt-3 rounded-xl bg-surface-2 p-3 text-sm">
+            <div className="flex items-center gap-2">
+              <Fingerprint className="size-4 shrink-0" />
+              <span className="flex-1">
+                生体認証：{v.passkeys ? <span className="text-success">登録済み{v.passkeys > 1 && `（${v.passkeys} 件）`}</span> : <span className="text-muted">未登録</span>}
+              </span>
+              {v.passkeys > 0 && (
+                <Button
+                  size="sm"
+                  onClick={async () => {
+                    if (!confirm('生体認証の登録を解除しますか？（パスフレーズでのロック解除はそのまま使えます）')) return
+                    await removePasskeys()
+                    v.refresh()
+                    setMsg('生体認証の登録を解除しました')
+                  }}
+                >
+                  解除
+                </Button>
+              )}
+            </div>
+            {v.passkeys === 0 ? (
               <Button
                 size="sm"
+                variant="primary"
+                className="mt-2"
                 onClick={async () => {
                   setMsg('')
                   try {
                     await registerPasskey()
                     v.refresh()
-                    setMsg('生体認証（パスキー）を登録しました')
+                    setMsg('生体認証（パスキー）を登録しました。次回から指紋・顔認証などでロックを解除できます')
                   } catch (e) {
                     setMsg(e instanceof Error ? e.message : String(e))
                   }
                 }}
               >
-                <Fingerprint className="size-4" /> {v.passkey ? 'パスキーを追加' : '生体認証を登録'}
+                <Fingerprint className="size-4" /> 生体認証を登録
               </Button>
+            ) : (
+              <p className="mt-1.5 text-xs leading-relaxed text-muted">
+                この端末のこのブラウザで、指紋・顔認証などでロックを解除できます。
+                <button
+                  type="button"
+                  className="ml-1 underline hover:text-fg"
+                  onClick={async () => {
+                    setMsg('')
+                    try {
+                      await registerPasskey()
+                      v.refresh()
+                      setMsg('別の認証方法を追加しました')
+                    } catch (e) {
+                      setMsg(e instanceof Error ? e.message : String(e))
+                    }
+                  }}
+                >
+                  別の認証方法を追加
+                </button>
+                （USB セキュリティキーなど、もう一つの方法でも解除できるようにしたいときだけ使います）
+              </p>
             )}
-            {v.passkey && (
-              <Button size="sm" onClick={async () => (await removePasskeys(), v.refresh())}>
-                パスキーを解除
-              </Button>
-            )}
+          </div>
+        )}
+        {v.unlocked && (
+          <div className="mt-3 flex flex-wrap gap-2">
             <Button
               size="sm"
               onClick={async () => {
