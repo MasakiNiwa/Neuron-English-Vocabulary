@@ -20,7 +20,7 @@ let dictPromise: Promise<Dictionary> | null = null
 const shardCache = new Map<string, Promise<Record<string, Entry>>>()
 
 export function rowToEntry(r: IndexRow): IndexEntry {
-  return { key: r[0], type: r[1] === 0 ? 'w' : 'p', rank: r[2], gloss: r[3], pos: r[4], shard: r[5], morphs: r[6] }
+  return { key: r[0], type: r[1] === 0 ? 'w' : 'p', rank: r[2], gloss: r[3], pos: r[4], shard: r[5], morphs: r[6], hasNote: r[7] === 1 }
 }
 
 async function fetchJson<T>(path: string): Promise<T> {
