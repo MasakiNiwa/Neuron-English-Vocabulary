@@ -1441,3 +1441,97 @@ gloss	turn up	verb:現れる、（音量を）上げる、見つかる
 gloss	check out	verb:確認する、（ホテルを）チェックアウトする、（本を）借り出す
 gloss	look through	verb:目を通す、〜を通して見る
 gloss	result in	verb:〜という結果になる
+#
+# ---- 第14弾: 3420〜3820 位の訳語
+drop	xi
+drop	hmm
+drop	cam
+drop	holland
+drop	ar
+drop	lo
+drop	yup
+drop	cum
+drop	shanghai
+drop	guinea
+drop	bro
+gloss	ham	noun:ハム、もも肉
+gloss	ridge	noun:尾根、隆起、（屋根の）棟
+gloss	scholar	noun:学者、奨学生
+gloss	unfortunate	adj:不運な、残念な
+gloss	attraction	noun:魅力、呼び物、名所、引力
+gloss	canon	noun:規範、正典、（教会法）カノン
+gloss	closure	noun:閉鎖、終結、決着
+gloss	dental	adj:歯の、歯科の
+gloss	editorial	noun:社説|adj:編集の
+gloss	entertain	verb:楽しませる、もてなす、（考えを）抱く
+gloss	generic	adj:一般的な、ノーブランドの|noun:ジェネリック医薬品
+gloss	grip	verb:しっかりつかむ|noun:握ること、支配
+gloss	handful	noun:一握り、少数
+gloss	hybrid	noun:雑種、混成物、ハイブリッド|adj:混成の
+gloss	parish	noun:教区、（英国の）行政教区
+gloss	pathetic	adj:哀れな、情けない、みじめな
+gloss	potter	noun:陶芸家、陶工
+gloss	restoration	noun:回復、修復、復元
+gloss	stamp	noun:切手、印、スタンプ|verb:押印する、踏みつける
+gloss	urge	verb:促す、強く勧める|noun:衝動
+gloss	archive	noun:記録保管所、アーカイブ|verb:保管する
+gloss	array	noun:配列、ずらりと並んだもの|verb:並べる
+gloss	breakdown	noun:故障、崩壊、内訳、（心身の）衰弱
+gloss	consensus	noun:合意、総意
+gloss	fig	noun:イチジク
+gloss	pine	noun:マツ|verb:思い焦がれる
+gloss	pose	verb:ポーズをとる、（問題を）提起する|noun:姿勢、ポーズ
+gloss	severely	adv:ひどく、厳しく
+gloss	technically	adv:厳密に言えば、技術的に
+gloss	cult	noun:崇拝、カルト、熱狂的な支持
+gloss	darling	noun:最愛の人、（呼びかけで）あなた|adj:かわいい
+gloss	drill	noun:ドリル、訓練|verb:穴をあける、反復練習する
+gloss	leak	verb:漏れる、漏らす|noun:漏れ、漏洩
+gloss	setup	noun:準備、設定、仕組み、配置
+gloss	tender	adj:優しい、柔らかい、痛む|noun:入札
+gloss	thoroughly	adv:徹底的に、すっかり
+gloss	breed	verb:繁殖させる、育てる|noun:品種
+gloss	bud	noun:芽、つぼみ
+gloss	butler	noun:執事
+gloss	cartoon	noun:漫画、風刺画、アニメ
+gloss	chick	noun:ひな鳥、（俗）若い女性
+gloss	coke	noun:コーラ、コークス
+gloss	console	verb:慰める|noun:操作盤、ゲーム機
+gloss	dump	verb:捨てる、投げ捨てる|noun:ごみ捨て場
+gloss	fold	verb:折りたたむ、（腕を）組む|noun:折り目
+gloss	frustrated	adj:不満な、いらいらした
+gloss	hub	noun:中心、拠点、ハブ
+gloss	lodge	noun:山小屋、ロッジ|verb:泊まる、（苦情を）申し立てる
+gloss	micro	adj:極小の、ミクロの
+gloss	pale	adj:青白い、薄い
+gloss	subtle	adj:微妙な、かすかな、巧妙な
+gloss	widow	noun:未亡人
+gloss	altogether	adv:まったく、全部で、全体として
+gloss	assess	verb:評価する、査定する
+gloss	assumption	noun:仮定、前提、（責任などの）引き受け
+gloss	curse	noun:のろい|verb:のろう、ののしる
+gloss	drain	verb:排水する、水を切る、消耗させる|noun:排水管
+gloss	flame	noun:炎
+gloss	nicely	adv:うまく、すてきに
+gloss	quantum	noun:量子、量
+gloss	reed	noun:葦（あし）、（楽器の）リード
+gloss	compact	adj:小型の、ぎっしり詰まった|noun:協定、コンパクト
+gloss	consult	verb:相談する、（辞書などを）調べる、診察を受ける
+gloss	pronounced	adj:はっきりした、顕著な
+gloss	streak	noun:筋、縞、連続|verb:筋をつける
+gloss	attribute	noun:特性、属性|verb:〜のせいにする（to）
+gloss	bout	noun:（病気などの）一時期、試合
+gloss	dimension	noun:寸法、次元、側面
+gloss	foul	adj:汚い、不快な、反則の|noun:ファウル
+gloss	majesty	noun:威厳、（Your Majesty）陛下
+gloss	savage	adj:残忍な、どう猛な|noun:野蛮人
+gloss	stack	noun:積み重ね、山|verb:積み重ねる
+gloss	static	adj:静的な、動きのない|noun:静電気、雑音
+gloss	tide	noun:潮、潮流、風潮
+gloss	bolt	noun:ボルト、稲妻|verb:かんぬきをかける、急に駆け出す
+gloss	brook	noun:小川
+gloss	bust	noun:胸像、逮捕|verb:壊す、逮捕する
+gloss	intermediate	adj:中間の、中級の
+gloss	lineup	noun:顔ぶれ、陣容、（容疑者の）面通し
+gloss	nut	noun:木の実、ナット、熱狂的なファン
+gloss	spite	noun:悪意、意地悪（in spite of 〜にもかかわらず）
