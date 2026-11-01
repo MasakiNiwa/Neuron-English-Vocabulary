@@ -46,11 +46,44 @@ export interface KeyValue {
   value: unknown
 }
 
+/** 暗号化された秘密情報（API キーなど）。平文は保存しない */
+export interface SecretRecord {
+  id: string
+  iv: Uint8Array
+  data: ArrayBuffer
+}
+
+/** AI チャットのメッセージ */
+export interface ChatRecord {
+  id?: number
+  thread: string
+  role: 'user' | 'assistant'
+  content: string
+  createdAt: number
+  /** 呼び出したツール名（表示用） */
+  tools?: string[]
+  model?: string
+}
+
+/** 外部 AI などで作成し取り込んだ追加解説 */
+export interface EnrichmentRecord {
+  entryId: string
+  mnemonic?: string
+  story?: string
+  note?: string
+  examples?: { en: string; ja: string }[]
+  source?: string
+  importedAt: number
+}
+
 export class NeuronDB extends Dexie {
   views!: EntityTable<ViewRecord, 'id'>
   cards!: EntityTable<StudyCard, 'entryId'>
   reviews!: EntityTable<ReviewRecord, 'id'>
   kv!: EntityTable<KeyValue, 'key'>
+  secrets!: EntityTable<SecretRecord, 'id'>
+  chats!: EntityTable<ChatRecord, 'id'>
+  enrichments!: EntityTable<EnrichmentRecord, 'entryId'>
 
   constructor(name = 'neuron-english-vocabulary') {
     super(name)
@@ -60,6 +93,11 @@ export class NeuronDB extends Dexie {
       cards: 'entryId, due, state, addedAt',
       reviews: '++id, entryId, reviewedAt, [entryId+reviewedAt]',
       kv: 'key',
+    })
+    this.version(2).stores({
+      secrets: 'id',
+      chats: '++id, thread, createdAt',
+      enrichments: 'entryId, importedAt',
     })
   }
 }

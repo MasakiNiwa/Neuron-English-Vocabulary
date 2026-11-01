@@ -1,6 +1,8 @@
 import type { LucideIcon } from 'lucide-react'
 import type { ComponentType } from 'react'
 import type { TKey } from '@/lib/i18n'
+import { Bot } from 'lucide-react'
+import { lazy } from 'react'
 
 /**
  * 設定ページに機能ごとのセクションを差し込むための登録口。
@@ -13,4 +15,11 @@ export interface SettingsExtension {
   Component: ComponentType
 }
 
-export const settingsExtensions: SettingsExtension[] = []
+export const settingsExtensions: SettingsExtension[] = [
+  {
+    id: 'ai',
+    titleKey: 'settings.ai',
+    icon: Bot,
+    Component: lazy(() => import('@/features/ai/AiSettings').then((m) => ({ default: m.AiSettings }))),
+  },
+]

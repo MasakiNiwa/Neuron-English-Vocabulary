@@ -1,5 +1,5 @@
 import { Database, GraduationCap, Palette, Volume2 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
 import { Button } from '@/components/ui/Button'
@@ -183,7 +183,9 @@ export function SettingsPage() {
 
         {settingsExtensions.map((ext) => (
           <AccordionSection key={ext.id} value={ext.id} title={t(ext.titleKey)} icon={<ext.icon className="size-5" />}>
-            <ext.Component />
+            <Suspense fallback={null}>
+              <ext.Component />
+            </Suspense>
           </AccordionSection>
         ))}
 

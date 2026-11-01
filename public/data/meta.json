@@ -1,11 +1,11 @@
 {
  "version": "20261101",
- "generatedAt": "2026-11-01T00:21:10.551893+00:00",
+ "generatedAt": "2026-11-01T00:32:12.917038+00:00",
  "counts": {
   "words": 10000,
   "phrases": 1139,
   "morphemes": 285,
-  "withParts": 3356,
+  "withParts": 3337,
   "withExamples": 9274
  },
  "shardSize": 200
