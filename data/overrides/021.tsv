@@ -1,0 +1,317 @@
+# 元データに日本語訳がなく採用されていなかった重要語（手動で訳を書くと採用される）（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
+gloss	would	verb:〜だろう、〜するつもりだ（will の過去形）、（would like で）〜したい
+gloss	could	verb:〜できた（can の過去形）、〜かもしれない、〜していただけますか
+gloss	into	prep:〜の中へ、〜に（変化）、〜に夢中で
+gloss	off	adv:離れて、外れて、（電気などが）切れて、休みで|prep:〜から離れて
+gloss	onto	prep:〜の上へ
+gloss	nor	conj:〜もまた…ない（neither A nor B：AもBも…ない）
+gloss	ought	verb:（ought to で）〜すべきだ、〜のはずだ
+gloss	ourselves	pron:私たち自身
+gloss	nobody	pron:誰も〜ない|noun:取るに足りない人
+gloss	anybody	pron:誰か、誰でも、（否定文で）誰も
+gloss	whoever	pron:〜する人は誰でも、誰が〜しても
+gloss	anymore	adv:（否定文で）もはや、今はもう
+gloss	elsewhere	adv:どこかほかの所で
+gloss	regardless	adv:それでも、（regardless of で）〜にかかわらず
+gloss	unlike	prep:〜と違って|adj:似ていない
+gloss	hardly	adv:ほとんど〜ない
+gloss	whilst	conj:〜する間、〜である一方（while と同じ）
+gloss	forth	adv:前へ、外へ（back and forth：行ったり来たり）
+gloss	amid	prep:〜の真っただ中で
+gloss	underneath	prep:〜の下に|adv:下に
+gloss	behalf	noun:（on behalf of で）〜を代表して、〜のために
+gloss	rid	verb:（get rid of で）〜を取り除く、取り除く
+gloss	sick	adj:病気の、吐き気がする、うんざりした
+gloss	medical	adj:医療の、医学の
+gloss	federal	adj:連邦の、連邦政府の
+gloss	additional	adj:追加の
+gloss	locate	verb:（場所を）突き止める、位置づける、（be located で）〜にある
+gloss	industrial	adj:産業の、工業の
+gloss	ensure	verb:確実にする、保証する
+gloss	environmental	adj:環境の
+gloss	corporate	adj:企業の、法人の
+gloss	typically	adv:典型的に、たいてい
+gloss	statistic	noun:統計値、（statistics で）統計
+gloss	competitive	adj:競争の、競争力のある、負けず嫌いの
+gloss	widely	adv:広く
+gloss	officially	adv:正式に、公式に
+gloss	engage	verb:従事させる、引きつける、（be engaged で）婚約している
+gloss	presidential	adj:大統領の
+gloss	regularly	adv:定期的に、規則正しく
+gloss	entitle	verb:権利を与える、題をつける
+gloss	inner	adj:内側の、内面の
+gloss	visual	adj:視覚の、目に見える
+gloss	effectively	adv:効果的に、事実上
+gloss	consistent	adj:一貫した、矛盾のない
+gloss	electrical	adj:電気の
+gloss	newly	adv:新たに、最近
+gloss	potentially	adv:潜在的に、もしかすると
+gloss	subsequent	adj:その後の、続いて起こる
+gloss	incredibly	adv:信じられないほど
+gloss	publishing	noun:出版（業）
+gloss	agricultural	adj:農業の
+gloss	progressive	adj:進歩的な、漸進的な、（文法の）進行形の
+gloss	rapidly	adv:急速に
+gloss	upcoming	adj:今度の、近づいている
+gloss	constitutional	adj:憲法の、体質の
+gloss	premium	noun:保険料、割増金|adj:高級な
+gloss	residential	adj:住宅の、居住の
+gloss	ongoing	adj:進行中の
+gloss	enable	verb:〜できるようにする、可能にする
+gloss	physically	adv:身体的に、物理的に
+gloss	racial	adj:人種の
+gloss	disabled	adj:障がいのある
+gloss	equipped	adj:備えた、装備した
+gloss	classified	adj:機密の、分類された
+gloss	fiscal	adj:財政の、会計の
+gloss	virtually	adv:事実上、ほとんど
+gloss	naval	adj:海軍の
+gloss	differently	adv:違ったふうに
+gloss	instantly	adv:すぐに、即座に
+gloss	regulatory	adj:規制の
+gloss	correctly	adv:正しく
+gloss	criteria	noun:基準（criterion の複数形）
+gloss	legally	adv:法的に、合法的に
+gloss	operational	adj:運用の、使用できる
+gloss	congressional	adj:（米国の）議会の
+gloss	deemed	adj:〜と見なされた
+gloss	practically	adv:ほとんど、実際的に
+gloss	accessible	adj:利用しやすい、近づきやすい、わかりやすい
+gloss	nominated	adj:指名された、ノミネートされた
+gloss	parliamentary	adj:議会の
+gloss	sadly	adv:悲しそうに、残念ながら
+gloss	structural	adj:構造の
+gloss	vintage	adj:年代物の、極上の|noun:（ワインの）醸造年
+gloss	colonial	adj:植民地の
+gloss	illustrate	verb:説明する、例証する、挿絵を入れる
+gloss	deadly	adj:致命的な、命にかかわる
+gloss	indigenous	adj:先住の、土着の
+gloss	react	verb:反応する
+gloss	strictly	adv:厳しく、厳密に
+gloss	dining	noun:食事|adj:食事用の
+gloss	immune	adj:免疫のある、影響を受けない
+gloss	statistical	adj:統計の
+gloss	accordance	noun:（in accordance with で）〜に従って
+gloss	applicable	adj:適用できる、当てはまる
+gloss	iconic	adj:象徴的な、アイコン的な
+gloss	infected	adj:感染した
+gloss	lesser	adj:より小さい、より劣った
+gloss	protective	adj:保護する、過保護な
+gloss	provider	noun:提供者、プロバイダー
+gloss	reportedly	adv:伝えられるところによると
+gloss	authorized	adj:認可された、正式の
+gloss	electoral	adj:選挙の
+gloss	linear	adj:直線の、線形の
+gloss	oriented	adj:〜志向の、〜向けの
+gloss	cognitive	adj:認知の
+gloss	locally	adv:地元で、局所的に
+gloss	molecular	adj:分子の
+gloss	openly	adv:公然と、率直に
+gloss	facial	adj:顔の
+gloss	genuinely	adv:心から、本当に
+gloss	poorly	adv:下手に、不十分に
+gloss	purely	adv:純粋に、まったく
+gloss	evolve	verb:進化する、発展する
+gloss	importantly	adv:重要なことに
+gloss	fabulous	adj:すばらしい、途方もない
+gloss	obsessed	adj:取りつかれた、夢中な
+gloss	provincial	adj:州の、地方の
+gloss	viral	adj:ウイルスの、（ネットで）一気に広まる
+gloss	assure	verb:保証する、確信させる
+gloss	optical	adj:光学の、視覚の
+gloss	specialize	verb:専門にする
+gloss	allegedly	adv:伝えられるところでは
+gloss	grocery	noun:食料品店、（groceries で）食料品
+gloss	intensive	adj:集中的な
+gloss	interactive	adj:双方向の、対話式の
+gloss	martial	adj:戦争の、武道の（martial arts：武道）
+gloss	specify	verb:具体的に述べる、指定する
+gloss	traditionally	adv:伝統的に
+gloss	supportive	adj:支えとなる、協力的な
+gloss	surgical	adj:外科の、手術の
+gloss	warfare	noun:戦争、交戦
+gloss	blonde	adj:金髪の|noun:金髪の人
+gloss	emotionally	adv:感情的に、精神的に
+gloss	mathematical	adj:数学の
+gloss	thermal	adj:熱の、保温の
+gloss	arctic	adj:北極の、極寒の
+gloss	reasonably	adv:かなり、ほどほどに、理にかなって
+gloss	tribal	adj:部族の
+gloss	continental	adj:大陸の
+gloss	gut	noun:腸、（guts で）根性|adj:直感的な
+gloss	characterize	verb:特徴づける、〜と評する
+gloss	notably	adv:特に、著しく
+gloss	privately	adv:個人的に、内密に
+gloss	upside	noun:上側、利点
+gloss	coup	noun:クーデター、大成功
+gloss	institutional	adj:制度の、機関の
+gloss	kindly	adv:親切に、どうか|adj:親切な
+gloss	compelling	adj:説得力のある、強く引きつける
+gloss	financially	adv:財政的に、経済的に
+gloss	intact	adj:無傷の、そのままの
+gloss	fortunate	adj:幸運な
+gloss	frustrating	adj:いらいらさせる
+gloss	inclusive	adj:包括的な、すべてを含んだ
+gloss	memorable	adj:記憶に残る
+gloss	portable	adj:持ち運びできる
+gloss	randomly	adv:無作為に、でたらめに
+gloss	tactical	adj:戦術の
+gloss	architectural	adj:建築の
+gloss	maritime	adj:海の、海事の
+gloss	nominee	noun:候補者、指名された人
+gloss	polar	adj:極地の、正反対の
+gloss	socially	adv:社会的に
+gloss	supposedly	adv:おそらく、〜ということになっている
+gloss	dramatically	adv:劇的に
+gloss	philosophical	adj:哲学の、達観した
+gloss	relieved	adj:ほっとした
+gloss	postal	adj:郵便の
+gloss	terrified	adj:おびえた
+gloss	thrilled	adj:わくわくした、大喜びの
+gloss	verified	adj:確認された
+gloss	incoming	adj:入ってくる、次期の
+gloss	offended	adj:気分を害した
+gloss	prone	adj:〜しがちな、うつぶせの
+gloss	thankful	adj:感謝している
+gloss	beautifully	adv:美しく、見事に
+gloss	demographic	adj:人口統計の|noun:（特定の）層
+gloss	reliability	noun:信頼性
+gloss	accountability	noun:説明責任
+gloss	automated	adj:自動化された
+gloss	charitable	adj:慈善の、寛大な
+gloss	inherited	adj:受け継いだ、遺伝の
+gloss	recreational	adj:娯楽の、レクリエーションの
+gloss	verbal	adj:言葉の、口頭の
+gloss	accountable	adj:責任がある
+gloss	arguably	adv:おそらく、ほぼ間違いなく
+gloss	literacy	noun:読み書きの能力、リテラシー
+gloss	pharmaceutical	adj:製薬の|noun:医薬品
+gloss	adverse	adj:不利な、有害な
+gloss	alumni	noun:卒業生（alumnus の複数形）
+gloss	browser	noun:ブラウザー
+gloss	fond	adj:（be fond of で）〜が好きだ、愛情のこもった
+gloss	liable	adj:責任がある、〜しがちな
+gloss	sharply	adv:鋭く、急激に
+gloss	critically	adv:批判的に、決定的に、重篤に
+gloss	distracted	adj:気が散った
+gloss	overwhelmed	adj:圧倒された
+gloss	selective	adj:選択的な、えり好みする
+gloss	inclined	adj:〜したい気がする、〜する傾向がある
+gloss	problematic	adj:問題のある
+gloss	prospective	adj:見込みのある、将来の
+gloss	unaware	adj:気づいていない
+gloss	fictional	adj:架空の、小説の
+gloss	prestigious	adj:名声のある、一流の
+gloss	clarify	verb:明らかにする
+gloss	devastating	adj:壊滅的な、打ちのめすような
+gloss	lengthy	adj:長い、長ったらしい
+gloss	successive	adj:連続する
+gloss	undergraduate	noun:大学生、学部生
+gloss	nationally	adv:全国的に
+gloss	tasty	adj:おいしい
+gloss	diagnostic	adj:診断の
+gloss	dominance	noun:優位、支配
+gloss	economically	adv:経済的に
+gloss	addicted	adj:中毒の、夢中の
+gloss	collectively	adv:集団で、まとめて
+gloss	globally	adv:世界的に
+gloss	willingness	noun:意欲、快くすること
+gloss	alternatively	adv:あるいは、代わりに
+# 熟語
+gloss	take off	verb:（服などを）脱ぐ、離陸する、（急に）人気が出る、休みを取る
+gloss	turn off	verb:（電気・水などを）消す、止める、うんざりさせる
+gloss	turn on	verb:（電気などを）つける、興奮させる
+gloss	turn into	verb:〜に変わる、〜に変える
+gloss	get into	verb:〜に入る、〜に夢中になる、（困った状態に）陥る
+gloss	run into	verb:〜に偶然出会う、〜にぶつかる、（困難に）陥る
+gloss	depend on	verb:〜に頼る、〜次第である
+gloss	used to	verb:以前は〜したものだ、（be used to で）〜に慣れている
+gloss	out of	prep:〜から外へ、〜のうちで、〜を切らして
+gloss	kind of	adv:ちょっと、いくぶん
+gloss	end up	verb:最後には〜になる、結局〜する
+gloss	figure out	verb:理解する、解決する、見つけ出す
+gloss	be going to	verb:〜するつもりだ、〜しそうだ
+gloss	about to	adj:（be about to で）まさに〜しようとしている
+gloss	have no idea	verb:まったくわからない
+gloss	in love with	adj:〜に恋をして
+gloss	fall in love	verb:恋に落ちる
+gloss	get out of	verb:〜から出る、〜を逃れる
+gloss	work out	verb:運動する、うまくいく、解決する
+gloss	based on	prep:〜に基づいて
+gloss	rather than	prep:〜よりむしろ
+gloss	had better	verb:〜したほうがよい
+gloss	in touch	adv:連絡を取って（get in touch：連絡する）
+gloss	ahead of	prep:〜の前に、〜より先に
+gloss	now that	conj:今や〜なので
+gloss	in charge	adj:担当して、責任者で
+gloss	in public	adv:人前で、公然と
+gloss	all the way	adv:はるばる、ずっと
+gloss	in common	adv:共通して
+gloss	in mind	adv:心に留めて（keep in mind：覚えておく）
+gloss	next door	adv:隣に|noun:隣の家
+gloss	take a break	verb:ひと休みする
+gloss	keep on	verb:〜し続ける
+gloss	on top of	prep:〜の上に、〜に加えて
+gloss	stand by	verb:待機する、そばで見ている、支持する
+gloss	keep up with	verb:〜に遅れずについていく
+gloss	except for	prep:〜を除いて
+gloss	feel sorry for	verb:〜を気の毒に思う
+gloss	get away with	verb:（悪いことを）罰を受けずに済ませる
+gloss	at a time	adv:一度に
+gloss	time to time	adv:（from time to time で）時々
+gloss	speaking of	prep:〜と言えば
+gloss	drop out	verb:中退する、脱落する
+gloss	for now	adv:今のところ
+gloss	anything but	adv:決して〜ではない
+gloss	do without	verb:〜なしで済ませる
+gloss	big deal	noun:大したこと、大ごと
+gloss	on foot	adv:徒歩で
+gloss	on board	adv:乗って、搭乗して
+gloss	come along	verb:一緒に来る、うまく進む
+gloss	pass out	verb:気絶する、配る
+gloss	short of	adj:〜が不足して
+gloss	bound to	adj:（be bound to で）きっと〜する
+gloss	on duty	adv:勤務中で
+gloss	fall out	verb:抜け落ちる、仲たがいする
+gloss	in favor	adv:（in favor of で）〜に賛成して
+gloss	to the point	adj:要領を得た、的を射た
+gloss	back down	verb:引き下がる、主張を取り下げる
+gloss	long term	noun:長期|adj:長期の
+gloss	out of control	adj:制御できない
+gloss	help out	verb:手伝う
+gloss	in need	adj:困っている
+gloss	in place	adv:所定の位置に、実施されて
+gloss	speak up	verb:はっきり話す、意見を言う
+gloss	stick around	verb:そばにいる、とどまる
+gloss	fill in	verb:記入する、代わりを務める
+gloss	by mistake	adv:間違って
+gloss	in terms of	prep:〜の点で、〜に関して
+gloss	make a difference	verb:違いを生む、影響を与える
+gloss	under control	adj:制御されて、落ち着いて
+gloss	call back	verb:電話をかけ直す
+gloss	burst out	verb:突然〜し出す（burst out laughing：急に笑い出す）
+gloss	any longer	adv:（否定文で）もはや
+gloss	no more	adv:もう〜ない
+gloss	by the time	conj:〜するときまでに
+gloss	how about	adv:〜はどうですか
+gloss	in a hurry	adv:急いで
+gloss	stay up	verb:寝ずに起きている
+gloss	what if	conj:もし〜だったらどうなるだろう
+gloss	no need	noun:必要ない
+gloss	plan on	verb:〜するつもりだ
+gloss	think about	verb:〜について考える
+gloss	would like	verb:〜がほしい、〜したい（want の丁寧な言い方）
+gloss	get ready	verb:準備する
+gloss	so long	intj:じゃあね、さようなら
+gloss	hear from	verb:〜から連絡をもらう
+gloss	in a way	adv:ある意味で
+gloss	not really	adv:それほどでもない、あまり
+gloss	spend time	verb:時間を過ごす
+gloss	in trouble	adj:困って、面倒なことになって
+gloss	in time	adv:間に合って、やがて
+gloss	far from	adv:決して〜ではない、〜から遠い
+gloss	end in	verb:〜で終わる、〜という結果になる
+gloss	check on	verb:〜の様子を確かめる
+gloss	mess up	verb:台なしにする、散らかす
+gloss	get dressed	verb:服を着る
+gloss	open up	verb:心を開く、開ける、開業する

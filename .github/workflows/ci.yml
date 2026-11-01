@@ -16,3 +16,4 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npx vite build
+      - run: python3 scripts/data/06_lint.py

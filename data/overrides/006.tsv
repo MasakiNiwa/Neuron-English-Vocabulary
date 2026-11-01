@@ -1,0 +1,26 @@
+# 第6弾: 語源分解の誤判定（上位 7000 語）（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
+exclude	r:pol	pole,poles,polar
+exclude	r:cor	corn,corner,corny
+exclude	r:rat	rat,rats
+exclude	r:cad	casino
+exclude	r:pater	patrol,patrolling
+exclude	r:par	parish
+exclude	r:para	parish
+exclude	r:ann	penny
+exclude	r:pet	petty
+exclude	r:meter	cemetery
+exclude	r:cult	collar
+exclude	r:fer	ferry
+exclude	r:man	mansion
+exclude	r:rid	rider,ride,ridden
+exclude	r:lumin	aluminum,aluminium
+exclude	r:sal	salmon
+exclude	r:lat	inflation,inflate,inflated
+exclude	r:the	thesis,hypothesis,synthesis
+exclude	r:act	compact
+exclude	r:mand	tremendous,tremendously
+exclude	pre:mis	miserable,misery
+exclude	r:mit	miserable,misery
+exclude	r:cur	curve,curved,curvature
+exclude	r:ten	patent
+exclude	r:magn	magnetic,magnet,magnetism
