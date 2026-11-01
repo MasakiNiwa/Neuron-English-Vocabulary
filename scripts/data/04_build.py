@@ -397,7 +397,7 @@ def analyze(L: str, es: list[dict]):
     classical.discard(word)
     for r in roots:
         strength = 2 if etymon_res[r['id']].search(ntext + ' ' + all_parts_text) else 0
-        if not strength and any(classical_has(c, fm) for c in classical for fm in r['forms'] if len(fm) >= 3 and fm in word):
+        if not strength and r['etymons'] and any(classical_has(c, fm) for c in classical for fm in r['forms'] if len(fm) >= 3 and fm in word):
             strength = 1
         if not strength:
             continue
@@ -670,6 +670,35 @@ for r in read_tsv(os.path.join(REPO, 'data', 'overrides.tsv')):
             e = entries.get(key_of(w.strip()))
             if e:
                 e['parts'] = None
+# 手動の語源分解: parts	見出し語	綴り=形態素ID 綴り=形態素ID …（IDなしの綴りはつなぎ）
+# 解説で語源を説明できた語を、語源ネットワークにつなげるためのもの。自動判定より優先する。
+valid_morph = {m['id'] for m in roots + prefixes + suffixes}
+manual_parts = 0
+for r in read_tsv(os.path.join(REPO, 'data', 'overrides.tsv')):
+    if r[0] != 'parts' or len(r) < 3:
+        continue
+    e = entries.get(key_of(r[1].strip()))
+    if not e:
+        print('WARN parts: no entry', r[1])
+        continue
+    ps, ok = [], True
+    for tok in r[2].split():
+        sp, _, mid = tok.partition('=')
+        if mid and not (mid in valid_morph or (mid.startswith('w:') and mid[2:] in lemmas)):
+            print('WARN parts: unknown morpheme', r[1], mid)
+            ok = False
+        elif mid.startswith('w:'):
+            mid = 'w:' + lemmas[mid[2:]]['head']
+        ps.append({'s': sp, 'm': mid or None})
+    if ''.join(p['s'] for p in ps).lower() != e['h'].lower():
+        print('WARN parts: spelling mismatch', r[1], r[2])
+        ok = False
+    if ok:
+        e['parts'] = ps
+        e['manualParts'] = True
+        manual_parts += 1
+print('manual parts', manual_parts)
+
 for key, groups in overrides_gloss.items():
     e = entries.get(key_of(key))
     if not e:
@@ -680,7 +709,7 @@ for key, groups in overrides_gloss.items():
 for mid, words in overrides_exclude.items():
     for w in words:
         e = entries.get(key_of(w))
-        if e and e.get('parts') and any(p['m'] == mid for p in e['parts']):
+        if e and e.get('parts') and not e.get('manualParts') and any(p['m'] == mid for p in e['parts']):
             e['parts'] = None  # 誤った分解は丸ごと取り除く（部分的に残すと不自然になるため）
 
 # ---------------------------------------------------------------- 解説（data/explanations/*.tsv）
@@ -827,6 +856,7 @@ meta = {
         'withExamples': sum(1 for e in entries.values() if e.get('ex')),
         'pieRoots': sum(1 for m in morphemes if m['type'] == 'pie'),
         'withNote': sum(1 for e in entries.values() if e.get('note')),
+        'manualParts': sum(1 for e in entries.values() if e.get('manualParts')),
         'manual': sum(1 for e in entries.values() if e.get('manual')),
         'withPie': sum(1 for e in entries.values() if e.get('pie')),
     },
