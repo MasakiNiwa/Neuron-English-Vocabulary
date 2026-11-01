@@ -371,6 +371,9 @@ def analyze(L: str, es: list[dict]):
                 continue
             spans.append((i, i + len(fm), r['id'], strength))
             break
+    # 語末の語根が接尾辞と同じ綴り（government の -ment など）なら接尾辞として扱う
+    suffix_forms = {f for sf in suffixes for f in sf['forms']}
+    spans = [sp for sp in spans if not (sp[2].startswith('r:') and sp[1] == len(word) and word[sp[0]:sp[1]] in suffix_forms)]
     # 3) 接頭辞
     for p in prefixes:
         for fm in p['forms']:

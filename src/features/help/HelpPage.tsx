@@ -101,7 +101,8 @@ export function HelpPage() {
             <li>単語ページで意味・語の成り立ち・例文・関連語を確認します。青い単語はタップするとその単語へ移動できます。</li>
             <li>「つながり」で語源や意味のネットワークを眺め、気になるグループを辿ります。</li>
             <li>「学習」で FSRS（間隔反復アルゴリズム）による復習を行い、記憶を定着させます。</li>
-            <li>「分析」で学習状況や閲覧履歴を振り返り、新しい気づきを得ます。</li>
+            <li>「分析」で学習状況や閲覧履歴を振り返り、新しい気づきを得ます。グラフや項目をタップすると該当する単語の一覧へドリルダウンできます。</li>
+            <li>（任意）「設定 → AI 連携」で API キーを登録すると、「AI」タブでキャラクターと会話しながら学べます。</li>
           </ol>
         </AccordionSection>
         <AccordionSection value="features" title={t('help.features')} icon={<Sparkles className="size-5" />}>
@@ -111,7 +112,9 @@ export function HelpPage() {
             <li>音声読み上げ（Web Speech API）</li>
             <li>単語ごとの表示履歴の記録</li>
             <li>学習データの分析・ドリルダウン</li>
-            <li>AI（Gemini / OpenAI / Claude / OpenRouter）との連携（任意）</li>
+            <li>AI（Gemini / OpenAI / Claude / OpenRouter）との連携（任意）: 複数キャラクターの掛け合い、アプリの辞書・学習データをツールとして使う解説、用途ごとのモデル割り当て</li>
+            <li>API キーは 1 つのパスフレーズで暗号化（AES-GCM）。対応端末では生体認証（WebAuthn パスキー）でロック解除</li>
+            <li>外部 AI 連携: プロンプトを作成して外部 AI に貼り付け、生成された JSON を取り込み（API キー不要）</li>
           </ul>
         </AccordionSection>
         <AccordionSection value="shortcuts" title={t('help.shortcuts')} icon={<Keyboard className="size-5" />}>

@@ -1,0 +1,60 @@
+import { castPrompt } from './personas'
+import { complete, type ChatTurn } from './providers'
+import { appTools, buildContext, runAppTool } from './tools'
+import { resolveRoute, type TaskId } from './config'
+import { getSecret, isUnlocked } from './vault'
+
+export class AiNotReadyError extends Error {
+  constructor(public reason: 'no-key' | 'locked') {
+    super(reason === 'no-key' ? 'AI の API キーが設定されていません' : 'API キーのロックを解除してください')
+  }
+}
+
+const BASE_SYSTEM = `あなたは英単語学習アプリ「ニューロン英単語」に組み込まれた AI です。ユーザーは日本語話者の英語学習者です。
+- 日本語で、簡潔で親しみやすく答えてください。
+- 単語の意味・語源・例文などの事実は、できる限りツール（get_word / get_root / search_words）でアプリの辞書を確認してから話してください。
+  辞書データは自動抽出のため誤りを含むことがあります。明らかに誤っている場合はそう指摘して構いません。
+- 英単語は原形のまま書くと、アプリ上でリンクになります。
+- 学習カードへの追加は、ユーザーが望んだときだけ add_to_study を使ってください。
+- Markdown の見出しや表は使わず、短い段落と箇条書き程度にしてください。`
+
+export interface RunOptions {
+  task: TaskId
+  messages: ChatTurn[]
+  about?: string
+  cast?: string[]
+  extraSystem?: string
+  useTools?: boolean
+  onToolCall?: (name: string) => void
+  signal?: AbortSignal
+}
+
+/** タスクに割り当てられた接続（会社・API キー・モデル）で LLM を呼び出す */
+export async function runTask(o: RunOptions) {
+  const route = resolveRoute(o.task)
+  if (!route) throw new AiNotReadyError('no-key')
+  if (!isUnlocked()) throw new AiNotReadyError('locked')
+  const apiKey = await getSecret(route.keyId)
+  if (!apiKey) throw new AiNotReadyError('no-key')
+  const context = await buildContext(o.about)
+  const system = [
+    BASE_SYSTEM,
+    o.cast?.length ? castPrompt(o.cast) : '',
+    o.extraSystem ?? '',
+    `# アプリの現在の状態（JSON）\n${JSON.stringify(context)}`,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
+  const text = await complete({
+    provider: route.key.provider,
+    apiKey,
+    model: route.model,
+    system,
+    messages: o.messages,
+    tools: o.useTools === false ? undefined : appTools,
+    runTool: runAppTool,
+    onToolCall: (n) => o.onToolCall?.(n),
+    signal: o.signal,
+  })
+  return { text, model: `${route.key.label} / ${route.model}` }
+}

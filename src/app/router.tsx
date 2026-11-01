@@ -11,6 +11,7 @@ import { Page } from '@/components/ui/Page'
 import { RootLayout } from './RootLayout'
 import { validateWordsSearch } from '@/features/words/search'
 import { validateNetworkSearch } from '@/features/network/search'
+import { validateAiSearch } from '@/features/ai/search'
 
 function NotFound() {
   const { t } = useTranslation()
@@ -53,7 +54,12 @@ const routeTree = rootRoute.addChildren([
   }),
   page('/study', () => import('@/features/study/StudyPage'), 'StudyPage'),
   page('/analytics', () => import('@/features/analytics/AnalyticsPage'), 'AnalyticsPage'),
-  page('/ai', () => import('@/features/ai/AiPage'), 'AiPage'),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/ai',
+    validateSearch: validateAiSearch,
+    component: lazyRouteComponent(() => import('@/features/ai/AiPage'), 'AiPage'),
+  }),
   page('/settings', () => import('@/features/settings/SettingsPage'), 'SettingsPage'),
   page('/help', () => import('@/features/help/HelpPage'), 'HelpPage'),
 ])

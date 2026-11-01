@@ -12,6 +12,7 @@ import { EntryLink, LinkedText, MorphemeLink, SpeakButton } from './components/l
 import { recordView, useDictionary, useEntry, useEntryViews } from './hooks'
 import type { Entry, Morpheme } from './types'
 import { PageSpinner } from '@/components/ui/Spinner'
+import { WordAiPanel } from '@/features/ai/WordAiPanel'
 
 const POS_LABEL: Record<string, string> = {
   noun: '名',
@@ -333,6 +334,8 @@ function EntryView({ entryKey }: { entryKey: string }) {
           </details>
         </Section>
       )}
+
+      <WordAiPanel entryKey={entry.k} />
 
       <ViewHistory entryKey={entry.k} />
     </>

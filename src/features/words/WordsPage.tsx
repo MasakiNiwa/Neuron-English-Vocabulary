@@ -28,7 +28,9 @@ function Browse({ filter }: { filter: SearchFilter }) {
   const dict = useDictionary()
   const { t } = useTranslation()
   const [limit, setLimit] = useState(100)
-  useEffect(() => setLimit(100), [filter])
+  useEffect(() => {
+    setLimit(100)
+  }, [filter])
   if (filter === 'm') {
     const groups = (['root', 'prefix', 'suffix'] as const).map((type) => ({
       type,

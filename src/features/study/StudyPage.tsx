@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { CircleCheck, Play, Plus } from 'lucide-react'
-import { Suspense, useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
 import { Button } from '@/components/ui/Button'
@@ -14,6 +14,7 @@ import { selectClass } from '@/components/ui/Form'
 import { useSettings } from '@/stores/settings'
 import { formatInterval, removeFromStudy, retrievability } from './cards'
 import { ReviewSession } from './ReviewSession'
+const StudyReaction = lazy(() => import('@/features/ai/StudyReaction').then((m) => ({ default: m.StudyReaction })))
 import { addNextFrequentWords, buildQueue, getStudyStats } from './session'
 
 const STATE_LABEL = ['新規', '学習中', '復習', '再学習']
@@ -152,6 +153,7 @@ export function StudyPage() {
   const { t } = useTranslation()
   const [queue, setQueue] = useState<StudyCard[] | null>(null)
   const [done, setDone] = useState<number | null>(null)
+  const [startedAt, setStartedAt] = useState(0)
   return (
     <Page title={t('study.title')}>
       <Suspense fallback={<PageSpinner />}>
@@ -166,14 +168,20 @@ export function StudyPage() {
         ) : (
           <>
             {done !== null && (
-              <Card className="mb-4 flex items-center gap-3 border-success/40 bg-success/10">
-                <CircleCheck className="size-6 text-success" />
-                <span className="text-sm">お疲れさまでした！ {done} 枚のカードに回答しました。</span>
+              <Card className="mb-4 border-success/40 bg-success/10">
+                <div className="flex items-center gap-3">
+                  <CircleCheck className="size-6 text-success" />
+                  <span className="text-sm">お疲れさまでした！ {done} 枚のカードに回答しました。</span>
+                </div>
+                <Suspense fallback={null}>
+                  <StudyReaction since={startedAt} />
+                </Suspense>
               </Card>
             )}
             <StudyHome
               onStart={(q) => {
                 setDone(null)
+                setStartedAt(Date.now())
                 setQueue(q)
               }}
             />
