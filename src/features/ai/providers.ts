@@ -3,7 +3,8 @@ import type { ProviderId } from './config'
 
 /**
  * 4 社の API を共通インターフェースで扱うアダプタ。
- * ツール呼び出し（function calling）のループもここで各社の形式に合わせて回す。
+ *  - ツール呼び出し（function calling）のループを各社の形式に合わせて回す
+ *  - onText を渡すと、応答テキストをストリーミングで逐次受け取れる
  */
 
 export interface ToolDef {
@@ -26,11 +27,14 @@ export interface CompleteParams {
   tools?: ToolDef[]
   runTool?: (name: string, args: Record<string, unknown>) => Promise<unknown>
   onToolCall?: (name: string, args: Record<string, unknown>) => void
+  /** ストリーミング: 受信したテキストの差分 */
+  onText?: (delta: string) => void
   signal?: AbortSignal
   maxTokens?: number
 }
 
 const MAX_ROUNDS = 6
+const LIMIT_MSG = '（ツール呼び出しの上限に達しました）'
 
 export async function complete(p: CompleteParams): Promise<string> {
   switch (p.provider) {
@@ -57,6 +61,42 @@ async function exec(p: CompleteParams, name: string, args: Record<string, unknow
   }
 }
 
+function parseArgs(s?: string): Record<string, unknown> {
+  try {
+    return JSON.parse(s || '{}') as Record<string, unknown>
+  } catch {
+    return {} // 引数が壊れていても空で実行
+  }
+}
+
+/** Server-Sent Events を JSON として順に読む */
+async function* readSSE(res: Response): AsyncGenerator<Record<string, unknown>> {
+  const reader = res.body!.pipeThrough(new TextDecoderStream()).getReader()
+  let buf = ''
+  for (;;) {
+    const { value, done } = await reader.read()
+    if (done) break
+    buf += value
+    let i: number
+    while ((i = buf.indexOf('\n')) >= 0) {
+      const line = buf.slice(0, i).trim()
+      buf = buf.slice(i + 1)
+      if (!line.startsWith('data:')) continue
+      const data = line.slice(5).trim()
+      if (!data || data === '[DONE]') continue
+      try {
+        yield JSON.parse(data) as Record<string, unknown>
+      } catch {
+        /* 途中で切れた行は無視 */
+      }
+    }
+  }
+}
+
+async function ensureOk(res: Response) {
+  if (!res.ok) throw new Error(`${res.status}: ${(await res.text()).slice(0, 300)}`)
+}
+
 // ---------------------------------------------------------------- Claude（公式 SDK）
 /** 拒否時のサーバー側フォールバックに対応するモデル */
 const FALLBACK_MODELS = new Set(['claude-fable-5-1', 'claude-opus-5-5', 'claude-opus-5', 'claude-sonnet-5-5'])
@@ -71,8 +111,9 @@ async function completeAnthropic(p: CompleteParams) {
     input_schema: t.parameters,
   }))
   const useFallback = FALLBACK_MODELS.has(p.model)
+  let all = ''
   for (let round = 0; round < MAX_ROUNDS; round++) {
-    const res = await client.beta.messages.create(
+    const stream = client.beta.messages.stream(
       {
         model: p.model,
         max_tokens: p.maxTokens ?? 16000,
@@ -83,13 +124,14 @@ async function completeAnthropic(p: CompleteParams) {
       },
       { signal: p.signal },
     )
-    if (res.stop_reason === 'refusal') return '（この依頼には回答できませんでした）'
-    const text = res.content
-      .filter((b): b is Anthropic.Beta.BetaTextBlock => b.type === 'text')
-      .map((b) => b.text)
-      .join('')
+    stream.on('text', (d) => {
+      all += d
+      p.onText?.(d)
+    })
+    const res = await stream.finalMessage()
+    if (res.stop_reason === 'refusal') return all + '（この依頼には回答できませんでした）'
     const uses = res.content.filter((b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use')
-    if (res.stop_reason !== 'tool_use' || !uses.length) return text
+    if (res.stop_reason !== 'tool_use' || !uses.length) return all
     messages.push({ role: 'assistant', content: res.content as Anthropic.Beta.BetaContentBlockParam[] })
     // 並列ツール呼び出しの結果は 1 つの user メッセージにまとめて返す
     const results = await Promise.all(
@@ -101,7 +143,7 @@ async function completeAnthropic(p: CompleteParams) {
     )
     messages.push({ role: 'user', content: results })
   }
-  return '（ツール呼び出しの上限に達しました）'
+  return all + LIMIT_MSG
 }
 
 // ---------------------------------------------------------------- OpenAI（Responses API）
@@ -109,18 +151,22 @@ async function completeAnthropic(p: CompleteParams) {
  * 新しい推論モデル（gpt-5.x など）は Chat Completions ではツールと推論を併用できないため、
  * OpenAI は Responses API を使う。ツール結果は previous_response_id で会話をつないで返す。
  */
+interface RespFinal {
+  id: string
+  output: RespItem[]
+}
 interface RespItem {
   type: string
   call_id?: string
   name?: string
   arguments?: string
-  content?: { type: string; text?: string }[]
 }
 
 async function completeOpenAIResponses(p: CompleteParams) {
   const tools = p.tools?.map((t) => ({ type: 'function', name: t.name, description: t.description, parameters: t.parameters }))
   let input: unknown[] = p.messages.map((m) => ({ role: m.role, content: m.content }))
   let previous: string | undefined
+  let all = ''
   for (let round = 0; round < MAX_ROUNDS; round++) {
     const res = await fetch('https://api.openai.com/v1/responses', {
       method: 'POST',
@@ -130,76 +176,90 @@ async function completeOpenAIResponses(p: CompleteParams) {
         model: p.model,
         instructions: p.system,
         input,
+        stream: true,
         ...(previous ? { previous_response_id: previous } : {}),
         ...(tools?.length ? { tools } : {}),
       }),
     })
-    if (!res.ok) throw new Error(`${res.status}: ${(await res.text()).slice(0, 300)}`)
-    const json = (await res.json()) as { id: string; output: RespItem[] }
-    const calls = json.output.filter((o) => o.type === 'function_call')
-    if (!calls.length) {
-      return json.output
-        .filter((o) => o.type === 'message')
-        .flatMap((o) => o.content ?? [])
-        .filter((c) => c.type === 'output_text')
-        .map((c) => c.text ?? '')
-        .join('')
+    await ensureOk(res)
+    let final = null as RespFinal | null
+    for await (const ev of readSSE(res)) {
+      if (ev.type === 'response.output_text.delta' && typeof ev.delta === 'string') {
+        all += ev.delta
+        p.onText?.(ev.delta)
+      } else if (ev.type === 'response.completed') {
+        final = ev.response as RespFinal
+      } else if (ev.type === 'response.failed' || ev.type === 'error') {
+        throw new Error(JSON.stringify(ev).slice(0, 300))
+      }
     }
-    previous = json.id
+    const calls = final?.output.filter((o) => o.type === 'function_call') ?? []
+    if (!final || !calls.length) return all
+    previous = final.id
     input = await Promise.all(
-      calls.map(async (c) => {
-        let args: Record<string, unknown> = {}
-        try {
-          args = JSON.parse(c.arguments || '{}')
-        } catch {
-          /* 引数が壊れていても空で実行 */
-        }
-        return { type: 'function_call_output', call_id: c.call_id, output: await exec(p, c.name ?? '', args) }
-      }),
+      calls.map(async (c) => ({ type: 'function_call_output', call_id: c.call_id, output: await exec(p, c.name ?? '', parseArgs(c.arguments)) })),
     )
   }
-  return '（ツール呼び出しの上限に達しました）'
+  return all + LIMIT_MSG
 }
 
 // ---------------------------------------------------------------- OpenRouter（Chat Completions 互換）
+interface OAIToolCall {
+  id: string
+  type: 'function'
+  function: { name: string; arguments: string }
+}
 interface OAIMessage {
   role: 'system' | 'user' | 'assistant' | 'tool'
   content: string | null
-  tool_calls?: { id: string; type: 'function'; function: { name: string; arguments: string } }[]
+  tool_calls?: OAIToolCall[]
   tool_call_id?: string
 }
 
 async function completeOpenAICompat(p: CompleteParams, url: string, extraHeaders: Record<string, string> = {}) {
   const messages: OAIMessage[] = [{ role: 'system', content: p.system }, ...p.messages]
   const tools = p.tools?.map((t) => ({ type: 'function', function: t }))
+  let all = ''
   for (let round = 0; round < MAX_ROUNDS; round++) {
     const res = await fetch(url, {
       method: 'POST',
       signal: p.signal,
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${p.apiKey}`, ...extraHeaders },
-      body: JSON.stringify({ model: p.model, messages, ...(tools?.length ? { tools } : {}) }),
+      body: JSON.stringify({ model: p.model, messages, stream: true, ...(tools?.length ? { tools } : {}) }),
     })
-    if (!res.ok) throw new Error(`${res.status}: ${(await res.text()).slice(0, 300)}`)
-    const json = (await res.json()) as { choices: { message: OAIMessage }[] }
-    const msg = json.choices[0].message
-    if (!msg.tool_calls?.length) return msg.content ?? ''
-    messages.push(msg)
-    for (const c of msg.tool_calls) {
-      let args: Record<string, unknown> = {}
-      try {
-        args = JSON.parse(c.function.arguments || '{}')
-      } catch {
-        /* 引数が壊れていても空で実行 */
+    await ensureOk(res)
+    let text = ''
+    const calls: OAIToolCall[] = []
+    for await (const ev of readSSE(res)) {
+      const delta = (ev.choices as { delta?: { content?: string; tool_calls?: { index: number; id?: string; function?: { name?: string; arguments?: string } }[] } }[] | undefined)?.[0]?.delta
+      if (!delta) continue
+      if (delta.content) {
+        text += delta.content
+        all += delta.content
+        p.onText?.(delta.content)
       }
-      messages.push({ role: 'tool', tool_call_id: c.id, content: await exec(p, c.function.name, args) })
+      // ツール呼び出しは断片で届くので index ごとに連結する
+      for (const tc of delta.tool_calls ?? []) {
+        const c = (calls[tc.index] ??= { id: '', type: 'function', function: { name: '', arguments: '' } })
+        if (tc.id) c.id = tc.id
+        if (tc.function?.name) c.function.name += tc.function.name
+        if (tc.function?.arguments) c.function.arguments += tc.function.arguments
+      }
+    }
+    const toolCalls = calls.filter(Boolean)
+    if (!toolCalls.length) return all
+    messages.push({ role: 'assistant', content: text || null, tool_calls: toolCalls })
+    for (const c of toolCalls) {
+      messages.push({ role: 'tool', tool_call_id: c.id, content: await exec(p, c.function.name, parseArgs(c.function.arguments)) })
     }
   }
-  return '（ツール呼び出しの上限に達しました）'
+  return all + LIMIT_MSG
 }
 
 // ---------------------------------------------------------------- Gemini
 interface GPart {
   text?: string
+  thought?: boolean
   functionCall?: { name: string; args?: Record<string, unknown> }
   functionResponse?: { name: string; response: unknown }
 }
@@ -210,8 +270,9 @@ async function completeGemini(p: CompleteParams) {
     parts: [{ text: m.content }],
   }))
   const model = p.model.replace(/^models\//, '')
+  let all = ''
   for (let round = 0; round < MAX_ROUNDS; round++) {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse`, {
       method: 'POST',
       signal: p.signal,
       headers: { 'Content-Type': 'application/json', 'x-goog-api-key': p.apiKey },
@@ -221,11 +282,20 @@ async function completeGemini(p: CompleteParams) {
         ...(p.tools?.length ? { tools: [{ functionDeclarations: p.tools }] } : {}),
       }),
     })
-    if (!res.ok) throw new Error(`${res.status}: ${(await res.text()).slice(0, 300)}`)
-    const json = (await res.json()) as { candidates?: { content?: { parts?: GPart[] } }[] }
-    const parts = json.candidates?.[0]?.content?.parts ?? []
+    await ensureOk(res)
+    const parts: GPart[] = []
+    for await (const ev of readSSE(res)) {
+      const ps = (ev.candidates as { content?: { parts?: GPart[] } }[] | undefined)?.[0]?.content?.parts ?? []
+      for (const x of ps) {
+        parts.push(x)
+        if (x.text && !x.thought) {
+          all += x.text
+          p.onText?.(x.text)
+        }
+      }
+    }
     const calls = parts.filter((x) => x.functionCall)
-    if (!calls.length) return parts.map((x) => x.text ?? '').join('')
+    if (!calls.length) return all
     contents.push({ role: 'model', parts })
     const responses: GPart[] = []
     for (const c of calls) {
@@ -234,5 +304,5 @@ async function completeGemini(p: CompleteParams) {
     }
     contents.push({ role: 'user', parts: responses })
   }
-  return '（ツール呼び出しの上限に達しました）'
+  return all + LIMIT_MSG
 }

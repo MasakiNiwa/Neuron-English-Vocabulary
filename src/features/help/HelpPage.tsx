@@ -108,11 +108,13 @@ export function HelpPage() {
         <AccordionSection value="features" title={t('help.features')} icon={<Sparkles className="size-5" />}>
           <ul className="list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
             <li>語源・意味のネットワーク探索（WebGL による高速描画）</li>
+            <li>語源の語源: 語根自体の成り立ち（例: jud = jus + dic）と、印欧祖語までさかのぼる祖語ファミリー（例: spec・scope ← *speḱ-「見る」）</li>
+            <li>出題形式: 英→日・日→英・例文の穴埋め・4択・ミックス</li>
             <li>FSRS による記憶定着スケジューリング</li>
             <li>音声読み上げ（Web Speech API）</li>
             <li>単語ごとの表示履歴の記録</li>
             <li>学習データの分析・ドリルダウン</li>
-            <li>AI（Gemini / OpenAI / Claude / OpenRouter）との連携（任意）: 複数キャラクターの掛け合い、アプリの辞書・学習データをツールとして使う解説、用途ごとのモデル割り当て</li>
+            <li>AI（Gemini / ChatGPT / Claude / OpenRouter）との連携（任意。応答はストリーミング表示）: 複数キャラクターの掛け合い、アプリの辞書・学習データをツールとして使う解説、用途ごとのモデル割り当て</li>
             <li>API キーは 1 つのパスフレーズで暗号化（AES-GCM）。対応端末では生体認証（WebAuthn パスキー）でロック解除</li>
             <li>外部 AI 連携: プロンプトを作成して外部 AI に貼り付け、生成された JSON を取り込み（API キー不要）</li>
           </ul>

@@ -16,6 +16,8 @@ export interface Settings {
   desiredRetention: number
   /** 「カードを追加」で追加を始める頻度順位 */
   studyStartRank: number
+  /** 出題形式 */
+  studyFormat: 'en2ja' | 'ja2en' | 'cloze' | 'choice' | 'mix'
 }
 
 export const defaultSettings: Settings = {
@@ -28,6 +30,7 @@ export const defaultSettings: Settings = {
   dailyNewLimit: 0,
   desiredRetention: 0.9,
   studyStartRank: 500,
+  studyFormat: 'en2ja',
 }
 
 interface SettingsStore extends Settings {

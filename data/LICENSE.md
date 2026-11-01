@@ -16,6 +16,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 | JMdict | Electronic Dictionary Research and Development Group — https://www.edrdg.org/jmdict/j_jmdict.html | CC BY-SA 4.0 | Wiktionary に日本語訳がない語の訳語の補完（逆引き） |
 | Tatoeba | Tatoeba contributors — https://tatoeba.org/ | CC BY 2.0 FR | 英日対訳の例文（各例文に Tatoeba の文 ID を保持） |
 | 語根・接辞辞書（`data/roots.tsv`, `data/affixes.tsv`） | このリポジトリのオリジナル | CC BY-SA 4.0 | 語根・接頭辞・接尾辞の意味と由来 |
+| 語源の成り立ち・印欧祖語辞書・手動修正（`data/morpheme_parts.tsv`, `data/pie_roots.tsv`, `data/overrides.tsv`） | このリポジトリのオリジナル | CC BY-SA 4.0 | 語源の語源分解、祖語ファミリー、訳語・分解の修正 |
 
 上記を機械的に加工（抽出・統合・語源の分解）したものであり、誤りが含まれる可能性があります。
 

@@ -85,7 +85,9 @@ function search(q: string, filter: SearchFilter = 'all', limit = 200): SearchHit
     const qq = query.replace(/^-|-$/g, '')
     for (const m of morphs) {
       let s = 0
-      if (m.label === qq || m.forms.includes(qq)) s = 90
+      const slug = m.type === 'pie' ? m.id.slice(4) : ''
+      if (m.label === qq || m.forms.includes(qq) || slug === qq) s = 90
+      else if (slug && slug.startsWith(qq) && qq.length >= 3) s = 44
       else if (m.forms.some((f) => f.startsWith(qq))) s = 45
       else if (m.meaning.ja.includes(query)) s = 48
       if (s) add({ kind: 'morpheme', key: m.id, score: s + Math.min(m.words.length, 50) / 100 })

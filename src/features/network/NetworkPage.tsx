@@ -20,6 +20,7 @@ const KIND_LABEL: Record<string, string> = {
   root: '語根',
   prefix: '接頭辞',
   suffix: '接尾辞',
+  pie: '印欧祖語',
 }
 
 function Legend() {
@@ -28,6 +29,7 @@ function Legend() {
     ['var(--node-phrase)', '熟語'],
     ['var(--node-root)', '語根'],
     ['var(--node-affix)', '接辞'],
+    ['var(--node-pie)', '祖語'],
   ]
   return (
     <div className="flex gap-3 text-[11px] text-muted">

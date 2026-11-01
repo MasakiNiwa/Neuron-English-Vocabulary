@@ -34,6 +34,13 @@ export function morphLabel(m: Morpheme) {
   return m.type === 'prefix' ? `${m.label}-` : m.type === 'suffix' ? `-${m.label}` : m.label
 }
 
+export const MORPH_TYPE_LABEL: Record<Morpheme['type'], string> = {
+  root: '語根',
+  prefix: '接頭辞',
+  suffix: '接尾辞',
+  pie: '印欧祖語',
+}
+
 /** 英文中の既知の単語を自動でリンク化する */
 export function LinkedText({ text, highlight }: { text: string; highlight?: Set<string> }) {
   const dict = useDictionary()

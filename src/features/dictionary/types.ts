@@ -57,9 +57,12 @@ export interface Entry {
   ngsl?: boolean
   z?: number
   freq?: number
+  /** 印欧祖語の語根ID */
+  pie?: string[]
 }
 
-export type MorphemeType = 'root' | 'prefix' | 'suffix'
+/** pie = 印欧祖語の語根（英語・ラテン語・ギリシャ語の語根のさらに古い祖先） */
+export type MorphemeType = 'root' | 'prefix' | 'suffix' | 'pie'
 
 export interface Morpheme {
   id: string
@@ -69,6 +72,15 @@ export interface Morpheme {
   meaning: { ja: string; ko?: string; zh?: string }
   origin: string
   words: string[]
+  /** この語源自体の成り立ち（語源の語源分解）: 構成する形態素ID */
+  parts?: string[]
+  partsNote?: { ja: string }
+  /** この語源を構成要素に含む語源 */
+  partOf?: string[]
+  /** 祖語ファミリー（印欧祖語の語根ID） */
+  family?: string[]
+  /** 印欧祖語の場合: そこから生まれた語根 */
+  members?: string[]
 }
 
 export interface DataMeta {

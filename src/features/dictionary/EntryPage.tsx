@@ -87,6 +87,11 @@ function PartsView({ entry }: { entry: Entry }) {
                 >
                   <span className="font-en text-lg font-semibold text-accent">{p.s}</span>
                   <span className="text-[11px] text-muted">{m.meaning.ja}</span>
+                  {m.parts && (
+                    <span className="mt-0.5 text-[10px] text-muted">
+                      = {m.parts.map((x) => dict.morphById.get(x)?.label ?? '').join(' + ')}
+                    </span>
+                  )}
                 </Link>
               ) : base && dict.byKey.has(base) ? (
                 <Link
@@ -115,11 +120,13 @@ function PartsView({ entry }: { entry: Entry }) {
 function SameRoot({ entry }: { entry: Entry }) {
   const dict = useDictionary()
   const { t } = useTranslation()
-  const ms = (entry.parts ?? [])
-    .map((p) => (p.m && !p.m.startsWith('w:') ? dict.morphById.get(p.m) : undefined))
-    .filter((m): m is Morpheme => !!m && m.words.length > 1)
-  // 語根を優先して表示（接尾辞などは語数が多くなりやすいので後ろへ）
-  ms.sort((a, b) => Number(a.type !== 'root') - Number(b.type !== 'root'))
+  const ms = [
+    ...(entry.parts ?? []).map((p) => (p.m && !p.m.startsWith('w:') ? dict.morphById.get(p.m) : undefined)),
+    ...(entry.pie ?? []).map((id) => dict.morphById.get(id)),
+  ].filter((m): m is Morpheme => !!m && m.words.length > 1)
+  // 語根 → 祖語 → 接辞の順（接尾辞などは語数が多くなりやすいので後ろへ）
+  const order = { root: 0, pie: 1, prefix: 2, suffix: 3 }
+  ms.sort((a, b) => order[a.type] - order[b.type])
   if (!ms.length) return null
   return (
     <Section title={t('words.sameRoot')}>

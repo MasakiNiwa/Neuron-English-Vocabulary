@@ -23,6 +23,7 @@
   --node-word: #3d6e8c;
   --node-phrase: #4f8a62;
   --node-affix: #a07a2c;
+  --node-pie: #9a5f5f;
   --edge: #d6d6cf;
   --edge-strong: #b9c7cf;
   color-scheme: light;
@@ -45,6 +46,7 @@
   --node-word: #7d9fb3;
   --node-phrase: #8bb196;
   --node-affix: #c4ab78;
+  --node-pie: #c29494;
   --edge: #2c3135;
   --edge-strong: #3a4a54;
   color-scheme: dark;

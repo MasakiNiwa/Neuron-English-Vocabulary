@@ -14,6 +14,7 @@ import { Segmented, selectClass } from '@/components/ui/Form'
 import { useSettings } from '@/stores/settings'
 import { formatInterval, removeFromStudy, retrievability } from './cards'
 import { ReviewSession } from './ReviewSession'
+import { FORMAT_OPTIONS, type StudyFormat } from './formats'
 const StudyReaction = lazy(() => import('@/features/ai/StudyReaction').then((m) => ({ default: m.StudyReaction })))
 import { buildPracticeQueue, buildQueue, getStudyStats, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
 
@@ -254,12 +255,26 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => 
   )
 }
 
+function FormatPicker() {
+  const format = useSettings((s) => s.studyFormat)
+  const set = useSettings((s) => s.set)
+  return (
+    <div className="flex flex-wrap items-center gap-2 text-sm">
+      <span className="text-muted">出題形式</span>
+      <div className="max-w-full overflow-x-auto">
+        <Segmented<StudyFormat> value={format} onChange={(v) => set('studyFormat', v)} options={FORMAT_OPTIONS} />
+      </div>
+    </div>
+  )
+}
+
 function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
   const { t } = useTranslation()
   const stats = useLiveQuery(getStudyStats, [])
   return (
     <div className="flex flex-col gap-4">
       <Steps />
+      <FormatPicker />
       {/* 復習待ちがあれば復習を先頭に、なければ「新しく学ぶ」を先頭に */}
       {!!stats?.due && <ReviewCard onStart={onStart} />}
       <div className="grid gap-4 md:grid-cols-2">
@@ -287,6 +302,7 @@ export function StudyPage() {
   const { t } = useTranslation()
   const [queue, setQueue] = useState<StudyCard[] | null>(null)
   const [mode, setMode] = useState('review')
+  const format = useSettings((s) => s.studyFormat)
   const [done, setDone] = useState<number | null>(null)
   const [startedAt, setStartedAt] = useState(0)
   return (
@@ -296,6 +312,7 @@ export function StudyPage() {
           <ReviewSession
             queue={queue}
             mode={mode}
+            format={format}
             onDone={(n) => {
               setQueue(null)
               setDone(n)

@@ -36,3 +36,12 @@ python3 scripts/data/04_build.py --work $WORK --raw $RAW --repo .
 - `meta.json` — 生成日時・件数
 
 スキーマの型定義は `src/features/dictionary/types.ts` を参照。
+
+## 手で編集するデータ（data/）
+
+| ファイル | 内容 |
+|---|---|
+| roots.tsv / affixes.tsv | 語根・接頭辞・接尾辞の辞書（綴り・語源判定キー・意味・由来） |
+| morpheme_parts.tsv | **語源の語源分解**: 語根自体が小さな語源からできている場合の成り立ち（例: `r:jud	r:jus+r:dict`）。追記するだけで分解が増える |
+| pie_roots.tsv | 印欧祖語の語根（Wiktionary の `{{root|en|ine-pro|...}}` と照合）と、そこから生まれた語根 |
+| overrides.tsv | 頻出語から順に直していく手動修正（訳語の置き換え、語源分解の誤判定の除外） |
