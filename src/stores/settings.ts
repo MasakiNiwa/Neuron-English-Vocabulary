@@ -13,6 +13,8 @@ export interface Settings {
   autoSpeak: boolean
   dailyNewLimit: number
   desiredRetention: number
+  /** 「カードを追加」で追加を始める頻度順位 */
+  studyStartRank: number
 }
 
 export const defaultSettings: Settings = {
@@ -24,6 +26,7 @@ export const defaultSettings: Settings = {
   autoSpeak: false,
   dailyNewLimit: 20,
   desiredRetention: 0.9,
+  studyStartRank: 500,
 }
 
 interface SettingsStore extends Settings {
