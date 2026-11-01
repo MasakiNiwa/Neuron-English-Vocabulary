@@ -237,8 +237,10 @@ for w in top:
         g = jm_gloss(L)
         if g:
             tr = [(POS_MAP.get(es[0]['pos'], es[0]['pos']), g)]
+    rescued = False
     if not tr and L in GLOSS_KEYS:
         tr = [(POS_MAP.get(es[0]['pos'], es[0]['pos']), ['（手動の訳で置き換え）'])]  # 手動で訳を書いた語は採用する
+        rescued = True
     if not tr:
         skipped_no_ja += 1
         skipped_words.append(L)
@@ -246,8 +248,8 @@ for w in top:
     if over and L not in KEEP:
         continue
     lemmas[L] = {'head': head, 'entries': es, 'ja': tr}
-    if not over:
-        n_main += 1
+    if not over and not rescued:
+        n_main += 1  # 訳がなく手動で救った語は上限に数えない（他の語を押し出さないように）
 print('lemmas', len(lemmas), 'skipped(no ja)', skipped_no_ja)
 print('words skipped (no translation):', ' / '.join(skipped_words[:40]), '…')
 # 訳語がなくて採用できなかった語の一覧（手動で訳を書けば採用される）
