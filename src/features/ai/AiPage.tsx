@@ -1,25 +1,23 @@
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Loader2, Mic, Send, Settings, Square, Trash2, Volume2, Wrench, X } from 'lucide-react'
+import { History, Loader2, MessageSquarePlus, Mic, Send, Settings, Square, Trash2, Volume2, Wrench } from 'lucide-react'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Accordion, AccordionSection } from '@/components/ui/Accordion'
 import { Card } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { PageSpinner } from '@/components/ui/Spinner'
-import { db, type ChatRecord } from '@/lib/db'
+import { db, type ChatRecord, type ChatThread } from '@/lib/db'
 import { getSpeechRecognition } from '@/lib/speech'
 import { headword } from '@/features/dictionary/data'
 import { LinkedText } from '@/features/dictionary/components/links'
 import { useAiConfig } from './config'
-import { ExternalAi } from './ExternalAi'
-import { PERSONAS, personaById, splitBySpeaker } from './personas'
+import { personaById, splitBySpeaker, usePersonas } from './personas'
+import { createThread, deleteAllThreads, deleteThread, MAX_THREADS, touchThread, useChatUi } from './threads'
 import type { AiSearch } from './search'
 import { AiNotReadyError, runTask } from './service'
 import { UnlockPanel } from './UnlockPanel'
 import { useVault } from './useVault'
 
-const THREAD = 'main'
 
 function speakJa(text: string) {
   if (!('speechSynthesis' in window)) return
@@ -72,28 +70,90 @@ function Bubble({ m, live }: { m: ChatRecord; live?: boolean }) {
   )
 }
 
+function HistoryPanel({ current, onPick, onClose }: { current: string | null; onPick: (id: string) => void; onClose: () => void }) {
+  const threads = useLiveQuery(() => db.threads.orderBy('updatedAt').reverse().toArray(), [])
+  return (
+    <Card className="p-0">
+      <div className="flex items-center justify-between border-b border-border px-3 py-2">
+        <span className="text-sm font-semibold">
+          チャット履歴 <span className="text-xs font-normal text-muted">{threads?.length ?? 0} / {MAX_THREADS} 件</span>
+        </span>
+        <div className="flex items-center gap-2">
+          {!!threads?.length && (
+            <button
+              type="button"
+              className="text-xs text-muted hover:text-danger"
+              onClick={async () => {
+                if (confirm('すべてのチャット履歴を削除しますか？')) {
+                  await deleteAllThreads()
+                  onPick('')
+                }
+              }}
+            >
+              すべて削除
+            </button>
+          )}
+          <button type="button" className="text-xs text-muted hover:text-fg" onClick={onClose}>
+            閉じる
+          </button>
+        </div>
+      </div>
+      {threads?.length === 0 && <p className="p-3 text-sm text-muted">まだ履歴はありません。</p>}
+      <ul className="max-h-72 divide-y divide-border overflow-auto">
+        {threads?.map((t) => (
+          <li key={t.id} className={'flex items-center gap-2 px-3 py-2 ' + (t.id === current ? 'bg-accent-soft/60' : '')}>
+            <button type="button" className="min-w-0 flex-1 text-left" onClick={() => onPick(t.id)}>
+              <div className="truncate text-sm">{t.title}</div>
+              <div className="text-[11px] text-muted">
+                {new Date(t.updatedAt).toLocaleString()}
+                {t.about && ` ・ ${headword(t.about)}`}
+              </div>
+            </button>
+            <button
+              type="button"
+              aria-label="削除"
+              className="shrink-0 text-muted hover:text-danger"
+              onClick={async () => {
+                await deleteThread(t.id)
+                if (t.id === current) onPick('')
+              }}
+            >
+              <Trash2 className="size-4" />
+            </button>
+          </li>
+        ))}
+      </ul>
+    </Card>
+  )
+}
+
 function ChatView() {
   const search = useSearch({ from: '/ai' }) as AiSearch
   const navigate = useNavigate()
   const { keys, cast, setCast } = useAiConfig()
+  const personas = usePersonas()
   const vault = useVault()
-  const messages = useLiveQuery(() => db.chats.where('thread').equals(THREAD).sortBy('createdAt'), [])
+  const current = useChatUi((s) => s.current)
+  const setCurrent = useChatUi((s) => s.setCurrent)
+  const thread = useLiveQuery(async () => (current ? ((await db.threads.get(current)) ?? null) : null), [current])
+  const messages = useLiveQuery(async () => (current ? db.chats.where('thread').equals(current).sortBy('createdAt') : []), [current])
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
   const [tools, setTools] = useState<string[]>([])
   const [streaming, setStreaming] = useState('')
+  const [showHistory, setShowHistory] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
   const [error, setError] = useState('')
   const [listening, setListening] = useState(false)
-  const about = search.about
   const bottom = useRef<HTMLDivElement>(null)
-  const sentQ = useRef<string | null>(null)
+  const handledParams = useRef<string | null>(null)
 
   useEffect(() => {
     void bottom.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages?.length, busy])
 
-  const send = async (text: string) => {
+  /** メッセージを送信（threadOverride: 新しく作ったスレッドに送る場合） */
+  const send = async (text: string, threadOverride?: ChatThread) => {
     const content = text.trim()
     if (!content || busy) return
     setError('')
@@ -103,29 +163,38 @@ function ChatView() {
     setStreaming('')
     const ac = new AbortController()
     abortRef.current = ac
-    const now = Date.now()
-    await db.chats.add({ thread: THREAD, role: 'user', content, createdAt: now })
-    const history = [...(messages ?? []), { role: 'user' as const, content }].slice(-20).map((m) => ({ role: m.role, content: m.content }))
+    // スレッドがなければこのメッセージで新しく作る
+    let t = threadOverride ?? thread ?? null
+    if (!t) {
+      t = await createThread(content)
+      setCurrent(t.id)
+    }
+    const prior = threadOverride ? [] : (messages ?? [])
+    await db.chats.add({ thread: t.id, role: 'user', content, createdAt: Date.now() })
+    await touchThread(t.id)
+    const history = [...prior, { role: 'user' as const, content }].slice(-20).map((m) => ({ role: m.role, content: m.content }))
     const used: string[] = []
+    const threadId = t.id
     try {
       const res = await runTask({
         task: 'chat',
         messages: history,
-        about,
+        about: t.about,
         cast,
         onToolCall: (n) => {
           used.push(n)
           setTools([...used])
         },
-        onText: (d) => setStreaming((t) => t + d),
+        onText: (d) => setStreaming((x) => x + d),
         signal: ac.signal,
       })
-      await db.chats.add({ thread: THREAD, role: 'assistant', content: res.text || '（応答が空でした）', createdAt: Date.now(), tools: used, model: res.model })
+      await db.chats.add({ thread: threadId, role: 'assistant', content: res.text || '（応答が空でした）', createdAt: Date.now(), tools: used, model: res.model })
+      await touchThread(threadId)
     } catch (e) {
       if (ac.signal.aborted) {
         // 停止した場合は、そこまでの応答を保存する
         setStreaming((partial) => {
-          if (partial) void db.chats.add({ thread: THREAD, role: 'assistant', content: partial + '\n（停止しました）', createdAt: Date.now(), tools: used })
+          if (partial) void db.chats.add({ thread: threadId, role: 'assistant', content: partial + '\n（停止しました）', createdAt: Date.now(), tools: used })
           return ''
         })
         return
@@ -138,14 +207,19 @@ function ChatView() {
     }
   }
 
-  // 単語ページなどから質問付きで開かれたら自動送信
+  // 単語ページなど、チャットページ以外からの依頼は「新しいスレッド」で始める（古い会話の話題が混ざらないように）
   useEffect(() => {
-    if (search.q && messages && vault.unlocked && sentQ.current !== search.q) {
-      sentQ.current = search.q
-      void send(search.q)
-      void navigate({ to: '/ai', search: { about }, replace: true })
-    }
-  }, [search.q, messages, vault.unlocked])
+    const key = `${search.about ?? ''}|${search.q ?? ''}`
+    if ((!search.about && !search.q) || handledParams.current === key || !vault.unlocked) return
+    handledParams.current = key
+    void (async () => {
+      const title = search.about ? `${headword(search.about)}について` : (search.q ?? '新しいチャット')
+      const t = await createThread(title, search.about)
+      setCurrent(t.id)
+      void navigate({ to: '/ai', search: {}, replace: true })
+      if (search.q) await send(search.q, t)
+    })()
+  }, [search.about, search.q, vault.unlocked])
 
   const SR = getSpeechRecognition()
   const listen = () => {
@@ -165,11 +239,10 @@ function ChatView() {
   if (!keys.length)
     return (
       <Card className="flex flex-col items-start gap-2">
-        <p className="text-sm">AI チャットを使うには、設定で API キー（Gemini / OpenAI / Claude / OpenRouter）を登録してください。</p>
+        <p className="text-sm">AI チャットを使うには、設定で API キー（Gemini / ChatGPT / Claude / OpenRouter）を登録してください。</p>
         <Link to="/settings" className="inline-flex items-center gap-1.5 text-sm text-accent">
           <Settings className="size-4" /> 設定を開く
         </Link>
-        <p className="text-xs text-muted">API キーがなくても、下の「外部 AI 連携」で解説データを作成・取り込みできます。</p>
       </Card>
     )
   if (!vault.unlocked)
@@ -183,7 +256,7 @@ function ChatView() {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center gap-1.5">
-        {PERSONAS.map((p) => {
+        {personas.map((p) => {
           const on = cast.includes(p.id)
           return (
             <button
@@ -196,50 +269,66 @@ function ChatView() {
             </button>
           )
         })}
-        <div className="flex-1" />
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="min-w-0 flex-1 truncate text-sm">
+          {thread ? (
+            <>
+              <span className="font-medium">{thread.title}</span>
+              {thread.about && <span className="ml-2 rounded-full bg-surface-2 px-2 py-0.5 text-xs">話題: <span className="font-en">{headword(thread.about)}</span></span>}
+            </>
+          ) : (
+            <span className="text-muted">新しいチャット</span>
+          )}
+        </div>
+        <button type="button" onClick={() => setShowHistory((v) => !v)} className="inline-flex items-center gap-1 rounded-lg border border-border px-2 py-1 text-xs text-muted hover:text-fg">
+          <History className="size-3.5" /> 履歴
+        </button>
         <button
           type="button"
-          className="inline-flex items-center gap-1 text-xs text-muted hover:text-danger"
+          disabled={busy}
           onClick={() => {
-            if (confirm('会話をクリアしますか？')) void db.chats.where('thread').equals(THREAD).delete()
+            setCurrent(null)
+            setShowHistory(false)
           }}
+          className="inline-flex items-center gap-1 rounded-lg border border-border px-2 py-1 text-xs text-muted hover:text-fg"
         >
-          <Trash2 className="size-3.5" /> クリア
+          <MessageSquarePlus className="size-3.5" /> 新しいチャット
         </button>
       </div>
-      {about && (
-        <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-surface-2 px-3 py-1 text-xs">
-          話題: <span className="font-en font-medium">{headword(about)}</span>
-          <button type="button" aria-label="話題を外す" onClick={() => void navigate({ to: '/ai', search: {} })}>
-            <X className="size-3" />
-          </button>
-        </div>
+      {showHistory && (
+        <HistoryPanel
+          current={current}
+          onPick={(id) => {
+            setCurrent(id || null)
+            setShowHistory(false)
+          }}
+          onClose={() => setShowHistory(false)}
+        />
       )}
       <div className="flex min-h-48 flex-col gap-4">
-        {messages?.length === 0 && (
+        {messages?.length === 0 && !busy && (
           <div className="flex flex-col gap-2 py-6 text-center text-sm text-muted">
             <p>語源の質問、覚え方の相談、学習の作戦会議などをどうぞ。</p>
             <div className="flex flex-wrap justify-center gap-2">
-              {['spect を含む単語を語源から解説して', '今日の学習状況を見てアドバイスして', 'give up と abandon の違いは？'].map((s) => (
-                <button key={s} type="button" onClick={() => void send(s)} className="rounded-full border border-border px-3 py-1 text-xs hover:border-accent hover:text-accent">
-                  {s}
+              {['spect を含む単語を語源から解説して', '今日の学習状況を見てアドバイスして', 'give up と abandon の違いは？'].map((x) => (
+                <button key={x} type="button" onClick={() => void send(x)} className="rounded-full border border-border px-3 py-1 text-xs hover:border-accent hover:text-accent">
+                  {x}
                 </button>
               ))}
             </div>
           </div>
         )}
         {messages?.map((m) => <Bubble key={m.id} m={m} />)}
-        {busy && streaming && (
-          <Bubble m={{ thread: THREAD, role: 'assistant', content: streaming, createdAt: 0, tools }} live />
-        )}
+        {busy && streaming && <Bubble m={{ thread: current ?? '', role: 'assistant', content: streaming, createdAt: 0, tools }} live />}
         {busy && (
           <div className="flex items-center gap-2 text-xs text-muted">
             <Loader2 className="size-4 animate-spin" />
             {cast.map((id) => personaById(id)?.emoji).join('')} {streaming ? '入力中…' : '考え中…'}
             {!streaming &&
-              tools.map((t, i) => (
+              tools.map((x, i) => (
                 <span key={i} className="inline-flex items-center gap-1 rounded bg-surface-2 px-1">
-                  <Wrench className="size-3" /> {t}
+                  <Wrench className="size-3" /> {x}
                 </span>
               ))}
             <button type="button" onClick={() => abortRef.current?.abort()} className="ml-auto inline-flex items-center gap-1 rounded-md border border-border px-2 py-0.5 hover:text-danger">
@@ -285,19 +374,11 @@ function ChatView() {
 
 export function AiPage() {
   const { t } = useTranslation()
-  const search = useSearch({ from: '/ai' }) as AiSearch
   return (
     <Page title={t('ai.title')}>
       <Suspense fallback={<PageSpinner />}>
         <ChatView />
       </Suspense>
-      <div className="mt-6">
-        <Accordion>
-          <AccordionSection value="external" title="外部 AI 連携（プロンプト作成・データ取り込み）">
-            <ExternalAi defaultWords={search.about ? headword(search.about) : ''} />
-          </AccordionSection>
-        </Accordion>
-      </div>
     </Page>
   )
 }

@@ -1,3 +1,5 @@
+import { useAiConfig } from './config'
+
 /** AI のキャラクター。複数を同時に登場させて掛け合いにできる */
 export interface Persona {
   id: string
@@ -38,7 +40,13 @@ export const PERSONAS: Persona[] = [
   },
 ]
 
-export const personaById = (id: string) => PERSONAS.find((p) => p.id === id)
+/** プリセット + カスタムキャラクター */
+export function getPersonas(): Persona[] {
+  const c = useAiConfig.getState().custom
+  return c && c.name.trim() ? [...PERSONAS, { id: 'custom', ...c, emoji: c.emoji || '✨' }] : PERSONAS
+}
+
+export const personaById = (id: string) => getPersonas().find((p) => p.id === id)
 
 export function castPrompt(ids: string[]) {
   const cast = ids.map(personaById).filter((p): p is Persona => !!p)
@@ -57,8 +65,14 @@ export function splitBySpeaker(text: string): { persona?: Persona; text: string 
   const out: { persona?: Persona; text: string }[] = []
   for (const chunk of text.split(/\n?(?=【[^】]{1,20}】)/)) {
     const m = chunk.match(/^【([^】]{1,20})】\s*([\s\S]*)$/)
-    if (m) out.push({ persona: PERSONAS.find((p) => p.name === m[1]), text: m[2].trim() })
+    if (m) out.push({ persona: getPersonas().find((p) => p.name === m[1]), text: m[2].trim() })
     else if (chunk.trim()) out.push({ text: chunk.trim() })
   }
   return out
+}
+
+/** React 用: カスタムキャラクターの変更に追従するキャラクター一覧 */
+export function usePersonas(): Persona[] {
+  const custom = useAiConfig((s) => s.custom)
+  return custom && custom.name.trim() ? [...PERSONAS, { id: 'custom', ...custom, emoji: custom.emoji || '✨' }] : PERSONAS
 }

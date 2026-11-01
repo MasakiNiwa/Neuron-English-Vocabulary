@@ -53,8 +53,18 @@ export interface Route {
   model: string
 }
 
+/** ユーザーが作るカスタムキャラクター（1人） */
+export interface CustomPersona {
+  name: string
+  emoji: string
+  role: string
+  style: string
+}
+
 interface AiConfigState {
   keys: ApiKeyEntry[]
+  custom: CustomPersona | null
+  setCustom: (p: CustomPersona | null) => void
   routes: Partial<Record<TaskId, Route>>
   cast: string[]
   reactionAfterStudy: boolean
@@ -70,6 +80,9 @@ export const useAiConfig = create<AiConfigState>()(
   persist(
     (set) => ({
       keys: [],
+      custom: null,
+      setCustom: (custom) =>
+        set((s) => ({ custom, cast: custom ? s.cast : s.cast.filter((c) => c !== 'custom') })),
       routes: {},
       cast: DEFAULT_CAST,
       reactionAfterStudy: true,

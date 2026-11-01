@@ -10,6 +10,7 @@ import { Card } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { PageSpinner } from '@/components/ui/Spinner'
 import { db } from '@/lib/db'
+import { usePersistentState } from '@/lib/persist'
 import { useSettings } from '@/stores/settings'
 import { EntryRow } from '@/features/dictionary/components/EntryRow'
 import { useDictionary } from '@/features/dictionary/hooks'
@@ -90,7 +91,7 @@ function DrillPanel({ drill, onClose }: { drill: Drill; onClose: () => void }) {
 
 function AnalyticsInner() {
   const data = useAnalytics()
-  const [drill, setDrill] = useState<Drill | null>(null)
+  const [drill, setDrill] = usePersistentState<Drill | null>('analytics:drill', null)
   useEffect(() => {
     if (drill) document.getElementById('drill')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
   }, [drill])
@@ -134,7 +135,7 @@ function AnalyticsInner() {
 
       <div id="drill">{drill && <DrillPanel key={drill.title} drill={drill} onClose={() => setDrill(null)} />}</div>
 
-      <Accordion defaultOpen={['activity']}>
+      <Accordion defaultOpen={['activity']} persistKey="analytics">
         {analyticsModules.map((m) => (
           <AccordionSection key={m.id} value={m.id} title={m.title}>
             <p className="mb-3 text-xs text-muted">{m.description}</p>

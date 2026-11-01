@@ -76,7 +76,7 @@ export function SettingsPage() {
 
   return (
     <Page title={t('settings.title')}>
-      <Accordion>
+      <Accordion persistKey="settings">
         <AccordionSection value="appearance" title={t('settings.appearance')} icon={<Palette className="size-5" />}>
           <Row label={t('settings.theme')}>
             <Segmented<ThemeMode>

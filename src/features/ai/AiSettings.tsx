@@ -3,8 +3,9 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { selectClass } from '@/components/ui/Form'
 import { PROVIDERS, TASKS, useAiConfig, type ApiKeyEntry, type ProviderId } from './config'
-import { PERSONAS } from './personas'
+import { usePersonas } from './personas'
 import { ModelPicker } from './ModelPicker'
+import { ExternalAi } from './ExternalAi'
 import { inputClass, UnlockPanel } from './UnlockPanel'
 import { useVault } from './useVault'
 import { changePassphrase, deleteSecret, putSecret, registerPasskey, removePasskeys, resetVault, webauthnSupported } from './vault'
@@ -149,11 +150,65 @@ function Routing() {
   )
 }
 
+function CustomPersonaEditor() {
+  const custom = useAiConfig((s) => s.custom)
+  const setCustom = useAiConfig((s) => s.setCustom)
+  const [draft, setDraft] = useState(custom ?? { name: '', emoji: '✨', role: '', style: '' })
+  const [saved, setSaved] = useState(false)
+  const field = (k: keyof typeof draft, label: string, placeholder: string, multiline = false) => (
+    <label className="flex flex-col gap-1 text-xs">
+      <span className="text-muted">{label}</span>
+      {multiline ? (
+        <textarea className={inputClass + ' h-16 py-2'} value={draft[k]} placeholder={placeholder} onChange={(e) => setDraft({ ...draft, [k]: e.target.value })} />
+      ) : (
+        <input className={inputClass} value={draft[k]} placeholder={placeholder} onChange={(e) => setDraft({ ...draft, [k]: e.target.value })} />
+      )}
+    </label>
+  )
+  return (
+    <div className="mt-3 flex flex-col gap-2 rounded-xl bg-surface-2 p-3">
+      <div className="text-sm font-medium">カスタムキャラクター（1人）</div>
+      <div className="grid grid-cols-[4rem_1fr] gap-2">
+        {field('emoji', 'アイコン', '✨')}
+        {field('name', '名前', '例: ジョン先生')}
+      </div>
+      {field('role', '役割', '例: ロンドン出身の陽気な英語ネイティブ')}
+      {field('style', '話し方・性格', '例: 英語のフレーズを交えて楽しく話す。発音やネイティブの感覚を教えてくれる。', true)}
+      <div className="flex gap-2">
+        <Button
+          size="sm"
+          variant="primary"
+          disabled={!draft.name.trim()}
+          onClick={() => {
+            setCustom({ ...draft, name: draft.name.trim().slice(0, 20) })
+            setSaved(true)
+            setTimeout(() => setSaved(false), 1500)
+          }}
+        >
+          {saved ? '保存しました' : '保存'}
+        </Button>
+        {custom && (
+          <Button
+            size="sm"
+            onClick={() => {
+              setCustom(null)
+              setDraft({ name: '', emoji: '✨', role: '', style: '' })
+            }}
+          >
+            削除
+          </Button>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function Cast() {
   const { cast, setCast } = useAiConfig()
+  const personas = usePersonas()
   return (
     <div className="flex flex-col gap-1.5">
-      {PERSONAS.map((p) => {
+      {personas.map((p) => {
         const on = cast.includes(p.id)
         return (
           <label key={p.id} className="flex cursor-pointer items-start gap-2 rounded-lg p-1.5 hover:bg-surface-2">
@@ -172,6 +227,7 @@ function Cast() {
         )
       })}
       <p className="text-xs text-muted">最大 3 人まで。複数選ぶとキャラクター同士の掛け合いになります。</p>
+      <CustomPersonaEditor />
     </div>
   )
 }
@@ -266,6 +322,14 @@ export function AiSettings() {
       </Sub>
       <Sub title="キャラクター">
         <Cast />
+      </Sub>
+      <Sub title="外部 AI 連携（任意）">
+        <details>
+          <summary className="cursor-pointer text-sm text-muted">API キーなしで、外部の AI サービスに解説データを作ってもらう</summary>
+          <div className="mt-3">
+            <ExternalAi />
+          </div>
+        </details>
       </Sub>
       <Sub title="その他">
         <label className="flex items-center gap-2 text-sm">

@@ -13,6 +13,7 @@ import { useDictionary } from '@/features/dictionary/hooks'
 import { searchDictionary, type SearchFilter, type SearchHit } from '@/features/dictionary/search'
 import type { Morpheme } from '@/features/dictionary/types'
 import type { WordsSearch } from './search'
+import { usePersistentState } from '@/lib/persist'
 
 function MorphemeRow({ m }: { m: Morpheme }) {
   return (
@@ -27,10 +28,7 @@ function MorphemeRow({ m }: { m: Morpheme }) {
 function Browse({ filter }: { filter: SearchFilter }) {
   const dict = useDictionary()
   const { t } = useTranslation()
-  const [limit, setLimit] = useState(100)
-  useEffect(() => {
-    setLimit(100)
-  }, [filter])
+  const [limit, setLimit] = usePersistentState('words:limit:' + filter, 100)
   if (filter === 'm') {
     const groups = (['root', 'prefix', 'suffix', 'pie', 'particle'] as const).map((type) => ({
       type,

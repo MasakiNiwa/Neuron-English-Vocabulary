@@ -121,7 +121,7 @@ export function HelpPage() {
         <InfoRow label={t('help.commit')} value={appInfo.commit} />
       </Card>
 
-      <Accordion>
+      <Accordion persistKey="help">
         <AccordionSection value="about" title={t('help.about')} icon={<Info className="size-5" />}>
           <div className="space-y-2 text-sm leading-relaxed">
             <p>
@@ -153,7 +153,9 @@ export function HelpPage() {
             <li>学習データの分析・ドリルダウン</li>
             <li>AI（Gemini / ChatGPT / Claude / OpenRouter）との連携（任意。応答はストリーミング表示）: 複数キャラクターの掛け合い、アプリの辞書・学習データをツールとして使う解説、用途ごとのモデル割り当て</li>
             <li>API キーは 1 つのパスフレーズで暗号化（AES-GCM）。対応端末では生体認証（WebAuthn パスキー）でロック解除</li>
-            <li>外部 AI 連携: プロンプトを作成して外部 AI に貼り付け、生成された JSON を取り込み（API キー不要）</li>
+            <li>AI チャットの履歴（最大 50 件）。単語ページから AI に聞くと、その単語を話題にした新しいチャットが始まる</li>
+            <li>カスタムキャラクター（1 人）を作成して会話に参加させられる</li>
+            <li>外部 AI 連携（設定 → AI 連携 → 外部 AI 連携）: プロンプトを作成して外部 AI に貼り付け、生成された JSON を取り込み（API キー不要）</li>
           </ul>
         </AccordionSection>
         <AccordionSection value="shortcuts" title={t('help.shortcuts')} icon={<Keyboard className="size-5" />}>

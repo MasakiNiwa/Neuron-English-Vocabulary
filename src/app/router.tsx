@@ -68,7 +68,6 @@ export const router = createRouter({
   routeTree,
   history: createHashHistory(),
   defaultViewTransition: true,
-  scrollRestoration: true,
   defaultPreload: 'intent',
 })
 

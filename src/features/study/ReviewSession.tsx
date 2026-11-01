@@ -119,21 +119,28 @@ export function ReviewSession({
   onDone,
   mode = 'review',
   format = 'en2ja',
+  initialIdx = 0,
+  initialCount = 0,
+  onProgress,
 }: {
   queue: StudyCard[]
   onDone: (n: number) => void
   mode?: string
   format?: StudyFormat
+  initialIdx?: number
+  initialCount?: number
+  /** 進み具合（ページ移動後の再開用） */
+  onProgress?: (idx: number, count: number) => void
 }) {
   const dict = useDictionary()
   const autoSpeak = useSettings((s) => s.autoSpeak)
-  const [idx, setIdx] = useState(0)
+  const [idx, setIdx] = useState(initialIdx)
   const [shown, setShown] = useState(false)
   const [card, setCard] = useState<StudyCard | null>(queue[0] ?? null)
   const startRef = useRef(Date.now())
   const backRef = useRef<HTMLDivElement>(null)
   const cardRef = useRef<HTMLDivElement>(null)
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(initialCount)
   const [suggested, setSuggested] = useState<Grade | null>(null)
 
   // 学習中は画面スリープを防止（Screen Wake Lock API）
@@ -182,6 +189,7 @@ export function ReviewSession({
       navigator.vibrate?.(g === Rating.Again ? [20, 40, 20] : 10)
       await review(card.entryId, g, { durationMs: Date.now() - startRef.current, mode: `${mode}:${format}` })
       setCount((n) => n + 1)
+      onProgress?.(Math.min(idx + 1, queue.length - 1), count + 1)
       // 「もう一度」は数枚後に再出題
       if (g === Rating.Again) queue.splice(Math.min(queue.length, idx + 4), 0, card)
       if (idx + 1 >= queue.length) onDone(count + 1)

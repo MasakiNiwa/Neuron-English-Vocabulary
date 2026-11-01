@@ -1,18 +1,19 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Suspense, useState } from 'react'
+import { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { PageSpinner } from '@/components/ui/Spinner'
 import { clearHistory, db } from '@/lib/db'
+import { usePersistentState } from '@/lib/persist'
 import { EntryLink } from '@/features/dictionary/components/links'
 import { useDictionary } from '@/features/dictionary/hooks'
 
 function HistoryList() {
   const { t } = useTranslation()
   const dict = useDictionary()
-  const [limit, setLimit] = useState(200)
+  const [limit, setLimit] = usePersistentState('history:limit', 200)
   const views = useLiveQuery(() => db.views.orderBy('viewedAt').reverse().limit(limit).toArray(), [limit])
   if (!views) return <PageSpinner />
   if (!views.length) return <p className="py-10 text-center text-muted">{t('home.noHistory')}</p>
