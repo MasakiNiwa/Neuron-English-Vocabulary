@@ -61,6 +61,7 @@ async function wordSummary(key: string) {
       const m = p.m && !p.m.startsWith('w:') ? dict.morphById.get(p.m) : null
       return { spelling: p.s, morpheme: m ? { id: m.id, type: m.type, meaning: m.meaning.ja, origin: m.origin } : p.m?.startsWith('w:') ? { baseWord: p.m.slice(2) } : null }
     }),
+    explanation: e.note?.ja,
     etymology: e.ety,
     examples: e.ex?.slice(0, 3),
     synonyms: e.syn?.map(headword),

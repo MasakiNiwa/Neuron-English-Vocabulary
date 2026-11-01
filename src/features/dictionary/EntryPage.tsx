@@ -277,6 +277,14 @@ function EntryView({ entryKey }: { entryKey: string }) {
         </Section>
       )}
 
+      {entry.note && (
+        <Section title="解説">
+          <Card className="p-3 text-sm leading-relaxed">
+            <LinkedText text={entry.note.ja} />
+          </Card>
+        </Section>
+      )}
+
       {entry.comp && entry.comp.length > 0 && (
         <Section title={t('words.parts')}>
           <ChipList keys={entry.comp} />
