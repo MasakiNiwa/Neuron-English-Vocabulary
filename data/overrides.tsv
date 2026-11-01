@@ -1284,3 +1284,93 @@ gloss	matrix	noun:母体、基盤、行列
 #
 # ---- 第10弾: 語源分解の誤判定（noparts でまとめて除外）
 noparts	allege,tiger,integrate,motel,remembrance,colon,mural,gravy,moderation,sandal,mara,mania,parry,prism,riddle,corona,cactus,germ,ditto,colossal,pigment,scorpion,bonnet,maroon,heresy,parlor,vandalism,potion,narration,jug,volt,feral,overt,masturbation,masturbate,modulation,solemn,existential,ordeal,incarceration,illustrator,registrar,deterrent,occult,lux,prostate,amplifier
+#
+# ---- 第11弾: 語源分解の誤判定
+noparts	track,van,core,affair,academic,academy,pleasure,concert,latin,islamic,ardent,frail,medley,solace,latent,pelvis,potty,cypress,remuneration,volley,domino,intestine,tint,gnome,oust,stagnation,parmesan,grate,curt,provost,chastity,ferocious,vigil
+#
+# ---- 第11弾: 3000〜3420 位の訳語
+drop	fa
+drop	si
+drop	turner
+drop	earl
+drop	chuck
+drop	inter
+drop	thou
+drop	mason
+drop	brad
+drop	um
+drop	Xbox
+gloss	creator	noun:創造者、作者、（the Creator）造物主
+gloss	holder	noun:所有者、保持者、入れ物
+gloss	meter	noun:メートル、計器、メーター
+gloss	skip	verb:飛ばす、抜かす、スキップする|noun:スキップ
+gloss	snap	verb:ぽきっと折る、パチンと鳴らす、写真を撮る|noun:ぱちっという音
+gloss	bug	noun:虫、（プログラムの）不具合、病原菌|verb:悩ませる
+gloss	convict	verb:有罪と宣告する|noun:囚人
+gloss	dose	noun:（薬の）1回分の量、服用量
+gloss	patch	noun:継ぎ当て、小区画、修正プログラム|verb:継ぎを当てる
+gloss	precisely	adv:正確に、まさに、ちょうど
+gloss	transit	noun:輸送、通過、乗り継ぎ
+gloss	beside	prep:〜のそばに、〜と比べると
+gloss	bulk	noun:大部分、大量、かさ
+gloss	commentary	noun:解説、論評、実況
+gloss	corn	noun:トウモロコシ、穀物、（足の）うおのめ
+gloss	dealer	noun:販売業者、ディーラー、（トランプの）配り手
+gloss	insight	noun:洞察（力）、見識
+gloss	preserve	verb:保存する、保護する|noun:ジャム、保護区
+gloss	ram	noun:雄羊|verb:激突する
+gloss	respective	adj:それぞれの
+gloss	sustain	verb:維持する、支える、（損害を）受ける
+gloss	advisory	adj:助言の、顧問の|noun:注意報
+gloss	assignment	noun:課題、宿題、任務、割り当て
+gloss	chill	noun:冷え、寒気|verb:冷やす、くつろぐ
+gloss	compound	noun:化合物、複合物、（囲われた）敷地|adj:複合の|verb:悪化させる
+gloss	devote	verb:捧げる、充てる
+gloss	lap	noun:ひざ（座ったときの太ももの上）、（競技の）1周
+gloss	oak	noun:オーク、カシ・ナラの木
+gloss	proceed	verb:進む、続ける、取りかかる
+gloss	pupil	noun:生徒、児童、瞳孔
+gloss	spray	noun:スプレー、しぶき|verb:吹きかける
+gloss	suite	noun:（ホテルの）スイートルーム、一式、組曲
+gloss	tropical	adj:熱帯の、熱帯性の
+gloss	verse	noun:詩、韻文、（歌の）節
+gloss	victor	noun:勝利者
+gloss	contrary	adj:反対の、逆の|noun:正反対（on the contrary 逆に）
+gloss	couch	noun:ソファー、長いす
+gloss	crush	verb:押しつぶす、砕く|noun:片思い（の相手）、殺到
+gloss	dam	noun:ダム|verb:せき止める
+gloss	lease	noun:賃貸借契約|verb:賃貸しする、賃借りする
+gloss	notion	noun:考え、概念、観念
+gloss	partial	adj:部分的な、不公平な、大好きな（be partial to）
+gloss	resolve	verb:解決する、決心する|noun:決意
+gloss	underlie	verb:〜の根底にある
+gloss	ash	noun:灰、トネリコ
+gloss	determination	noun:決意、決心、決定
+gloss	exhibit	verb:展示する、示す|noun:展示品
+gloss	infinite	adj:無限の、果てしない
+gloss	remark	noun:発言、意見|verb:述べる
+gloss	shade	noun:日陰、色合い、（意味の）ニュアンス|verb:陰にする
+gloss	shy	adj:恥ずかしがりの、内気な
+gloss	tier	noun:段、層、階層
+gloss	vocal	adj:声の、はっきり意見を言う|noun:ボーカル
+gloss	yield	verb:生み出す、（利益を）もたらす、屈する|noun:収穫量、利回り
+gloss	burst	verb:破裂する、突然〜しだす|noun:破裂
+gloss	elderly	adj:年配の、高齢の
+gloss	par	noun:同等、標準、（ゴルフの）パー
+gloss	stake	noun:くい、出資金、利害関係|verb:賭ける
+gloss	strain	noun:緊張、負担、（筋肉の）損傷|verb:痛める、こす
+gloss	swift	adj:速い、迅速な|noun:アマツバメ
+gloss	abstract	adj:抽象的な|noun:要約、抽象画
+gloss	harsh	adj:厳しい、過酷な、粗い
+gloss	horn	noun:角、警笛、ホルン
+gloss	justify	verb:正当化する、正しいと示す
+gloss	lean	verb:傾く、寄りかかる|adj:やせた、脂肪の少ない
+gloss	organ	noun:器官、臓器、オルガン、機関
+gloss	peer	noun:同僚、仲間、同等の人|verb:じっと見る
+gloss	pile	noun:積み重ね、山|verb:積み重ねる
+gloss	breach	noun:違反、不履行、裂け目|verb:破る
+gloss	correspond	verb:一致する、相当する、文通する
+gloss	keen	adj:熱心な、鋭い、強い
+gloss	sterling	noun:英貨（ポンド）|adj:純銀の、立派な
+gloss	adjacent	adj:隣接した、隣の
+gloss	athletic	adj:運動の、運動選手らしい、体格のいい
