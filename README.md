@@ -17,6 +17,7 @@ FSRS による記憶定着、音声読み上げ、学習分析、AI 連携（任
 | 状態 | Zustand（設定）, Dexie.js / IndexedDB（履歴・学習データ） |
 | 学習 | ts-fsrs |
 | 検索 | MiniSearch（Web Worker + Comlink） |
+| ネットワーク図 | Sigma.js（WebGL）, Graphology, ForceAtlas2（Web Worker） |
 | 多言語 | i18next（現在は日本語のみ。`src/locales` に追加して拡張） |
 | PWA | vite-plugin-pwa |
 | テスト / CI | Vitest, GitHub Actions → GitHub Pages |
