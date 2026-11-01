@@ -1,16 +1,16 @@
 {
  "version": "20261101",
- "generatedAt": "2026-11-01T23:50:05.387390+00:00",
+ "generatedAt": "2026-11-01T23:56:17.600636+00:00",
  "counts": {
   "words": 11570,
   "phrases": 1231,
   "morphemes": 432,
-  "withParts": 5543,
+  "withParts": 5596,
   "withExamples": 10228,
   "pieRoots": 92,
-  "withNote": 8406,
-  "manualParts": 1991,
-  "manual": 9086,
+  "withNote": 8621,
+  "manualParts": 2083,
+  "manual": 9301,
   "withPie": 1416
  },
  "shardSize": 200
