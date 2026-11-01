@@ -1,0 +1,283 @@
+# 第34弾: 基本語の見直し（1〜1110 位）の訳語・語源分解（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
+gloss	that	pron:それ、あれ、（関係代名詞）〜するところの|det:その、あの|conj:〜ということ|adv:そんなに
+gloss	this	pron:これ、このこと|det:この、今の|adv:こんなに
+gloss	not	adv:〜ない、〜でない
+gloss	or	conj:または、あるいは、さもないと
+gloss	so	adv:とても、そのように、それほど|conj:だから、それで
+gloss	more	adj:もっと多くの|adv:もっと、より〜|pron:もっと多くのもの
+gloss	who	pron:誰、（関係代名詞）〜する人
+gloss	she	pron:彼女は、彼女が
+gloss	which	pron:どれ、どちら、（関係代名詞）〜するところの|det:どの
+gloss	also	adv:〜もまた、さらに
+gloss	now	adv:今、さて|conj:今や〜なので
+gloss	other	adj:ほかの、別の、もう一方の|pron:ほかのもの・人
+gloss	than	conj:〜よりも|prep:〜よりも
+gloss	only	adv:ただ〜だけ、ほんの|adj:唯一の
+gloss	after	prep:〜の後に、〜を追って|conj:〜した後で|adv:後で
+gloss	first	adj:最初の、第一の|adv:最初に、まず|noun:最初
+gloss	two	num:2、2つ
+gloss	then	adv:その時、それから、それなら
+gloss	because	conj:なぜなら、〜なので
+gloss	most	adj:最も多くの、たいていの|adv:最も、とても|pron:大部分
+gloss	much	adj:たくさんの（量）|adv:とても、ずっと|pron:多くのこと
+gloss	where	adv:どこに、どこで|conj:〜するところに
+gloss	here	adv:ここに、ここで、ほら
+gloss	need	verb:必要とする、〜する必要がある|noun:必要、ニーズ
+gloss	really	adv:本当に、実に
+gloss	too	adv:〜もまた、あまりにも〜すぎる
+gloss	before	prep:〜の前に|conj:〜する前に|adv:以前に
+gloss	why	adv:なぜ
+gloss	many	adj:たくさんの（数）|pron:多くの人・もの
+gloss	last	adj:最後の、この前の|adv:最後に|verb:続く、長持ちする
+gloss	while	conj:〜する間に、〜する一方で|noun:しばらくの間
+gloss	such	det:そのような、とても
+gloss	both	det:両方の|pron:両方|conj:（both A and B）A も B も
+gloss	three	num:3、3つ
+gloss	around	prep:〜のまわりに、〜のあちこちに|adv:まわりに、およそ
+gloss	between	prep:〜の間に、〜の間で
+gloss	always	adv:いつも、常に
+gloss	another	det:もうひとつの、別の|pron:もうひとつ
+gloss	own	adj:自分自身の|verb:所有する
+gloss	during	prep:〜の間に、〜の間ずっと
+gloss	again	adv:再び、また
+gloss	next	adj:次の、隣の|adv:次に
+gloss	each	det:それぞれの|pron:それぞれ
+gloss	without	prep:〜なしで、〜せずに
+gloss	against	prep:〜に反対して、〜に対して、〜にもたれて
+gloss	found	verb:設立する、創立する（find の過去形・過去分詞でもある）
+gloss	big	adj:大きい、重要な
+gloss	please	adv:どうぞ、お願いします|verb:喜ばせる
+gloss	someone	pron:誰か
+gloss	away	adv:離れて、あちらへ、どんどん
+gloss	left	noun:左、左派|adj:左の|adv:左へ（leave の過去形・過去分詞でもある）
+gloss	until	conj:〜するまで|prep:〜まで
+gloss	few	adj:（a few）少しの、（few）ほとんどない|pron:少数
+gloss	already	adv:すでに、もう
+gloss	anything	pron:何か、何でも、（否定文で）何も
+gloss	nothing	pron:何も〜ない|noun:無、取るに足らないもの
+gloss	enough	adj:十分な|adv:十分に|pron:十分な量
+gloss	everything	pron:すべてのもの、何もかも
+gloss	yet	adv:まだ、もう|conj:けれども
+gloss	four	num:4、4つ
+gloss	once	adv:一度、かつて|conj:いったん〜すると
+gloss	though	conj:〜だけれども|adv:でも、やっぱり
+gloss	actually	adv:実際に、実は
+gloss	American	adj:アメリカの|noun:アメリカ人
+gloss	less	adj:より少ない|adv:より少なく
+gloss	everyone	pron:みんな、誰でも
+gloss	together	adv:一緒に、合わせて
+gloss	five	num:5、5つ
+gloss	maybe	adv:たぶん、もしかすると
+gloss	least	adj:最も少ない|adv:最も少なく|pron:最小
+gloss	within	prep:〜以内に、〜の中で
+gloss	oh	intj:おお、ああ、あら
+gloss	ago	adv:（今から）〜前に
+gloss	often	adv:しばしば、よく
+gloss	almost	adv:ほとんど、もう少しで
+gloss	probably	adv:たぶん、おそらく
+gloss	yeah	intj:うん、ああ
+gloss	either	det:どちらかの、どちらの〜も|pron:どちらか|adv:（否定文で）〜もまた|conj:（either A or B）A か B か
+gloss	fuck	verb:（卑語）性交する|intj:（卑語）くそっ
+gloss	million	num:100万|noun:100万、無数
+gloss	third	adj:3番目の|noun:3分の1
+gloss	whether	conj:〜かどうか、〜であろうとなかろうと
+gloss	myself	pron:私自身
+gloss	yourself	pron:あなた自身
+gloss	although	conj:〜だけれども
+gloss	six	num:6、6つ
+gloss	sometimes	adv:ときどき
+gloss	song	noun:歌、曲
+gloss	himself	pron:彼自身
+gloss	sex	noun:性、性別、性行為
+gloss	county	noun:（米）郡、（英）州
+gloss	english	noun:英語|adj:英語の、イングランドの
+gloss	British	adj:イギリスの、英国の|noun:（the British）イギリス人
+gloss	finally	adv:ついに、最後に
+gloss	themselves	pron:彼ら自身、それら自身
+gloss	okay	adj:大丈夫な、まあまあの|intj:オーケー、よし
+gloss	stuff	noun:もの、こと|verb:詰め込む
+gloss	tax	noun:税金|verb:課税する、負担をかける
+gloss	whatever	pron:何でも、何が〜しても|intj:どうでもいい
+gloss	hey	intj:おい、ねえ、やあ
+gloss	mom	noun:（米）お母さん、ママ
+gloss	October	noun:10月
+gloss	amaze	verb:びっくりさせる
+gloss	august	noun:8月（August）|adj:威厳のある
+gloss	hell	noun:地獄、ひどい状況|intj:くそっ
+gloss	itself	pron:それ自身、そのもの
+gloss	lord	noun:君主、領主、（the Lord）神、卿
+gloss	damn	intj:くそっ、ちくしょう|verb:のろう、けなす|adj:（強調）ひどい
+gloss	french	adj:フランスの、フランス語の|noun:フランス語
+gloss	perhaps	adv:たぶん、もしかすると
+gloss	website	noun:ウェブサイト
+gloss	currently	adv:現在、今のところ
+gloss	European	adj:ヨーロッパの|noun:ヨーロッパ人
+gloss	seven	num:7、7つ
+gloss	crazy	adj:正気でない、夢中な、ばかげた
+gloss	internet	noun:インターネット
+gloss	below	prep:〜より下に|adv:下に、下記に
+gloss	ten	num:10
+gloss	Europe	noun:ヨーロッパ
+gloss	minister	noun:大臣、牧師
+gloss	shall	verb:（Shall I/we 〜?）〜しましょうか、（法律文で）〜するものとする
+gloss	tonight	adv:今夜|noun:今夜
+gloss	album	noun:アルバム
+gloss	eight	num:8、8つ
+gloss	funny	adj:おかしい、面白い、変な
+gloss	recently	adv:最近
+gloss	tomorrow	noun:明日|adv:明日
+gloss	brown	adj:茶色の|noun:茶色
+gloss	Chinese	adj:中国の|noun:中国語、中国人
+gloss	Russian	adj:ロシアの|noun:ロシア語、ロシア人
+gloss	hi	intj:やあ、こんにちは
+gloss	throughout	prep:〜の間ずっと、〜のいたるところに
+gloss	absolutely	adv:絶対に、まったく、（返事で）その通り
+gloss	immediately	adv:すぐに、直ちに
+gloss	unless	conj:〜しない限り
+gloss	canada	noun:カナダ
+gloss	computer	noun:コンピューター
+gloss	definitely	adv:間違いなく、確かに
+gloss	Friday	noun:金曜日
+gloss	wow	intj:わあ、うわっ
+gloss	dad	noun:お父さん、パパ
+gloss	worker	noun:労働者、働く人
+gloss	pro	noun:プロ、賛成（意見）|adj:プロの
+gloss	seriously	adv:真剣に、ひどく、（口語）マジで
+gloss	stupid	adj:ばかな、くだらない
+gloss	Australian	adj:オーストラリアの|noun:オーストラリア人
+gloss	cancer	noun:がん
+gloss	none	pron:誰も〜ない、何も〜ない
+gloss	trump	noun:切り札|verb:切り札で勝つ、上回る
+gloss	Africa	noun:アフリカ
+gloss	awesome	adj:すごい、最高の、畏敬の念を起こさせる
+gloss	Sunday	noun:日曜日
+gloss	anyway	adv:とにかく、いずれにしても、ところで
+gloss	Christmas	noun:クリスマス
+gloss	literally	adv:文字通りに、（口語）本当に
+gloss	thus	adv:したがって、このように
+gloss	directly	adv:直接に、まっすぐに、すぐに
+gloss	gay	adj:同性愛の、（古）陽気な|noun:同性愛者
+gloss	glad	adj:うれしい
+gloss	fully	adv:十分に、完全に
+gloss	highly	adv:非常に、高く
+gloss	japan	noun:日本
+gloss	Mrs	noun:〜夫人、〜さん（既婚女性）
+gloss	smith	noun:鍛冶屋、〜職人
+gloss	challenge	noun:難題、挑戦|verb:異議を唱える、挑む
+gloss	equipment	noun:装備、設備、機器
+gloss	holy	adj:神聖な、聖なる
+gloss	purpose	noun:目的、意図
+gloss	shop	noun:店|verb:買い物をする
+gloss	teacher	noun:先生、教師
+gloss	theory	noun:理論、説
+gloss	agency	noun:代理店、（政府の）機関、主体性
+gloss	camera	noun:カメラ
+gloss	coast	noun:海岸、沿岸|verb:惰性で進む
+gloss	drug	noun:薬、麻薬
+gloss	economy	noun:経済、節約|adj:エコノミークラスの
+gloss	environment	noun:環境
+gloss	nine	num:9、9つ
+gloss	pop	noun:ポップス、ポンという音|verb:ポンと鳴る、ひょいと出る
+gloss	Saturday	noun:土曜日
+gloss	therefore	adv:それゆえに、したがって
+gloss	weather	noun:天気|verb:切り抜ける
+gloss	app	noun:アプリ
+gloss	coffee	noun:コーヒー
+gloss	division	noun:分割、部門、割り算、（スポーツの）部・リーグ
+gloss	freedom	noun:自由
+gloss	heat	noun:熱、暑さ|verb:熱する、温める
+gloss	library	noun:図書館、蔵書、（プログラムの）ライブラリ
+gloss	murder	noun:殺人|verb:殺害する
+gloss	actual	adj:実際の、現実の
+gloss	attempt	noun:試み|verb:試みる
+gloss	channel	noun:（テレビの）チャンネル、水路、経路|verb:向ける、注ぐ
+gloss	exchange	noun:交換、両替、為替|verb:交換する
+gloss	northern	adj:北の、北部の
+gloss	powerful	adj:強力な、影響力のある
+gloss	protection	noun:保護
+gloss	religious	adj:宗教の、信心深い
+gloss	speech	noun:演説、スピーチ、話すこと
+gloss	tree	noun:木、樹形図
+gloss	airport	noun:空港
+gloss	bottom	noun:底、下部、尻|adj:いちばん下の
+gloss	everybody	pron:みんな、誰でも
+gloss	famous	adj:有名な
+gloss	investment	noun:投資
+gloss	lie	verb:横たわる、ある、うそをつく|noun:うそ
+gloss	sad	adj:悲しい
+gloss	southern	adj:南の、南部の
+gloss	traditional	adj:伝統的な
+gloss	twice	adv:2度、2倍
+gloss	bus	noun:バス
+
+# 第34弾の語源分解
+parts	also	al=w:all so=w:so
+parts	almost	al=w:all most=w:most
+parts	already	al=w:all ready=w:ready
+parts	although	al=w:all though=w:though
+parts	another	an=w:a other=w:other
+parts	without	with=w:with out=w:out
+parts	within	with=w:with in=w:in
+parts	throughout	through=w:through out=w:out
+parts	anything	any=w:any thing=w:thing
+parts	nothing	no=w:no thing=w:thing
+parts	everything	every=w:every thing=w:thing
+parts	someone	some=w:some one=w:one
+parts	everyone	every=w:every one=w:one
+parts	everybody	every=w:every body=w:body
+parts	sometimes	some=w:some time=w:time s
+parts	myself	my self=w:self
+parts	yourself	your self=w:self
+parts	himself	him self=w:self
+parts	itself	it=w:it self=w:self
+parts	themselves	them selves=w:self
+parts	tonight	to=w:to night=w:night
+parts	therefore	there=w:there fore=pre:fore
+parts	maybe	may=w:may be=w:be
+parts	anyway	any=w:any way=w:way
+parts	whatever	what=w:what ever=w:ever
+parts	website	web=w:web site=w:site
+parts	airport	air=w:air port=r:port
+parts	internet	inter=pre:inter net=w:net
+parts	worker	work=w:work er=suf:er
+parts	teacher	teach=w:teach er=suf:er
+parts	freedom	free=w:free dom=suf:dom
+parts	powerful	power=w:power ful=suf:ful
+parts	awesome	awe=w:awe some=suf:some
+parts	protection	pro=pre:pro tect ion
+parts	investment	in=pre:in vest=w:vest ment=suf:ment
+parts	equipment	equip=w:equip ment=suf:ment
+parts	environment	environ ment=suf:ment
+parts	computer	com=pre:com put er=suf:er
+parts	directly	direct=w:direct ly=suf:ly
+parts	finally	final=w:final ly=suf:ly
+parts	recently	recent=w:recent ly=suf:ly
+parts	currently	current=w:current ly=suf:ly
+parts	definitely	definite=w:definite ly=suf:ly
+parts	immediately	immediate=w:immediate ly=suf:ly
+parts	absolutely	absolute=w:absolute ly=suf:ly
+parts	literally	literal=w:literal ly=suf:ly
+parts	seriously	serious=w:serious ly=suf:ly
+parts	probably	probab=w:probable ly=suf:ly
+parts	actually	actual=w:actual ly=suf:ly
+parts	really	real=w:real ly=suf:ly
+parts	fully	ful=w:full ly=suf:ly
+parts	highly	high=w:high ly=suf:ly
+parts	traditional	tradition=w:tradition al=suf:al
+parts	religious	religi=w:religion ous=suf:ous
+parts	division	divi=w:divide sion
+parts	northern	north=w:north ern
+parts	southern	south=w:south ern
+parts	funny	funn=w:fun y=suf:y
+parts	crazy	craz=w:craze y=suf:y
+parts	because	be=w:by cause=w:cause
+parts	before	be=w:by fore=pre:fore
+parts	below	be=w:by low=w:low
+parts	together	to=w:to gether=w:gather
+parts	twice	twi=w:two ce
+parts	once	on=w:one ce
+parts	exchange	ex=pre:ex change=w:change
+parts	attempt	at=pre:ad tempt=w:tempt
+parts	purpose	pur=pre:pro pose=r:pon
+parts	actual	act=r:act ual
+parts	Christmas	Christ mas=w:mass
