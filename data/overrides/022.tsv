@@ -1,0 +1,697 @@
+# 第17弾: 4809〜5230 位の訳語・語源分解（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
+drop	fu
+drop	yale
+drop	dee
+drop	dana
+drop	rand
+drop	Ferrari
+gloss	confession	noun:告白、自白、懺悔
+gloss	corridor	noun:廊下、回廊、（交通の）回廊地帯
+gloss	dolphin	noun:イルカ
+gloss	fourteen	num:14
+gloss	gossip	noun:うわさ話、ゴシップ|verb:うわさ話をする
+gloss	grandparent	noun:祖父母（の一人）
+gloss	haul	verb:引っ張る、運ぶ|noun:獲物、収穫、運搬
+gloss	header	noun:見出し、ヘッダー、ヘディング
+gloss	headphones	noun:ヘッドホン
+gloss	holly	noun:セイヨウヒイラギ
+gloss	immense	adj:巨大な、計り知れない
+gloss	interfere	verb:干渉する、邪魔をする
+gloss	intersection	noun:交差点、交わり
+gloss	investigator	noun:調査員、捜査官
+gloss	juvenile	adj:少年の、未成年の、子どもっぽい|noun:少年少女
+gloss	karma	noun:因果応報、業、カルマ
+gloss	leverage	noun:影響力、てこの作用、レバレッジ|verb:活用する
+gloss	mankind	noun:人類
+gloss	metric	adj:メートル法の|noun:指標、測定基準
+gloss	militia	noun:民兵（組織）
+gloss	node	noun:結節、節点、ノード
+gloss	obstacle	noun:障害（物）
+gloss	performer	noun:演奏者、出演者、パフォーマー
+gloss	pointless	adj:無意味な、むだな
+gloss	prompt	adj:即座の、迅速な|verb:促す、引き起こす|noun:（入力の）プロンプト
+gloss	proximity	noun:近いこと、近接
+gloss	qualification	noun:資格、条件、制限
+gloss	render	verb:〜にする、与える、表現する、（画像を）描画する
+gloss	sadness	noun:悲しみ
+gloss	shiny	adj:ぴかぴかの、光沢のある
+gloss	socialism	noun:社会主義
+gloss	sour	adj:酸っぱい、不機嫌な|verb:悪くなる
+gloss	spoon	noun:スプーン
+gloss	stressful	adj:ストレスの多い
+gloss	tenant	noun:借家人、テナント
+gloss	terrace	noun:テラス、段々畑、（英国の）連続住宅
+gloss	thief	noun:泥棒
+gloss	tribunal	noun:裁判所、法廷
+gloss	undoubtedly	adv:疑いなく、確かに
+gloss	verify	verb:確かめる、立証する
+gloss	villain	noun:悪役、悪党
+gloss	whistle	noun:笛、口笛|verb:口笛を吹く、笛を鳴らす
+gloss	yearly	adj:毎年の、年1回の|adv:毎年
+gloss	alley	noun:路地、裏通り
+gloss	appetite	noun:食欲、欲求
+gloss	backyard	noun:裏庭
+gloss	billboard	noun:広告板、看板
+gloss	bully	noun:いじめっ子|verb:いじめる
+gloss	calculation	noun:計算、打算
+gloss	conceive	verb:思いつく、想像する、妊娠する
+gloss	dynasty	noun:王朝、（一族の）支配
+gloss	economist	noun:経済学者、エコノミスト
+gloss	extensively	adv:広範囲に、徹底的に
+gloss	forehead	noun:額（ひたい）
+gloss	foreigner	noun:外国人
+gloss	forgiveness	noun:許し、寛大さ
+gloss	gem	noun:宝石、逸品
+gloss	haunted	adj:幽霊の出る、取りつかれた
+gloss	heather	noun:ヘザー（ヒースの一種）
+gloss	hypothesis	noun:仮説
+gloss	illegally	adv:不法に
+gloss	informal	adj:形式ばらない、非公式の、くだけた
+gloss	marker	noun:マーカー、目印、指標
+gloss	marsh	noun:湿地
+gloss	marshal	noun:（米国の）連邦保安官、元帥、司会者|verb:整列させる
+gloss	maturity	noun:成熟、（手形などの）満期
+gloss	messy	adj:散らかった、厄介な
+gloss	ninja	noun:忍者
+gloss	optimistic	adj:楽観的な
+gloss	owl	noun:フクロウ
+gloss	pharmacy	noun:薬局、薬学
+gloss	processor	noun:処理装置、プロセッサー、加工業者
+gloss	promotional	adj:販売促進の、宣伝の
+gloss	repeal	verb:（法律を）廃止する|noun:廃止
+gloss	roast	verb:（肉などを）焼く、いる|noun:焼き肉|adj:焼いた
+gloss	rubbish	noun:ごみ、くだらないこと
+gloss	salon	noun:美容院、サロン、応接間
+gloss	seventeen	num:17
+gloss	sodium	noun:ナトリウム
+gloss	surplus	noun:余り、黒字|adj:余分の
+gloss	swallow	verb:飲み込む、うのみにする|noun:ツバメ
+gloss	systematic	adj:体系的な、組織的な
+gloss	unacceptable	adj:受け入れられない
+gloss	uncommon	adj:まれな、珍しい
+gloss	underway	adj:進行中で
+gloss	unstable	adj:不安定な
+gloss	upstairs	adv:上の階へ、2階で|noun:上の階
+gloss	vague	adj:あいまいな、ぼんやりした
+gloss	wee	adj:ちっちゃな|noun:おしっこ
+gloss	woo	verb:口説く、（支持などを）得ようとする
+gloss	zip	noun:ファスナー、ジッパー|verb:ファスナーを締める、（ファイルを）圧縮する
+gloss	abundance	noun:豊富、大量
+gloss	ant	noun:アリ
+gloss	antique	noun:骨董品|adj:骨董の、古風な
+gloss	autonomy	noun:自治、自主性
+gloss	breeze	noun:そよ風、楽なこと
+gloss	carnival	noun:謝肉祭、カーニバル、お祭り騒ぎ
+gloss	commodity	noun:商品、産物、日用品
+gloss	congressman	noun:（米国の）下院議員
+gloss	cooperative	adj:協力的な、協同の|noun:協同組合
+gloss	coral	noun:サンゴ
+gloss	correlation	noun:相関（関係）
+gloss	correspondent	noun:特派員、通信員、文通相手
+gloss	coupon	noun:クーポン、割引券
+gloss	curtain	noun:カーテン、（舞台の）幕
+gloss	dentist	noun:歯医者
+gloss	dough	noun:（パンなどの）生地、（俗）お金
+gloss	endangered	adj:絶滅の危機にある
+gloss	envelope	noun:封筒
+gloss	fade	verb:色あせる、薄れる、消えていく
+gloss	fatigue	noun:疲労
+gloss	fellowship	noun:仲間意識、（大学の）研究奨学金、団体
+gloss	fragile	adj:壊れやすい、もろい
+gloss	fringe	noun:周辺、ふち、前髪、房飾り|adj:非主流の
+gloss	fulfill	verb:果たす、実現する、満たす
+gloss	granite	noun:花こう岩、御影石
+gloss	handbook	noun:手引き書、ハンドブック
+gloss	hardy	adj:丈夫な、耐寒性の
+gloss	instinct	noun:本能、直感
+gloss	irony	noun:皮肉、反語
+gloss	judiciary	noun:司法（部）、裁判官
+gloss	legion	noun:軍団、多数
+gloss	lethal	adj:致死の、致命的な
+gloss	lime	noun:ライム、石灰
+gloss	lively	adj:活気のある、元気な
+gloss	logistics	noun:物流、ロジスティクス、（細かな）段取り
+gloss	maid	noun:メイド、お手伝い
+gloss	maple	noun:カエデ
+gloss	midfielder	noun:ミッドフィールダー
+gloss	mindset	noun:考え方、思考様式
+gloss	morality	noun:道徳、倫理
+gloss	mortal	adj:死ぬ運命にある、致命的な|noun:（普通の）人間
+gloss	nonprofit	adj:非営利の|noun:非営利団体
+gloss	pickup	noun:小型トラック、受け取り、回復
+gloss	radius	noun:半径、範囲
+gloss	referee	noun:審判、レフェリー|verb:審判をする
+gloss	relay	noun:リレー、中継|verb:中継する、伝える
+gloss	rig	verb:不正に操作する、装備する|noun:装置、掘削装置
+gloss	scroll	noun:巻物|verb:（画面を）スクロールする
+gloss	sovereignty	noun:主権、統治権
+gloss	stunt	noun:離れ業、スタント、人目を引く行為|verb:成長を妨げる
+gloss	sunlight	noun:日光
+gloss	surf	verb:波乗りをする、（ネットを）見て回る|noun:打ち寄せる波
+gloss	symbolic	adj:象徴的な
+gloss	taxpayer	noun:納税者
+gloss	tempt	verb:誘惑する、〜する気にさせる
+gloss	thrust	verb:強く押す、突き出す|noun:推進力、要点
+gloss	trilogy	noun:三部作
+gloss	wheelchair	noun:車いす
+gloss	accusation	noun:非難、告発
+gloss	allowance	noun:手当、小遣い、許容量
+gloss	arbitrary	adj:恣意的な、任意の
+gloss	autonomous	adj:自治の、自律的な、自動運転の
+gloss	bait	noun:えさ、おとり|verb:えさをつける、挑発する
+gloss	bark	verb:ほえる|noun:ほえ声、樹皮
+gloss	bra	noun:ブラジャー
+gloss	brotherhood	noun:兄弟愛、同胞、団体
+gloss	Buddhist	noun:仏教徒|adj:仏教の
+gloss	builder	noun:建築業者、建設者
+gloss	carriage	noun:馬車、（鉄道の）客車、運送
+gloss	censorship	noun:検閲
+gloss	compilation	noun:編集、編集したもの、コンピレーション
+gloss	composer	noun:作曲家
+gloss	constitute	verb:構成する、〜に等しい、設立する
+gloss	correspondence	noun:文通、通信、一致
+gloss	desirable	adj:望ましい
+gloss	diagram	noun:図、図表
+gloss	erect	verb:建てる、立てる|adj:直立した
+gloss	explorer	noun:探検家
+gloss	feminism	noun:フェミニズム
+gloss	flaw	noun:欠点、欠陥、ひび
+gloss	gasoline	noun:ガソリン
+gloss	genesis	noun:起源、発生、（Genesis）創世記
+gloss	governmental	adj:政府の
+gloss	grandson	noun:孫息子
+gloss	incomplete	adj:不完全な、未完成の
+gloss	interrupt	verb:さえぎる、中断する
+gloss	ivory	noun:象牙、象牙色
+gloss	levy	verb:（税などを）課す|noun:徴税、税
+gloss	manipulation	noun:操作、ごまかし、巧みな扱い
+gloss	mock	verb:あざける、まねてからかう|adj:模擬の、にせの
+gloss	necklace	noun:ネックレス
+gloss	niche	noun:適所、すき間（市場）、ニッチ、壁のくぼみ
+gloss	obscure	adj:はっきりしない、無名の|verb:覆い隠す
+gloss	porch	noun:玄関、ポーチ、ベランダ
+gloss	portray	verb:描く、演じる
+gloss	proposition	noun:提案、命題、主張
+gloss	recession	noun:景気後退、後退
+gloss	rim	noun:縁、へり
+gloss	secondly	adv:第二に
+gloss	spiral	noun:らせん、悪循環|verb:らせん状に進む、急上昇する
+gloss	spit	verb:つばを吐く、吐き出す|noun:つば、焼き串
+gloss	splash	verb:はねかける、はねる|noun:はね、水しぶき
+gloss	superhero	noun:スーパーヒーロー
+gloss	therapeutic	adj:治療の、癒やしの
+gloss	timely	adj:タイミングのよい、時宜を得た
+gloss	tub	noun:浴槽、おけ
+gloss	undertake	verb:引き受ける、着手する
+gloss	uranium	noun:ウラン
+gloss	utter	verb:（声・言葉を）発する|adj:まったくの
+gloss	Vietnamese	adj:ベトナムの|noun:ベトナム人、ベトナム語
+gloss	volleyball	noun:バレーボール
+gloss	yell	verb:叫ぶ、怒鳴る|noun:叫び声
+gloss	advertisement	noun:広告
+gloss	bracket	noun:かっこ、（所得などの）層、支え
+gloss	confront	verb:立ち向かう、直面する、突きつける
+gloss	creep	verb:忍び寄る、這う|noun:（俗）気味の悪いやつ
+gloss	daylight	noun:日光、昼間
+gloss	disclose	verb:明らかにする、公開する
+gloss	doe	noun:雌ジカ、（ウサギなどの）雌
+gloss	elbow	noun:ひじ|verb:ひじで押しのける
+gloss	enthusiastic	adj:熱心な、熱狂的な
+gloss	envy	noun:うらやましさ、ねたみ|verb:うらやむ
+gloss	exile	noun:亡命、追放、亡命者|verb:追放する
+gloss	exploitation	noun:搾取、（資源などの）開発
+gloss	gel	noun:ジェル、ゲル
+gloss	genetics	noun:遺伝学
+gloss	goose	noun:ガチョウ、ガン
+gloss	grill	verb:焼き網で焼く、問い詰める|noun:焼き網、グリル
+gloss	heel	noun:かかと、ヒール
+gloss	heroic	adj:英雄的な、勇ましい
+gloss	hut	noun:小屋
+gloss	instruct	verb:指示する、教える
+gloss	Malaysian	adj:マレーシアの|noun:マレーシア人
+gloss	mat	noun:マット、敷物
+gloss	monopoly	noun:独占、専売
+gloss	outrage	noun:激怒、暴挙|verb:激怒させる
+gloss	paperwork	noun:書類仕事、事務処理
+gloss	promptly	adv:すぐに、時間どおりに
+gloss	renewal	noun:更新、再開、再生
+gloss	ruler	noun:支配者、定規
+gloss	sincere	adj:心からの、誠実な
+gloss	skating	noun:スケート
+gloss	slaughter	noun:虐殺、屠殺|verb:虐殺する
+gloss	sperm	noun:精子
+gloss	spill	verb:こぼす、こぼれる|noun:こぼれること、流出
+gloss	steadily	adv:着実に
+gloss	swamp	noun:沼地|verb:殺到させる、圧倒する
+gloss	swan	noun:白鳥
+gloss	synthesis	noun:統合、合成
+gloss	testify	verb:証言する、証明する
+gloss	tolerate	verb:我慢する、許容する
+gloss	traveler	noun:旅行者
+gloss	treason	noun:反逆（罪）
+gloss	trustee	noun:受託者、評議員、理事
+gloss	urine	noun:尿
+gloss	vanilla	noun:バニラ|adj:ありきたりの
+gloss	violet	noun:スミレ、紫|adj:紫色の
+gloss	activation	noun:起動、活性化
+gloss	applause	noun:拍手
+gloss	bald	adj:はげた、むき出しの
+gloss	boil	verb:沸騰する、ゆでる|noun:沸騰、おでき
+gloss	borough	noun:（行政区としての）区、自治町
+gloss	breakthrough	noun:大発見、突破口
+gloss	cone	noun:円すい、（アイスの）コーン、松かさ
+gloss	convey	verb:伝える、運ぶ
+gloss	critique	noun:批評|verb:批評する
+gloss	decay	verb:腐る、衰える|noun:腐敗、衰退
+gloss	dessert	noun:デザート
+gloss	discourse	noun:談話、論説、言説
+gloss	exploit	verb:利用する、搾取する、開発する|noun:偉業
+gloss	fireworks	noun:花火
+gloss	freeman	noun:自由民、名誉市民
+gloss	gateway	noun:入り口、玄関口、ゲートウェイ
+gloss	humidity	noun:湿度、湿気
+gloss	imagery	noun:イメージ、比喩表現、画像
+gloss	inherent	adj:本来備わっている、固有の
+gloss	inland	adj:内陸の|adv:内陸へ
+gloss	innocence	noun:無罪、無邪気、純真
+gloss	ivy	noun:ツタ
+gloss	justification	noun:正当化、正当な理由
+gloss	livestock	noun:家畜
+gloss	mafia	noun:マフィア
+gloss	merry	adj:陽気な、楽しい
+gloss	missionary	noun:宣教師|adj:伝道の
+gloss	nationalism	noun:ナショナリズム、民族主義
+gloss	naughty	adj:いたずらな、行儀の悪い
+gloss	notify	verb:知らせる、通知する
+gloss	notorious	adj:悪名高い
+gloss	obey	verb:従う
+gloss	outright	adv:完全に、きっぱりと|adj:完全な、明白な
+gloss	overly	adv:過度に
+gloss	oversight	noun:見落とし、監督
+gloss	panther	noun:ヒョウ、ピューマ
+gloss	Persian	adj:ペルシアの|noun:ペルシア人、ペルシア語
+gloss	prototype	noun:試作品、原型
+gloss	pumpkin	noun:カボチャ
+gloss	ramp	noun:傾斜路、スロープ|verb:（ramp up で）増やす
+gloss	reactor	noun:原子炉、反応装置
+gloss	reef	noun:岩礁、サンゴ礁
+gloss	refined	adj:精製された、洗練された
+gloss	refreshing	adj:さわやかな、すがすがしい、新鮮な
+gloss	refusal	noun:拒否
+gloss	remedy	noun:治療法、解決策|verb:改善する
+gloss	reset	verb:リセットする、設定し直す
+gloss	sage	noun:賢人、セージ（ハーブ）|adj:賢明な
+gloss	shave	verb:ひげをそる、そる|noun:ひげそり
+gloss	sickness	noun:病気、吐き気
+gloss	startup	noun:新興企業、スタートアップ、起動
+gloss	statute	noun:法令、成文法
+gloss	straightforward	adj:簡単な、率直な
+gloss	superstar	noun:スーパースター
+gloss	telecommunication	noun:電気通信
+gloss	thoughtful	adj:思いやりのある、考え深い
+gloss	toddler	noun:よちよち歩きの幼児
+gloss	vicious	adj:悪意のある、凶暴な、激しい
+gloss	vodka	noun:ウォッカ
+gloss	wholly	adv:完全に、まったく
+gloss	zoom	verb:疾走する、ズームする|noun:ズーム
+gloss	accidental	adj:偶然の
+gloss	archbishop	noun:大司教、大主教
+gloss	assassination	noun:暗殺
+gloss	Belgian	adj:ベルギーの|noun:ベルギー人
+gloss	bibliography	noun:参考文献一覧、書誌
+gloss	bot	noun:ボット
+gloss	broadly	adv:広く、大まかに
+gloss	calcium	noun:カルシウム
+gloss	certainty	noun:確実性、確信
+gloss	citation	noun:引用、表彰、召喚状
+gloss	compression	noun:圧縮
+gloss	confess	verb:告白する、自白する、認める
+gloss	confined	adj:限られた、狭い、閉じ込められた
+gloss	congregation	noun:（教会の）会衆、集まり
+gloss	consolidated	adj:統合された、連結の
+gloss	coordinate	verb:調整する、組み合わせる|noun:座標
+gloss	cube	noun:立方体、3乗
+gloss	decoration	noun:装飾、飾り、勲章
+gloss	decree	noun:法令、命令|verb:命じる
+gloss	deliberate	adj:意図的な、慎重な|verb:熟考する
+gloss	despair	noun:絶望|verb:絶望する
+gloss	dividend	noun:配当（金）、恩恵
+gloss	drift	verb:漂う、さまよう|noun:漂流、流れ、趣旨
+gloss	dye	noun:染料|verb:染める
+gloss	educator	noun:教育者
+gloss	electron	noun:電子
+gloss	endure	verb:耐える、持ちこたえる
+gloss	enzyme	noun:酵素
+gloss	fragment	noun:破片、断片|verb:ばらばらになる
+gloss	guru	noun:指導者、第一人者、グル
+gloss	hatch	verb:かえる、孵化させる、（計画を）企てる|noun:ハッチ
+gloss	hormone	noun:ホルモン
+gloss	inadequate	adj:不十分な、不適切な
+gloss	infinity	noun:無限
+gloss	intentionally	adv:意図的に、わざと
+gloss	kilometer	noun:キロメートル
+gloss	lace	noun:レース、靴ひも|verb:ひもで締める
+gloss	maiden	noun:少女、乙女|adj:初めての（maiden voyage：処女航海）
+gloss	marketplace	noun:市場
+gloss	membrane	noun:膜
+gloss	metallic	adj:金属の、金属的な
+gloss	methodology	noun:方法論、方法
+gloss	modification	noun:修正、変更
+gloss	murderer	noun:殺人犯
+gloss	nap	noun:昼寝、うたた寝|verb:昼寝する
+gloss	nickel	noun:ニッケル、（米国の）5セント硬貨
+gloss	niece	noun:姪（めい）
+gloss	pardon	noun:許し、恩赦|verb:許す（Pardon?：もう一度言ってください）
+gloss	persuade	verb:説得する
+gloss	pier	noun:桟橋、埠頭
+gloss	predecessor	noun:前任者、前のもの
+gloss	quiz	noun:クイズ、小テスト
+gloss	rainfall	noun:降雨（量）
+gloss	reckless	adj:無謀な、向こう見ずな
+gloss	redemption	noun:救い、償還、（約束の）履行
+gloss	replay	noun:再生、再試合|verb:再生する
+gloss	revision	noun:改訂、修正、（英国で）復習
+gloss	scent	noun:香り、においの跡
+gloss	slate	noun:粘板岩、石板、候補者名簿
+gloss	stimulus	noun:刺激
+gloss	sunrise	noun:日の出
+gloss	surge	noun:急増、高まり|verb:急増する、押し寄せる
+gloss	tee	noun:（ゴルフの）ティー、Tシャツ
+gloss	token	noun:しるし、記念品、代用硬貨、トークン
+gloss	tornado	noun:竜巻
+gloss	twilight	noun:たそがれ、薄明かり
+gloss	unprecedented	adj:前例のない
+gloss	vagina	noun:膣
+gloss	vocabulary	noun:語彙
+gloss	whoa	intj:おっと、どうどう
+gloss	worthless	adj:価値のない
+gloss	yacht	noun:ヨット
+gloss	absorb	verb:吸収する、夢中にさせる
+gloss	advancement	noun:進歩、昇進
+gloss	assurance	noun:保証、確信、自信
+gloss	barber	noun:理髪師、床屋
+gloss	battalion	noun:大隊
+gloss	boycott	noun:不買運動、ボイコット|verb:ボイコットする
+gloss	Bulgarian	adj:ブルガリアの|noun:ブルガリア人、ブルガリア語
+gloss	carpenter	noun:大工
+# 元データに日本語訳がなく採用されていなかった語（第17弾分）
+gloss	donated	adj:寄付された
+gloss	activated	adj:作動した、活性化した
+gloss	punished	adj:罰せられた
+gloss	decorated	adj:飾られた、勲章を受けた
+gloss	violated	adj:侵害された
+gloss	embedded	adj:埋め込まれた、組み込まれた
+gloss	carved	adj:彫られた
+gloss	abusive	adj:虐待的な、口汚い
+gloss	dissolved	adj:溶けた、解散した
+gloss	endorsed	adj:承認された、支持された
+gloss	psychiatric	adj:精神医学の、精神科の
+gloss	unified	adj:統一された
+gloss	behavioral	adj:行動の
+gloss	operative	adj:機能している、有効な|noun:工作員
+gloss	spinal	adj:背骨の、脊髄の
+gloss	atmospheric	adj:大気の、雰囲気のある
+gloss	cardiac	adj:心臓の
+gloss	allocated	adj:割り当てられた
+gloss	differential	adj:差異の、差別的な|noun:差、格差
+gloss	organizational	adj:組織の
+gloss	reinforced	adj:強化された
+gloss	evolutionary	adj:進化の、発展的な
+gloss	geological	adj:地質学の
+gloss	overlooked	adj:見過ごされた
+gloss	detained	adj:拘束された
+gloss	dubbed	adj:〜と呼ばれる、吹き替えの
+gloss	expired	adj:期限切れの
+gloss	partisan	adj:党派的な|noun:熱烈な支持者
+gloss	respiratory	adj:呼吸の、呼吸器の
+gloss	sympathetic	adj:同情的な、共感する
+gloss	aligned	adj:そろった、提携した
+gloss	decorative	adj:装飾的な
+gloss	definitive	adj:決定的な、最終的な
+gloss	displace	verb:取って代わる、（住む場所から）追い出す
+gloss	predominantly	adv:主に、大部分は
+gloss	reproductive	adj:生殖の、繁殖の
+gloss	destined	adj:運命づけられた、〜行きの
+gloss	detached	adj:分離した、一戸建ての、超然とした
+gloss	populated	adj:人が住んでいる
+gloss	starving	adj:飢えている、腹ぺこの
+gloss	amended	adj:修正された
+gloss	collaborative	adj:協力的な、共同の
+gloss	departed	adj:亡くなった、過ぎ去った
+gloss	developmental	adj:発達の、開発の
+gloss	exempt	adj:免除された|verb:免除する
+gloss	fertility	noun:肥沃さ、生殖能力
+gloss	lightweight	adj:軽量の|noun:軽量級
+gloss	parental	adj:親の
+gloss	respondent	noun:回答者、被告
+gloss	traction	noun:けん引、手応え、支持
+gloss	continuity	noun:連続性、一貫性
+gloss	credible	adj:信頼できる、もっともらしい
+gloss	drowning	noun:溺死|adj:溺れている
+gloss	incumbent	adj:現職の|noun:現職者
+gloss	lunar	adj:月の
+gloss	obliged	adj:義務がある、感謝している
+gloss	rotating	adj:回転する、交代制の
+gloss	simplicity	noun:簡単さ、素朴さ
+gloss	theological	adj:神学の
+gloss	undercover	adj:秘密の、潜入した
+gloss	activate	verb:作動させる、活性化する
+gloss	betrayed	adj:裏切られた
+gloss	horrific	adj:恐ろしい、ぞっとする
+gloss	neural	adj:神経の
+gloss	payroll	noun:給与支払い（名簿）
+gloss	photographic	adj:写真の
+gloss	professionally	adv:専門的に、職業として
+gloss	stainless	adj:さびない、ステンレスの
+gloss	statutory	adj:法定の
+gloss	stellar	adj:星の、すばらしい
+gloss	unveiled	adj:公開された
+gloss	accelerated	adj:加速された
+gloss	disciplinary	adj:懲戒の、規律の
+gloss	enact	verb:（法律を）制定する、演じる
+gloss	enlisted	adj:入隊した
+gloss	ideally	adv:理想的には
+gloss	inspirational	adj:刺激を与える、感動的な
+gloss	internally	adv:内部で、内面的に
+gloss	noticeable	adj:目立つ
+gloss	remotely	adv:遠隔で、（否定文で）少しも
+gloss	shattered	adj:粉々になった、打ちのめされた
+gloss	terminated	adj:終了した、解雇された
+gloss	upwards	adv:上の方へ（upwards of：〜以上）
+gloss	veterinary	adj:獣医の
+gloss	drowned	adj:溺死した、水浸しの
+gloss	enclosed	adj:同封された、囲まれた
+gloss	ironically	adv:皮肉にも
+gloss	laden	adj:（〜を）積んだ、（〜で）いっぱいの
+gloss	postponed	adj:延期された
+gloss	preceding	adj:前の、先行する
+gloss	stray	adj:迷子の、はぐれた|verb:はぐれる、それる
+gloss	thereof	adv:それの、その
+gloss	unchanged	adj:変わらない
+gloss	whereby	adv:それによって〜する
+gloss	aerospace	noun:航空宇宙（産業）
+gloss	analytical	adj:分析的な
+gloss	bacterial	adj:細菌の
+gloss	longtime	adj:長年の
+gloss	uncovered	adj:覆いのない、明らかにされた
+gloss	weakened	adj:弱まった
+gloss	apparel	noun:衣服、アパレル
+gloss	compelled	adj:（〜せざるを得ないと）強いられた
+gloss	concealed	adj:隠された
+gloss	devastated	adj:打ちのめされた、壊滅した
+gloss	flawed	adj:欠陥のある
+gloss	hydraulic	adj:水圧の、油圧の
+gloss	inflammatory	adj:炎症性の、扇動的な
+gloss	occupational	adj:職業の
+gloss	reunited	adj:再会した、再統一された
+gloss	unarmed	adj:武器を持たない
+gloss	unhealthy	adj:不健康な
+gloss	vanished	adj:消えた
+gloss	accredited	adj:認定された
+gloss	cosmetic	adj:化粧の、表面的な|noun:化粧品
+gloss	cubic	adj:立方の、3乗の
+gloss	detector	noun:検出器、探知機
+gloss	downward	adj:下向きの|adv:下の方へ
+gloss	hourly	adj:1時間ごとの|adv:1時間ごとに
+gloss	indirectly	adv:間接的に
+gloss	preferably	adv:できれば
+gloss	recurring	adj:繰り返し起こる
+gloss	routinely	adv:日常的に、決まって
+gloss	upward	adj:上向きの|adv:上の方へ
+gloss	volcanic	adj:火山の
+gloss	wildly	adv:乱暴に、ひどく、熱狂的に
+gloss	acclaimed	adj:称賛された、評価の高い
+gloss	akin	adj:似ている、同類の
+gloss	baseline	noun:基準、基準線
+gloss	beware	verb:用心する（Beware of the dog：犬に注意）
+gloss	contaminated	adj:汚染された
+gloss	crisp	adj:ぱりっとした、さわやかな、てきぱきした
+gloss	dietary	adj:食事の、食生活の
+gloss	hustle	verb:急がせる、せかせか動く|noun:押し合い、詐欺
+gloss	juicy	adj:果汁の多い、興味をそそる
+gloss	manually	adv:手で、手動で
+gloss	residency	noun:居住、研修医の期間
+gloss	responsive	adj:すぐ反応する、敏感な
+gloss	songwriter	noun:作詞作曲家
+gloss	stranded	adj:立ち往生した、取り残された
+gloss	whichever	pron:どちらでも、どちらが〜しても
+gloss	aide	noun:補佐官、側近
+gloss	broadband	noun:ブロードバンド
+gloss	deprived	adj:恵まれない、奪われた
+gloss	insure	verb:保険をかける、保証する
+gloss	invasive	adj:侵略的な、侵襲的な
+gloss	negatively	adv:否定的に、悪く
+gloss	persona	noun:人物像、ペルソナ
+gloss	plaque	noun:記念の銘板、歯垢
+gloss	poetic	adj:詩の、詩的な
+gloss	archaeological	adj:考古学の
+gloss	freelance	adj:フリーランスの、自由契約の
+gloss	investigative	adj:調査の
+gloss	navigate	verb:（道を）たどる、操縦する、うまく切り抜ける
+gloss	outreach	noun:支援活動、出張サービス
+gloss	sensory	adj:感覚の
+gloss	skeptical	adj:疑い深い、懐疑的な
+gloss	stunned	adj:呆然とした、驚いた
+gloss	theatrical	adj:演劇の、芝居がかった
+gloss	visually	adv:視覚的に
+gloss	activism	noun:（政治・社会）活動、行動主義
+gloss	airborne	adj:空中の、空気感染の
+gloss	astonishing	adj:驚くべき
+gloss	commercially	adv:商業的に
+gloss	diminished	adj:減少した
+gloss	fixture	noun:備品、定着した人・物、（スポーツの）試合予定
+gloss	focal	adj:焦点の、中心の
+gloss	gladly	adv:喜んで
+gloss	gradual	adj:徐々の、緩やかな
+gloss	imminent	adj:差し迫った
+gloss	proprietary	adj:所有者の、独占的な
+gloss	rant	verb:わめき立てる|noun:暴言
+gloss	sane	adj:正気の、分別のある
+gloss	statistically	adv:統計的に
+gloss	strangely	adv:奇妙に、不思議なことに
+gloss	unsafe	adj:危険な
+gloss	casually	adv:何気なく、くだけた服装で
+gloss	dire	adj:悲惨な、差し迫った
+gloss	distributor	noun:配給業者、販売代理店
+gloss	genetically	adv:遺伝的に
+gloss	imperative	adj:必須の、命令的な|noun:必須事項、命令法
+gloss	storytelling	noun:物語ること、ストーリーテリング
+gloss	tangible	adj:具体的な、触れられる
+gloss	drastically	adv:劇的に、徹底的に
+gloss	evenly	adv:均等に
+gloss	furnished	adj:家具付きの
+gloss	hugely	adv:非常に、大いに
+gloss	inaccurate	adj:不正確な
+gloss	intervene	verb:介入する、仲裁する
+gloss	receptor	noun:受容体
+gloss	salvage	verb:救出する、回収する|noun:救助、回収品
+gloss	undermine	verb:徐々に弱める、損なう
+gloss	vocational	adj:職業の
+gloss	adequately	adv:十分に、適切に
+gloss	approximate	adj:おおよその|verb:近づく、近似する
+gloss	contestant	noun:競技者、出場者
+gloss	culturally	adv:文化的に
+gloss	standardized	adj:標準化された
+gloss	transitional	adj:過渡的な、移行の
+gloss	unused	adj:使われていない
+gloss	align	verb:そろえる、一致させる、提携する
+gloss	coherent	adj:筋の通った、首尾一貫した
+gloss	discontinued	adj:製造中止の
+gloss	morally	adv:道徳的に
+gloss	practitioner	noun:開業医、実践者
+gloss	universally	adv:普遍的に、どこでも
+gloss	compressed	adj:圧縮された
+gloss	computational	adj:計算の、コンピューターの
+gloss	discouraged	adj:落胆した
+gloss	heavyweight	noun:ヘビー級、大物
+gloss	lawmaker	noun:立法者、議員
+gloss	loosely	adv:ゆるく、大まかに
+gloss	militant	adj:好戦的な、闘争的な|noun:過激派
+gloss	unanimously	adv:満場一致で
+gloss	vastly	adv:大いに、非常に
+gloss	violently	adv:激しく、乱暴に
+gloss	wisely	adv:賢明に
+# 第17弾の語源分解
+parts	corridor	corr=r:cur idor
+parts	leverage	lev=r:lev er age
+parts	obstacle	ob=pre:ob sta=r:sta cle
+parts	performer	perform=w:perform er=suf:er
+parts	pointless	point=w:point less=suf:less
+parts	sadness	sad=w:sad ness=suf:ness
+parts	shiny	shin=w:shine y=suf:y
+parts	undoubtedly	un=pre:un doubt=w:doubt ed ly=suf:ly
+parts	backyard	back=w:back yard=w:yard
+parts	billboard	bill=w:bill board=w:board
+parts	illegally	il=pre:in leg=r:lex al=suf:al ly=suf:ly
+parts	informal	in=pre:in form=r:form al=suf:al
+parts	marker	mark=w:mark er=suf:er
+parts	messy	mess=w:mess y=suf:y
+parts	promotional	pro=pre:pro mot=r:mob ion=suf:ation al=suf:al
+parts	seventeen	seven=w:seven teen
+parts	uncommon	un=pre:un common=w:common
+parts	upstairs	up=w:up stairs
+parts	congressman	con=pre:com gress=r:grad man=w:man
+parts	cooperative	co=pre:com oper=r:oper at ive=suf:ive
+parts	correlation	cor=pre:com re=pre:re lat=r:lat ion=suf:ation
+parts	endangered	en=pre:en danger=w:danger ed
+parts	fulfill	ful=w:full fill=w:fill
+parts	handbook	hand=w:hand book=w:book
+parts	judiciary	jud=r:jud ici ary=suf:ary
+parts	midfielder	mid field=w:field er=suf:er
+parts	mindset	mind=w:mind set=w:set
+parts	nonprofit	non=pre:non profit=w:profit
+parts	pickup	pick=w:pick up=w:up
+parts	sunlight	sun=w:sun light=w:light
+parts	taxpayer	tax=w:tax pay=w:pay er=suf:er
+parts	wheelchair	wheel=w:wheel chair=w:chair
+parts	censorship	censor=w:censor ship=suf:ship
+parts	composer	com=pre:com pos=r:pon er=suf:er
+parts	desirable	de=pre:de sir=r:sider able=suf:able
+parts	explorer	explor=w:explore er=suf:er
+parts	governmental	govern=w:govern ment=suf:ment al=suf:al
+parts	grandson	grand=w:grand son=w:son
+parts	necklace	neck=w:neck lace=w:lace
+parts	volleyball	volley=w:volley ball=w:ball
+parts	confront	con=pre:com front=w:front
+parts	daylight	day=w:day light=w:light
+parts	enthusiastic	en=pre:en thus=r:the iastic
+parts	paperwork	paper=w:paper work=w:work
+parts	prompt	pro=pre:pro mpt=r:em
+parts	promptly	prompt=w:prompt ly=suf:ly
+parts	renewal	re=pre:re new=w:new al=suf:al
+parts	ruler	rul=w:rule er=suf:er
+parts	steadily	steadi=w:steady ly=suf:ly
+parts	traveler	travel=w:travel er=suf:er
+parts	trustee	trust=w:trust ee=suf:ee
+parts	inherent	in=pre:into her=r:her ent=suf:ant
+parts	livestock	live=w:live stock=w:stock
+parts	notify	not=r:gno ify=suf:fy
+parts	outright	out=w:out right=w:right
+parts	overly	over=w:over ly=suf:ly
+parts	prototype	proto type=w:type
+parts	refined	re=pre:re fin=w:fine ed
+parts	refreshing	re=pre:re fresh=w:fresh ing
+parts	refusal	re=pre:re fus=r:fus al=suf:al
+parts	startup	start=w:start up=w:up
+parts	straightforward	straight=w:straight forward=w:forward
+parts	thoughtful	thought=w:think ful=suf:ful
+parts	archbishop	arch bishop=w:bishop
+parts	bibliography	biblio graph=r:graph y=suf:y
+parts	broadly	broad=w:broad ly=suf:ly
+parts	certainty	cert=r:cert ain ty=suf:ity
+parts	confined	con=pre:com fin=r:fin ed
+parts	consolidated	con=pre:com solid=w:solid at ed
+parts	coordinate	co=pre:com ordin=r:ord ate=suf:ate
+parts	decree	de=pre:de cree=r:cern
+parts	endure	en=pre:en dur=r:dur e
+parts	kilometer	kilo meter=r:meter
+parts	marketplace	market=w:market place=w:place
+parts	predecessor	pre=pre:pre de=pre:de cess=r:ced or=suf:er
+parts	rainfall	rain=w:rain fall=w:fall
+parts	redemption	red=pre:re empt=r:em ion=suf:ation
+parts	replay	re=pre:re play=w:play
+parts	sunrise	sun=w:sun rise=w:rise
+parts	twilight	twi light=w:light
+parts	unprecedented	un=pre:un pre=pre:pre ced=r:ced ent=suf:ant ed
+parts	vocabulary	voc=r:voc abul ary=suf:ary
+parts	assurance	as=pre:ad sur=w:sure ance=suf:ance
