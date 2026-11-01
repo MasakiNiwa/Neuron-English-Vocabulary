@@ -1136,3 +1136,145 @@ gloss	pants	noun:ズボン、（英）下着のパンツ
 gloss	plastic	noun:プラスチック|adj:プラスチックの、柔軟な
 gloss	loop	noun:輪、ループ|verb:輪にする
 gloss	default	noun:初期設定、債務不履行|verb:債務を怠る
+#
+# ---- 第9弾: 語源分解の誤判定
+exclude	r:cult	col
+exclude	r:rat	decoration,decorate,decorative,admiration,admire,vibration,vibrate,lucrative
+exclude	r:fid	faint
+exclude	r:act	pact
+exclude	r:pet	petrol,petroleum
+exclude	r:ver	verb,verbal,verge
+exclude	r:ple	ample,amplify
+exclude	r:cor	cork
+exclude	r:sal	salute,sultan,salsa
+exclude	r:sult	sultan
+exclude	r:grav	gravel
+exclude	r:fin	fin
+exclude	r:sol	sol,solicitor,solicit
+exclude	r:sta	staple,stool
+exclude	r:dent	dent
+exclude	r:sat	satire,satirical
+exclude	r:man	mantle
+exclude	r:dem	demolition,demolish
+exclude	r:mot	motel
+exclude	r:col	colon
+exclude	r:memor	remembrance
+exclude	r:sens	adolescent,crescent
+exclude	r:tang	tango
+exclude	r:tact	tango
+exclude	r:ven	venom
+exclude	pre:mis	mister
+exclude	r:mit	mister
+exclude	r:lumin	lucrative
+exclude	r:sed	sedan
+exclude	r:cad	suitcase
+exclude	r:vad	vase
+exclude	r:terr	interrogation,interrogate
+exclude	r:equ	equip,equipment,equipped
+#
+# ---- 第9弾: 2550〜3000 位の訳語
+drop	se
+drop	cooper
+drop	khan
+drop	li
+drop	charlotte
+drop	ac
+drop	er
+drop	eh
+drop	uh
+drop	huh
+drop	nope
+gloss	blast	noun:爆発、突風|verb:爆破する
+gloss	faculty	noun:（大学の）学部、教授陣、能力
+gloss	railroad	noun:（米）鉄道
+gloss	sufficient	adj:十分な
+gloss	tissue	noun:（生物の）組織、ティッシュペーパー
+gloss	amongst	prep:〜の間で、〜の中で
+gloss	arsenal	noun:兵器庫、武器
+gloss	bite	verb:かむ、かみつく|noun:かむこと、一口
+gloss	dynamic	adj:活動的な、動的な、力強い
+gloss	engagement	noun:婚約、約束、関与
+gloss	footage	noun:（記録）映像、場面
+gloss	grave	noun:墓|adj:重大な、厳粛な
+gloss	steady	adj:安定した、着実な
+gloss	unlikely	adj:ありそうもない、〜しそうにない
+gloss	bat	noun:バット、コウモリ|verb:打つ
+gloss	bow	verb:お辞儀する|noun:お辞儀、弓、蝶結び
+gloss	cape	noun:岬、ケープ（肩掛け）
+gloss	craft	noun:技術、工芸、船・航空機|verb:念入りに作る
+gloss	equity	noun:公平、株主資本、持ち分
+gloss	fortune	noun:財産、運、幸運
+gloss	seal	noun:印章、封印、アザラシ|verb:封をする
+gloss	slide	verb:滑る、滑らせる|noun:滑り台、スライド
+gloss	stem	noun:茎、幹|verb:生じる（from）、食い止める
+gloss	summit	noun:頂上、首脳会談
+gloss	carrier	noun:運ぶもの、運送会社、保菌者
+gloss	cite	verb:引用する、挙げる、召喚する
+gloss	integrate	verb:統合する、溶け込ませる
+gloss	jet	noun:ジェット機、噴射|verb:噴出する
+gloss	polish	verb:磨く|noun:つや出し、洗練
+gloss	remarkable	adj:注目すべき、驚くべき、素晴らしい
+gloss	reliable	adj:信頼できる、頼りになる
+gloss	sole	adj:唯一の、単独の|noun:足の裏、靴底
+gloss	worthy	adj:値する、立派な
+gloss	butt	noun:お尻、（たばこの）吸い殻
+gloss	con	verb:だます|noun:反対論、詐欺
+gloss	consideration	noun:考慮、思いやり、報酬
+gloss	crucial	adj:決定的な、きわめて重要な
+gloss	dependent	adj:頼っている、依存している、〜次第の
+gloss	dual	adj:二重の、二つの
+gloss	experimental	adj:実験的な、実験の
+gloss	intent	noun:意図|adj:熱心な、集中した
+gloss	knight	noun:騎士、ナイト
+gloss	mature	adj:成熟した、大人の|verb:成熟する
+gloss	spare	adj:予備の、余分の|verb:割く、惜しむ、免除する
+gloss	tap	verb:軽くたたく|noun:蛇口、軽くたたくこと
+gloss	acceptable	adj:受け入れられる、まずまずの
+gloss	execute	verb:実行する、処刑する
+gloss	margin	noun:余白、差、利ざや、ゆとり
+gloss	mar	verb:損なう、台無しにする
+gloss	parallel	adj:平行の、類似した|noun:類似点
+gloss	pit	noun:穴、くぼみ、（果物の）種
+gloss	quest	noun:探求、追求
+gloss	stroke	noun:脳卒中、一撃、（ペンの）一筆、ストローク
+gloss	stunning	adj:驚くほど美しい、衝撃的な
+gloss	tune	noun:曲、旋律|verb:調律する、調整する
+gloss	utility	noun:公共事業（ガス・水道など）、有用性
+gloss	vessel	noun:船、容器、血管
+gloss	clip	noun:クリップ、（動画の）一部|verb:切り取る、留める
+gloss	examination	noun:試験、検査、診察
+gloss	mainstream	noun:主流|adj:主流の
+gloss	offense	noun:違反、犯罪、攻撃、気分を害すること
+gloss	pursue	verb:追い求める、追跡する、続ける
+gloss	segment	noun:部分、区分
+gloss	considerable	adj:かなりの、相当な
+gloss	conventional	adj:従来の、慣習的な
+gloss	designated	adj:指定された
+gloss	conversion	noun:転換、変換、改宗
+gloss	divine	adj:神の、神聖な、素晴らしい
+gloss	exclusively	adv:もっぱら、独占的に
+gloss	mama	noun:ママ、お母さん
+gloss	modify	verb:修正する、変更する、修飾する
+gloss	pat	verb:軽くたたく、なでる
+gloss	toxic	adj:有毒な
+gloss	upgrade	verb:改良する、格上げする|noun:改良、アップグレード
+gloss	warrant	noun:令状、保証|verb:正当化する
+gloss	bless	verb:祝福する、恵む
+gloss	casual	adj:気楽な、普段着の、偶然の
+gloss	cock	noun:おんどり、雄鳥
+gloss	complain	verb:不平を言う、苦情を言う
+gloss	discipline	noun:規律、しつけ、学問分野|verb:しつける
+gloss	dominant	adj:支配的な、優勢な
+gloss	implement	verb:実行する、実施する|noun:道具
+gloss	ranger	noun:森林警備隊員、レンジャー
+gloss	shed	verb:流す、落とす、脱ぎ捨てる|noun:小屋
+gloss	subsequently	adv:その後、続いて
+gloss	substance	noun:物質、実質、要旨
+gloss	accidentally	adv:偶然に、誤って
+gloss	briefly	adv:簡潔に、少しの間
+gloss	integrity	noun:誠実さ、高潔、完全性
+gloss	legitimate	adj:合法的な、正当な
+gloss	nasty	adj:不快な、意地悪な、ひどい
+gloss	slight	adj:わずかな、ちょっとした
+gloss	twist	verb:ねじる、ひねる|noun:ねじれ、意外な展開
+gloss	ugh	intj:うえっ、げっ
