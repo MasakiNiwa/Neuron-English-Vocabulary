@@ -145,6 +145,7 @@ export function HelpPage() {
           <ul className="list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
             <li>語源・意味のネットワーク探索（WebGL による高速描画）</li>
             <li>語源の語源: 語根自体の成り立ち（例: jud = jus + dic）と、印欧祖語までさかのぼる祖語ファミリー（例: spec・scope ← *speḱ-「見る」）</li>
+            <li>句動詞の成り立ち: 動詞 + 不変化詞（up = すっかり、out = 外へ・最後まで など）のイメージから熟語を理解</li>
             <li>出題形式: 英→日・日→英・例文の穴埋め・4択・ミックス</li>
             <li>FSRS による記憶定着スケジューリング</li>
             <li>音声読み上げ（Web Speech API）</li>

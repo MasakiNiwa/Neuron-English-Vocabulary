@@ -90,6 +90,12 @@ function MorphemeView({ id }: { id: string }) {
         </Link>
       </div>
 
+      {m.desc && (
+        <Card className="mb-4 p-3 text-sm leading-relaxed">
+          <span className="mr-1 text-xs text-accent">イメージ</span>
+          {m.desc.ja}
+        </Card>
+      )}
       <PartsTree m={m} />
       <MorphList title="この語源を含む語源" ids={m.partOf} />
       <MorphList title="祖語（さらに古い祖先）" ids={m.family} />
@@ -99,7 +105,7 @@ function MorphemeView({ id }: { id: string }) {
         <>
           <div className="mb-2 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-muted">
-              {m.type === 'pie' ? 'この祖語に由来する単語' : t('words.wordsWithRoot')}（{words.length}）
+              {m.type === 'pie' ? 'この祖語に由来する単語' : m.type === 'particle' ? 'この不変化詞を使う熟語' : t('words.wordsWithRoot')}（{words.length}）
             </h2>
             <Button size="sm" onClick={async () => setAdded(await addManyToStudy(words.slice(0, 50).map((w) => w.key)))}>
               {added === null ? t('words.addToStudy') : `+${added}`}

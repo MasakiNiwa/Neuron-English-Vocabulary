@@ -39,6 +39,7 @@ export const MORPH_TYPE_LABEL: Record<Morpheme['type'], string> = {
   prefix: '接頭辞',
   suffix: '接尾辞',
   pie: '印欧祖語',
+  particle: '不変化詞',
 }
 
 /** 英文中の既知の単語を自動でリンク化する */
