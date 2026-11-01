@@ -283,6 +283,8 @@ phr_sel = []
 for w, c in pcount.most_common():
     if len(phr_sel) >= args.phrases:
         break
+    if w in DROP:
+        continue
     if c < 8:
         break
     es = cand[w]
@@ -611,6 +613,24 @@ for rank, (L, v) in enumerate(lemma_list, 1):
         'pie': pie_of(es),
     }
 
+particles = {}
+for r in read_tsv(os.path.join(REPO, 'data', 'particles.tsv')):
+    particles[r[0]] = {'meaning': r[1], 'note': r[2] if len(r) > 2 else ''}
+
+
+def phrase_parts(toks):
+    """句動詞の成り立ち: 各語を見出し語（w:）または不変化詞（pt:）に対応づける"""
+    out = []
+    for i, t in enumerate(toks):
+        if i > 0 and t in particles:
+            out.append({'s': t, 'm': 'pt:' + t})
+        else:
+            lt = lemma_of(t)
+            out.append({'s': t, 'm': ('w:' + lemmas[lt]['head']) if lt in lemmas else None})
+    # 不変化詞を含まない熟語（in fact など）は成り立ちを表示しない
+    return out if any(p['m'] and p['m'].startswith('pt:') for p in out) else None
+
+
 for prank, (w, c, es, tr) in enumerate(phr_sel, 1):
     toks = w.split(' ')
     vforms = {toks[0]} | {f for f, l in infl.items() if l == toks[0]}
@@ -624,7 +644,7 @@ for prank, (w, c, es, tr) in enumerate(phr_sel, 1):
         'ipa': ipa_of(es),
         'g': merge_gloss(tr, collect_tr(es, 'ko'), collect_tr(es, 'zh')),
         'd': defs(es),
-        'parts': None,
+        'parts': phrase_parts(toks),
         'ety': None,
         'forms': [],
         'comp': comps,
@@ -724,6 +744,14 @@ for typ, lst in (('root', roots), ('prefix', prefixes), ('suffix', suffixes)):
         ws = sorted(morph_words.get(m['id'], []), key=sort_key)
         morphemes.append({'id': m['id'], 'type': typ, 'label': m['label'], 'forms': m['forms'],
                           'meaning': {'ja': m['meaning']}, 'origin': m['origin'], 'words': ws})
+
+# 句動詞の不変化詞
+for pid, v in particles.items():
+    ws = sorted(morph_words.get('pt:' + pid, []), key=sort_key)
+    if ws:
+        morphemes.append({'id': 'pt:' + pid, 'type': 'particle', 'label': pid, 'forms': [pid],
+                          'meaning': {'ja': v['meaning']}, 'origin': '句動詞の不変化詞', 'words': ws,
+                          'desc': {'ja': v['note']} if v['note'] else None})
 
 # 印欧祖語の語根: その祖語から来た見出し語と、そこから生まれた語根
 pie_words = defaultdict(list)

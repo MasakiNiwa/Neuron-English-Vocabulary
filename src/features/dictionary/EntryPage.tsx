@@ -125,7 +125,7 @@ function SameRoot({ entry }: { entry: Entry }) {
     ...(entry.pie ?? []).map((id) => dict.morphById.get(id)),
   ].filter((m): m is Morpheme => !!m && m.words.length > 1)
   // 語根 → 祖語 → 接辞の順（接尾辞などは語数が多くなりやすいので後ろへ）
-  const order = { root: 0, pie: 1, prefix: 2, suffix: 3 }
+  const order = { root: 0, particle: 0, pie: 1, prefix: 2, suffix: 3 }
   ms.sort((a, b) => order[a.type] - order[b.type])
   if (!ms.length) return null
   return (
@@ -285,7 +285,7 @@ function EntryView({ entryKey }: { entryKey: string }) {
         </Section>
       )}
 
-      {entry.comp && entry.comp.length > 0 && (
+      {!entry.parts && entry.comp && entry.comp.length > 0 && (
         <Section title={t('words.parts')}>
           <ChipList keys={entry.comp} />
         </Section>

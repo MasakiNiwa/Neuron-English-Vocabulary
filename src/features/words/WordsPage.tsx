@@ -32,7 +32,7 @@ function Browse({ filter }: { filter: SearchFilter }) {
     setLimit(100)
   }, [filter])
   if (filter === 'm') {
-    const groups = (['root', 'prefix', 'suffix', 'pie'] as const).map((type) => ({
+    const groups = (['root', 'prefix', 'suffix', 'pie', 'particle'] as const).map((type) => ({
       type,
       list: dict.morphemes.filter((m) => m.type === type && m.words.length > 0).sort((a, b) => b.words.length - a.words.length),
     }))

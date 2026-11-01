@@ -66,7 +66,7 @@ export interface Entry {
 }
 
 /** pie = 印欧祖語の語根（英語・ラテン語・ギリシャ語の語根のさらに古い祖先） */
-export type MorphemeType = 'root' | 'prefix' | 'suffix' | 'pie'
+export type MorphemeType = 'root' | 'prefix' | 'suffix' | 'pie' | 'particle'
 
 export interface Morpheme {
   id: string
@@ -79,6 +79,8 @@ export interface Morpheme {
   /** この語源自体の成り立ち（語源の語源分解）: 構成する形態素ID */
   parts?: string[]
   partsNote?: { ja: string }
+  /** 補足説明（不変化詞のイメージなど） */
+  desc?: { ja: string } | null
   /** この語源を構成要素に含む語源 */
   partOf?: string[]
   /** 祖語ファミリー（印欧祖語の語根ID） */

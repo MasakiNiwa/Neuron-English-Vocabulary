@@ -21,6 +21,7 @@ const KIND_LABEL: Record<string, string> = {
   prefix: '接頭辞',
   suffix: '接尾辞',
   pie: '印欧祖語',
+  particle: '不変化詞',
 }
 
 function Legend() {

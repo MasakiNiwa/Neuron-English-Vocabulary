@@ -9,7 +9,7 @@ import type { Entry } from '@/features/dictionary/types'
  * ノードID: "e:<key>"（単語・熟語） / "m:<id>"（語根・接辞）
  */
 
-export type NodeKind = 'word' | 'phrase' | 'root' | 'prefix' | 'suffix' | 'pie'
+export type NodeKind = 'word' | 'phrase' | 'root' | 'prefix' | 'suffix' | 'pie' | 'particle'
 export type EdgeKind = 'morph' | 'syn' | 'ant' | 'der' | 'phrase' | 'rel' | 'co'
 
 export interface NodeAttrs {
@@ -39,6 +39,7 @@ export interface Palette {
   prefix: string
   suffix: string
   pie: string
+  particle: string
   edge: string
   edgeStrong: string
 }
@@ -53,6 +54,7 @@ export function readPalette(): Palette {
     prefix: v('--node-affix'),
     suffix: v('--node-affix'),
     pie: v('--node-pie'),
+    particle: v('--node-phrase'),
     edge: v('--edge'),
     edgeStrong: v('--edge-strong'),
   }
@@ -122,7 +124,7 @@ export function buildEntryGraph(dict: Dictionary, entry: Entry, pal: Palette, pe
     const m = dict.morphById.get(mid)
     if (!m) continue
     // 接尾辞は語数が多くノイズになりやすいので少なめに
-    const n = m.type === 'suffix' ? 4 : m.type === 'prefix' || m.type === 'pie' ? 6 : perMorph
+    const n = m.type === 'suffix' ? 4 : m.type === 'prefix' || m.type === 'pie' || m.type === 'particle' ? 6 : perMorph
     const mn = addMorphNode(g, dict, mid, pal, 12)
     link(g, center, mn, 'morph', pal, 3)
     for (const w of m.words.filter((x) => x !== entry.k).slice(0, n)) {
