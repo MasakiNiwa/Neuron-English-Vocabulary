@@ -208,3 +208,27 @@ phil	phil	philos,phílos,φίλος,philein,philia,philo-	愛する	ギリシャ
 soph	soph	sophia,sophía,σοφία,sophos,sophós,sophistes	知恵	ギリシャ語 sophia
 hydr	hydr	hydor,hýdōr,ὕδωρ,hydro-,hudor	水	ギリシャ語 hydor
 aster	astr,aster	astron,ástron,astēr,astḗr,astrum,astrologia,astronomia	星	ギリシャ語 astron
+# ---- 手動の語源分解（overrides.tsv の parts）で使う語根。語源判定キーは空にして自動判定には使わない
+em	em,empt,ampl,empl		取る・買う	ラテン語 emere
+bol	bol,bl,blem,ball		投げる	ギリシャ語 ballein
+erg	erg,urg,org		仕事・働き	ギリシャ語 ergon
+hod	hod,od		道	ギリシャ語 hodos
+mont	mont,mount		山・上がる	ラテン語 mons
+sider	sider		星	ラテン語 sidus
+cresc	cresc,creas,cret,cruit		育つ・増える	ラテン語 crescere
+mod	mod		尺度・ほどよさ	ラテン語 modus
+capit	capit,capt,chief,cap		頭	ラテン語 caput
+carr	carr,car,char		荷車・運ぶ	ラテン語 carrus
+cre	cre,creat		生み出す	ラテン語 creare
+minist	minist		仕える	ラテン語 ministrare
+fend	fend,fens		打つ・防ぐ	ラテン語 -fendere
+stinct	stinct,sting,stingu		印をつける・突く	ラテン語 stinguere
+merc	merc,merch,mark		商売・取引	ラテン語 merx
+rot	rot,roll,round		車輪・回る	ラテン語 rota
+insul	insul,isol		島	ラテン語 insula
+plan	plan,plain		平らな	ラテン語 planus
+lax	lax,leas		ゆるめる	ラテン語 laxare
+veh	veh,vect		運ぶ	ラテン語 vehere
+ess	ess,sent		ある・存在する	ラテン語 esse
+tom	tom		切る	ギリシャ語 temnein
+mir	mir		驚く・見とれる	ラテン語 mirari

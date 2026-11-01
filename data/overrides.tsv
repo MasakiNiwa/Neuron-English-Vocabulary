@@ -1868,3 +1868,213 @@ gloss	toast	noun:トースト、乾杯|verb:乾杯する、こんがり焼く
 gloss	trait	noun:特徴、特性
 gloss	tricky	adj:扱いにくい、厄介な、ずるい
 gloss	triumph	noun:勝利、大成功、勝利の喜び|verb:勝利する
+#
+# ---- 手動の語源分解（解説で語源を説明できた語を語源ネットワークにつなげる）
+#   parts	見出し語	綴り=形態素ID 綴り=形態素ID …（IDなしの綴りはつなぎ。w:語 は英語の語基）
+parts	president	pre=pre:pre sid=r:sed ent=suf:ant
+parts	current	cur=r:cur r ent=suf:ant
+parts	example	ex=pre:ex ampl=r:em e
+parts	problem	pro=pre:pro blem=r:bol
+parts	energy	en=pre:en erg=r:erg y=suf:y
+parts	period	peri=pre:peri od=r:hod
+parts	episode	epi=pre:epi s ode=r:hod
+parts	especially	e spec=r:spec ial=suf:al ly=suf:ly
+parts	available	a=pre:ad vail=r:val able=suf:able
+parts	relationship	re=pre:re lat=r:lat ion=suf:ation ship=suf:ship
+parts	amount	a=pre:ad mount=r:mont
+parts	consider	con=pre:com sider=r:sider
+parts	considerably	con=pre:com sider=r:sider ab=suf:able ly=suf:ly
+parts	increase	in=pre:into crease=r:cresc
+parts	recruit	re=pre:re cruit=r:cresc
+parts	financial	fin=r:fin anc=suf:ance ial=suf:al
+parts	view	view=r:vid
+parts	overview	over=w:over view=w:view
+parts	train	train=r:tract
+parts	trainer	train=w:train er=suf:er
+parts	league	leag=r:lig ue
+parts	unite	uni=pre:uni te
+parts	union	un=pre:uni ion=suf:ation
+parts	modest	mod=r:mod est
+parts	model	mod=r:mod el
+parts	accommodate	ac=pre:ad com=pre:com mod=r:mod ate=suf:ate
+parts	accommodation	ac=pre:ad com=pre:com mod=r:mod ation=suf:ation
+parts	forward	for=pre:fore ward=suf:ward
+parts	backwards	back=w:back wards=suf:ward
+parts	toward	to=w:to ward=suf:ward
+parts	chief	chief=r:capit
+parts	captain	capt=r:capit ain
+parts	capitol	capit=r:capit ol
+parts	capitalism	capit=r:capit al=suf:al ism=suf:ism
+parts	language	langu=r:lingu age
+parts	release	re=pre:re lease=r:lax
+parts	car	car=r:carr
+parts	career	car=r:carr eer
+parts	daily	dai=w:day ly=suf:ly
+parts	create	cre=r:cre ate=suf:ate
+parts	creativity	cre=r:cre at iv=suf:ive ity=suf:ity
+parts	truth	tru=w:true th
+parts	specific	spec=r:spec if=suf:fy ic=suf:ic
+parts	network	net=w:net work=w:work
+parts	weight	weigh=w:weigh t
+parts	western	west=w:west ern
+parts	completely	com=pre:com plet=r:ple e ly=suf:ly
+parts	husband	hus=w:house band
+parts	previous	pre=pre:pre vi=r:via ous=suf:ous
+parts	positive	pos=r:pon it ive=suf:ive
+parts	welcome	wel=w:well come=w:come
+parts	safety	safe=w:safe ty=suf:ity
+parts	degree	de=pre:de gree=r:grad
+parts	administration	ad=pre:ad minist=r:minist r ation=suf:ation
+parts	administrator	ad=pre:ad minist=r:minist r at or=suf:er
+parts	administer	ad=pre:ad minist=r:minist er
+parts	defense	de=pre:de fens=r:fend e
+parts	defendant	de=pre:de fend=r:fend ant=suf:ant
+parts	weekend	week=w:week end=w:end
+parts	multiple	multi=pre:multi ple=r:plic
+parts	competition	com=pre:com pet=r:pet ition=suf:ation
+parts	competitor	com=pre:com pet=r:pet it or=suf:er
+parts	establish	e sta=r:sta blish
+parts	notice	not=r:gno ice
+parts	notable	not=r:gno able=suf:able
+parts	explain	ex=pre:ex plain=r:plan
+parts	plan	plan=r:plan
+parts	pursuit	pur=pre:pro suit=r:sequ
+parts	reminder	re=pre:re mind=w:mind er=suf:er
+parts	pathetic	path=r:path et ic=suf:ic
+parts	sergeant	serg=r:serv eant
+parts	distinction	di=pre:dis stinct=r:stinct ion=suf:ation
+parts	distinctive	di=pre:dis stinct=r:stinct ive=suf:ive
+parts	laughter	laugh=w:laugh ter
+parts	rental	rent=w:rent al=suf:al
+parts	influential	in=pre:into flu=r:flu ent=suf:ant ial=suf:al
+parts	lawsuit	law=w:law suit=w:suit
+parts	musician	music=w:music ian
+parts	receiver	re=pre:re ceiv=r:cap er=suf:er
+parts	servant	serv=r:serv ant=suf:ant
+parts	surrender	sur=pre:super render=w:render
+parts	comparable	com=pre:com par=r:par able=suf:able
+parts	merchant	merch=r:merc ant=suf:ant
+parts	market	mark=r:merc et
+parts	rotation	rot=r:rot ation=suf:ation
+parts	round	round=r:rot
+parts	roller	roll=r:rot er=suf:er
+parts	warehouse	ware house=w:house
+parts	concentrate	con=pre:com centr=r:centr ate=suf:ate
+parts	momentum	mom=r:mob entum
+parts	rainbow	rain=w:rain bow=w:bow
+parts	testament	test=r:test a ment=suf:ment
+parts	alter	alter=r:alter
+parts	hatred	hat=w:hate red
+parts	measurement	meas=r:mens ure=suf:ure ment=suf:ment
+parts	passport	pass=w:pass port=w:port
+parts	sophisticated	soph=r:soph ist=suf:ist ic=suf:ic at=suf:ate ed
+parts	withdrawal	with=pre:with draw=w:draw al=suf:al
+parts	pipeline	pipe=w:pipe line=w:line
+parts	mineral	min=w:mine er al=suf:al
+parts	peninsula	pen insul=r:insul a
+parts	isolation	isol=r:insul ation=suf:ation
+parts	uncertainty	un=pre:un cert=r:cert ain ty=suf:ity
+parts	accordingly	ac=pre:ad cord=r:cor ing ly=suf:ly
+parts	enthusiasm	en=pre:en thus=r:the iasm
+parts	equation	equ=r:equ ation=suf:ation
+parts	ideology	ide=w:idea ology=suf:logy
+parts	keeper	keep=w:keep er=suf:er
+parts	liar	li=w:lie ar=suf:er
+parts	machinery	machin=w:machine ery=suf:ary
+parts	pending	pend=r:pend ing
+parts	probability	prob=r:prob abil=suf:able ity=suf:ity
+parts	rider	rid=w:ride er=suf:er
+parts	starter	start=w:start er=suf:er
+parts	width	wid=w:wide th
+parts	workout	work=w:work out=w:out
+parts	disappointment	dis=pre:dis appoint=w:appoint ment=suf:ment
+parts	formally	form=r:form al=suf:al ly=suf:ly
+parts	loser	los=w:lose er=suf:er
+parts	secretly	se=pre:se cret=r:cern ly=suf:ly
+parts	voluntary	vol=r:vol unt ary=suf:ary
+parts	disclosure	dis=pre:dis clos=r:clud ure=suf:ure
+parts	disposal	dis=pre:dis pos=r:pon al=suf:al
+parts	indirect	in=pre:in di=pre:dis rect=r:reg
+parts	magnitude	magn=r:magn itude
+parts	protester	pro=pre:pro test=r:test er=suf:er
+parts	accurately	ac=pre:ad cur=r:cura ate=suf:ate ly=suf:ly
+parts	dancer	danc=w:dance er=suf:er
+parts	denial	de=pre:de ni=r:neg al=suf:al
+parts	entrepreneur	entre=pre:inter pren=r:prehend eur=suf:er
+parts	prohibited	pro=pre:pro hib=r:hab it ed
+parts	rehabilitation	re=pre:re hab=r:hab il it ation=suf:ation
+parts	remix	re=pre:re mix=w:mix
+parts	upload	up=w:up load=w:load
+parts	vector	vect=r:veh or=suf:er
+parts	absent	ab=pre:ab sent=r:ess
+parts	essence	ess=r:ess ence=suf:ance
+parts	ancestor	an=pre:ante cest=r:ced or=suf:er
+parts	atomic	a=pre:a tom=r:tom ic=suf:ic
+parts	doctrine	doctr=r:doc ine
+parts	freshman	fresh=w:fresh man=w:man
+parts	gameplay	game=w:game play=w:play
+parts	irrelevant	ir=pre:in re=pre:re lev=r:lev ant=suf:ant
+parts	referendum	re=pre:re fer=r:fer endum
+parts	seasonal	season=w:season al=suf:al
+parts	teammate	team=w:team mate=w:mate
+parts	admire	ad=pre:ad mir=r:mir e
+parts	bullying	bully=w:bully ing
+parts	certification	cert=r:cert ific=suf:fy ation=suf:ation
+parts	continuously	con=pre:com tin=r:ten u ous=suf:ous ly=suf:ly
+parts	frontier	front=w:front ier
+parts	headache	head=w:head ache=w:ache
+parts	merger	merg=r:merg er
+parts	superintendent	super=pre:super in=pre:into tend=r:tend ent=suf:ant
+parts	suspicion	su=pre:sub spic=r:spec ion=suf:ation
+parts	thereafter	there=w:there after=w:after
+parts	wholesale	whole=w:whole sale=w:sale
+parts	clearance	clear=w:clear ance=suf:ance
+parts	countless	count=w:count less=suf:less
+parts	deceased	de=pre:de ceas=r:ced ed
+parts	explicitly	ex=pre:ex plic=r:plic it ly=suf:ly
+parts	reconstruction	re=pre:re con=pre:com struct=r:struct ion=suf:ation
+parts	substantially	sub=pre:sub stant=r:sta ial=suf:al ly=suf:ly
+parts	suburbs	sub=pre:sub urb=r:urb s
+parts	underwear	under=w:under wear=w:wear
+parts	today	to=w:to day=w:day
+parts	outside	out=w:out side=w:side
+parts	across	a cross=w:cross
+parts	beautiful	beauti=w:beauty ful=suf:ful
+# 新しく登録した語根の仲間
+parts	modern	mod=r:mod ern
+parts	mode	mod=r:mod e
+parts	moderate	mod=r:mod er ate=suf:ate
+parts	modify	mod=r:mod ify=suf:fy
+parts	module	mod=r:mod ule
+parts	commodity	com=pre:com mod=r:mod ity=suf:ity
+parts	capital	capit=r:capit al=suf:al
+parts	mischief	mis=pre:mis chief=r:capit
+parts	commerce	com=pre:com merce=r:merc
+parts	commercial	com=pre:com merc=r:merc ial=suf:al
+parts	merchandise	merch=r:merc and ise
+parts	creature	cre=r:cre ature=suf:ure
+parts	creation	cre=r:cre at ion=suf:ation
+parts	essential	ess=r:ess ent=suf:ant ial=suf:al
+parts	plain	plain=r:plan
+parts	rotate	rot=r:rot ate=suf:ate
+parts	crescent	cresc=r:cresc ent=suf:ant
+parts	concrete	con=pre:com cret=r:cresc e
+parts	vehicle	veh=r:veh icle
+parts	carry	carr=r:carr y
+parts	charge	char=r:carr ge
+parts	cargo	car=r:carr go
+parts	mount	mount=r:mont
+parts	mountain	mount=r:mont ain
+parts	symbol	sym=pre:syn bol=r:bol
+parts	anatomy	ana tom=r:tom y
+parts	miracle	mir=r:mir acle
+parts	mirror	mir=r:mir ror
+parts	minister	minist=r:minist er
+parts	offend	of=pre:ob fend=r:fend
+parts	offense	of=pre:ob fens=r:fend e
+parts	distinct	di=pre:dis stinct=r:stinct
+parts	distinguish	di=pre:dis stingu=r:stinct ish
+parts	instinct	in=pre:into stinct=r:stinct
+parts	method	met hod=r:hod
+parts	relax	re=pre:re lax=r:lax
+parts	desire	de=pre:de sire=r:sider

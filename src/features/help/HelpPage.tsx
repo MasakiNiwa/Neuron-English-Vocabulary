@@ -77,6 +77,7 @@ function DataStatus() {
     ['例文あり', c.withExamples],
     ['解説（書き下ろし）あり', c.withNote],
     ['訳語を手動で確認済み', c.manual],
+    ['語源分解を手動で登録', c.manualParts],
   ]
   return (
     <div className="mb-3 rounded-xl bg-surface-2 p-3">

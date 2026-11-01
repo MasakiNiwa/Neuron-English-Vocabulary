@@ -65,6 +65,8 @@ export interface Entry {
   note?: { ja: string }
   /** 訳語を手動で確認・修正済み */
   manual?: boolean
+  /** 語源分解を手動で登録した */
+  manualParts?: boolean
 }
 
 /** pie = 印欧祖語の語根（英語・ラテン語・ギリシャ語の語根のさらに古い祖先） */
@@ -104,6 +106,7 @@ export interface DataMeta {
     withPie?: number
     withNote?: number
     manual?: number
+    manualParts?: number
   }
   shardSize: number
 }
