@@ -5,7 +5,6 @@ import { selectClass } from '@/components/ui/Form'
 import { PROVIDERS, TASKS, useAiConfig, type ApiKeyEntry, type ProviderId } from './config'
 import { usePersonas } from './personas'
 import { ModelPicker } from './ModelPicker'
-import { ExternalAi } from './ExternalAi'
 import { inputClass, UnlockPanel } from './UnlockPanel'
 import { useVault } from './useVault'
 import { changePassphrase, deleteSecret, putSecret, registerPasskey, removePasskeys, resetVault, webauthnSupported } from './vault'
@@ -322,14 +321,6 @@ export function AiSettings() {
       </Sub>
       <Sub title="キャラクター">
         <Cast />
-      </Sub>
-      <Sub title="外部 AI 連携（任意）">
-        <details>
-          <summary className="cursor-pointer text-sm text-muted">API キーなしで、外部の AI サービスに解説データを作ってもらう</summary>
-          <div className="mt-3">
-            <ExternalAi />
-          </div>
-        </details>
       </Sub>
       <Sub title="その他">
         <label className="flex items-center gap-2 text-sm">

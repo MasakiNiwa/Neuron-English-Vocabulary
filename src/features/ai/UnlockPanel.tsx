@@ -69,7 +69,7 @@ export function UnlockPanel({ compact }: { compact?: boolean }) {
     >
       <div className="flex gap-2">
         <input type="password" className={inputClass} placeholder="パスフレーズ" value={pass} onChange={(e) => setPass(e.target.value)} autoComplete="current-password" />
-        <Button variant="primary" type="submit" disabled={busy || !pass}>
+        <Button variant="primary" type="submit" className="shrink-0 whitespace-nowrap" disabled={busy || !pass}>
           <Unlock className="size-4" /> 解除
         </Button>
       </div>
