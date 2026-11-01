@@ -12,7 +12,7 @@ export const PROVIDERS: Record<ProviderId, { name: string; keyUrl: string; sugge
     suggested: ['claude-opus-5-5', 'claude-sonnet-5-5', 'claude-haiku-5-5', 'claude-fable-5-1'],
   },
   openai: {
-    name: 'OpenAI',
+    name: 'ChatGPT (OpenAI)',
     keyUrl: 'https://platform.openai.com/api-keys',
     suggested: ['gpt-5', 'gpt-5-mini'],
   },
@@ -27,6 +27,9 @@ export const PROVIDERS: Record<ProviderId, { name: string; keyUrl: string; sugge
     suggested: ['openrouter/auto'],
   },
 }
+
+/** 既定のキャラクター: 解説役のニューロン先生 + 語源オタクのドクター・ルーツ */
+export const DEFAULT_CAST = ['sensei', 'roots']
 
 export interface ApiKeyEntry {
   id: string
@@ -68,7 +71,7 @@ export const useAiConfig = create<AiConfigState>()(
     (set) => ({
       keys: [],
       routes: {},
-      cast: ['sensei', 'mirai'],
+      cast: DEFAULT_CAST,
       reactionAfterStudy: true,
       addKey: (k) => set((s) => ({ keys: [...s.keys, k] })),
       updateKey: (id, patch) => set((s) => ({ keys: s.keys.map((k) => (k.id === id ? { ...k, ...patch } : k)) })),
@@ -81,7 +84,16 @@ export const useAiConfig = create<AiConfigState>()(
       setCast: (cast) => set({ cast }),
       set: (patch) => set(patch),
     }),
-    { name: 'nev-ai', version: 1 },
+    {
+      name: 'nev-ai',
+      version: 2,
+      migrate: (state, version) => {
+        const s = state as { cast?: string[] }
+        // v1 の既定（先生 + ミライ）のままなら新しい既定に置き換える
+        if (version < 2 && s.cast?.join() === 'sensei,mirai') s.cast = DEFAULT_CAST
+        return s as never
+      },
+    },
   ),
 )
 

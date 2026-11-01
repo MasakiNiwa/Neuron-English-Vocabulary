@@ -39,7 +39,7 @@ export async function complete(p: CompleteParams): Promise<string> {
     case 'gemini':
       return completeGemini(p)
     case 'openai':
-      return completeOpenAICompat(p, 'https://api.openai.com/v1/chat/completions')
+      return completeOpenAIResponses(p)
     case 'openrouter':
       return completeOpenAICompat(p, 'https://openrouter.ai/api/v1/chat/completions', {
         'HTTP-Referer': location.origin,
@@ -104,7 +104,64 @@ async function completeAnthropic(p: CompleteParams) {
   return '（ツール呼び出しの上限に達しました）'
 }
 
-// ---------------------------------------------------------------- OpenAI / OpenRouter
+// ---------------------------------------------------------------- OpenAI（Responses API）
+/**
+ * 新しい推論モデル（gpt-5.x など）は Chat Completions ではツールと推論を併用できないため、
+ * OpenAI は Responses API を使う。ツール結果は previous_response_id で会話をつないで返す。
+ */
+interface RespItem {
+  type: string
+  call_id?: string
+  name?: string
+  arguments?: string
+  content?: { type: string; text?: string }[]
+}
+
+async function completeOpenAIResponses(p: CompleteParams) {
+  const tools = p.tools?.map((t) => ({ type: 'function', name: t.name, description: t.description, parameters: t.parameters }))
+  let input: unknown[] = p.messages.map((m) => ({ role: m.role, content: m.content }))
+  let previous: string | undefined
+  for (let round = 0; round < MAX_ROUNDS; round++) {
+    const res = await fetch('https://api.openai.com/v1/responses', {
+      method: 'POST',
+      signal: p.signal,
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${p.apiKey}` },
+      body: JSON.stringify({
+        model: p.model,
+        instructions: p.system,
+        input,
+        ...(previous ? { previous_response_id: previous } : {}),
+        ...(tools?.length ? { tools } : {}),
+      }),
+    })
+    if (!res.ok) throw new Error(`${res.status}: ${(await res.text()).slice(0, 300)}`)
+    const json = (await res.json()) as { id: string; output: RespItem[] }
+    const calls = json.output.filter((o) => o.type === 'function_call')
+    if (!calls.length) {
+      return json.output
+        .filter((o) => o.type === 'message')
+        .flatMap((o) => o.content ?? [])
+        .filter((c) => c.type === 'output_text')
+        .map((c) => c.text ?? '')
+        .join('')
+    }
+    previous = json.id
+    input = await Promise.all(
+      calls.map(async (c) => {
+        let args: Record<string, unknown> = {}
+        try {
+          args = JSON.parse(c.arguments || '{}')
+        } catch {
+          /* 引数が壊れていても空で実行 */
+        }
+        return { type: 'function_call_output', call_id: c.call_id, output: await exec(p, c.name ?? '', args) }
+      }),
+    )
+  }
+  return '（ツール呼び出しの上限に達しました）'
+}
+
+// ---------------------------------------------------------------- OpenRouter（Chat Completions 互換）
 interface OAIMessage {
   role: 'system' | 'user' | 'assistant' | 'tool'
   content: string | null
@@ -178,29 +235,4 @@ async function completeGemini(p: CompleteParams) {
     contents.push({ role: 'user', parts: responses })
   }
   return '（ツール呼び出しの上限に達しました）'
-}
-
-// ---------------------------------------------------------------- モデル一覧
-export async function listModels(provider: ProviderId, apiKey: string): Promise<string[]> {
-  if (provider === 'anthropic') {
-    const client = new Anthropic({ apiKey, dangerouslyAllowBrowser: true })
-    const ids: string[] = []
-    for await (const m of client.models.list()) ids.push(m.id)
-    return ids
-  }
-  if (provider === 'gemini') {
-    const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=200', {
-      headers: { 'x-goog-api-key': apiKey },
-    })
-    if (!res.ok) throw new Error(`${res.status}`)
-    const j = (await res.json()) as { models: { name: string; supportedGenerationMethods?: string[] }[] }
-    return j.models
-      .filter((m) => m.supportedGenerationMethods?.includes('generateContent'))
-      .map((m) => m.name.replace(/^models\//, ''))
-  }
-  const url = provider === 'openai' ? 'https://api.openai.com/v1/models' : 'https://openrouter.ai/api/v1/models'
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${apiKey}` } })
-  if (!res.ok) throw new Error(`${res.status}`)
-  const j = (await res.json()) as { data: { id: string }[] }
-  return j.data.map((m) => m.id).sort()
 }

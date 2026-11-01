@@ -1,13 +1,13 @@
-import { Fingerprint, Plus, RefreshCw, Trash2, X } from 'lucide-react'
+import { Fingerprint, ListChecks, Plus, Trash2, X } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { selectClass } from '@/components/ui/Form'
 import { PROVIDERS, TASKS, useAiConfig, type ApiKeyEntry, type ProviderId } from './config'
 import { PERSONAS } from './personas'
-import { listModels } from './providers'
+import { ModelPicker } from './ModelPicker'
 import { inputClass, UnlockPanel } from './UnlockPanel'
 import { useVault } from './useVault'
-import { changePassphrase, deleteSecret, getSecret, putSecret, registerPasskey, removePasskeys, resetVault, webauthnSupported } from './vault'
+import { changePassphrase, deleteSecret, putSecret, registerPasskey, removePasskeys, resetVault, webauthnSupported } from './vault'
 
 function Sub({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -72,19 +72,12 @@ function AddKeyForm({ onDone }: { onDone: () => void }) {
 function KeyCard({ k }: { k: ApiKeyEntry }) {
   const update = useAiConfig((s) => s.updateKey)
   const remove = useAiConfig((s) => s.removeKey)
-  const [model, setModel] = useState('')
-  const [fetched, setFetched] = useState<string[] | null>(null)
-  const [err, setErr] = useState('')
-  const addModel = (m: string) => {
-    if (m && !k.models.includes(m)) update(k.id, { models: [...k.models, m] })
-    setModel('')
-  }
-  const options = [...new Set([...(fetched ?? []), ...PROVIDERS[k.provider].suggested])].filter((m) => !k.models.includes(m))
+  const [picking, setPicking] = useState(false)
   return (
     <div className="rounded-xl border border-border p-3">
       <div className="mb-2 flex items-center gap-2">
         <span className="rounded-md bg-surface-2 px-1.5 text-xs text-muted">{PROVIDERS[k.provider].name}</span>
-        <span className="flex-1 font-medium">{k.label}</span>
+        <span className="min-w-0 flex-1 truncate font-medium">{k.label}</span>
         <button
           type="button"
           aria-label="削除"
@@ -98,64 +91,31 @@ function KeyCard({ k }: { k: ApiKeyEntry }) {
           <Trash2 className="size-4" />
         </button>
       </div>
-      <div className="mb-2 flex flex-wrap gap-1.5">
-        {k.models.map((m) => (
-          <span key={m} className="inline-flex items-center gap-1 rounded-lg bg-accent-soft px-2 py-0.5 text-xs text-accent">
-            {m}
-            <button type="button" aria-label="外す" onClick={() => update(k.id, { models: k.models.filter((x) => x !== m) })}>
-              <X className="size-3" />
-            </button>
-          </span>
-        ))}
-      </div>
-      <div className="flex gap-2">
-        <input
-          list={`models-${k.id}`}
-          className={inputClass}
-          placeholder="モデルを追加（候補から選択 or 入力）"
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault()
-              addModel(model.trim())
-            }
-          }}
-        />
-        <datalist id={`models-${k.id}`}>
-          {options.map((m) => (
-            <option key={m} value={m} />
+      {k.models.length > 0 ? (
+        <div className="mb-2 flex flex-wrap gap-1.5">
+          {k.models.map((m) => (
+            <span key={m} className="inline-flex max-w-full items-center gap-1 rounded-lg bg-accent-soft px-2 py-0.5 text-xs text-accent">
+              <span className="truncate">{m}</span>
+              <button type="button" aria-label="外す" onClick={() => update(k.id, { models: k.models.filter((x) => x !== m) })}>
+                <X className="size-3" />
+              </button>
+            </span>
           ))}
-        </datalist>
-        <Button size="sm" className="h-10" onClick={() => addModel(model.trim())} aria-label="追加">
-          <Plus className="size-4" />
-        </Button>
-        <Button
-          size="sm"
-          className="h-10"
-          title="API からモデル一覧を取得"
-          onClick={async () => {
-            setErr('')
-            try {
-              const key = await getSecret(k.id)
-              setFetched(await listModels(k.provider, key ?? ''))
-            } catch (e) {
-              setErr(String(e))
-            }
-          }}
-        >
-          <RefreshCw className="size-4" />
-        </Button>
-      </div>
-      {fetched && <p className="mt-1 text-xs text-muted">{fetched.length} 件のモデルを取得しました（入力欄の候補に表示）</p>}
-      {err && <p className="mt-1 text-xs text-danger">{err}</p>}
+        </div>
+      ) : (
+        <p className="mb-2 text-xs text-muted">モデルが選択されていません</p>
+      )}
+      <Button size="sm" className="w-full" onClick={() => setPicking(true)}>
+        <ListChecks className="size-4" /> モデルを選択（{k.models.length}）
+      </Button>
+      <ModelPicker apiKey={k} open={picking} onOpenChange={setPicking} />
     </div>
   )
 }
 
 function Routing() {
   const { keys, routes, setRoute } = useAiConfig()
-  const conns = keys.flatMap((k) => k.models.map((m) => ({ value: `${k.id}|${m}`, label: `${PROVIDERS[k.provider].name.split(' ')[0]} / ${k.label} / ${m}` })))
+  const conns = keys.flatMap((k) => k.models.map((m) => ({ value: `${k.id}|${m}`, label: `${PROVIDERS[k.provider].name.split(' (')[0]} / ${k.label} / ${m}` })))
   if (!conns.length) return <p className="text-sm text-muted">API キーとモデルを登録すると設定できます。</p>
   return (
     <div className="flex flex-col gap-2">

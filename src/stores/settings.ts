@@ -11,6 +11,7 @@ export interface Settings {
   ttsVoiceURI: string | null
   ttsRate: number
   autoSpeak: boolean
+  /** 1日の新規カード上限（0 = 無制限） */
   dailyNewLimit: number
   desiredRetention: number
   /** 「カードを追加」で追加を始める頻度順位 */
@@ -24,7 +25,7 @@ export const defaultSettings: Settings = {
   ttsVoiceURI: null,
   ttsRate: 0.95,
   autoSpeak: false,
-  dailyNewLimit: 20,
+  dailyNewLimit: 0,
   desiredRetention: 0.9,
   studyStartRank: 500,
 }
@@ -42,6 +43,15 @@ export const useSettings = create<SettingsStore>()(
       set: (key, value) => set({ [key]: value } as Partial<Settings>),
       reset: () => set({ ...defaultSettings }),
     }),
-    { name: 'nev-settings', version: 1 },
+    {
+      name: 'nev-settings',
+      version: 2,
+      migrate: (state, version) => {
+        const s = state as Partial<Settings>
+        // v2: 1日の新規カード上限の既定を「無制限 (0)」に変更
+        if (version < 2 && s.dailyNewLimit === 20) s.dailyNewLimit = 0
+        return s as never
+      },
+    },
   ),
 )

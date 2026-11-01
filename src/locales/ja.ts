@@ -68,7 +68,7 @@ const ja = {
     autoSpeak: '単語ページを開いたら自動で読み上げる',
     testSpeak: '試しに再生',
     study: '学習',
-    dailyNew: '1日の新規カード上限',
+    dailyNew: '1日の新規カード上限（0 で無制限）',
     retention: '目標記憶保持率',
     ai: 'AI 連携',
     data: 'データ管理',
