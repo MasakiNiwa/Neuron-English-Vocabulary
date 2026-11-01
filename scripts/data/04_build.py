@@ -800,7 +800,8 @@ for k, e in entries.items():
     short = '、'.join(flat[:3])
     pos = ''.join(sorted({g['p'][:4] for g in e['g']}))
     index_rows.append([k, 0 if e['t'] == 'w' else 1, e['r'], short, [g['p'] for g in e['g']], shard,
-                       [p['m'] for p in (e.get('parts') or []) if p['m'] and not p['m'].startswith('w:')] + (e.get('pie') or [])])
+                       [p['m'] for p in (e.get('parts') or []) if p['m'] and not p['m'].startswith('w:')] + (e.get('pie') or []),
+                       1 if e.get('note') else 0])
 for name, data in shards.items():
     with open(os.path.join(OUT, 'entries', name + '.json'), 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, separators=(',', ':'))

@@ -2,8 +2,8 @@
 
 export type PosCode = 'noun' | 'verb' | 'adj' | 'adv' | 'prep' | 'conj' | 'pron' | 'det' | 'intj' | 'num' | 'phrase' | string
 
-/** index.json の1行: [key, type(0=単語,1=熟語), rank, 短い訳, 品詞[], shard, 形態素ID[]] */
-export type IndexRow = [string, 0 | 1, number, string, PosCode[], string, string[]]
+/** index.json の1行: [key, type(0=単語,1=熟語), rank, 短い訳, 品詞[], shard, 形態素ID[], 解説あり(1/0)] */
+export type IndexRow = [string, 0 | 1, number, string, PosCode[], string, string[], (0 | 1)?]
 
 export interface IndexEntry {
   key: string
@@ -13,6 +13,8 @@ export interface IndexEntry {
   pos: PosCode[]
   shard: string
   morphs: string[]
+  /** 書き下ろし解説がある */
+  hasNote: boolean
 }
 
 export interface Gloss {

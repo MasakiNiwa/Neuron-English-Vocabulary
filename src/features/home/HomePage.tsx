@@ -1,6 +1,6 @@
 import { Link, useNavigate } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { GraduationCap, Shuffle, Sparkles } from 'lucide-react'
+import { BookOpenText, GraduationCap, Shuffle, Sparkles } from 'lucide-react'
 import { Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Card, SectionTitle } from '@/components/ui/Card'
@@ -8,8 +8,8 @@ import { Page } from '@/components/ui/Page'
 import { SearchField } from '@/components/ui/SearchField'
 import { PageSpinner } from '@/components/ui/Spinner'
 import { db } from '@/lib/db'
-import { EntryLink, MorphemeLink } from '@/features/dictionary/components/links'
-import { useDictionary, useRecentEntries } from '@/features/dictionary/hooks'
+import { EntryLink, LinkedText, MorphemeLink } from '@/features/dictionary/components/links'
+import { useDictionary, useEntry, useRecentEntries } from '@/features/dictionary/hooks'
 
 function dayIndex(n: number) {
   const d = new Date()
@@ -38,6 +38,32 @@ function TodayRoot() {
           </span>
         ))}
       </div>
+    </Card>
+  )
+}
+
+function TodayNote() {
+  const dict = useDictionary()
+  const pool = useMemo(() => dict.entries.filter((e) => e.hasNote), [dict])
+  const ie = pool.length ? pool[(dayIndex(pool.length) * 7919) % pool.length] : null
+  return ie ? <TodayNoteCard entryKey={ie.key} /> : null
+}
+
+function TodayNoteCard({ entryKey }: { entryKey: string }) {
+  const entry = useEntry(entryKey)
+  if (!entry?.note) return null
+  return (
+    <Card>
+      <SectionTitle className="flex items-center gap-1.5">
+        <BookOpenText className="size-4" /> きょうの解説
+      </SectionTitle>
+      <div className="mb-1 flex items-baseline gap-2">
+        <EntryLink k={entry.k} className="font-en text-lg font-semibold" />
+        <span className="text-sm text-muted">{entry.g[0]?.ja.slice(0, 3).join('、')}</span>
+      </div>
+      <p className="text-sm leading-relaxed">
+        <LinkedText text={entry.note.ja} />
+      </p>
     </Card>
   )
 }
@@ -135,6 +161,11 @@ export function HomePage() {
         <StudySummary />
         <Suspense fallback={<PageSpinner />}>
           <TodayRoot />
+        </Suspense>
+        <Suspense fallback={null}>
+          <div className="md:col-span-2">
+            <TodayNote />
+          </div>
         </Suspense>
         <Suspense fallback={null}>
           <div className="md:col-span-2">
