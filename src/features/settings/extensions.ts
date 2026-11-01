@@ -1,7 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
 import type { ComponentType } from 'react'
 import type { TKey } from '@/lib/i18n'
-import { Bot } from 'lucide-react'
+import { Bot, ExternalLink } from 'lucide-react'
 import { lazy } from 'react'
 
 /**
@@ -21,5 +21,11 @@ export const settingsExtensions: SettingsExtension[] = [
     titleKey: 'settings.ai',
     icon: Bot,
     Component: lazy(() => import('@/features/ai/AiSettings').then((m) => ({ default: m.AiSettings }))),
+  },
+  {
+    id: 'external-ai',
+    titleKey: 'settings.externalAi',
+    icon: ExternalLink,
+    Component: lazy(() => import('@/features/ai/ExternalAiSettings').then((m) => ({ default: m.ExternalAiSettings }))),
   },
 ]

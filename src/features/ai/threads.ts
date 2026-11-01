@@ -37,3 +37,13 @@ export async function deleteAllThreads() {
     await db.threads.clear()
   })
 }
+
+export async function renameThread(id: string, title: string) {
+  const t = title.trim().slice(0, 60)
+  if (t) await db.threads.update(id, { title: t })
+}
+
+/** 指定したメッセージ以降を削除（編集して送り直す・再生成のため） */
+export async function deleteMessagesFrom(thread: string, createdAt: number) {
+  await db.chats.where('thread').equals(thread).filter((m) => m.createdAt >= createdAt).delete()
+}
