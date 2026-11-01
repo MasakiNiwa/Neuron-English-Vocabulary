@@ -132,7 +132,7 @@ port	port	portare,portāre,porto,portō	運ぶ	ラテン語 portare
 pot	pot,poss,pow	posse,potis,potens,potentia,possibilis	力がある・できる	ラテン語 posse
 prehend	prehend,prehens,pris,priz	prehendere,prehensus,prendere,prensus,prise	つかむ	ラテン語 prehendere
 press	press,prim,print	premere,pressus,pressare	押す	ラテン語 premere
-prim	prim,prin,prem	primus,prīmus,princeps	第一の	ラテン語 primus
+prim	prim,prem	primus,prīmus,princeps	第一の	ラテン語 primus
 priv	priv	privus,prīvus,privatus,prīvātus	個人の・切り離された	ラテン語 privus
 prob	prob,prov,proof	probare,probāre,probus	試す・証明する	ラテン語 probare
 psych	psych	psyche,psukhḗ,ψυχή,psukhe	心・魂	ギリシャ語 psyche
@@ -202,3 +202,9 @@ volv	volv,volu,volt	volvere,volutus,volūtus	転がる・回る	ラテン語 vol
 dat	dat,don,dot	dare,dāre,datus,dātus,datum,dātum,donare,dōnāre,donum,dōnum,dos,dōs	与える	ラテン語 dare
 hend			つかむ	ラテン語 -hendere（単独では使われない）
 crat	crat,crac	kratos,krátos,κράτος,kratia,-kratia,krateia	力・支配	ギリシャ語 kratos
+princ	princ,princip	princeps,principium,principalis,princeps,prīnceps,prīncipium	第一の位置を取る	ラテン語 princeps（primus + capere）
+geo	geo	gē,ge,geo-,geōgraphía,geographia,geometria,geologia	大地・地球	ギリシャ語 gē
+phil	phil	philos,phílos,φίλος,philein,philia,philo-	愛する	ギリシャ語 philos
+soph	soph	sophia,sophía,σοφία,sophos,sophós,sophistes	知恵	ギリシャ語 sophia
+hydr	hydr	hydor,hýdōr,ὕδωρ,hydro-,hudor	水	ギリシャ語 hydor
+aster	astr,aster	astron,ástron,astēr,astḗr,astrum,astrologia,astronomia	星	ギリシャ語 astron
