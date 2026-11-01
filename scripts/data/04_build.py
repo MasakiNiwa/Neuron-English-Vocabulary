@@ -177,6 +177,7 @@ def jm_gloss(word: str, min_score=25):
 
 # ---------------------------------------------------------------- 見出し語の選定
 print('selecting headwords…')
+DROP = {r[1] for r in read_tsv(os.path.join(REPO, 'data', 'overrides.tsv')) if r[0] == 'drop' and len(r) > 1}
 top = top_n_list('en', 80000)
 lemmas: dict[str, dict] = {}
 skipped_no_ja = 0
@@ -205,7 +206,7 @@ for w in top:
             L = w
         else:
             continue
-    if L in lemmas:
+    if L in lemmas or L in DROP:
         continue
     key = 'I' if L == 'i' else L
     es = entries_for(key) or entries_for(L)
@@ -657,6 +658,20 @@ for mid, words in overrides_exclude.items():
         if e and e.get('parts') and any(p['m'] == mid for p in e['parts']):
             e['parts'] = None  # 誤った分解は丸ごと取り除く（部分的に残すと不自然になるため）
 
+# ---------------------------------------------------------------- 解説（data/explanations/*.tsv）
+# このリポジトリで書き下ろす「語源・意味のつながり」の解説。頻出語から少しずつ追加していく。
+import glob as _glob
+explained = 0
+for path in sorted(_glob.glob(os.path.join(REPO, 'data', 'explanations', '*.tsv'))):
+    for r in read_tsv(path):
+        if len(r) < 2:
+            continue
+        e = entries.get(key_of(r[0]))
+        if e:
+            e['note'] = {'ja': r[1].strip()}
+            explained += 1
+print('explanations', explained)
+
 # 関連語をデータ内に存在するものだけに解決
 lower_key = {k.lower().replace('_', ' '): k for k in entries}
 
@@ -777,6 +792,8 @@ meta = {
         'withParts': sum(1 for e in entries.values() if e.get('parts')),
         'withExamples': sum(1 for e in entries.values() if e.get('ex')),
         'pieRoots': sum(1 for m in morphemes if m['type'] == 'pie'),
+        'withNote': sum(1 for e in entries.values() if e.get('note')),
+        'manual': sum(1 for e in entries.values() if e.get('manual')),
         'withPie': sum(1 for e in entries.values() if e.get('pie')),
     },
     'shardSize': SHARD,

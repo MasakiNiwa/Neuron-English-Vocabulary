@@ -59,6 +59,10 @@ export interface Entry {
   freq?: number
   /** 印欧祖語の語根ID */
   pie?: string[]
+  /** このリポジトリで書き下ろした解説 */
+  note?: { ja: string }
+  /** 訳語を手動で確認・修正済み */
+  manual?: boolean
 }
 
 /** pie = 印欧祖語の語根（英語・ラテン語・ギリシャ語の語根のさらに古い祖先） */
@@ -86,6 +90,16 @@ export interface Morpheme {
 export interface DataMeta {
   version: string
   generatedAt: string
-  counts: { words: number; phrases: number; morphemes: number; withParts: number; withExamples: number }
+  counts: {
+    words: number
+    phrases: number
+    morphemes: number
+    withParts: number
+    withExamples: number
+    pieRoots?: number
+    withPie?: number
+    withNote?: number
+    manual?: number
+  }
   shardSize: number
 }

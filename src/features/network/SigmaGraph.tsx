@@ -113,6 +113,25 @@ export function SigmaGraph({
       renderer.refresh({ skipIndexation: true })
     })
     renderer.on('clickNode', ({ node }) => clickRef.current?.(node, graph.getNodeAttributes(node)))
+    // 点の中だけでなく、点の周り・ラベル文字の上をタップしても反応するように判定範囲を広げる
+    renderer.on('clickStage', ({ event }) => {
+      let best: string | null = null
+      let bestD = Infinity
+      graph.forEachNode((node, a) => {
+        const vp = renderer.graphToViewport({ x: a.x, y: a.y })
+        const size = renderer.getNodeDisplayData(node)?.size ?? 5
+        const dx = event.x - vp.x
+        const dy = event.y - vp.y
+        const d = Math.hypot(dx, dy)
+        const labelW = (a.label?.length ?? 0) * 7.5
+        const onLabel = dx >= 0 && dx <= size + 8 + labelW && Math.abs(dy) <= 11
+        if ((d <= size + 16 || onLabel) && d < bestD) {
+          best = node
+          bestD = d
+        }
+      })
+      if (best) clickRef.current?.(best, graph.getNodeAttributes(best))
+    })
 
     let layout: FA2Layout | null = null
     let timer: number | undefined

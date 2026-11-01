@@ -6,6 +6,8 @@ import { Card } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { appInfo, assetUrl } from '@/lib/appInfo'
 import { dataSources } from './credits'
+import { loadMeta } from '@/features/dictionary/data'
+import type { DataMeta } from '@/features/dictionary/types'
 
 interface ThirdParty {
   name: string
@@ -56,6 +58,40 @@ function ThirdPartyLicenses() {
         </li>
       ))}
     </ul>
+  )
+}
+
+function DataStatus() {
+  const [meta, setMeta] = useState<DataMeta | null>(null)
+  useEffect(() => {
+    void loadMeta().then(setMeta).catch(() => {})
+  }, [])
+  if (!meta) return null
+  const c = meta.counts
+  const rows: [string, number | undefined][] = [
+    ['単語', c.words],
+    ['熟語・句動詞', c.phrases],
+    ['語根・接辞・祖語', c.morphemes],
+    ['語の成り立ちあり', c.withParts],
+    ['祖語ファミリーあり', c.withPie],
+    ['例文あり', c.withExamples],
+    ['解説（書き下ろし）あり', c.withNote],
+    ['訳語を手動で確認済み', c.manual],
+  ]
+  return (
+    <div className="mb-3 rounded-xl bg-surface-2 p-3">
+      <div className="mb-1 text-xs text-muted">単語データの状況（{meta.version}）。コンテンツは少しずつ拡充しています。</div>
+      <div className="grid gap-x-6 gap-y-0.5 text-sm sm:grid-cols-2">
+        {rows
+          .filter(([, v]) => v !== undefined)
+          .map(([k, v]) => (
+            <div key={k} className="flex justify-between gap-2">
+              <span className="text-muted">{k}</span>
+              <span className="font-mono">{v!.toLocaleString()}</span>
+            </div>
+          ))}
+      </div>
+    </div>
   )
 }
 
@@ -140,6 +176,7 @@ export function HelpPage() {
           </div>
         </AccordionSection>
         <AccordionSection value="data-sources" title={t('help.dataSources')} icon={<Database className="size-5" />}>
+          <DataStatus />
           <ul className="flex flex-col gap-3 text-sm">
             {dataSources.map((d) => (
               <li key={d.name}>
