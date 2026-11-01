@@ -36,7 +36,7 @@ let dekRaw: Uint8Array | null = null
 let dekKey: CryptoKey | null = null
 let lockTimer: number | undefined
 const listeners = new Set<() => void>()
-export const AUTO_LOCK_MS = 30 * 60 * 1000
+export const AUTO_LOCK_MS = 60 * 60 * 1000
 
 function emit() {
   listeners.forEach((l) => l())

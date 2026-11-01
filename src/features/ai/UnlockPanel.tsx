@@ -32,7 +32,7 @@ export function UnlockPanel({ compact }: { compact?: boolean }) {
     return (
       <div className="flex items-center gap-2 text-sm">
         <Unlock className="size-4 text-success" />
-        <span className="flex-1">ロック解除中（30分操作がないと自動でロック）</span>
+        <span className="flex-1">ロック解除中（60分操作がないと自動でロック）</span>
         <Button size="sm" onClick={lock}>
           <Lock className="size-4" /> ロック
         </Button>

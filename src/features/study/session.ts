@@ -37,7 +37,7 @@ export async function getStudyStats(): Promise<StudyStats> {
   const newCards = active.filter((c) => c.state === 0).length
   return {
     due: active.filter((c) => c.state !== 0 && c.due <= now).length,
-    newAvailable: Math.min(newCards, Math.max(0, limit - newToday)),
+    newAvailable: limit > 0 ? Math.min(newCards, Math.max(0, limit - newToday)) : newCards,
     newToday,
     total: cards.length,
     reviewedToday,
@@ -50,7 +50,7 @@ export async function buildQueue(): Promise<StudyCard[]> {
   const cards = (await db.cards.toArray()).filter((c) => !c.suspended)
   const due = cards.filter((c) => c.state !== 0 && c.due <= now).sort((a, b) => a.due - b.due)
   const limit = useSettings.getState().dailyNewLimit
-  const remainingNew = Math.max(0, limit - (await newIntroducedToday()))
+  const remainingNew = limit > 0 ? Math.max(0, limit - (await newIntroducedToday())) : Infinity
   const fresh = cards
     .filter((c) => c.state === 0)
     .sort((a, b) => a.addedAt - b.addedAt)
@@ -67,16 +67,58 @@ export async function buildQueue(): Promise<StudyCard[]> {
   return queue
 }
 
-/** 頻度順で、まだ学習に入っていない単語を n 件追加 */
-export async function addNextFrequentWords(n: number, type: 'w' | 'p' = 'w') {
+// ---------------------------------------------------------------- 新しく学ぶ・自由に練習
+
+export type LearnSource = 'frequency' | 'recent' | 'root'
+
+/** 学習に入っていない単語を選ぶ */
+export async function pickNewWords(
+  source: LearnSource,
+  n: number,
+  opts: { type?: 'w' | 'p'; rootId?: string } = {},
+): Promise<string[]> {
   const dict = await loadDictionary()
   const existing = new Set(await db.cards.toCollection().primaryKeys())
+  if (source === 'recent') {
+    const views = await db.views.orderBy('viewedAt').reverse().limit(500).toArray()
+    return [...new Set(views.map((v) => v.entryId))].filter((k) => !existing.has(k) && dict.byKey.has(k)).slice(0, n)
+  }
+  if (source === 'root') {
+    const m = opts.rootId ? dict.morphById.get(opts.rootId) : undefined
+    return (m?.words ?? []).filter((k) => !existing.has(k)).slice(0, n)
+  }
+  const type = opts.type ?? 'w'
   const start = type === 'w' ? useSettings.getState().studyStartRank : 1
   const FUNCTION = new Set(['det', 'prep', 'conj', 'pron', 'article', 'particle', 'intj', 'num'])
-  const keys = dict.entries
+  return dict.entries
     .filter((e) => e.type === type && e.rank >= start && !existing.has(e.key))
     .filter((e) => type === 'p' || !e.pos.every((p) => FUNCTION.has(p)))
     .slice(0, n)
     .map((e) => e.key)
-  return addManyToStudy(keys)
+}
+
+/** 選んだ単語をカードにしてすぐ学習を始める（1日の上限とは無関係にユーザーの操作で開始） */
+export async function startLearning(keys: string[]): Promise<StudyCard[]> {
+  await addManyToStudy(keys)
+  const cards = await db.cards.bulkGet(keys)
+  return cards.filter((c): c is StudyCard => !!c)
+}
+
+export type PracticeMode = 'random' | 'weak' | 'recent'
+
+/** 復習日に関係なく、学習中のカードから自由に練習 */
+export async function buildPracticeQueue(mode: PracticeMode, n: number): Promise<StudyCard[]> {
+  const cards = (await db.cards.toArray()).filter((c) => !c.suspended)
+  if (mode === 'weak') {
+    return cards
+      .filter((c) => c.state !== 0)
+      .sort((a, b) => b.lapses - a.lapses || b.difficulty - a.difficulty)
+      .slice(0, n)
+  }
+  if (mode === 'recent') return cards.sort((a, b) => b.addedAt - a.addedAt).slice(0, n)
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[cards[i], cards[j]] = [cards[j], cards[i]]
+  }
+  return cards.slice(0, n)
 }

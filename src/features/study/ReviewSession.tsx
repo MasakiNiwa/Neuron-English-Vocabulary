@@ -113,7 +113,7 @@ function CardBack({ entryKey }: { entryKey: string }) {
   )
 }
 
-export function ReviewSession({ queue, onDone }: { queue: StudyCard[]; onDone: (n: number) => void }) {
+export function ReviewSession({ queue, onDone, mode = 'review' }: { queue: StudyCard[]; onDone: (n: number) => void; mode?: string }) {
   const dict = useDictionary()
   const autoSpeak = useSettings((s) => s.autoSpeak)
   const [idx, setIdx] = useState(0)
@@ -167,14 +167,14 @@ export function ReviewSession({ queue, onDone }: { queue: StudyCard[]; onDone: (
     async (g: Grade) => {
       if (!card) return
       navigator.vibrate?.(g === Rating.Again ? [20, 40, 20] : 10)
-      await review(card.entryId, g, { durationMs: Date.now() - startRef.current, mode: 'en2ja' })
+      await review(card.entryId, g, { durationMs: Date.now() - startRef.current, mode })
       setCount((n) => n + 1)
       // 「もう一度」は数枚後に再出題
       if (g === Rating.Again) queue.splice(Math.min(queue.length, idx + 4), 0, card)
       if (idx + 1 >= queue.length) onDone(count + 1)
       else setIdx(idx + 1)
     },
-    [card, idx, queue, onDone, count],
+    [card, idx, queue, onDone, count, mode],
   )
 
   useEffect(() => {
@@ -206,6 +206,9 @@ export function ReviewSession({ queue, onDone }: { queue: StudyCard[]; onDone: (
         <span>
           {idx + 1} / {queue.length}
         </span>
+        <button type="button" onClick={() => onDone(count)} className="ml-1 rounded-md px-1.5 py-0.5 hover:bg-surface-2 hover:text-fg">
+          終了
+        </button>
       </div>
       <div ref={cardRef} style={{ perspective: 800 }}>
         <Card className="flex min-h-80 flex-col items-center justify-center gap-4 p-6 text-center">
