@@ -44,12 +44,20 @@ python3 scripts/data/04_build.py --work $WORK --raw $RAW --repo .
 | roots.tsv / affixes.tsv | 語根・接頭辞・接尾辞の辞書（綴り・語源判定キー・意味・由来） |
 | morpheme_parts.tsv | **語源の語源分解**: 語根自体が小さな語源からできている場合の成り立ち（例: `r:jud	r:jus+r:dict`）。追記するだけで分解が増える |
 | pie_roots.tsv | 印欧祖語の語根（Wiktionary の `{{root|en|ine-pro|...}}` と照合）と、そこから生まれた語根 |
-| overrides.tsv | 頻出語から順に直していく手動修正（訳語の置き換え `gloss`、語源分解の誤判定の除外 `exclude`、見出し語から外す `drop`、語源分解をまとめて外す `noparts`、解説で説明できた語の語源分解を手で登録する `parts`） |
+| overrides/*.tsv | 頻出語から順に直していく手動修正（訳語の置き換え `gloss`、語源分解の誤判定の除外 `exclude`、見出し語から外す `drop`、語源分解をまとめて外す `noparts`、解説で説明できた語の語源分解を手で登録する `parts`） |
 | explanations/*.tsv | 書き下ろしの解説（語根の意味から単語の意味が生まれる理由）。番号付きファイルで少しずつ追加する |
 
 ## コンテンツ拡充の進め方
 
 1. `python3 scripts/data/05_quality_report.py --top 3000` で怪しい訳語を頻度順に洗い出す
-2. `data/overrides.tsv` に修正を追記、`data/explanations/` に解説を追記
-3. `04_build.py` で再生成し、PR を作成する
+2. `data/overrides/` に今回の弾のファイルを追加して修正を書く、`data/explanations/` に解説を追記
+3. `python3 scripts/data/06_lint.py` で書式・形態素 ID の誤りを確認する（CI でも実行）
+4. `04_build.py` で再生成し、PR を作成する
+
+### 補足
+
+- 元データに日本語訳がない語・熟語は自動では採用されない。`04_build.py` は採用できなかった語を
+  `$WORK/skipped_words.txt`・`$WORK/skipped_phrases.txt` に頻度順で書き出すので、重要なものに `gloss` で訳を書くと採用される
+- 手で書いたデータ（`gloss`・`parts`・解説）がある語は、単語数の上限（`--words`）を超えても残す
+- 訳語を手で書いた語は、一覧に出す短い訳も書いた順のまま使う
 

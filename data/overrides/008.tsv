@@ -1,0 +1,26 @@
+# 第7弾: 語源分解の誤判定（上位 9000 語）（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
+exclude	r:ple	pledge
+exclude	r:doc	dock,docking
+exclude	r:the	therapist,therapy,therapeutic
+exclude	r:sal	sally
+exclude	r:mar	marble
+exclude	r:sta	feast
+exclude	r:her	herald
+exclude	r:medi	comedian,comedy
+exclude	r:mon	monk,monkey
+exclude	r:cor	coral
+exclude	r:man	manor
+exclude	r:flu	flush
+exclude	r:cur	curb
+exclude	r:tact	stain
+exclude	r:ten	stain
+exclude	r:ven	vendor
+exclude	r:alter	alignment,align
+exclude	r:fac	faint
+exclude	r:par	parody,parole
+exclude	r:para	parody,parole
+exclude	r:ced	cedar
+exclude	r:path	spatial
+exclude	r:reg	rigid
+exclude	r:mort	mortar
+exclude	r:tort	torch

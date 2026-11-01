@@ -4,8 +4,8 @@ usage: python3 scripts/data/05_quality_report.py [--top 2000] [--limit 300]
   - カタカナだけの訳しかない（音訳の可能性）
   - 先頭の訳がカタカナ（より適切な訳が後ろにある可能性）
   - 訳が 1 つだけ
-  - 手動修正 (data/overrides.tsv) 済みの語は除外
-出力は data/overrides.tsv に書き写して直す想定のタブ区切り。
+  - 手動修正 (data/overrides/*.tsv) 済みの語は除外
+出力は data/overrides/*.tsv に書き写して直す想定のタブ区切り。
 """
 import argparse, glob, json, os, re
 

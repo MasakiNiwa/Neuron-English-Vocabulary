@@ -177,13 +177,32 @@ def jm_gloss(word: str, min_score=25):
 
 # ---------------------------------------------------------------- 見出し語の選定
 print('selecting headwords…')
-DROP = {r[1] for r in read_tsv(os.path.join(REPO, 'data', 'overrides.tsv')) if r[0] == 'drop' and len(r) > 1}
+def read_overrides():
+    """data/overrides/*.tsv をファイル名順に読む（後のファイルが優先）"""
+    import glob as _g
+    rows = []
+    for path in sorted(_g.glob(os.path.join(REPO, 'data', 'overrides', '*.tsv'))):
+        rows += read_tsv(path)
+    return rows
+
+
+OVERRIDES = read_overrides()
+DROP = {r[1] for r in OVERRIDES if r[0] == 'drop' and len(r) > 1}
+GLOSS_KEYS = {r[1] for r in OVERRIDES if r[0] == 'gloss' and len(r) > 2}
+# 手で書いたデータ（訳・語源分解・解説）がある語は、上限を超えても残す
+import glob as _gk
+KEEP = GLOSS_KEYS | {r[1] for r in OVERRIDES if r[0] == 'parts' and len(r) > 2}
+for _p in _gk.glob(os.path.join(REPO, 'data', 'explanations', '*.tsv')):
+    KEEP |= {r[0] for r in read_tsv(_p)}
 top = top_n_list('en', 80000)
 lemmas: dict[str, dict] = {}
 skipped_no_ja = 0
+skipped_words = []
+n_main = 0  # 上限の対象になる語数（KEEP で上限を超えて残した語は数えない）
 for w in top:
-    if len(lemmas) >= args.words:
-        break
+    over = n_main >= args.words
+    if over and w not in KEEP:
+        continue
     if not re.fullmatch(r"[a-z][a-z'-]*", w) or "'" in w:
         continue
     if len(w) == 1 and w not in ('a', 'i'):
@@ -218,11 +237,22 @@ for w in top:
         g = jm_gloss(L)
         if g:
             tr = [(POS_MAP.get(es[0]['pos'], es[0]['pos']), g)]
+    if not tr and L in GLOSS_KEYS:
+        tr = [(POS_MAP.get(es[0]['pos'], es[0]['pos']), ['（手動の訳で置き換え）'])]  # 手動で訳を書いた語は採用する
     if not tr:
         skipped_no_ja += 1
+        skipped_words.append(L)
+        continue
+    if over and L not in KEEP:
         continue
     lemmas[L] = {'head': head, 'entries': es, 'ja': tr}
+    if not over:
+        n_main += 1
 print('lemmas', len(lemmas), 'skipped(no ja)', skipped_no_ja)
+print('words skipped (no translation):', ' / '.join(skipped_words[:40]), '…')
+# 訳語がなくて採用できなかった語の一覧（手動で訳を書けば採用される）
+with open(os.path.join(W, 'skipped_words.txt'), 'w', encoding='utf-8') as f:
+    f.write('\n'.join(skipped_words) + '\n')
 
 # 活用形 → 見出し語
 infl: dict[str, str] = {}
@@ -280,6 +310,7 @@ with open(os.path.join(W, 'eng_all.txt'), encoding='utf-8') as f:
                     for w in ws:
                         pcount[w] += 1
 phr_sel = []
+no_tr = []
 for w, c in pcount.most_common():
     if len(phr_sel) >= args.phrases:
         break
@@ -293,16 +324,22 @@ for w, c in pcount.most_common():
         g = jm_gloss(w, 30)
         if g:
             tr = [(POS_MAP.get(es[0]['pos'], es[0]['pos']), g)]
+    if not tr and w in GLOSS_KEYS:
+        tr = [('verb', ['（手動の訳で置き換え）'])]  # 訳語がない熟語も、手動で訳を書いたものは採用する
     if not tr:
+        no_tr.append((w, c))
         continue
     toks0 = w.split(' ')
-    if toks0[0] in SUBJ or not any(e['pos'] != 'noun' for e in es):
+    if w not in GLOSS_KEYS and (toks0[0] in SUBJ or not any(e['pos'] != 'noun' for e in es)):
         continue  # 文（"do you know"）や複合名詞（"car wash"）は熟語として扱わない
     # 先頭語＋機能語だけの自明な連語（"of the" など）を除外
-    if all(t in ('the', 'a', 'an', 'of', 'to', 'and', 'in', 'is', 'it') for t in w.split(' ')[1:]) and es[0]['pos'] not in ('verb', 'phrase', 'prep_phrase'):
+    if w not in GLOSS_KEYS and all(t in ('the', 'a', 'an', 'of', 'to', 'and', 'in', 'is', 'it') for t in w.split(' ')[1:]) and es[0]['pos'] not in ('verb', 'phrase', 'prep_phrase'):
         continue
     phr_sel.append((w, c, es, tr))
 print('phrases', len(phr_sel))
+print('phrases skipped (no translation):', ' / '.join(f'{w}({c})' for w, c in no_tr[:40]), '…')
+with open(os.path.join(W, 'skipped_phrases.txt'), 'w', encoding='utf-8') as f:
+    f.write('\n'.join(f'{w}\t{c}' for w, c in no_tr) + '\n')
 
 
 # ---------------------------------------------------------------- 印欧祖語（PIE）の語根
@@ -654,9 +691,9 @@ for prank, (w, c, es, tr) in enumerate(phr_sel, 1):
         'freq': c,
     }
 
-# ---------------------------------------------------------------- 手動での修正（data/overrides.tsv）
+# ---------------------------------------------------------------- 手動での修正（data/overrides/*.tsv）
 overrides_gloss, overrides_exclude = {}, defaultdict(set)
-for r in read_tsv(os.path.join(REPO, 'data', 'overrides.tsv')):
+for r in OVERRIDES:
     if r[0] == 'gloss' and len(r) >= 3:
         groups = []
         for part in r[2].split('|'):
@@ -674,7 +711,7 @@ for r in read_tsv(os.path.join(REPO, 'data', 'overrides.tsv')):
 # 解説で語源を説明できた語を、語源ネットワークにつなげるためのもの。自動判定より優先する。
 valid_morph = {m['id'] for m in roots + prefixes + suffixes}
 manual_parts = 0
-for r in read_tsv(os.path.join(REPO, 'data', 'overrides.tsv')):
+for r in OVERRIDES:
     if r[0] != 'parts' or len(r) < 3:
         continue
     e = entries.get(key_of(r[1].strip()))
@@ -830,7 +867,9 @@ for k, e in entries.items():
     shards[shard][k] = {kk: vv for kk, vv in e.items() if vv not in (None, [], '')}
     flat = [x for g in e['g'] for x in g['ja']]
     # 一覧用の短い訳: カタカナだけの訳（音訳）より漢字・ひらがなを含む訳を優先
-    flat.sort(key=lambda x: bool(re.fullmatch(r'[\u30a0-\u30ffー・]+', x)))
+    # （訳語を手動で確認した語は、書いた順をそのまま使う）
+    if not e.get('manual'):
+        flat.sort(key=lambda x: bool(re.fullmatch(r'[\u30a0-\u30ffー・]+', x)))
     short = '、'.join(flat[:3])
     pos = ''.join(sorted({g['p'][:4] for g in e['g']}))
     index_rows.append([k, 0 if e['t'] == 'w' else 1, e['r'], short, [g['p'] for g in e['g']], shard,
