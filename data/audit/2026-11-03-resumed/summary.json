@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "1f65cbefdf0d41eb868533f378a8ed5ea0a4b808",
+  "vocabulary_version": "20261102",
+  "counts": {
+    "words": 11887,
+    "phrases": 1329,
+    "morphemes": 432,
+    "pieRoots": 92,
+    "withParts": 6505,
+    "withExamples": 10440,
+    "withNote": 12211,
+    "manualParts": 2954,
+    "manual": 12256,
+    "withPie": 1435
+  },
+  "structural_errors": 0,
+  "flags": {
+    "NAMED_REVIEW_CASE": 156,
+    "NOTE_ROOT_LINK_CANDIDATE": 368,
+    "NO_DECOMPOSITION": 6711,
+    "NO_EMBEDDED_ETYMOLOGY": 1767,
+    "NO_JAPANESE_NOTE": 1005,
+    "PARTS_NOPARTS_CONFLICT": 8,
+    "PHRASE_MNEMONIC_VS_HISTORY": 324,
+    "ROOT_SURFACE_VARIANT": 140,
+    "SOURCE_LENGTH_NEAR_600_CANDIDATE": 2107,
+    "SOURCE_UNCERTAINTY_NOTE_REVIEW": 926
+  },
+  "named_cases": 163,
+  "preservation_controls": 8,
+  "named_entries": 156,
+  "guard_failures": 0,
+  "root_groups": 231,
+  "base_groups": 1794,
+  "queue_entries": 8745,
+  "semantic_priority_entries": 1428,
+  "externally_verified_entries": 0,
+  "recovered_historical_300_corrections": false,
+  "note": "Candidate counts overlap. Rules differ from the unavailable previous audit; do not compare counts as a correction delta."
+}

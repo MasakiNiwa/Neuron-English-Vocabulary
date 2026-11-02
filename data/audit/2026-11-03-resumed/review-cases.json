@@ -1,0 +1,1689 @@
+[
+  {
+    "key": "immigration",
+    "action": "replace_link",
+    "old_id": "pre:in",
+    "new_id": "pre:into",
+    "reason": "解説は位置・方向のin-。否定in-ノードとの食い違い。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "import",
+    "action": "replace_link",
+    "old_id": "pre:in",
+    "new_id": "pre:into",
+    "reason": "解説は位置・方向のin-。否定in-ノードとの食い違い。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "inside",
+    "action": "replace_link",
+    "old_id": "pre:in",
+    "new_id": "pre:into",
+    "reason": "解説は位置・方向のin-。否定in-ノードとの食い違い。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "independence",
+    "action": "replace_link",
+    "old_id": "pre:into",
+    "new_id": "pre:in",
+    "reason": "解説は否定。方向のin-ノードを分離する。integerの-erも別途撤回が必要。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "ignorant",
+    "action": "replace_link",
+    "old_id": "pre:into",
+    "new_id": "pre:in",
+    "reason": "解説は否定。方向のin-ノードを分離する。integerの-erも別途撤回が必要。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "integer",
+    "action": "replace_link",
+    "old_id": "pre:into",
+    "new_id": "pre:in",
+    "reason": "解説は否定。方向のin-ノードを分離する。integerの-erも別途撤回が必要。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "around",
+    "action": "replace_link",
+    "old_id": "pre:a",
+    "new_id": null,
+    "reason": "英語a-（on等）をギリシャ語の否定a-/an-へ接続しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "away",
+    "action": "replace_link",
+    "old_id": "pre:a",
+    "new_id": null,
+    "reason": "英語a-（on等）をギリシャ語の否定a-/an-へ接続しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "ahead",
+    "action": "replace_link",
+    "old_id": "pre:a",
+    "new_id": null,
+    "reason": "英語a-（on等）をギリシャ語の否定a-/an-へ接続しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "alive",
+    "action": "replace_link",
+    "old_id": "pre:a",
+    "new_id": null,
+    "reason": "英語a-（on等）をギリシャ語の否定a-/an-へ接続しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "agree",
+    "action": "replace_link",
+    "old_id": "pre:a",
+    "new_id": "pre:ad",
+    "reason": "原文・解説はラテン語ad-系であり、ギリシャ語の否定a-ではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "announce",
+    "action": "replace_link",
+    "old_id": "pre:a",
+    "new_id": "pre:ad",
+    "reason": "原文・解説はラテン語ad-系であり、ギリシャ語の否定a-ではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "aspect",
+    "action": "replace_link",
+    "old_id": "pre:a",
+    "new_id": "pre:ad",
+    "reason": "原文・解説はラテン語ad-系であり、ギリシャ語の否定a-ではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "ascend",
+    "action": "replace_link",
+    "old_id": "pre:a",
+    "new_id": "pre:ad",
+    "reason": "原文・解説はラテン語ad-系であり、ギリシャ語の否定a-ではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "director",
+    "action": "replace_link",
+    "old_id": "pre:dia",
+    "new_id": "pre:dis",
+    "reason": "解説はラテン語dis-/di-。ギリシャ語dia-との同形衝突。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "direct",
+    "action": "replace_link",
+    "old_id": "pre:dia",
+    "new_id": "pre:dis",
+    "reason": "解説はラテン語dis-/di-。ギリシャ語dia-との同形衝突。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "district",
+    "action": "replace_link",
+    "old_id": "pre:dia",
+    "new_id": "pre:dis",
+    "reason": "解説はラテン語dis-/di-。ギリシャ語dia-との同形衝突。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "diverse",
+    "action": "replace_link",
+    "old_id": "pre:dia",
+    "new_id": "pre:dis",
+    "reason": "解説はラテン語dis-/di-。ギリシャ語dia-との同形衝突。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "antigen",
+    "action": "replace_link",
+    "old_id": "pre:ante",
+    "new_id": "pre:anti",
+    "reason": "anti-（対抗）とante-（前）の同形衝突。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "antisocial",
+    "action": "replace_link",
+    "old_id": "pre:ante",
+    "new_id": "pre:anti",
+    "reason": "anti-（対抗）とante-（前）の同形衝突。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "unanimous",
+    "action": "replace_link",
+    "old_id": "pre:un",
+    "new_id": "pre:uni",
+    "reason": "unus（一つ）であり否定un-ではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "unanimously",
+    "action": "replace_link",
+    "old_id": "pre:un",
+    "new_id": "pre:uni",
+    "reason": "unus（一つ）であり否定un-ではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "Monday",
+    "action": "replace_link",
+    "old_id": "pre:mono",
+    "new_id": "w:moon",
+    "reason": "原文はMoon + day。monをmono-（一つ）としない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "passion",
+    "action": "replace_link",
+    "old_id": "r:pass",
+    "new_id": "r:path",
+    "reason": "pati/passus（苦しむ）を歩くpassus/passareから分離。既存r:pathにpatiが含まれる。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "passive",
+    "action": "replace_link",
+    "old_id": "r:pass",
+    "new_id": "r:path",
+    "reason": "pati/passus（苦しむ）を歩くpassus/passareから分離。既存r:pathにpatiが含まれる。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "compassion",
+    "action": "replace_link",
+    "old_id": "r:pass",
+    "new_id": "r:path",
+    "reason": "pati/passus（苦しむ）を歩くpassus/passareから分離。既存r:pathにpatiが含まれる。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "important",
+    "action": "replace_link",
+    "old_id": "r:part",
+    "new_id": "r:port",
+    "reason": "port（運ぶ）の説明とpars（部分）のノードが不一致。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "importance",
+    "action": "replace_link",
+    "old_id": "r:part",
+    "new_id": "r:port",
+    "reason": "port（運ぶ）の説明とpars（部分）のノードが不一致。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "reporter",
+    "action": "replace_link",
+    "old_id": "r:part",
+    "new_id": "r:port",
+    "reason": "port（運ぶ）の説明とpars（部分）のノードが不一致。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "attention",
+    "action": "replace_link",
+    "old_id": "r:ten",
+    "new_id": "r:tend",
+    "reason": "伸ばすtendereと保つtenereを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "extent",
+    "action": "replace_link",
+    "old_id": "r:ten",
+    "new_id": "r:tend",
+    "reason": "伸ばすtendereと保つtenereを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "intent",
+    "action": "replace_link",
+    "old_id": "r:ten",
+    "new_id": "r:tend",
+    "reason": "伸ばすtendereと保つtenereを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "curious",
+    "action": "replace_link",
+    "old_id": "r:cur",
+    "new_id": "r:cura",
+    "reason": "世話・注意curaと走るcurrereを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "curiosity",
+    "action": "replace_link",
+    "old_id": "r:cur",
+    "new_id": "r:cura",
+    "reason": "世話・注意curaと走るcurrereを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "accuracy",
+    "action": "replace_link",
+    "old_id": "r:cur",
+    "new_id": "r:cura",
+    "reason": "世話・注意curaと走るcurrereを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "geometric",
+    "action": "replace_link",
+    "old_id": "r:mater",
+    "new_id": "r:meter",
+    "reason": "測るmetronと母materを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "symmetric",
+    "action": "replace_link",
+    "old_id": "r:mater",
+    "new_id": "r:meter",
+    "reason": "測るmetronと母materを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "apparent",
+    "action": "replace_link",
+    "old_id": "r:para",
+    "new_id": "r:parere",
+    "reason": "現れるpareoと準備するparareを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "transparent",
+    "action": "replace_link",
+    "old_id": "r:para",
+    "new_id": "r:parere",
+    "reason": "現れるpareoと準備するparareを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "preparation",
+    "action": "replace_link",
+    "old_id": "r:par",
+    "new_id": "r:para",
+    "reason": "解説parare（用意する）に対応させ、等しいparから分離。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "pair",
+    "action": "replace_link",
+    "old_id": "r:para",
+    "new_id": "r:par",
+    "reason": "等しいparと準備するparareを分離する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "parent",
+    "action": "replace_link",
+    "old_id": "r:parere",
+    "new_id": null,
+    "reason": "原文はpario（産む）。現れるpareoのノードを外す。日本語parereは不定詞としてはあり得るので単純な綴り訂正をしない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "gastric",
+    "action": "replace_link",
+    "old_id": "r:aster",
+    "new_id": null,
+    "reason": "原文gastēr（胃）。astrの部分一致は星asterの根拠にならない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "visceral",
+    "action": "replace_link",
+    "old_id": "r:vid",
+    "new_id": null,
+    "reason": "原文viscera（内臓）/viscum（鳥もち）の語族をvidere（見る）から分離。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "viscosity",
+    "action": "replace_link",
+    "old_id": "r:vid",
+    "new_id": null,
+    "reason": "原文viscera（内臓）/viscum（鳥もち）の語族をvidere（見る）から分離。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "tentative",
+    "action": "replace_link",
+    "old_id": "r:ten",
+    "new_id": null,
+    "reason": "tentare（試す）をtenere（保つ）へ結び付けない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "tactic",
+    "action": "replace_link",
+    "old_id": "r:tact",
+    "new_id": null,
+    "reason": "ギリシャ語tassein/taktikos（並べる）でありラテン語tangere（触る）ではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "tactical",
+    "action": "replace_link",
+    "old_id": "r:tact",
+    "new_id": null,
+    "reason": "ギリシャ語tassein/taktikos（並べる）でありラテン語tangere（触る）ではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "saline",
+    "action": "replace_link",
+    "old_id": "r:sal",
+    "new_id": null,
+    "reason": "sal（塩）/sala（部屋）をsalire（跳ぶ）から分離。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "saloon",
+    "action": "replace_link",
+    "old_id": "r:sal",
+    "new_id": null,
+    "reason": "sal（塩）/sala（部屋）をsalire（跳ぶ）から分離。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "inspiration",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "-ration中のratをratioへ接続している。spir/operと-ationへ分割し直す。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "in",
+        "m": "pre:into"
+      },
+      {
+        "s": "spir",
+        "m": "r:spir"
+      },
+      {
+        "s": "ation",
+        "m": "suf:ation"
+      }
+    ]
+  },
+  {
+    "key": "cooperation",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "-ration中のratをratioへ接続している。spir/operと-ationへ分割し直す。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "co",
+        "m": "pre:com"
+      },
+      {
+        "s": "oper",
+        "m": "r:oper"
+      },
+      {
+        "s": "ation",
+        "m": "suf:ation"
+      }
+    ]
+  },
+  {
+    "key": "determination",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "-nation中のnatをnasciへ接続している。termin/nominと-ationへ分割し直す。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "de",
+        "m": "pre:de"
+      },
+      {
+        "s": "termin",
+        "m": "r:termin"
+      },
+      {
+        "s": "ation",
+        "m": "suf:ation"
+      }
+    ]
+  },
+  {
+    "key": "nomination",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "-nation中のnatをnasciへ接続している。termin/nominと-ationへ分割し直す。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "nomin",
+        "m": "r:nom"
+      },
+      {
+        "s": "ation",
+        "m": "suf:ation"
+      }
+    ]
+  },
+  {
+    "key": "fundamental",
+    "action": "replace_link",
+    "old_id": "r:ment",
+    "new_id": "suf:ment",
+    "reason": "-mentum由来の接尾辞をmens（心）へ接続しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "instrumental",
+    "action": "replace_link",
+    "old_id": "r:ment",
+    "new_id": "suf:ment",
+    "reason": "-mentum由来の接尾辞をmens（心）へ接続しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "detrimental",
+    "action": "replace_link",
+    "old_id": "r:ment",
+    "new_id": "suf:ment",
+    "reason": "-mentum由来の接尾辞をmens（心）へ接続しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "lateral",
+    "action": "replace_link",
+    "old_id": "r:lat",
+    "new_id": null,
+    "reason": "側面latus/地名Latiumとferreの過去分詞latus（運ばれた）を分離。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "Latin",
+    "action": "replace_link",
+    "old_id": "r:lat",
+    "new_id": null,
+    "reason": "側面latus/地名Latiumとferreの過去分詞latus（運ばれた）を分離。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "regulate",
+    "action": "replace_link",
+    "old_id": "r:lat",
+    "new_id": null,
+    "reason": "語幹末と-ateにまたがるlatを「運ばれた」にしない。正しい部分分解は別途復元。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "speculate",
+    "action": "replace_link",
+    "old_id": "r:lat",
+    "new_id": null,
+    "reason": "語幹末と-ateにまたがるlatを「運ばれた」にしない。正しい部分分解は別途復元。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "circulate",
+    "action": "replace_link",
+    "old_id": "r:lat",
+    "new_id": null,
+    "reason": "語幹末と-ateにまたがるlatを「運ばれた」にしない。正しい部分分解は別途復元。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "contemplate",
+    "action": "replace_link",
+    "old_id": "r:lat",
+    "new_id": null,
+    "reason": "語幹末と-ateにまたがるlatを「運ばれた」にしない。正しい部分分解は別途復元。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "irony",
+    "action": "replace_link",
+    "old_id": "w:iron",
+    "new_id": null,
+    "reason": "原文eirōneia（とぼけ）。代表義は鉄ironの派生ではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "flower",
+    "action": "replace_link",
+    "old_id": "w:flow",
+    "new_id": null,
+    "reason": "原文flos（花）。流れるflow + -erという代表義の分解を撤回。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "corner",
+    "action": "replace_link",
+    "old_id": "w:corn",
+    "new_id": null,
+    "reason": "角cornuと穀物cornは別。代表義を区別できない語基リンクを撤回。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "bullet",
+    "action": "replace_link",
+    "old_id": "w:bull",
+    "new_id": null,
+    "reason": "原文boule（球）の指小形。雄牛bullへのリンクを撤回。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "voltage",
+    "action": "replace_link",
+    "old_id": "w:age",
+    "new_id": null,
+    "reason": "接尾辞-ageと年齢ageを区別する。既存の接尾辞ノードがないためnull候補。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "patronage",
+    "action": "replace_link",
+    "old_id": "w:age",
+    "new_id": null,
+    "reason": "接尾辞-ageと年齢ageを区別する。既存の接尾辞ノードがないためnull候補。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "orphanage",
+    "action": "replace_link",
+    "old_id": "w:age",
+    "new_id": null,
+    "reason": "接尾辞-ageと年齢ageを区別する。既存の接尾辞ノードがないためnull候補。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "signage",
+    "action": "replace_link",
+    "old_id": "w:age",
+    "new_id": null,
+    "reason": "接尾辞-ageと年齢ageを区別する。既存の接尾辞ノードがないためnull候補。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "kindred",
+    "action": "replace_link",
+    "old_id": "w:red",
+    "new_id": null,
+    "reason": "接尾辞-redは赤色redではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "cinematic",
+    "action": "replace_link",
+    "old_id": "w:tic",
+    "new_id": null,
+    "reason": "-ticは独立語tic（痙攣）ではない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "kidnap",
+    "action": "replace_link",
+    "old_id": "w:nap",
+    "new_id": null,
+    "reason": "原文napはnab/grabの意味。昼寝を代表義とする語基ノードと混同しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "biker",
+    "action": "resegment",
+    "old_id": "pre:bi",
+    "new_id": null,
+    "reason": "bike + -erへ分割し直す。短縮語内部biを数詞接頭辞に直結しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "bik",
+        "m": "w:bike"
+      },
+      {
+        "s": "er",
+        "m": "suf:er"
+      }
+    ]
+  },
+  {
+    "key": "comedic",
+    "action": "resegment",
+    "old_id": "r:medi",
+    "new_id": null,
+    "reason": "comedy + -icへ分割し直す。中間mediusとは別。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "comed",
+        "m": "w:comedy"
+      },
+      {
+        "s": "ic",
+        "m": "suf:ic"
+      }
+    ]
+  },
+  {
+    "key": "parenthesis",
+    "action": "resegment",
+    "old_id": "r:the",
+    "new_id": null,
+    "reason": "thesis/therapy/theoryの内部theを神theosへ接続しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "par",
+        "m": "pre:para"
+      },
+      {
+        "s": "en",
+        "m": null
+      },
+      {
+        "s": "thesis",
+        "m": "w:thesis"
+      }
+    ]
+  },
+  {
+    "key": "psychotherapy",
+    "action": "resegment",
+    "old_id": "r:the",
+    "new_id": null,
+    "reason": "thesis/therapy/theoryの内部theを神theosへ接続しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "psych",
+        "m": "r:psych"
+      },
+      {
+        "s": "o",
+        "m": null
+      },
+      {
+        "s": "therapy",
+        "m": "w:therapy"
+      }
+    ]
+  },
+  {
+    "key": "theorist",
+    "action": "resegment",
+    "old_id": "r:the",
+    "new_id": null,
+    "reason": "thesis/therapy/theoryの内部theを神theosへ接続しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "theor",
+        "m": "w:theory"
+      },
+      {
+        "s": "ist",
+        "m": "suf:ist"
+      }
+    ]
+  },
+  {
+    "key": "consultant",
+    "action": "resegment",
+    "old_id": "r:sal",
+    "new_id": null,
+    "reason": "原文は-sulereがuncertain origin。salire（跳ぶ）を確定させずconsult + -ant候補へ。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "consult",
+        "m": "w:consult"
+      },
+      {
+        "s": "ant",
+        "m": "suf:ant"
+      }
+    ]
+  },
+  {
+    "key": "shuttle",
+    "action": "sense_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "同綴り別語義が混在。shut/tieとの関係を絶対否定せず代表義と原文の語源区分を再確認。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "tier",
+    "action": "sense_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "同綴り別語義が混在。shut/tieとの関係を絶対否定せず代表義と原文の語源区分を再確認。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "grateful",
+    "action": "note_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "grateは古英語ではなくラテン語gratusの借用。原文に明示。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_note": "grate（古い英語の語で「喜ばしい・感謝する」の意）+ -ful。grateはラテン語gratusの借用語で、古英語由来ではない。gratitudeと同じgratの語族。"
+  },
+  {
+    "key": "parent",
+    "action": "note_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "pario（産む）とpareo（現れる）を区別し、語根ノードの意味と整合させる。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_note": "ラテン語parens（親）、pario（産む）の分詞に由来する。「産む人」から「親」。現れるpareoとは区別する。"
+  },
+  {
+    "key": "consultant",
+    "action": "note_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "相談するconsultまでの語基と、不明とされる-sulereの究極語源を区別。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_note": "consult（相談する）に関連する語で「相談を受ける専門家・顧問」。フランス語consultant、ラテン語consultareを経る。さらに遡る-sulereの語源は確定しておらず、「共に跳ぶ」とは断定しない。"
+  },
+  {
+    "key": "monkey",
+    "action": "note_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "原文はUncertainから複数説を列挙。Monekeを唯一の確定説として語らない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_note": "語源は未確定。monkに指小辞が付いたとする説や、低地ドイツ語の物語中のサルの名Monekeに結び付ける説などがある。「サル」の意。"
+  },
+  {
+    "key": "desire",
+    "action": "note_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "原文apparentlyの仮説性と、星を待つという記憶用物語の確実性を分ける。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_note": "古フランス語を経てラテン語desiderare（強く望む・欠如を感じる）から。sidus（星）との関連説があるが、「星から運命を待つ」という物語を確定した意味変化としては扱わない。"
+  },
+  {
+    "key": "consider",
+    "action": "note_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "埋め込み原文はLatin considerareまで。星を見て占う物語を外部辞典で再確認。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_note": "古フランス語を経てラテン語considerareに由来し、「よく考える・考慮する」。星との関連や占いからの意味変化は、追加の辞典照合を要する説明として区別する。"
+  },
+  {
+    "key": "on_fire",
+    "action": "note_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "火の上という位置直訳ではなく、燃焼中の状態と比喩を説明する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_note": "onはここでは状態を表し、「燃えている」。比喩的に「非常に好調で・絶好調で」とも使う。「火の上に」という位置の直訳ではない。"
+  },
+  {
+    "key": "get_started",
+    "action": "note_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "常に受動態として解釈せず「始める・取りかかる」の構文として説明する。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_note": "「始める・取りかかる」を表す構文。Let’s get started. は「始めましょう」。startedを常に受け身の「始められた」と訳す必要はない。"
+  },
+  {
+    "key": "put_up_with",
+    "action": "note_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "掲げて耐えるという記憶用物語を歴史的事実として断定しない。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_note": "「我慢する・耐える」を表す慣用句。「掲げて耐える」というイメージは記憶の補助として、歴史的な成立の説明とは区別する。"
+  },
+  {
+    "key": "for_good",
+    "action": "note_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "goodを確定したものとする直訳は出典未提示。慣用句の意味と分ける。",
+    "origin": "uploaded_report_specific_example",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_note": "「永久に・これを最後に」を表す慣用句。goodの通常の「良い」という語義の直訳からは導けないので、句全体の用法として覚える。"
+  },
+  {
+    "key": "grateful",
+    "action": "pie_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "原文の究極語源は*gʷerH-だがpie:pleh1（満たす）へ接続。ful側の祖語か語全体かを区別して確認。誤りと断定しない。",
+    "origin": "new_observation_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "for_good",
+    "action": "example_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "第1例文The school is crying out for good teachers.はgood teachersの修飾で、永久にの慣用句の例ではない。",
+    "origin": "new_observation_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "parent",
+    "action": "pie_review",
+    "old_id": null,
+    "new_id": null,
+    "reason": "partsは現れるr:parereだが原文は産むpario。pie:perの多義・別root番号混在も併せて確認。",
+    "origin": "new_observation_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "curvy",
+    "action": "replace_link",
+    "old_id": "r:cur",
+    "new_id": null,
+    "reason": "原文はcurve + -y、curvus系。currere（走る）へ接続しない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "spiral",
+    "action": "replace_link",
+    "old_id": "r:spir",
+    "new_id": null,
+    "reason": "原文speira（巻いたもの）、解説も息とは別語源と明示。spirareへのリンクを撤回。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "compassionate",
+    "action": "replace_link",
+    "old_id": "r:pass",
+    "new_id": "r:path",
+    "reason": "compassionの派生。解説pati（苦しむ）と「歩み・通る」の不一致。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "participation",
+    "action": "resegment",
+    "old_id": "r:path",
+    "new_id": null,
+    "reason": "原文participate + -ion、解説part + icip。patiは部分一致であり苦しむ意味ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "particip",
+        "m": "w:participate"
+      },
+      {
+        "s": "ation",
+        "m": "suf:ation"
+      }
+    ]
+  },
+  {
+    "key": "patio",
+    "action": "replace_link",
+    "old_id": "r:path",
+    "new_id": null,
+    "reason": "原文はSpanish patioで究極語源uncertain。綴りpatiだけでは苦しむ語根への接続を支えない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "transparency",
+    "action": "replace_link",
+    "old_id": "r:para",
+    "new_id": "r:parere",
+    "reason": "transparentの派生。見えるpareoを準備parareから分離。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "compare",
+    "action": "replace_link",
+    "old_id": "r:para",
+    "new_id": "r:par",
+    "reason": "原文com- + par（equal）と解説の双方は等しいpar。準備parareではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "impairment",
+    "action": "replace_link",
+    "old_id": "r:para",
+    "new_id": null,
+    "reason": "解説はpejorare（悪くする）。準備parare・等しいparのいずれとも同定しない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "parcel",
+    "action": "replace_link",
+    "old_id": "r:par",
+    "new_id": "r:part",
+    "reason": "原文particula/partem（部分）と解説の双方はpars系。等しいparから部分へ。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "parasitic",
+    "action": "resegment",
+    "old_id": "r:par",
+    "new_id": null,
+    "reason": "原文parasite + -ic、解説para + sitos。等しいparへの部分一致を撤回。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "parasit",
+        "m": "w:parasite"
+      },
+      {
+        "s": "ic",
+        "m": "suf:ic"
+      }
+    ]
+  },
+  {
+    "key": "sentimental",
+    "action": "resegment",
+    "old_id": "r:ment",
+    "new_id": null,
+    "reason": "原文はsentiment/department/fragment/rudimentを語基とする。内部mentをmens（心）の独立語根へ直結しない。適切な語基へ再分割。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "sentiment",
+        "m": "w:sentiment"
+      },
+      {
+        "s": "al",
+        "m": "suf:al"
+      }
+    ]
+  },
+  {
+    "key": "departmental",
+    "action": "resegment",
+    "old_id": "r:ment",
+    "new_id": null,
+    "reason": "原文はsentiment/department/fragment/rudimentを語基とする。内部mentをmens（心）の独立語根へ直結しない。適切な語基へ再分割。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "department",
+        "m": "w:department"
+      },
+      {
+        "s": "al",
+        "m": "suf:al"
+      }
+    ]
+  },
+  {
+    "key": "fragmentation",
+    "action": "resegment",
+    "old_id": "r:ment",
+    "new_id": null,
+    "reason": "原文はsentiment/department/fragment/rudimentを語基とする。内部mentをmens（心）の独立語根へ直結しない。適切な語基へ再分割。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "fragment",
+        "m": "w:fragment"
+      },
+      {
+        "s": "ation",
+        "m": "suf:ation"
+      }
+    ]
+  },
+  {
+    "key": "rudimentary",
+    "action": "resegment",
+    "old_id": "r:ment",
+    "new_id": null,
+    "reason": "原文はsentiment/department/fragment/rudimentを語基とする。内部mentをmens（心）の独立語根へ直結しない。適切な語基へ再分割。 語基の見出し語が未収録のため、提案表示ではその部分を無接続にする。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "rudiment",
+        "m": null
+      },
+      {
+        "s": "ary",
+        "m": "suf:ary"
+      }
+    ]
+  },
+  {
+    "key": "fermentation",
+    "action": "resegment",
+    "old_id": "r:fer",
+    "new_id": null,
+    "reason": "解説はfervere（沸き立つ）で運ぶferreとは別と明示。ferを運ぶ語根へ結ばない。 語基の見出し語が未収録のため、提案表示ではその部分を無接続にする。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "ferment",
+        "m": null
+      },
+      {
+        "s": "ation",
+        "m": "suf:ation"
+      }
+    ]
+  },
+  {
+    "key": "fermentation",
+    "action": "resegment",
+    "old_id": "r:ment",
+    "new_id": null,
+    "reason": "ferment + -ationの語基内部mentをmens（心）へ直結しない。fer側と一緒に再分割。 語基の見出し語が未収録のため、提案表示ではその部分を無接続にする。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "ferment",
+        "m": null
+      },
+      {
+        "s": "ation",
+        "m": "suf:ation"
+      }
+    ]
+  },
+  {
+    "key": "alternative",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "dominate",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "alternate",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "donation",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "resignation",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "coordination",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "designation",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "discriminate",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "ordination",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "designate",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "inclination",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "affectionate",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "denomination",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "dissemination",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "ornate",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "detonate",
+    "action": "resegment",
+    "old_id": "r:nat",
+    "new_id": null,
+    "reason": "原文と解説の語基（alter/dom/don/sign/ordin/clin/nomin/semin/orn/ton等）と-ate/-ationの境界に跨るnat。nasci（生まれる）の根拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "corporate",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "corporation",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "collaboration",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "concentration",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "federation",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "demonstrate",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "separation",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "declaration",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "apparatus",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "acceleration",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "aspiration",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "expiration",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "incorporation",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "iteration",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "doctorate",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "saturation",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "temperate",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "exaggeration",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "commemoration",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "disparate",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "reparation",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "consecrate",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "deliberation",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "reiterate",
+    "action": "resegment",
+    "old_id": "r:rat",
+    "new_id": null,
+    "reason": "原文と解説の語幹（corpor/labor/centr/clar/par/spir/memor等）と派生接辞に跨るrat。ratio（計算・理性）への部分一致を撤回し語基境界を再確認。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "aspiration",
+    "action": "replace_link",
+    "old_id": "pre:a",
+    "new_id": "pre:ad",
+    "reason": "aspireの語族で方向のad-。ギリシャ語否定a-との混同を別件として記録。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "consult",
+    "action": "resegment",
+    "old_id": "r:sal",
+    "new_id": null,
+    "reason": "consultantと同じ語族。consultまでの語基と究極語源不明の-sulereを区別し、salireを断定しない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "consultation",
+    "action": "resegment",
+    "old_id": "r:sal",
+    "new_id": null,
+    "reason": "consultantと同じ語族。consultまでの語基と究極語源不明の-sulereを区別し、salireを断定しない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review",
+    "proposed_parts": [
+      {
+        "s": "consult",
+        "m": "w:consult"
+      },
+      {
+        "s": "ation",
+        "m": "suf:ation"
+      }
+    ]
+  },
+  {
+    "key": "congratulate",
+    "action": "resegment",
+    "old_id": "r:lat",
+    "new_id": null,
+    "reason": "原文gratulari/gratus系。-ulate内部latは運ぶlatusの証拠ではない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "proposal_requires_claude_review"
+  },
+  {
+    "key": "metropolitan",
+    "action": "preserve_control",
+    "old_id": null,
+    "new_id": null,
+    "reason": "埋め込み原文はmother-city。metrだから測るmeterに一括変換しない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "preserve_current_pending_external_review"
+  },
+  {
+    "key": "pregnant",
+    "action": "preserve_control",
+    "old_id": null,
+    "new_id": null,
+    "reason": "埋め込み原文はprae + gnasci（probably）。nat語族の除去候補へ一括追加しない。不確実性表現は別途校閲。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "preserve_current_pending_external_review"
+  },
+  {
+    "key": "compass",
+    "action": "preserve_control",
+    "old_id": null,
+    "new_id": null,
+    "reason": "原文はcom + passus（pace）。苦しむpathへ一括変換しない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "preserve_current_pending_external_review"
+  },
+  {
+    "key": "legislation",
+    "action": "preserve_control",
+    "old_id": null,
+    "new_id": null,
+    "reason": "法を運び提出するlatio/lator系。latの一括除去をしない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "preserve_current_pending_external_review"
+  },
+  {
+    "key": "legislative",
+    "action": "preserve_control",
+    "old_id": null,
+    "new_id": null,
+    "reason": "法を運び提出するlatio/lator系。latの一括除去をしない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "preserve_current_pending_external_review"
+  },
+  {
+    "key": "legislature",
+    "action": "preserve_control",
+    "old_id": null,
+    "new_id": null,
+    "reason": "法を運び提出するlatio/lator系。latの一括除去をしない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "preserve_current_pending_external_review"
+  },
+  {
+    "key": "legislator",
+    "action": "preserve_control",
+    "old_id": null,
+    "new_id": null,
+    "reason": "法を運び提出するlatio/lator系。latの一括除去をしない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "preserve_current_pending_external_review"
+  },
+  {
+    "key": "separate",
+    "action": "preserve_control",
+    "old_id": null,
+    "new_id": null,
+    "reason": "原文・解説ともse + parare。compareの修正をparare全語へ広げない。",
+    "origin": "new_family_review_during_resume",
+    "review_status": "preserve_current_pending_external_review"
+  }
+]
