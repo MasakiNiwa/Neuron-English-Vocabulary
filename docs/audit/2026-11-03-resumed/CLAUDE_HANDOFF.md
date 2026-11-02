@@ -23,4 +23,4 @@ npm run build
 
 生成される監査ファイルは再実行で上書きされる。編集する入力は `review-cases.json`、手動の判断記録はこのディレクトリの `DECISIONS.tsv` に置く。`--output /tmp/nev-audit-check` を指定すれば別ディレクトリに検査結果を出せる。監査は任意のカレントディレクトリから実行でき、公開データ・手動TSVへは書き込まない。rawが未配置なのでデータ完全再生成は別途必要。
 
-GitHub APIの接続が有効になれば、既存PRを検索して重複を避け、[PR_BODY.md](PR_BODY.md) を本文に使い、このブランチからmain向けのDraft PRを作成する。作成後はPR URLと未完了事項をPROGRESS.mdに追記する。既にユーザーからブランチへの送信とPR作成の許可を受けている。Claudeへのメンションや他人への通知は依頼されていない。
+Claude確認用Draft PRは [#85](https://github.com/MasakiNiwa/Neuron-English-Vocabulary/pull/85)。公開後の環境でGitHub API接続が成功し、作成済みである。同じ作業の重複PRは作らない。進捗と採否はこのPRのブランチへ追記する。mainへのマージや、Claudeへのメンション・他人への通知は依頼されていない。

@@ -54,3 +54,15 @@ mainへはマージしない。修正案の採否と外部辞典での検証は�
 ### PR作成の最終実行結果
 
 `gh pr create --base main --head review/etymology-audit-resume-2026-11-03 --draft --body-file docs/audit/2026-11-03-resumed/PR_BODY.md` を実行したが、`Post https://api.github.com/graphql: Forbidden` で失敗。PRは作成されていない。本文とタイトル、ブランチの準備は完了している。環境設定でapi.github.comの許可を確認・保存し、設定ツールの案内に従って環境をPublishする必要がある。mainへのマージ操作は実行していない。
+
+
+## 2026-11-03 JST — チェックポイント4：公開環境でPR作成完了
+
+- 新しい公開済み環境でGitHub APIのHTTP 200と認証付きPR一覧取得を確認。以前のForbiddenは解消。
+- mainは引き続き `1f65cbefdf0d41eb868533f378a8ed5ea0a4b808`。監査ブランチの保存済みHEADもGitHubと一致。
+- 監査入力203ファイルのSHA-256が保存済みmanifestとすべて一致。
+- [x] Claude確認用Draft PR #85を作成: https://github.com/MasakiNiwa/Neuron-English-Vocabulary/pull/85
+- 現在のネットワークポリシーはunrestricted（制限なし）で適用済み。GitHub APIへの限定許可より広いが、動作を妨げる設定不備は確認できない。今回、環境設定の変更・公開は行っていない。
+- mainへのマージは行っていない。外部辞典の全件校閲、旧300件の完全復元、raw再生成、Claudeの採否判断は引き続き未完了。
+
+過去のチェックポイントにあるAPI拒否・PR未作成の記述は、その時点の履歴である。最新状態はこのチェックポイントを参照する。
