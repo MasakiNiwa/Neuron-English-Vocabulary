@@ -97,14 +97,14 @@ roots = []
 for r in read_tsv(os.path.join(REPO, 'data', 'roots.tsv')):
     rid, forms, etymons, meaning, origin = r[:5]
     roots.append({
-        'id': 'r:' + rid, 'label': rid, 'forms': sorted({x for x in forms.split(',') if x}, key=len, reverse=True),
+        'id': 'r:' + rid, 'label': rid, 'forms': sorted({x for x in forms.split(',') if x}, key=lambda x: (-len(x), x)),
         'etymons': [norm_text(x) for x in etymons.split(',') if x], 'meaning': meaning, 'origin': origin,
     })
 prefixes, suffixes = [], []
 for r in read_tsv(os.path.join(REPO, 'data', 'affixes.tsv')):
     typ, aid, forms, meaning, origin = r[:5]
     item = {'id': ('pre:' if typ == 'prefix' else 'suf:') + aid, 'label': aid,
-            'forms': sorted({x for x in forms.split(',') if x}, key=len, reverse=True), 'meaning': meaning, 'origin': origin}
+            'forms': sorted({x for x in forms.split(',') if x}, key=lambda x: (-len(x), x)), 'meaning': meaning, 'origin': origin}
     (prefixes if typ == 'prefix' else suffixes).append(item)
 def _etymon_re(ets):
     if not ets:
@@ -328,7 +328,7 @@ with open(os.path.join(W, 'eng_all.txt'), encoding='utf-8') as f:
                         pcount[w] += 1
 phr_sel = []
 no_tr = []
-for w, c in pcount.most_common():
+for w, c in sorted(pcount.items(), key=lambda x: (-x[1], x[0])):  # 同数は綴り順（ビルドごとに順位が変わらないように）
     # 上限を超えても、手動で訳を書いた熟語は採用する（見出し語の KEEP と同じ考え方）
     if len(phr_sel) >= args.phrases and w not in GLOSS_KEYS:
         continue
@@ -408,7 +408,7 @@ def ety_info(es: list[dict]):
     return texts, tparts
 
 
-PREFIX_FORMS = sorted({f for p in prefixes for f in p['forms']}, key=len, reverse=True)
+PREFIX_FORMS = sorted({f for p in prefixes for f in p['forms']}, key=lambda x: (-len(x), x))
 
 
 def classical_has(c: str, fm: str) -> bool:
@@ -564,7 +564,7 @@ def pick_examples(forms: set[str], seq: list[str] | None = None, k=3):
                     ok.append(i)
                     break
         ids = set(ok)
-    best = sorted(ids, key=ex_score)
+    best = sorted(ids, key=lambda i: (ex_score(i), i))  # 同点は ID 順にして、ビルドごとに結果が変わらないようにする
     out, used_en = [], set()
     for i in best:
         en, ja, _, sid = pairs[i]
@@ -827,7 +827,7 @@ for k, e in entries.items():
     e['der'] = list(dict.fromkeys(der))[:20]
     e['rel'] = resolve(e.pop('_rel'), k)[:12]
     if e['t'] == 'w':
-        e['ph'] = sorted(phrases_of.get(k, []), key=lambda x: entries[x]['r'])[:20]
+        e['ph'] = sorted(phrases_of.get(k, []), key=lambda x: (entries[x]['r'], x))[:20]
 
 # 形態素 → 単語
 morph_words = defaultdict(list)
@@ -839,7 +839,7 @@ for k, e in entries.items():
 
 def sort_key(k):
     e = entries[k]
-    return (e['t'] != 'w', e['r'])
+    return (e['t'] != 'w', e['r'], k)
 
 
 morphemes = []
