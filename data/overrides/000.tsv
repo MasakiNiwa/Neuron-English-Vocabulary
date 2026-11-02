@@ -19,14 +19,11 @@ gloss	we	pron:私たちは、私たちが
 gloss	all	det:すべての|pron:すべて、全員
 gloss	they	pron:彼らは、それらは
 gloss	if	conj:もし〜なら、〜かどうか
-gloss	one	num:1、ひとつ|pron:（一般の）人、もの
 gloss	can	verb:〜できる、〜してもよい|noun:缶
-gloss	will	verb:〜するつもりだ、〜だろう|noun:意志、遺言
 gloss	just	adv:ちょうど、ただ〜だけ、たった今|adj:公正な
 gloss	about	prep:〜について、〜のあたりに|adv:およそ、約
 gloss	up	adv:上へ、上がって、すっかり
 gloss	out	adv:外へ、外に、すっかり
-gloss	what	pron:何、〜すること・もの
 gloss	when	adv:いつ|conj:〜するとき
 gloss	do	verb:する、行う
 gloss	no	det:ひとつも〜ない|adv:いいえ
@@ -45,14 +42,12 @@ gloss	year	noun:年、1年、学年
 gloss	day	noun:日、1日、昼間
 gloss	never	adv:決して〜ない、一度も〜ない
 gloss	world	noun:世界、世の中
-gloss	something	pron:何か、あるもの
 gloss	every	det:すべての、毎〜、〜ごとに
 gloss	part	noun:部分、一部、役
 gloss	find	verb:見つける、分かる、気づく
 gloss	old	adj:古い、年取った、〜歳の
 gloss	house	noun:家、住宅|verb:収容する
 gloss	place	noun:場所、所|verb:置く
-gloss	end	noun:終わり、端、目的|verb:終わる
 gloss	team	noun:チーム、組
 gloss	family	noun:家族、一族、（生物の）科
 gloss	lot	noun:たくさん、区画、くじ
@@ -115,7 +110,6 @@ gloss	game	noun:試合、ゲーム、遊び
 gloss	school	noun:学校、学派
 gloss	since	prep:〜以来|conj:〜なので
 gloss	high	adj:高い、高度な
-gloss	others	pron:他の人たち
 gloss	way	noun:道、方法、方向
 gloss	work	noun:仕事、作品|verb:働く、うまくいく
 gloss	inspect	verb:検査する、点検する、調べる
