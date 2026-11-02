@@ -754,8 +754,19 @@ for r in OVERRIDES:
         manual_parts += 1
 print('manual parts', manual_parts)
 
+# 手動データの見出し語は大文字・小文字を区別せずに照合する（olympian → Olympian など）
+_lower_entry = {}
+for _k in entries:
+    _lower_entry.setdefault(_k.lower(), _k)
+
+
+def entry_for(word):
+    k = key_of(word)
+    return entries.get(k) or entries.get(_lower_entry.get(k.lower(), ''))
+
+
 for key, groups in overrides_gloss.items():
-    e = entries.get(key_of(key))
+    e = entry_for(key)
     if not e:
         continue
     old = {g['p']: g for g in e['g']}
@@ -775,11 +786,15 @@ for path in sorted(_glob.glob(os.path.join(REPO, 'data', 'explanations', '*.tsv'
     for r in read_tsv(path):
         if len(r) < 2:
             continue
-        e = entries.get(key_of(r[0]))
+        e = entry_for(r[0])
         if e:
             e['note'] = {'ja': r[1].strip()}
             explained += 1
 print('explanations', explained)
+# 手動の訳で採用した語に、訳語が当たらずに仮の文字列が残っていないか確認する
+for e in entries.values():
+    if any('（手動の訳で置き換え）' in w for g in e['g'] for w in g.get('ja', [])):
+        print('WARN gloss placeholder left:', e['h'])
 
 # 関連語をデータ内に存在するものだけに解決
 lower_key = {k.lower().replace('_', ' '): k for k in entries}
