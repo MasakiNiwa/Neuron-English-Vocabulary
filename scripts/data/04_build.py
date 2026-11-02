@@ -289,7 +289,20 @@ for w, es in wikt.items():
     es2 = [e for e in es if e['pos'] in PHRASE_POS and any(good_sense(s) for s in e['senses'])]
     if es2:
         cand[w] = es2
-print('phrase candidates', len(cand))
+# Wiktionary に項目がない重要熟語（depend on など）: data/phrases_extra.tsv
+# 「熟語<TAB>品詞<TAB>英語の定義」。頻度の集計・採用の条件はほかの熟語と同じ。
+# 訳語は overrides の gloss で書く（訳語がないものは採用されない）。
+n_extra = 0
+for r in read_tsv(os.path.join(REPO, 'data', 'phrases_extra.tsv')):
+    if len(r) < 3:
+        continue
+    w, pos, gl = r[0].strip(), r[1].strip(), r[2].strip()
+    toks = w.split(' ')
+    if w in cand or not all(t in lemmas or t in infl for t in toks):
+        continue
+    cand[w] = [{'word': w, 'pos': pos, 'senses': [{'glosses': [gl]}]}]
+    n_extra += 1
+print('phrase candidates', len(cand), f'(extra {n_extra})')
 SUBJ = {'i', 'you', 'he', 'she', 'it', 'we', 'they', 'do', 'does', 'did', 'is', 'was', 'are'}
 cand_keys = set(cand)
 # 先頭語を見出し語化したキーでも照合する（gave up → give up）
@@ -316,8 +329,9 @@ with open(os.path.join(W, 'eng_all.txt'), encoding='utf-8') as f:
 phr_sel = []
 no_tr = []
 for w, c in pcount.most_common():
-    if len(phr_sel) >= args.phrases:
-        break
+    # 上限を超えても、手動で訳を書いた熟語は採用する（見出し語の KEEP と同じ考え方）
+    if len(phr_sel) >= args.phrases and w not in GLOSS_KEYS:
+        continue
     if w.lower() in DROP:
         continue
     if c < 8:

@@ -1,0 +1,49 @@
+# Wiktionary に項目がない重要熟語の補い（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
+# 熟語<TAB>品詞<TAB>英語の定義（Wiktionary に項目があればそちらが使われる）
+# 訳語は data/overrides/*.tsv の gloss で書く。
+depend on	verb	To rely on someone or something; to be determined by something.
+take part in	verb	To participate in an activity or event.
+get along with	verb	To have a friendly relationship with someone.
+run out of	verb	To use up all of something so that none is left.
+cope with	verb	To deal successfully with a difficult situation.
+belong to	verb	To be the property of someone; to be a member of a group.
+consist of	verb	To be made up of the stated parts.
+result from	verb	To happen because of something.
+refer to	verb	To mention or speak about; to look at for information.
+apply for	verb	To make a formal request for a job, permission, etc.
+approve of	verb	To think that something or someone is good or acceptable.
+insist on	verb	To demand something firmly and refuse to accept otherwise.
+focus on	verb	To give most of one's attention to something.
+concentrate on	verb	To direct all of one's attention or effort to something.
+succeed in	verb	To manage to do something one has tried to do.
+agree to	verb	To accept a proposal or say that one will do something.
+apologize for	verb	To say that one is sorry for something.
+believe in	verb	To be sure that something exists or is good or right.
+care about	verb	To feel that something or someone is important.
+dream of	verb	To imagine or hope for something one would like.
+escape from	verb	To get away from a place or situation.
+listen to	verb	To pay attention to a sound, a person, or advice.
+object to	verb	To oppose or disapprove of something.
+participate in	verb	To take part in an activity or event.
+pay for	verb	To give money in exchange for something; to suffer for a mistake.
+pay attention to	verb	To watch, listen to, or think about something carefully.
+prepare for	verb	To make oneself or something ready for an event.
+recover from	verb	To become well or normal again after an illness or difficulty.
+respond to	verb	To reply or react to something.
+spend on	verb	To use money or time for a particular purpose.
+stare at	verb	To look at something or someone for a long time.
+worry about	verb	To feel anxious about something.
+be about to	verb	To be going to do something very soon.
+according to	prep	As stated by; in a way that agrees with.
+because of	prep	As a result of; on account of.
+instead of	prep	In place of; rather than.
+in spite of	prep	Without being prevented by; despite.
+due to	prep	Caused by; because of.
+thanks to	prep	Because of (often a good result).
+a lot of	det	A large number or amount of.
+plenty of	det	A large or sufficient amount or number of.
+next to	prep	Beside; very close to.
+up to	prep	As far as; until; dependent on the decision of.
+cheer up	verb	To become or make someone happier.
+catch up with	verb	To reach someone ahead; to bring oneself up to date.
+get used to	verb	To become accustomed to something.
