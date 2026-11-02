@@ -1,0 +1,86 @@
+# 第68弾: 解説と語源分解の食い違いの解消（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
+# 07_note_parts_report.py で、解説に語根の語源語があるのに語根につながっていない語を洗い出して登録した。
+# 誤った自動分解の修正
+parts	second	sec=r:sequ ond
+parts	secondly	sec=r:sequ ond ly=suf:ly
+parts	senate	sen=r:sen ate=suf:ate
+parts	separate	se=pre:se par=r:para ate=suf:ate
+parts	migration	migr=r:migr ation=suf:ation
+parts	mandate	mand=r:mand ate=suf:ate
+parts	portable	port=r:port able=suf:able
+parts	tent	tent=r:tend
+# 語根につながっていなかった語
+parts	during	dur=r:dur ing
+parts	please	pleas=r:plac e
+parts	miss	miss=r:mit
+parts	parent	par=r:parere ent
+parts	medical	med=r:med ical
+parts	stage	sta=r:sta ge
+parts	track	trac=r:tract k
+parts	justice	jus=r:jus tice
+parts	regular	reg=r:reg ular
+parts	comment	com=pre:com ment=r:ment
+parts	appear	ap=pre:ad pear=r:parere
+parts	faith	fai=r:fid th
+parts	prison	pris=r:prehend on
+parts	labor	labor=r:labor
+parts	criminal	cri=r:cern minal
+parts	medicine	med=r:med icine
+parts	capacity	cap=r:cap acity
+parts	deliver	de=pre:de liver=r:liber
+parts	maximum	max=r:magn imum
+parts	pacific	pac ific=r:fac
+parts	assume	as=pre:ad sum=r:sum e
+parts	prefer	pre=pre:pre fer=r:fer
+parts	expose	ex=pre:ex pos=r:pon e
+parts	monster	mon=r:mon ster
+parts	format	form=r:form at
+parts	translation	trans=pre:trans lat=r:lat ion
+parts	genuine	gen=r:gen uine
+parts	gene	gen=r:gen e
+parts	dialog	dia=pre:dia log=r:log
+parts	integrate	in=pre:in teg=r:tact rate
+parts	logo	log=r:log o
+parts	sacred	sacr=r:sacr ed
+parts	casual	cas=r:cad ual
+parts	integrity	in=pre:in teg=r:tact rity
+parts	congressional	con=pre:com gress=r:grad ional
+parts	victor	vict=r:vinc or
+parts	parade	par=r:para ade
+parts	portfolio	port=r:port folio
+parts	strain	strain=r:strict
+parts	infected	in=pre:in fect=r:fac ed
+parts	colony	col=r:cult ony
+parts	oriented	ori=r:ori ented
+parts	capability	cap=r:cap ability
+parts	beneficial	bene=r:bene fic=r:fac ial
+parts	obsessed	ob=pre:ob sess=r:sed ed
+parts	deficit	de=pre:de fic=r:fac it
+parts	donated	don=r:dat ated
+parts	rational	rat=r:rat ional
+parts	graph	graph=r:graph
+parts	majesty	maj=r:magn esty
+parts	medieval	medi=r:medi eval
+parts	sentiment	senti=r:sens ment=suf:ment
+parts	precision	pre=pre:pre cis=r:caed ion
+parts	vitamin	vit=r:viv amin
+parts	habitat	hab=r:hab itat
+parts	coincidence	co=pre:com in=pre:in cid=r:cad ence
+parts	maritime	mar=r:mar itime
+parts	distress	di=pre:dis stress=r:strict
+parts	meditation	medit=r:med ation=suf:ation
+parts	consequently	con=pre:com sequ=r:sequ ently
+parts	prosecutor	pro=pre:pro secu=r:sequ tor
+parts	verified	ver=r:ver ified
+parts	regiment	reg=r:reg iment
+parts	literacy	liter=r:liter acy
+parts	monument	mon=r:mon ument
+parts	distracted	dis=pre:dis tract=r:tract ed
+parts	headphones	head=w:head phon=r:phon es
+parts	qualification	qual ific=r:fac ation=suf:ation
+parts	dissolved	dis=pre:dis solv=r:solv ed
+parts	genesis	gen=r:gen esis
+parts	genetics	gen=r:gen etics
+parts	allocated	al=pre:ad loc=r:loc ated
+parts	justification	jus=r:jus tific=r:fac ation=suf:ation
+parts	educator	e=pre:ex duc=r:duc ator
