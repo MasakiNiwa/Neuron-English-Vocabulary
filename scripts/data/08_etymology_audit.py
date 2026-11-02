@@ -26,7 +26,7 @@ def dump(path, value):
 
 def tsv(path, fields, rows):
     with path.open('w', encoding='utf-8', newline='') as f:
-        writer = csv.DictWriter(f, fields, delimiter='\t', quoting=csv.QUOTE_ALL)
+        writer = csv.DictWriter(f, fields, delimiter='\t', quoting=csv.QUOTE_ALL, lineterminator='\n')
         writer.writeheader()
         for row in rows:
             writer.writerow({k: str(row.get(k, '')).replace('\r', '\\r').replace('\n', '\\n') for k in fields})

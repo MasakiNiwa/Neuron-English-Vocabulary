@@ -201,5 +201,5 @@
   "public/data/morphemes.json": "5c0e4d7606f48acd45b6da3f316415c91e7700e7137896e87d2d87ce5a764577",
   "scripts/data/04_build.py": "84d91c99d501e67d2e4abd26c936e128a17b3241dcaeb3645b2ff6f40eb036a8",
   "scripts/data/07_note_parts_report.py": "bdf4a2bdba756a0baaa5a277acb069de91a957c568213f117a2a03f132d08523",
-  "scripts/data/08_etymology_audit.py": "c4b008b67b804032c4ba8c91fd14b03bf2ea2bb914cf3a65e99dc6c4cd99c0ab"
+  "scripts/data/08_etymology_audit.py": "efb1465430c2fe2b961cf56f642977fc421a830857a2228f4ad4194df55cb448"
 }
