@@ -188,6 +188,8 @@ def read_overrides():
 
 OVERRIDES = read_overrides()
 DROP = {r[1] for r in OVERRIDES if r[0] == 'drop' and len(r) > 1}
+# 大文字で始まる語（商標など）も落とせるよう、照合は小文字で行う
+DROP |= {d.lower() for d in DROP}
 GLOSS_KEYS = {r[1] for r in OVERRIDES if r[0] == 'gloss' and len(r) > 2}
 # 手で書いたデータ（訳・語源分解・解説）がある語は、上限を超えても残す
 import glob as _gk
@@ -225,7 +227,7 @@ for w in top:
             L = w
         else:
             continue
-    if L in lemmas or L in DROP:
+    if L in lemmas or L.lower() in DROP:
         continue
     key = 'I' if L == 'i' else L
     es = entries_for(key) or entries_for(L)
@@ -316,7 +318,7 @@ no_tr = []
 for w, c in pcount.most_common():
     if len(phr_sel) >= args.phrases:
         break
-    if w in DROP:
+    if w.lower() in DROP:
         continue
     if c < 8:
         break
