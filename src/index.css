@@ -83,10 +83,13 @@ body {
   overscroll-behavior-y: none;
 }
 
-/* フォーカスリング（キーボード操作時のみ） */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+/* フォーカスリング（キーボード操作時のみ）
+   base レイヤーに置き、入力欄などは outline-none で個別に消せるようにする */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
 }
 
 /* ===== View Transitions API ===== */

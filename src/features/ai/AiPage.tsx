@@ -213,7 +213,7 @@ function AutoTextarea({
       }}
       rows={1}
       placeholder={placeholder}
-      className={cn('resize-none bg-transparent outline-none placeholder:text-muted', className)}
+      className={cn('resize-none bg-transparent outline-none focus-visible:outline-none placeholder:text-muted', className)}
     />
   )
 }
@@ -379,7 +379,7 @@ function ModelSwitch() {
         const [keyId, ...rest] = e.target.value.split('|')
         setRoute('chat', { keyId, model: rest.join('|') })
       }}
-      className="max-w-40 truncate rounded-lg bg-transparent px-1.5 py-1 text-xs text-muted outline-none hover:bg-surface-2 hover:text-fg md:max-w-60"
+      className="max-w-40 truncate rounded-lg bg-transparent px-1.5 py-1 text-xs text-muted outline-none hover:bg-surface-2 hover:text-fg focus-visible:bg-surface-2 focus-visible:text-fg md:max-w-60"
     >
       {keys.map((k) => (
         <optgroup key={k.id} label={k.label}>
@@ -546,7 +546,7 @@ function ChatView() {
 
   const composer = (
     <form
-      className="flex flex-col rounded-3xl border border-border bg-surface px-3 pb-2 pt-3 shadow-sm focus-within:border-accent/60"
+      className="flex flex-col rounded-[1.75rem] border border-border bg-surface px-4 pb-2.5 pt-3.5 shadow-sm transition-colors focus-within:border-muted/50"
       onSubmit={(e) => {
         e.preventDefault()
         void send(input)
@@ -557,7 +557,7 @@ function ChatView() {
         onChange={setInput}
         onSubmit={() => void send(input)}
         placeholder={thread?.about ? `${headword(thread.about)} について質問する` : 'メッセージを入力'}
-        className="max-h-[200px] min-h-6 px-1 text-[15px]"
+        className="max-h-[200px] min-h-7 px-1 text-base leading-relaxed"
       />
       <div className="mt-2 flex items-center gap-1">
         <button
