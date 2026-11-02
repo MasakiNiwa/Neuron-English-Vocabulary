@@ -53,6 +53,8 @@ python3 scripts/data/04_build.py --work $WORK --raw $RAW --repo .
 1. `python3 scripts/data/05_quality_report.py --top 3000` で怪しい訳語を頻度順に洗い出す
 2. `data/overrides/` に今回の弾のファイルを追加して修正を書く、`data/explanations/` に解説を追記
 3. `python3 scripts/data/06_lint.py` で書式・形態素 ID の誤りを確認する（CI でも実行）
+   - ビルド後に `python3 scripts/data/07_note_parts_report.py` を実行すると、解説で語根の語源語（例: portare）に触れているのに
+     語源分解でその語根につながっていない語を頻度順に一覧できる（手動の語源分解を追加する候補探し用）
 4. `04_build.py` で再生成し、PR を作成する
 
 ### 補足
