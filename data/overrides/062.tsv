@@ -1,0 +1,11 @@
+# 第69弾: 外部レビュー（2026-11-03）で指摘された語源分解の誤りの修正（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
+# number: numb（しびれた）+ er ではなく、ラテン語 numerus（数）から
+parts	number	number=r:numer
+# remember: member（一員）ではなく、ラテン語 memorari（思い出す）。memor（覚えている）
+parts	remember	re=pre:re mem=r:memor ber
+# inflation: in- は否定ではなく「中へ」（吹き込んで膨らませる）
+parts	inflation	in=pre:into fla tion
+# religion: 解説（ligare 結ぶ）に合わせる。legere（読む）説もあるが、解説と一致させる
+parts	religion	re=pre:re lig=r:lig ion=suf:ation
+# former: 「前の」は古英語 forma（最初の）の比較級で、form（形）+ -er ではない
+noparts	former

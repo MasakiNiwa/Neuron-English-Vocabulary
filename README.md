@@ -71,6 +71,10 @@ npm run build      # 本番ビルド（dist/）
 
 `main` への push で GitHub Actions が GitHub Pages にデプロイします。
 
+## 今後の予定
+
+改善の予定は [docs/ROADMAP.md](docs/ROADMAP.md) にまとめています。
+
 ## ライセンス
 
 - ソースコード: [MIT License](LICENSE)
