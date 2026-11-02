@@ -37,3 +37,20 @@ mainへはマージしない。修正案の採否と外部辞典での検証は�
 - 新ブランチへの最初のpush成功。GitHub APIはCONNECT段階で403。api.github.comの追加を環境ドラフトに保存したが、実行中設定への適用は未確認。
 
 全件の外部辞典照合、旧300件の明細回収、raw完全再生成、修正案の採否は引き続き未完了。公開JSON/TSVは変更していない。
+
+## 2026-11-03 JST — チェックポイント3：検証とClaude引継ぎ
+
+- [x] 全件台帳・検査・候補一覧を再構築し専用ブランチに保存。
+- [x] 詳細163件/156項目と保持対照、提案解説10件・提案分解18項目を記録。
+- [x] 監査テスト6件、既存テスト11件、データlint、型チェック・本番ビルド・PWA生成成功。
+- [x] `/tmp` をカレントディレクトリとして別の出力先へ再実行し、生成11ファイルのバイト一致を確認。
+- [x] 公開JSON・手動修正TSV・解説TSV・アプリ本体・依存宣言・ロックファイル・既存生成器にmainとの差分なしを確認。
+- [x] REPORT.md、CLAUDE_HANDOFF.md、DECISIONS.tsv、PR_BODY.mdを用意。
+- [ ] PR作成：GitHub APIの接続制限が残る。`gh pr list` は `api.github.com/graphql: Forbidden`。ブランチpushは成功している。
+- [ ] 旧300件の完全復元、全件の外部辞典個別校閲、raw完全再生成、Claudeによる採否判断と反映。
+
+環境設定のネットワーク追加ドラフトは保存済み（api.github.com）。ユーザーによる設定の保存・実行中設定への適用が必要。API接続が有効になったら既存PRの有無を確認してDraft PRを作る。API接続後に認証・権限の別エラーが出る可能性はまだ検証できていない。追加の秘密値をチャットで要求しない。
+
+### PR作成の最終実行結果
+
+`gh pr create --base main --head review/etymology-audit-resume-2026-11-03 --draft --body-file docs/audit/2026-11-03-resumed/PR_BODY.md` を実行したが、`Post https://api.github.com/graphql: Forbidden` で失敗。PRは作成されていない。本文とタイトル、ブランチの準備は完了している。環境設定でapi.github.comの許可を確認・保存し、設定ツールの案内に従って環境をPublishする必要がある。mainへのマージ操作は実行していない。
