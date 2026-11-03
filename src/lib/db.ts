@@ -65,6 +65,8 @@ export interface ChatRecord {
   model?: string
   /** 消費トークン数（取得できた場合） */
   usage?: { input: number; output: number }
+  /** 応答が最後まで届かなかった理由（length / filtered / interrupted） */
+  incomplete?: 'length' | 'filtered' | 'interrupted'
 }
 
 /** AI チャットのスレッド（会話のまとまり） */

@@ -1,5 +1,5 @@
 import { castPrompt } from './personas'
-import { complete, type ChatTurn, type Usage } from './providers'
+import { complete, type ChatTurn, type IncompleteReason, type Usage } from './providers'
 import { appTools, buildContext, runAppTool } from './tools'
 import { resolveRoute, routeLabel } from './config'
 import { getSecret, isUnlocked } from './vault'
@@ -36,6 +36,8 @@ export interface RunResult {
   model: string
   /** 消費トークン数（取得できなかった場合は undefined） */
   usage?: Usage
+  /** 応答が最後まで届かなかった場合の理由（B12） */
+  incomplete?: IncompleteReason
 }
 
 /** 設定した接続（会社・API キー・モデル）で LLM を呼び出す */
@@ -55,6 +57,7 @@ export async function runTask(o: RunOptions): Promise<RunResult> {
     .filter(Boolean)
     .join('\n\n')
   let usage: Usage | undefined
+  let incomplete: IncompleteReason | undefined
   const text = await complete({
     provider: route.key.provider,
     apiKey,
@@ -66,7 +69,8 @@ export async function runTask(o: RunOptions): Promise<RunResult> {
     onToolCall: (n) => o.onToolCall?.(n),
     onText: o.onText,
     onUsage: (u) => (usage = { input: (usage?.input ?? 0) + u.input, output: (usage?.output ?? 0) + u.output }),
+    onIncomplete: (r) => (incomplete = r),
     signal: o.signal,
   })
-  return { text, model: routeLabel(route), usage }
+  return { text, model: routeLabel(route), usage, incomplete }
 }

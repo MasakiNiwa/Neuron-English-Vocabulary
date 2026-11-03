@@ -46,7 +46,7 @@ describe('providers (streaming + tools)', () => {
           { choices: [{ delta: { tool_calls: [{ index: 0, id: 't1', function: { name: 'get_', arguments: '{"wo' } }] } }] },
           { choices: [{ delta: { tool_calls: [{ index: 0, function: { name: 'word', arguments: 'rd":"a"}' } }] } }] },
         ])
-      return sse([{ choices: [{ delta: { content: 'OK' } }] }])
+      return sse([{ choices: [{ delta: { content: 'OK' }, finish_reason: 'stop' }] }])
     }))
     const args: unknown[] = []
     const text = await complete({
@@ -62,12 +62,33 @@ describe('providers (streaming + tools)', () => {
     vi.stubGlobal('fetch', vi.fn(async () => {
       n++
       if (n === 1) return sse([{ candidates: [{ content: { parts: [{ functionCall: { name: 'get_word', args: { word: 'b' } } }] } }] }])
-      return sse([{ candidates: [{ content: { parts: [{ text: 'こん' }] } }] }, { candidates: [{ content: { parts: [{ text: 'にちは' }] } }] }])
+      return sse([{ candidates: [{ content: { parts: [{ text: 'こん' }] } }] }, { candidates: [{ content: { parts: [{ text: 'にちは' }] }, finishReason: 'STOP' }] }])
     }))
     const text = await complete({
       provider: 'gemini', apiKey: 'k', model: 'models/gemini-x', system: 's', messages: [{ role: 'user', content: 'q' }], tools,
       runTool: async () => 1,
     })
     expect(text).toBe('こんにちは')
+  })
+
+  it('途中で終わった応答を検出する（B12）', async () => {
+    const run = async (provider: 'openai' | 'openrouter' | 'gemini', events: unknown[]) => {
+      vi.stubGlobal('location', { origin: 'https://example.com' })
+      vi.stubGlobal('fetch', vi.fn(async () => sse(events)))
+      const reasons: string[] = []
+      const text = await complete({ provider, apiKey: 'k', model: 'm', system: 's', messages: [{ role: 'user', content: 'q' }], onIncomplete: (r) => reasons.push(r) })
+      return { text, reasons }
+    }
+    expect(await run('openai', [{ type: 'response.output_text.delta', delta: 'あ' }])).toEqual({ text: 'あ', reasons: ['interrupted'] })
+    expect(
+      await run('openai', [
+        { type: 'response.output_text.delta', delta: 'あ' },
+        { type: 'response.incomplete', response: { id: 'r', output: [], incomplete_details: { reason: 'max_output_tokens' } } },
+      ]),
+    ).toEqual({ text: 'あ', reasons: ['length'] })
+    expect(await run('openrouter', [{ choices: [{ delta: { content: 'い' }, finish_reason: 'length' }] }])).toEqual({ text: 'い', reasons: ['length'] })
+    expect(await run('openrouter', [{ choices: [{ delta: { content: 'い' } }] }])).toEqual({ text: 'い', reasons: ['interrupted'] })
+    expect(await run('gemini', [{ candidates: [{ content: { parts: [{ text: 'う' }] }, finishReason: 'SAFETY' }] }])).toEqual({ text: 'う', reasons: ['filtered'] })
+    expect(await run('gemini', [{ candidates: [{ content: { parts: [{ text: 'う' }] }, finishReason: 'STOP' }] }])).toEqual({ text: 'う', reasons: [] })
   })
 })

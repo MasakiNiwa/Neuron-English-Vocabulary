@@ -39,6 +39,17 @@ export interface CompleteParams {
   maxTokens?: number
   /** 1 回のやり取りごとの消費トークン数（取得できる場合） */
   onUsage?: (u: Usage) => void
+  /** 応答が最後まで届かなかったとき（長さの上限・安全フィルタ・通信の中断）。返すテキストは途中まで（ROADMAP B12） */
+  onIncomplete?: (reason: IncompleteReason) => void
+}
+
+/** length: 出力の長さの上限 / filtered: 安全フィルタなどで止まった / interrupted: 終了の合図がないまま通信が終わった */
+export type IncompleteReason = 'length' | 'filtered' | 'interrupted'
+
+export const INCOMPLETE_LABEL: Record<IncompleteReason, string> = {
+  length: '長さの上限に達したため、応答が途中で終わっています',
+  filtered: 'AI サービスの安全フィルタにより、応答が途中で止まりました',
+  interrupted: '通信が途中で切れたため、応答が最後まで届いていない可能性があります',
 }
 
 function reportUsage(p: CompleteParams, input: unknown, output: unknown) {
@@ -149,6 +160,10 @@ async function completeAnthropic(p: CompleteParams) {
       res.usage.output_tokens,
     )
     if (res.stop_reason === 'refusal') return all + '（この依頼には回答できませんでした）'
+    if (res.stop_reason === 'max_tokens' || res.stop_reason === 'model_context_window_exceeded') {
+      p.onIncomplete?.('length')
+      return all
+    }
     const uses = res.content.filter((b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use')
     if (res.stop_reason !== 'tool_use' || !uses.length) return all
     messages.push({ role: 'assistant', content: res.content as Anthropic.Beta.BetaContentBlockParam[] })
@@ -210,12 +225,21 @@ async function completeOpenAIResponses(p: CompleteParams) {
       } else if (ev.type === 'response.completed') {
         final = ev.response as RespFinal
         reportUsage(p, final.usage?.input_tokens, final.usage?.output_tokens)
+      } else if (ev.type === 'response.incomplete') {
+        const r = ev.response as RespFinal & { incomplete_details?: { reason?: string } }
+        reportUsage(p, r.usage?.input_tokens, r.usage?.output_tokens)
+        p.onIncomplete?.(r.incomplete_details?.reason === 'content_filter' ? 'filtered' : 'length')
+        return all
       } else if (ev.type === 'response.failed' || ev.type === 'error') {
         throw new Error(JSON.stringify(ev).slice(0, 300))
       }
     }
-    const calls = final?.output.filter((o) => o.type === 'function_call') ?? []
-    if (!final || !calls.length) return all
+    if (!final) {
+      p.onIncomplete?.('interrupted')
+      return all
+    }
+    const calls = final.output.filter((o) => o.type === 'function_call')
+    if (!calls.length) return all
     previous = final.id
     input = await Promise.all(
       calls.map(async (c) => ({ type: 'function_call_output', call_id: c.call_id, output: await exec(p, c.name ?? '', parseArgs(c.arguments)) })),
@@ -250,11 +274,16 @@ async function completeOpenAICompat(p: CompleteParams, url: string, extraHeaders
     })
     await ensureOk(res)
     let text = ''
+    let finish: string | null = null
     const calls: OAIToolCall[] = []
     for await (const ev of readSSE(res)) {
       const u = ev.usage as { prompt_tokens?: number; completion_tokens?: number } | undefined
       if (u) reportUsage(p, u.prompt_tokens, u.completion_tokens)
-      const delta = (ev.choices as { delta?: { content?: string; tool_calls?: { index: number; id?: string; function?: { name?: string; arguments?: string } }[] } }[] | undefined)?.[0]?.delta
+      const choice = (
+        ev.choices as { finish_reason?: string | null; delta?: { content?: string; tool_calls?: { index: number; id?: string; function?: { name?: string; arguments?: string } }[] } }[] | undefined
+      )?.[0]
+      if (choice?.finish_reason) finish = choice.finish_reason
+      const delta = choice?.delta
       if (!delta) continue
       if (delta.content) {
         text += delta.content
@@ -270,6 +299,10 @@ async function completeOpenAICompat(p: CompleteParams, url: string, extraHeaders
       }
     }
     const toolCalls = calls.filter(Boolean)
+    if (finish === 'length' || finish === 'content_filter' || (!finish && !toolCalls.length)) {
+      p.onIncomplete?.(finish === 'length' ? 'length' : finish === 'content_filter' ? 'filtered' : 'interrupted')
+      return all
+    }
     if (!toolCalls.length) return all
     messages.push({ role: 'assistant', content: text || null, tool_calls: toolCalls })
     for (const c of toolCalls) {
@@ -308,10 +341,13 @@ async function completeGemini(p: CompleteParams) {
     await ensureOk(res)
     const parts: GPart[] = []
     let usage: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number } | undefined
+    let finish: string | undefined
     for await (const ev of readSSE(res)) {
       // 使用量は届くたびに累計が更新されるので、最後のものを使う
       if (ev.usageMetadata) usage = ev.usageMetadata as typeof usage
-      const ps = (ev.candidates as { content?: { parts?: GPart[] } }[] | undefined)?.[0]?.content?.parts ?? []
+      const cand = (ev.candidates as { finishReason?: string; content?: { parts?: GPart[] } }[] | undefined)?.[0]
+      if (cand?.finishReason) finish = cand.finishReason
+      const ps = cand?.content?.parts ?? []
       for (const x of ps) {
         parts.push(x)
         if (x.text && !x.thought) {
@@ -322,6 +358,10 @@ async function completeGemini(p: CompleteParams) {
     }
     reportUsage(p, usage?.promptTokenCount, (usage?.candidatesTokenCount ?? 0) + (usage?.thoughtsTokenCount ?? 0))
     const calls = parts.filter((x) => x.functionCall)
+    if (!calls.length && finish !== 'STOP') {
+      p.onIncomplete?.(!finish ? 'interrupted' : finish === 'MAX_TOKENS' ? 'length' : 'filtered')
+      return all
+    }
     if (!calls.length) return all
     contents.push({ role: 'model', parts })
     const responses: GPart[] = []
