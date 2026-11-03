@@ -11,6 +11,9 @@ import { useDictionary, useEntry, recordView } from '@/features/dictionary/hooks
 import { formatInterval, previewIntervals, Rating, review, type Grade } from './cards'
 import { ChoicePrompt, ClozePrompt, JaPrompt, resolveFormat, type StudyFormat } from './formats'
 
+/** 表面に見出し語が出る（最初に読み上げても答えにならない）形式 */
+const SPEAK_FIRST = new Set<StudyFormat>(['en2ja', 'choice'])
+
 const GRADES: { g: Grade; label: string; key: string; cls: string }[] = [
   { g: Rating.Again, label: 'もう一度', key: '1', cls: 'border-danger/40 text-danger' },
   { g: Rating.Hard, label: '難しい', key: '2', cls: 'border-warn/40 text-warn' },
@@ -138,6 +141,8 @@ export function ReviewSession({
   const [shown, setShown] = useState(false)
   const [card, setCard] = useState<StudyCard | null>(queue[0] ?? null)
   const startRef = useRef(Date.now())
+  // 回答の連打で同じカードを 2 回評価しないためのロック（state だと次の描画まで反映されないので ref）
+  const ratingRef = useRef(false)
   const backRef = useRef<HTMLDivElement>(null)
   const cardRef = useRef<HTMLDivElement>(null)
   const [count, setCount] = useState(initialCount)
@@ -157,8 +162,10 @@ export function ReviewSession({
     void db.cards.get(c.entryId).then((x) => setCard(x ?? c))
     setShown(false)
     setSuggested(null)
+    ratingRef.current = false
     startRef.current = Date.now()
-    if (autoSpeak) speak(c.entryId.replace(/_/g, ' '))
+    // 表面に英語が出る形式だけ最初に読み上げる。日→英・穴埋めでは答えになるので、答えを見たときに読む（B13）
+    if (autoSpeak && SPEAK_FIRST.has(format)) speak(c.entryId.replace(/_/g, ' '))
     // カードの登場アニメーション（Web Animations API）
     cardRef.current?.animate(
       [
@@ -167,7 +174,7 @@ export function ReviewSession({
       ],
       { duration: 220, easing: 'ease-out' },
     )
-  }, [idx, queue, autoSpeak])
+  }, [idx, queue, autoSpeak, format])
 
   const reveal = useCallback(() => {
     setShown(true)
@@ -181,13 +188,21 @@ export function ReviewSession({
       ),
     )
     if (card) void recordView(card.entryId, 'study')
-  }, [card])
+    if (card && autoSpeak && !SPEAK_FIRST.has(format)) speak(card.entryId.replace(/_/g, ' '))
+  }, [card, autoSpeak, format])
 
   const rate = useCallback(
     async (g: Grade) => {
-      if (!card) return
+      if (!card || ratingRef.current) return
+      ratingRef.current = true
       navigator.vibrate?.(g === Rating.Again ? [20, 40, 20] : 10)
-      await review(card.entryId, g, { durationMs: Date.now() - startRef.current, mode: `${mode}:${format}` })
+      try {
+        await review(card.entryId, g, { durationMs: Date.now() - startRef.current, mode: `${mode}:${format}` })
+      } catch (e) {
+        ratingRef.current = false
+        throw e
+      }
+      // ロックは次のカードに切り替わったとき（下の useEffect）に外す
       setCount((n) => n + 1)
       onProgress?.(Math.min(idx + 1, queue.length - 1), count + 1)
       // 「もう一度」は数枚後に再出題

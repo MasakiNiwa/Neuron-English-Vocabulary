@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
 import { Button } from '@/components/ui/Button'
 import { Page } from '@/components/ui/Page'
-import { clearAll, clearHistory, clearStudy, exportAll, importAll } from '@/lib/db'
+import { clearHistory, clearStudy } from '@/lib/db'
+import { buildBackup, clearEverything, parseBackup, restoreBackup, TABLE_LABEL, BACKUP_TABLES, type ParsedBackup } from './backup'
 import { supportedLanguages } from '@/lib/i18n'
 import { speak, ttsSupported, useEnglishVoices } from '@/lib/speech'
 import { useSettings, type ThemeMode } from '@/stores/settings'
@@ -49,11 +50,12 @@ export function SettingsPage() {
   const s = useSettings()
   const voices = useEnglishVoices()
 
+  const [pending, setPending] = useState<ParsedBackup | null>(null)
+  const [importMsg, setImportMsg] = useState('')
+
   const doExport = async () => {
-    const data = await exportAll()
-    const blob = new Blob([JSON.stringify({ app: 'neuron-english-vocabulary', exportedAt: Date.now(), data })], {
-      type: 'application/json',
-    })
+    const data = await buildBackup()
+    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' })
     const a = document.createElement('a')
     a.href = URL.createObjectURL(blob)
     a.download = `neuron-vocab-backup-${new Date().toISOString().slice(0, 10)}.json`
@@ -67,11 +69,26 @@ export function SettingsPage() {
     input.onchange = async () => {
       const file = input.files?.[0]
       if (!file) return
-      const json = JSON.parse(await file.text()) as { data?: Record<string, unknown[]> }
-      if (json.data) await importAll(json.data)
-      alert(t('common.ok'))
+      setImportMsg('')
+      try {
+        setPending(parseBackup(JSON.parse(await file.text())))
+      } catch (e) {
+        setPending(null)
+        setImportMsg(e instanceof SyntaxError ? 'JSON として読み込めませんでした' : e instanceof Error ? e.message : String(e))
+      }
     }
     input.click()
+  }
+  const doRestore = async (mode: 'replace' | 'merge') => {
+    if (!pending) return
+    if (mode === 'replace' && !confirm('今の学習データ・履歴・チャットを消して、バックアップの内容に置き換えます。よろしいですか？')) return
+    try {
+      await restoreBackup(pending, mode)
+      setImportMsg(mode === 'replace' ? 'バックアップの内容に置き換えました' : '今のデータにバックアップの内容を追加しました')
+    } catch (e) {
+      setImportMsg(`復元できませんでした: ${e instanceof Error ? e.message : String(e)}`)
+    }
+    setPending(null)
   }
 
   return (
@@ -203,6 +220,35 @@ export function SettingsPage() {
               {t('settings.importData')}
             </Button>
           </Row>
+          {pending && (
+            <div className="my-2 rounded-xl border border-border bg-surface-2/50 p-3 text-sm">
+              <p className="font-medium">
+                バックアップの内容{pending.exportedAt ? `（${new Date(pending.exportedAt).toLocaleString()} に作成）` : ''}
+              </p>
+              <ul className="mt-1 grid grid-cols-2 gap-x-4 text-xs text-muted">
+                {BACKUP_TABLES.map((t) => (
+                  <li key={t}>
+                    {TABLE_LABEL[t]}: {pending.rows[t].length.toLocaleString()} 件
+                  </li>
+                ))}
+                <li>設定: {Object.keys(pending.settings).length} 項目</li>
+              </ul>
+              {pending.skipped > 0 && <p className="mt-1 text-xs text-danger">形式が正しくない {pending.skipped} 件は取り込みません</p>}
+              <p className="mt-2 text-xs text-muted">API キーと AI の接続設定はバックアップに含まれません（復元後に設定し直してください）。</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                <Button size="sm" variant="primary" onClick={() => void doRestore('merge')}>
+                  今のデータに追加
+                </Button>
+                <Button size="sm" variant="danger" onClick={() => void doRestore('replace')}>
+                  置き換えて復元
+                </Button>
+                <Button size="sm" onClick={() => setPending(null)}>
+                  キャンセル
+                </Button>
+              </div>
+            </div>
+          )}
+          {importMsg && <p className="my-1 text-xs text-muted">{importMsg}</p>}
           <Row label={t('settings.clearHistory')}>
             <DangerButton label={t('common.clear')} action={clearHistory} />
           </Row>
@@ -213,7 +259,7 @@ export function SettingsPage() {
             <DangerButton
               label={t('common.clear')}
               action={async () => {
-                await clearAll()
+                await clearEverything()
                 location.reload()
               }}
             />

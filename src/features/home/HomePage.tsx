@@ -7,7 +7,8 @@ import { Card, SectionTitle } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { SearchField } from '@/components/ui/SearchField'
 import { PageSpinner } from '@/components/ui/Spinner'
-import { db } from '@/lib/db'
+import { useMinuteTick } from '@/lib/clock'
+import { getStudyStats } from '@/features/study/session'
 import { EntryLink, LinkedText, MorphemeLink } from '@/features/dictionary/components/links'
 import { useDictionary, useEntry, useRecentEntries } from '@/features/dictionary/hooks'
 
@@ -95,8 +96,11 @@ function Recent() {
 
 function StudySummary() {
   const { t } = useTranslation()
-  const due = useLiveQuery(() => db.cards.where('due').belowOrEqual(Date.now()).count(), [])
-  const total = useLiveQuery(() => db.cards.count(), [])
+  // 学習画面の「今日の学習」と同じ数え方（復習の時期が来たカード＋追加済みの新しいカード。B03）
+  const tick = useMinuteTick()
+  const stats = useLiveQuery(getStudyStats, [tick])
+  const due = stats ? stats.due + stats.newAvailable : undefined
+  const total = stats?.total
   return (
     <Card className="flex items-center gap-4">
       <div className="flex-1">
