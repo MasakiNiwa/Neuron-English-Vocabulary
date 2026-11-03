@@ -22,6 +22,7 @@ import csv
 import json
 import os
 import re
+import runpy
 import shutil
 import unicodedata
 from collections import Counter, defaultdict
@@ -828,6 +829,9 @@ for k, e in entries.items():
     e['rel'] = resolve(e.pop('_rel'), k)[:12]
     if e['t'] == 'w':
         e['ph'] = sorted(phrases_of.get(k, []), key=lambda x: (entries[x]['r'], x))[:20]
+
+# Editorial exclusions also apply to full rebuilds, before reverse indexes/counts.
+runpy.run_path(os.path.join(os.path.dirname(__file__), 'editorial_filters.py'))['apply_editorial_filters'](entries, REPO)
 
 # 形態素 → 単語
 morph_words = defaultdict(list)

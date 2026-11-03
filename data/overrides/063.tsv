@@ -115,7 +115,7 @@ parts	acceleration	ac=pre:ad celer ation=suf:ation
 parts	aspiration	a=pre:ad spir=r:spir ation=suf:ation
 parts	expiration	ex=pre:ex pir=r:spir ation=suf:ation
 parts	incorporation	in=pre:into corp=r:corp or ation=suf:ation
-parts	iteration	iter=r:it ation=suf:ation
+parts	iteration	iter ation=suf:ation
 parts	doctorate	doct=r:doc or=suf:er ate=suf:ate
 parts	saturation	sat=r:sat ur ation=suf:ation
 parts	temperate	temp=r:temp er ate=suf:ate
@@ -125,7 +125,7 @@ parts	disparate	dis=pre:dis par=r:para ate=suf:ate
 parts	reparation	re=pre:re par=r:para ation=suf:ation
 parts	consecrate	con=pre:com secr=r:sacr ate=suf:ate
 parts	deliberation	de=pre:de liber ation=suf:ation
-parts	reiterate	re=pre:re iter=r:it ate=suf:ate
+parts	reiterate	re=pre:re iter ate=suf:ate
 parts	consultation	consult=w:consult ation=suf:ation
 parts	congratulate	con=pre:com grat=r:grat ul ate=suf:ate
 # Batch 4 (C081-C095): 語義・解説・例文等の確認修正

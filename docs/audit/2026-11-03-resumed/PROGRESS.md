@@ -101,3 +101,8 @@ mainへはマージしない。修正案の採否と外部辞典での検証は�
 ## 2026-11-03 JST — チェックポイント6：Gemini成果の独立レビュー
 
 Geminiの814e71cまでを取得。構造・同期再現性・テストは成功したが、意味面の再修正事項あり。詳細と次の未完了項目はdocs/etymology-review/CHATGPT_REVIEW.md（R1〜R7）に保存。mainへのマージは行わずDraft維持。
+
+
+## 2026-11-03 JST — チェックポイント7：ChatGPT最終確認
+
+R1〜R3修正、R4〜R5は断定・曖昧な接続を撤回し保留3件を明示。R6入力ガード、R7共通除外ルールを実装・回帰検証。Python15件とVitest11件・構造/lint・型チェック/ビルド成功。最新のレビュー依頼はdocs/etymology-review/CLAUDE_FINAL_HANDOFF.md。raw完全生成・画面確認・全件外部辞典照合は未完了。マージは未実施。

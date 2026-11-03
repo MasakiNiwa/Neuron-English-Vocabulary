@@ -66,3 +66,21 @@ python3 scripts/data/04_build.py --work $WORK --raw $RAW --repo .
 - 手で書いたデータ（`gloss`・`parts`・解説）がある語は、単語数の上限（`--words`）を超えても残す
 - 訳語を手で書いた語は、一覧に出す短い訳も書いた順のまま使う
 
+
+## 校閲済みの除外ルールと限定同期
+
+`data/editorial_exclusions.json` は、特定見出し語の不適切な例文IDや未確定PIE接続を除外する正式入力です。`04_build.py` と `10_sync_fixes.py` の双方が同じ `editorial_filters.py` を呼び、index・逆引き・metaを作る前に適用します。現在はfor_goodの例文21606と、親parentに対する曖昧なpie:per接続を除外しています。新しい正しい語源を自動認定する仕組みではありません。
+
+rawのない環境では正式TSVの修正後、公開データを確認し、同期前のハッシュを記録してから限定同期します。
+
+```bash
+python3 scripts/data/10_sync_fixes.py --dry-run
+python3 scripts/data/10_sync_fixes.py --print-public-sha256
+# 上で記録しレビューした64桁のハッシュを次の引数に指定する
+python3 scripts/data/10_sync_fixes.py --expect-public-sha256 <確認済みハッシュ>
+python3 scripts/data/09_verify_after_fixes.py
+```
+
+`<確認済みハッシュ>` は実際の値に置き換えます。入力が変化した場合は書き込み前に停止するため、新しい状態を調べずにハッシュを更新して再試行しないでください。dry-runとハッシュ表示は書き込みません。限定同期はrawからの完全再生成とは異なり、原文や例文の再収集はしません。
+
+修正前・修正後の正式入力と公開データを同じコミットで保存してください。旧監査スナップショットは比較用として上書きしません。最終レビューの入口は `docs/etymology-review/CLAUDE_FINAL_HANDOFF.md` です。

@@ -8,10 +8,12 @@ word-base derived links (der), and meta.json counts idempotently.
 from __future__ import annotations
 
 import argparse
+import hashlib
 from collections import defaultdict
 import json
 from pathlib import Path
 import re
+import runpy
 import sys
 
 REPO = Path(__file__).resolve().parents[2]
@@ -41,6 +43,7 @@ def synchronize_data(
     overrides_rows: list[tuple[str, int, list[str]]],
     explanation_rows: list[tuple[str, int, list[str]]],
     extra_patches: dict[str, dict] | None = None,
+    repo: Path | None = None,
 ) -> dict[str, int]:
     """Apply TSVs to in-memory public data structures with strict validation."""
     by_id = {m['id']: m for m in morphs}
@@ -179,6 +182,9 @@ def synchronize_data(
                 else:
                     e[field] = after
 
+    if repo is not None:
+        runpy.run_path(str(Path(__file__).with_name('editorial_filters.py')))['apply_editorial_filters'](entries, repo)
+
     # 4. Update w: base derived links (der)
     new_bases_by_child: dict[str, set[str]] = defaultdict(set)
     children_by_base: dict[str, list[str]] = defaultdict(list)
@@ -270,42 +276,9 @@ def synchronize_data(
     return counts
 
 
-# Guarded non-TSV patches (e.g., C094 for_good example replacement)
-EXTRA_PATCHES: dict[str, dict] = {
-    'for_good': {
-        'ex': {
-            'before': [
-                {
-                    'en': 'The school is crying out for good teachers.',
-                    'ja': '学校では良い教師を切に必要としている。',
-                    'id': 21606,
-                },
-                {
-                    'en': "It's about time you settled down for good.",
-                    'ja': 'もうそろそろ腰を落ち着けてもいいんじゃないの。',
-                    'id': 31575,
-                },
-                {
-                    'en': "You aren't leaving Japan for good, are you?",
-                    'ja': '永久に日本を去るわけではないですよね。',
-                    'id': 69670,
-                },
-            ],
-            'after': [
-                {
-                    'en': "It's about time you settled down for good.",
-                    'ja': 'もうそろそろ腰を落ち着けてもいいんじゃないの。',
-                    'id': 31575,
-                },
-                {
-                    'en': "You aren't leaving Japan for good, are you?",
-                    'ja': '永久に日本を去るわけではないですよね。',
-                    'id': 69670,
-                },
-            ],
-        },
-    },
-}
+# Optional exact before/after patches. Stable exclusions live in the shared
+# data/editorial_exclusions.json so full builds preserve them too.
+EXTRA_PATCHES: dict[str, dict] = {}
 
 
 def write_if_changed(path: Path, content: str) -> bool:
@@ -316,12 +289,34 @@ def write_if_changed(path: Path, content: str) -> bool:
     return True
 
 
+def public_sha256(repo: Path) -> str:
+    """Bind a planned sync to the exact paths and bytes reviewed beforehand."""
+    digest = hashlib.sha256()
+    paths = sorted((repo / 'public/data').rglob('*.json'))
+    if not paths:
+        raise ValueError('No public data to synchronize')
+    for path in paths:
+        digest.update(str(path.relative_to(repo)).replace('\\', '/').encode('utf-8') + b'\0')
+        digest.update(hashlib.sha256(path.read_bytes()).digest())
+    return digest.hexdigest()
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--repo', type=Path, default=REPO)
     ap.add_argument('--dry-run', action='store_true')
+    ap.add_argument('--print-public-sha256', action='store_true')
+    ap.add_argument('--expect-public-sha256', help='reviewed input digest, required for writes')
     args = ap.parse_args()
     repo = args.repo.resolve()
+    current_digest = public_sha256(repo)
+    if args.print_public_sha256:
+        print(current_digest)
+        return 0
+    if args.expect_public_sha256 and args.expect_public_sha256 != current_digest:
+        ap.error('Public input changed since review; no files written')
+    if not args.dry_run and not args.expect_public_sha256:
+        ap.error('Writes require --expect-public-sha256 from the reviewed input')
 
     shard_files = sorted((repo / 'public/data/entries').glob('*.json'))
     shards: dict[str, dict[str, dict]] = {}
@@ -352,7 +347,7 @@ def main() -> int:
 
     counts = synchronize_data(
         entries, locations, index, morphs, meta,
-        overrides_rows, explanation_rows, EXTRA_PATCHES,
+        overrides_rows, explanation_rows, EXTRA_PATCHES, repo=repo,
     )
 
     changed_files = []
