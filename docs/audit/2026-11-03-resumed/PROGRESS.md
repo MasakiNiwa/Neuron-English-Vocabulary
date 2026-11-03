@@ -96,3 +96,8 @@ mainへはマージしない。修正案の採否と外部辞典での検証は�
 - 未実施・今後の任意項目：
   - ローカル環境の `node_modules` が未インストールのため、`npm test` / `npm run build` は未実行（今回フロントエンドのアプリコードや依存パッケージは変更なし）。
   - GitHub への push および Draft PR #85 の更新（ローカル PC の `c:/Antigravity/Neuron-English-Vocabulary` ブランチ `review/etymology-audit-resume-2026-11-03` に全コミット保存済み）。
+
+
+## 2026-11-03 JST — チェックポイント6：Gemini成果の独立レビュー
+
+Geminiの814e71cまでを取得。構造・同期再現性・テストは成功したが、意味面の再修正事項あり。詳細と次の未完了項目はdocs/etymology-review/CHATGPT_REVIEW.md（R1〜R7）に保存。mainへのマージは行わずDraft維持。

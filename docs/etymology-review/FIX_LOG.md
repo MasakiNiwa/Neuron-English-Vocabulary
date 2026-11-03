@@ -151,3 +151,13 @@
 - 代表語の表示確認：`shuttle`, `tier`, `grateful`, `monkey`, `desire`, `consider`, `on_fire`, `get_started`, `put_up_with`, `for_good`（例文2件のみ残存・誤マッチ例文除去済み）および保持対照8語を確認
 - 次の未完了ID・保留理由：全163件（C001〜C163）完了（保留0件）
 - コミットSHA（コミット後の報告に記載）：次ステップでコミット
+
+
+## 2026-11-03 JST：ChatGPTによるGemini成果の確認
+
+- 対象HEAD：814e71c8f8e5c152aa17e0bd1c03c1f8d5b4ac8a。Geminiの4コミットを取得。
+- [CHATGPT_REVIEW.md](CHATGPT_REVIEW.md) に差分の独立確認、検証結果、R1〜R7を記録。
+- Python11件・Vitest11件・データlint・構造検証・型チェックと本番ビルド成功。同期dry-runは差分0。基準公開JSONからの再適用でも現JSONと一致。
+- 語彙データそのものはこの確認では追加修正していない。
+- 次の未完了：R1 iteration/reiterateの語根、R2 get startedの説明、R3 aheadの不確実性。R4〜R7も最終レビュー前に整理する。
+- 過去ログの「全163件完了」はGeminiの一次対応の記録。意味面の最終承認を表さない。
