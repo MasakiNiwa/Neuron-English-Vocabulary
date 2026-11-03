@@ -1,8 +1,9 @@
 import { Check, X } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { SpeakButton } from '@/features/dictionary/components/links'
 import { useDictionary } from '@/features/dictionary/hooks'
 import type { Entry } from '@/features/dictionary/types'
+import { buildChoices } from './choices'
 
 /**
  * 出題形式
@@ -48,8 +49,6 @@ export function resolveFormat(format: StudyFormat, entry: Entry | null): Concret
   return available.includes(format) ? format : 'en2ja'
 }
 
-const glossOf = (e: Entry) => e.g.map((g) => g.ja.slice(0, 3).join('、')).join(' / ')
-
 export function JaPrompt({ entry }: { entry: Entry }) {
   const hint = entry.h
     .split('')
@@ -89,7 +88,7 @@ export function ClozePrompt({ entry, revealed }: { entry: Entry; revealed: boole
   )
 }
 
-/** 4 択: 正解 + 頻度が近い別の語の訳 3 つ */
+/** 4 択: 正解 + 頻度が近い別の語の訳 3 つ（数字キーでも選べる） */
 export function ChoicePrompt({
   entry,
   onAnswer,
@@ -100,15 +99,22 @@ export function ChoicePrompt({
   onAnswer: (index: number, correct: boolean) => void
 }) {
   const dict = useDictionary()
-  const options = useMemo(() => {
-    const pool = dict.entries.filter((e) => e.type === entry.t && e.key !== entry.k && Math.abs(e.rank - entry.r) < 800 && e.gloss)
-    const picks = new Set<string>()
-    while (picks.size < 3 && pool.length > 3) picks.add(pool[Math.floor(Math.random() * pool.length)].gloss)
-    const correct = glossOf(entry)
-    const all = [...picks].map((g) => ({ text: g, correct: false }))
-    all.splice(Math.floor(Math.random() * 4), 0, { text: correct, correct: true })
-    return all
-  }, [dict, entry])
+  const options = useMemo(() => buildChoices(entry, dict.entries), [dict, entry])
+  // 数字キー 1〜4 で選べる（B15）
+  useEffect(() => {
+    if (answered !== null) return
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement).tagName === 'INPUT' || e.metaKey || e.ctrlKey || e.altKey) return
+      const i = Number(e.key) - 1
+      if (Number.isInteger(i) && i >= 0 && i < options.length) {
+        e.preventDefault()
+        e.stopImmediatePropagation()
+        onAnswer(i, options[i].correct)
+      }
+    }
+    window.addEventListener('keydown', onKey, true)
+    return () => window.removeEventListener('keydown', onKey, true)
+  }, [answered, options, onAnswer])
   return (
     <div className="grid w-full gap-2">
       {options.map((o, i) => {
