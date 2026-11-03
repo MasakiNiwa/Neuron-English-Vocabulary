@@ -1,0 +1,23 @@
+# 第70弾: 語源監査（2026-11-03 再開分）に基づく語源分解の精査・修正（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
+# Batch 1 (C001-C023): 接頭辞の同形異源（in-/into, a-/ad-, dia-/dis-, ante-/anti-, un-/uni-, mono-/moon）の分離
+parts	import	im=pre:into port=r:port
+parts	inside	in=pre:into side=w:side
+parts	independence	in=pre:in de pend=r:pend ence=suf:ance
+parts	ignorant	i=pre:in gnor=r:gno ant=suf:ant
+parts	integer	in=pre:in teg=r:tact er
+parts	around	a round=w:round
+parts	away	a way=w:way
+parts	ahead	a head=w:head
+parts	agree	a=pre:ad gree=r:grat
+parts	announce	an=pre:ad nounc=r:nunci e
+parts	aspect	a=pre:ad spect=r:spec
+parts	ascend	a=pre:ad scend=r:scend
+parts	director	di=pre:dis rect=r:reg or=suf:er
+parts	direct	di=pre:dis rect=r:reg
+parts	district	di=pre:dis strict=r:strict
+parts	diverse	di=pre:dis vers=r:vers e
+parts	antigen	anti=pre:anti gen=r:gen
+parts	antisocial	anti=pre:anti soci=r:soci al=suf:al
+parts	unanimous	un=pre:uni anim=r:anim ous=suf:ous
+parts	unanimously	un=pre:uni anim=r:anim ous=suf:ous ly=suf:ly
+parts	Monday	mon=w:moon day=w:day

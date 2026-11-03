@@ -1,0 +1,168 @@
+{
+  "validation_scope": "structural_only_not_semantic_approval",
+  "structural_errors": [],
+  "historical_case_drift": [
+    {
+      "id": "C001",
+      "key": "immigration",
+      "old_id": "pre:in",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C002",
+      "key": "import",
+      "old_id": "pre:in",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C003",
+      "key": "inside",
+      "old_id": "pre:in",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C004",
+      "key": "independence",
+      "old_id": "pre:into",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C005",
+      "key": "ignorant",
+      "old_id": "pre:into",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C006",
+      "key": "integer",
+      "old_id": "pre:into",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C007",
+      "key": "around",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C008",
+      "key": "away",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C009",
+      "key": "ahead",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C010",
+      "key": "alive",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C011",
+      "key": "agree",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C012",
+      "key": "announce",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C013",
+      "key": "aspect",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C014",
+      "key": "ascend",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C015",
+      "key": "director",
+      "old_id": "pre:dia",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C016",
+      "key": "direct",
+      "old_id": "pre:dia",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C017",
+      "key": "district",
+      "old_id": "pre:dia",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C018",
+      "key": "diverse",
+      "old_id": "pre:dia",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C019",
+      "key": "antigen",
+      "old_id": "pre:ante",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C020",
+      "key": "antisocial",
+      "old_id": "pre:ante",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C021",
+      "key": "unanimous",
+      "old_id": "pre:un",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C022",
+      "key": "unanimously",
+      "old_id": "pre:un",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C023",
+      "key": "Monday",
+      "old_id": "pre:mono",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    }
+  ],
+  "instruction": "Review drift against DECISIONS.tsv and FIX_LOG.md; it is not automatic proof of a resolved case."
+}
