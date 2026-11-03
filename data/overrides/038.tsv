@@ -274,7 +274,7 @@ parts	liken	like=w:like n
 parts	lockout	lock=w:lock out=w:out
 parts	modernism	modern=w:modern ism=suf:ism
 parts	observance	ob=pre:ob serv=r:serv ance=suf:ance
-parts	parenthesis	par=pre:para en the=r:the sis
+parts	parenthesis	par=pre:para en thesis=w:thesis
 parts	peroxide	per=pre:per oxide=w:oxide
 parts	postdoctoral	post=pre:post doctor=w:doctor al=suf:al
 parts	reformer	re=pre:re form=r:form er=suf:er

@@ -280,7 +280,7 @@ parts	invest	in=pre:in vest=w:vest
 parts	occupy	oc=pre:ob cupy=r:cap
 parts	operator	oper=r:oper ator
 parts	painful	pain=w:pain ful=suf:ful
-parts	preparation	pre=pre:pre par=r:par ation=suf:ation
+parts	preparation	pre=pre:pre par=r:para ation=suf:ation
 parts	registration	regist=w:register ration
 parts	underground	under=pre:under ground=w:ground
 parts	announcement	announce=w:announce ment=suf:ment
