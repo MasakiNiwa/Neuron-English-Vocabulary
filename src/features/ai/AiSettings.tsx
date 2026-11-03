@@ -140,6 +140,26 @@ function Routing() {
   )
 }
 
+/** AI に何を送るかの説明と、学習状況の共有の ON/OFF（B07） */
+function SharedInfo() {
+  const share = useAiConfig((s) => s.shareLearning)
+  const setShare = useAiConfig((s) => s.setShareLearning)
+  return (
+    <div className="flex flex-col gap-2 text-sm">
+      <ul className="list-disc space-y-0.5 pl-5 text-xs leading-relaxed text-muted">
+        <li>入力したメッセージと、そのチャットのこれまでのやりとり</li>
+        <li>話題にしている単語の辞書の内容、AI が辞書を調べたときの結果</li>
+        <li>下の設定がオンのとき: 学習状況（復習予定数・今日の回答数・最近見た単語・苦手な単語）</li>
+      </ul>
+      <label className="flex items-center gap-2">
+        <input type="checkbox" className="size-4 accent-[var(--accent)]" checked={share} onChange={(e) => setShare(e.target.checked)} />
+        学習状況を AI に伝える（アドバイスや例の選び方に使います）
+      </label>
+      <p className="text-[11px] text-muted">送信先は、選んだ AI サービスだけです（このアプリのサーバーは経由しません）。API キーは送信先のサービスにだけ使われます。</p>
+    </div>
+  )
+}
+
 function CustomPersonaEditor() {
   const custom = useAiConfig((s) => s.custom)
   const setCustom = useAiConfig((s) => s.setCustom)
@@ -332,6 +352,9 @@ export function AiSettings() {
       </Sub>
       <Sub title="キャラクター">
         <Cast />
+      </Sub>
+      <Sub title="AI に送る情報">
+        <SharedInfo />
       </Sub>
     </div>
   )
