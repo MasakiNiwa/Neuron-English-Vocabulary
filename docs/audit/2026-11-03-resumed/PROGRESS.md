@@ -75,3 +75,24 @@ mainへはマージしない。修正案の採否と外部辞典での検証は�
 - PR #85を継続利用し、タイトルと本文を語源品質点検中心の説明へ整理する。経緯の原本・既存資料は履歴として保持。
 - ブランチ整理候補をBRANCHES.mdへ記録。既存ブランチの削除は実施しない。
 - Geminiによるデータ修正はまだ未実施。次の未完了範囲と後日のレビュー条件は共通入口とFIX_LOGを参照。
+
+
+## 2026-11-03 JST — チェックポイント6：Gemini（4Argon）による全163件の最終点検・データ同期・解説ブラッシュアップ完了
+
+- 対象範囲：`data/audit/2026-11-03-resumed/review-cases.json` の全163件（修正・再確認155件 C001〜C155、保持対照8件 C156〜C163）。
+- 実装済み内容：
+  - [x] `scripts/data/10_sync_fixes.py` および単体テスト `scripts/data/test_sync_fixes.py` を新規作成（rawダンプ非依存のガード付き冪等同期、逆引き・`w:` 派生語 `der`・`index.json`・`meta.json` の完全同期）。
+  - [x] **バッチ1（C001〜C023）**：接頭辞誤リンク23件の修正と日本語解説10件のブラッシュアップ（コミット `74716ca`、レポート `docs/etymology-review/results/batch-01.json`）。
+  - [x] **バッチ2（C024〜C050, C055〜C074, C096〜C098, C100〜C104）**：同形異語根・誤語基リンク55件の修正と日本語解説9件のブラッシュアップ（コミット `b891840`、レポート `docs/etymology-review/results/batch-02.json`）。
+  - [x] **バッチ3（C051〜C054, C075〜C080, C099, C105〜C155）**：`-nat-` / `-rat-` / 複合語等の形態素境界再分割62件と日本語解説3件のブラッシュアップ（コミット `95f595c`、レポート `docs/etymology-review/results/batch-03.json`）。
+  - [x] **バッチ4（C081〜C095, C156〜C163）**：`shuttle` / `tier` の語義整合性確認（`noparts` 化）、日本語解説10件のブラッシュアップ、PIE整合性確認、`for_good` の誤マッチ第1例文（`id: 21606`）除去、および保持対照8件（C156〜C163）の無変更維持確認（コミット `5323029`、レポート `docs/etymology-review/results/batch-04.json`）。
+  - [x] `docs/audit/2026-11-03-resumed/DECISIONS.tsv` 全163行の採否（`accept` 142件 / `revise` 21件 / `pending` 0件）および根拠の記録完了。
+  - [x] `data/audit/2026-11-03-resumed/` の修正前スナップショットは無変更で保持。
+- 検証結果：
+  - `python scripts/data/06_lint.py`：エラー0件 / 警告0件。
+  - `python scripts/data/10_sync_fixes.py --dry-run`：2回目以降の差分0件（`changed_files: []`）。
+  - `python scripts/data/09_verify_after_fixes.py`：`structural_errors: []`、修正対象140件の `guard_matches: false`（旧誤リンク解消）かつ `proposed_target_exists: true`、保持対照 C156〜C163 の変化0件を確認。
+  - `python -m unittest discover -s scripts/data -p "test_*.py" -v`：全11件成功。
+- 未実施・今後の任意項目：
+  - ローカル環境の `node_modules` が未インストールのため、`npm test` / `npm run build` は未実行（今回フロントエンドのアプリコードや依存パッケージは変更なし）。
+  - GitHub への push および Draft PR #85 の更新（ローカル PC の `c:/Antigravity/Neuron-English-Vocabulary` ブランチ `review/etymology-audit-resume-2026-11-03` に全コミット保存済み）。

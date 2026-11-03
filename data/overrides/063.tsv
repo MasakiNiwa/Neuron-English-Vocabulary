@@ -128,4 +128,5 @@ parts	deliberation	de=pre:de liber ation=suf:ation
 parts	reiterate	re=pre:re iter=r:it ate=suf:ate
 parts	consultation	consult=w:consult ation=suf:ation
 parts	congratulate	con=pre:com grat=r:grat ul ate=suf:ate
-noparts	consult
+# Batch 4 (C081-C095): 語義・解説・例文等の確認修正
+noparts	consult,shuttle,tier

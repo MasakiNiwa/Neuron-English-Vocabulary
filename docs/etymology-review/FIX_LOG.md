@@ -121,3 +121,33 @@
 - 代表語の表示確認：`inspiration`, `parenthesis`, `participation`, `alternative`, `donation`, `corporate`, `aspiration` (`a=pre:ad spir=r:spir ation=suf:ation`), `consult` (`noparts`), `consultation` (`consult=w:consult ation=suf:ation`) を確認
 - 次の未完了ID・保留理由：次は最終バッチ4（C081〜C095：語義・解説・PIE・例文の確認と修正、および C156〜C163：保持対照8件の最終確認）へ進む
 - コミットSHA（コミット後の報告に記載）：次ステップでコミット
+
+
+## 2026-11-03 JST：バッチ4（C081〜C095：語義・解説・PIE・例文の確認と修正、および C156〜C163：保持対照8件の最終確認）
+
+- 日付・担当モデル・開始コミット：2026-11-03 JST / Gemini / `95f595c`
+- 対象ケースID / 見出し語：
+  - 語義・形態素区分確認（2件）：C081 (`shuttle`), C082 (`tier`)
+  - 解説精査・ブラッシュアップ（10件）：C083 (`grateful`), C084 (`parent`), C085 (`consultant`), C086 (`monkey`), C087 (`desire`), C088 (`consider`), C089 (`on_fire`), C090 (`get_started`), C091 (`put_up_with`), C092 (`for_good`)
+  - PIE・例文精査（3件）：C093 (`grateful`), C094 (`for_good`), C095 (`parent`)
+  - 保持対照群の維持確認（8件）：C156 (`metropolitan`), C157 (`pregnant`), C158 (`compass`), C159 (`legislation`), C160 (`legislative`), C161 (`legislature`), C162 (`legislator`), C163 (`separate`)
+- 採用 / 修正して採用 / 保留 / 却下（ID付き）：
+  - 採用 (`accept`)：C083〜C095, C156〜C163
+  - 修正して採用 (`revise`)：C081 (`shuttle`：代表義は古英語 `scytel`「投げ矢」由来であり `shut`「閉じる」への単一語基リンクは誤解を招くため `noparts` 化し、解説で合流史を補足）、C082 (`tier`：代表義「段・層」は古フランス語 `tire` 由来であり `tie` + `-er` ではないため `noparts` 化し、解説で区別を明記）
+- 実際に適用したケースID（採否判断だけと区別）：C081〜C095（全15件データ実装・確認済み）および C156〜C163（保持対照8件すべて無変更維持を確認）
+- 参照した辞典URL・語義・根拠：`DECISIONS.tsv` の対応行（`embedded source only`）
+- 変更ファイルと変更理由：
+  - `data/overrides/063.tsv`：`shuttle`, `tier` を `noparts` に追加
+  - `data/explanations/011.tsv`, `013.tsv`, `017.tsv`, `037.tsv`, `039.tsv`, `042.tsv`, `050.tsv`, `059.tsv`：`grateful`（ラテン語 `gratus` 借用の廃語 `grate` + `-ful`）、`monkey`（複数語源説の併記）、`desire` / `consider`（`sidus` 説の位置づけ明確化）、熟語4件（`on fire`, `get started`, `put up with`, `for good`）の自然な文法・語源解説へのブラッシュアップ
+  - `scripts/data/10_sync_fixes.py`：`for_good` の誤マッチ第1例文（`id: 21606` "for good teachers"）を除去するガード付き `EXTRA_PATCHES` を追加
+  - `public/data/entries/*.json`, `public/data/index.json`, `public/data/morphemes.json`, `public/data/meta.json`：同期スクリプトによる再生成
+  - `docs/audit/2026-11-03-resumed/DECISIONS.tsv`, `docs/etymology-review/results/batch-04.json`：全163件の判断記録完了と検証レポートの保存
+- 再生成：ガード付き限定同期（`scripts/data/10_sync_fixes.py`）
+- 同期処理の再適用結果（2回目の差分）：`changed_files: []`（差分0件）
+- 検証コマンド・終了結果・テスト数・未実行項目：
+  - `python scripts/data/06_lint.py`：エラー0件 / 警告0件
+  - `python scripts/data/09_verify_after_fixes.py --report docs/etymology-review/results/batch-04.json`：`structural_errors: []`、C156〜C163 が `historical_case_drift` に含まれず保持されていることを確認
+  - `python -m unittest discover -s scripts/data -p "test_*.py" -v`：11件成功
+- 代表語の表示確認：`shuttle`, `tier`, `grateful`, `monkey`, `desire`, `consider`, `on_fire`, `get_started`, `put_up_with`, `for_good`（例文2件のみ残存・誤マッチ例文除去済み）および保持対照8語を確認
+- 次の未完了ID・保留理由：全163件（C001〜C163）完了（保留0件）
+- コミットSHA（コミット後の報告に記載）：次ステップでコミット

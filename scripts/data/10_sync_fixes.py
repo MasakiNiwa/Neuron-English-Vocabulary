@@ -271,7 +271,41 @@ def synchronize_data(
 
 
 # Guarded non-TSV patches (e.g., C094 for_good example replacement)
-EXTRA_PATCHES: dict[str, dict] = {}
+EXTRA_PATCHES: dict[str, dict] = {
+    'for_good': {
+        'ex': {
+            'before': [
+                {
+                    'en': 'The school is crying out for good teachers.',
+                    'ja': '学校では良い教師を切に必要としている。',
+                    'id': 21606,
+                },
+                {
+                    'en': "It's about time you settled down for good.",
+                    'ja': 'もうそろそろ腰を落ち着けてもいいんじゃないの。',
+                    'id': 31575,
+                },
+                {
+                    'en': "You aren't leaving Japan for good, are you?",
+                    'ja': '永久に日本を去るわけではないですよね。',
+                    'id': 69670,
+                },
+            ],
+            'after': [
+                {
+                    'en': "It's about time you settled down for good.",
+                    'ja': 'もうそろそろ腰を落ち着けてもいいんじゃないの。',
+                    'id': 31575,
+                },
+                {
+                    'en': "You aren't leaving Japan for good, are you?",
+                    'ja': '永久に日本を去るわけではないですよね。',
+                    'id': 69670,
+                },
+            ],
+        },
+    },
+}
 
 
 def write_if_changed(path: Path, content: str) -> bool:
