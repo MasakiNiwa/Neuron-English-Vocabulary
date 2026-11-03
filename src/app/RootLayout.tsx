@@ -1,4 +1,5 @@
 import { Link, Outlet, useNavigate, useRouter, useRouterState } from '@tanstack/react-router'
+import { scrollBehavior, useApplyMotion } from '@/lib/motion'
 import { useEffect } from 'react'
 import { warmupSearch } from '@/features/dictionary/search'
 import { CircleHelp, Moon, Sun } from 'lucide-react'
@@ -21,7 +22,7 @@ function useTabClick(pathname: string) {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
     e.preventDefault()
     const href = tabTarget(to, pathname)
-    if (href === router.state.location.href) return window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (href === router.state.location.href) return window.scrollTo({ top: 0, behavior: scrollBehavior() })
     void router.navigate({ href })
   }
 }
@@ -114,6 +115,7 @@ function BottomNav({ pathname }: { pathname: string }) {
 
 export function RootLayout() {
   useApplyTheme()
+  useApplyMotion()
   const navigate = useNavigate()
   useEffect(() => {
     warmupSearch()
