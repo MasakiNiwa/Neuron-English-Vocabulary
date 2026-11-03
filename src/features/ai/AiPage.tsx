@@ -29,6 +29,7 @@ import { getSpeechRecognition } from '@/lib/speech'
 import { headword } from '@/features/dictionary/data'
 import { useAiConfig } from './config'
 import { Markdown } from './Markdown'
+import { ModelSelect } from './ModelSelect'
 import { personaById, splitBySpeaker, usePersonas } from './personas'
 import { createThread, deleteAllThreads, deleteMessagesFrom, deleteThread, MAX_THREADS, renameThread, touchThread, useChatUi } from './threads'
 import type { AiSearch } from './search'
@@ -169,7 +170,16 @@ function AssistantMessage({ m, live, onRegenerate }: { m: ChatRecord; live?: boo
               <RefreshCw className="size-3.5" />
             </ActionButton>
           )}
-          {m.model && <span className="ml-1 truncate opacity-0 transition-opacity group-hover:opacity-100">{m.model}</span>}
+          {(m.model || m.usage) && (
+            <span className="ml-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5">
+              {m.model && <span className="break-all">{m.model}</span>}
+              {m.usage && (
+                <span className="whitespace-nowrap tabular-nums" title="消費トークン数（入力 / 出力）">
+                  入力 {m.usage.input.toLocaleString()} / 出力 {m.usage.output.toLocaleString()} トークン
+                </span>
+              )}
+            </span>
+          )}
         </div>
       )}
     </div>
@@ -184,6 +194,7 @@ function AutoTextarea({
   className,
   placeholder,
   autoFocus,
+  id,
 }: {
   value: string
   onChange: (v: string) => void
@@ -191,6 +202,7 @@ function AutoTextarea({
   className?: string
   placeholder?: string
   autoFocus?: boolean
+  id?: string
 }) {
   const ref = useRef<HTMLTextAreaElement>(null)
   useLayoutEffect(() => {
@@ -202,6 +214,7 @@ function AutoTextarea({
   return (
     <textarea
       ref={ref}
+      id={id}
       value={value}
       autoFocus={autoFocus}
       onChange={(e) => onChange(e.target.value)}
@@ -365,35 +378,6 @@ function CastPicker({ onClose }: { onClose: () => void }) {
   )
 }
 
-/** チャットで使うモデルの切り替え（設定の「用途ごとのモデル割り当て」の AI チャットと同じ） */
-function ModelSwitch() {
-  const { keys, routes, setRoute } = useAiConfig()
-  const options = keys.flatMap((k) => k.models.map((m) => ({ value: `${k.id}|${m}`, label: m, group: k.label })))
-  if (options.length < 2) return null
-  const r = routes.chat ?? (keys[0]?.models[0] ? { keyId: keys[0].id, model: keys[0].models[0] } : undefined)
-  return (
-    <select
-      aria-label="モデル"
-      value={r ? `${r.keyId}|${r.model}` : ''}
-      onChange={(e) => {
-        const [keyId, ...rest] = e.target.value.split('|')
-        setRoute('chat', { keyId, model: rest.join('|') })
-      }}
-      className="max-w-40 truncate rounded-lg bg-transparent px-1.5 py-1 text-xs text-muted outline-none hover:bg-surface-2 hover:text-fg focus-visible:bg-surface-2 focus-visible:text-fg md:max-w-60"
-    >
-      {keys.map((k) => (
-        <optgroup key={k.id} label={k.label}>
-          {k.models.map((m) => (
-            <option key={m} value={`${k.id}|${m}`}>
-              {m}
-            </option>
-          ))}
-        </optgroup>
-      ))}
-    </select>
-  )
-}
-
 function ChatView() {
   const search = useSearch({ from: '/ai' }) as AiSearch
   const navigate = useNavigate()
@@ -441,7 +425,6 @@ function ChatView() {
     const used: string[] = []
     try {
       const res = await runTask({
-        task: 'chat',
         messages: history.slice(-20),
         about,
         cast,
@@ -452,7 +435,7 @@ function ChatView() {
         onText: (d) => setStreaming((x) => x + d),
         signal: ac.signal,
       })
-      await db.chats.add({ thread: threadId, role: 'assistant', content: res.text || '（応答が空でした）', createdAt: Date.now(), tools: used, model: res.model })
+      await db.chats.add({ thread: threadId, role: 'assistant', content: res.text || '（応答が空でした）', createdAt: Date.now(), tools: used, model: res.model, usage: res.usage })
       await touchThread(threadId)
     } catch (e) {
       if (ac.signal.aborted) {
@@ -556,6 +539,7 @@ function ChatView() {
         value={input}
         onChange={setInput}
         onSubmit={() => void send(input)}
+        id="ai-chat-input"
         placeholder={thread?.about ? `${headword(thread.about)} について質問する` : 'メッセージを入力'}
         className="max-h-[200px] min-h-7 px-1 text-base leading-relaxed"
       />
@@ -569,6 +553,7 @@ function ChatView() {
           {castPeople.length ? castPeople.map((p) => p.emoji).join('') : <Users className="size-4" />}
           <span className="hidden sm:inline">{castPeople.map((p) => p.name).join('・')}</span>
         </button>
+        <ModelSelect className="max-w-[60vw] sm:max-w-xs" />
         <div className="flex-1" />
         {SR && (
           <button
@@ -638,7 +623,6 @@ function ChatView() {
               <span className="text-muted">新しいチャット</span>
             )}
           </div>
-          <ModelSwitch />
           <button type="button" onClick={() => pick(null)} aria-label="新しいチャット" title="新しいチャット" className="inline-flex size-9 items-center justify-center rounded-lg text-muted hover:bg-surface-2 hover:text-fg md:hidden">
             <SquarePen className="size-5" />
           </button>
@@ -660,7 +644,15 @@ function ChatView() {
                     <button
                       key={s.text}
                       type="button"
-                      onClick={() => void send(s.text)}
+                      onClick={() => {
+                        // すぐ送らずに入力欄へ下書きとして入れる（書き換えてから送れる）
+                        setInput(s.text)
+                        requestAnimationFrame(() => {
+                          const el = document.getElementById('ai-chat-input') as HTMLTextAreaElement | null
+                          el?.focus()
+                          el?.setSelectionRange(s.text.length, s.text.length)
+                        })
+                      }}
                       className="rounded-2xl border border-border p-3 text-left hover:bg-surface-2"
                     >
                       <div className="text-sm font-medium">{s.title}</div>

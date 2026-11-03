@@ -1,7 +1,7 @@
 import { castPrompt } from './personas'
-import { complete, type ChatTurn } from './providers'
+import { complete, type ChatTurn, type Usage } from './providers'
 import { appTools, buildContext, runAppTool } from './tools'
-import { resolveRoute, type TaskId } from './config'
+import { resolveRoute, routeLabel } from './config'
 import { getSecret, isUnlocked } from './vault'
 
 export class AiNotReadyError extends Error {
@@ -19,7 +19,6 @@ const BASE_SYSTEM = `あなたは英単語学習アプリ「ニューロン英�
 - Markdown の見出しや表は使わず、短い段落と箇条書き程度にしてください。`
 
 export interface RunOptions {
-  task: TaskId
   messages: ChatTurn[]
   about?: string
   cast?: string[]
@@ -31,9 +30,17 @@ export interface RunOptions {
   signal?: AbortSignal
 }
 
-/** タスクに割り当てられた接続（会社・API キー・モデル）で LLM を呼び出す */
-export async function runTask(o: RunOptions) {
-  const route = resolveRoute(o.task)
+export interface RunResult {
+  text: string
+  /** 記録用のモデル名（API キーの名前 / モデル） */
+  model: string
+  /** 消費トークン数（取得できなかった場合は undefined） */
+  usage?: Usage
+}
+
+/** 設定した接続（会社・API キー・モデル）で LLM を呼び出す */
+export async function runTask(o: RunOptions): Promise<RunResult> {
+  const route = resolveRoute()
   if (!route) throw new AiNotReadyError('no-key')
   if (!isUnlocked()) throw new AiNotReadyError('locked')
   const apiKey = await getSecret(route.keyId)
@@ -47,6 +54,7 @@ export async function runTask(o: RunOptions) {
   ]
     .filter(Boolean)
     .join('\n\n')
+  let usage: Usage | undefined
   const text = await complete({
     provider: route.key.provider,
     apiKey,
@@ -57,7 +65,8 @@ export async function runTask(o: RunOptions) {
     runTool: runAppTool,
     onToolCall: (n) => o.onToolCall?.(n),
     onText: o.onText,
+    onUsage: (u) => (usage = { input: (usage?.input ?? 0) + u.input, output: (usage?.output ?? 0) + u.output }),
     signal: o.signal,
   })
-  return { text, model: `${route.key.label} / ${route.model}` }
+  return { text, model: routeLabel(route), usage }
 }

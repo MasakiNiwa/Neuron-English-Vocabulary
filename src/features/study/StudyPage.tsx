@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { CircleCheck, Play, RotateCcw, Shuffle, Sparkles } from 'lucide-react'
-import { lazy, Suspense, useMemo, useState } from 'react'
+import { Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
 import { Button } from '@/components/ui/Button'
@@ -17,7 +17,6 @@ import { formatInterval, removeFromStudy, retrievability } from './cards'
 import { ReviewSession } from './ReviewSession'
 import { useStudySession } from './sessionStore'
 import { FORMAT_OPTIONS, type StudyFormat } from './formats'
-const StudyReaction = lazy(() => import('@/features/ai/StudyReaction').then((m) => ({ default: m.StudyReaction })))
 import { buildPracticeQueue, buildQueue, getStudyStats, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
 
 const STATE_LABEL = ['新規', '学習中', '復習', '再学習']
@@ -303,7 +302,7 @@ function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
 export function StudyPage() {
   const { t } = useTranslation()
   const format = useSettings((s) => s.studyFormat)
-  const { queue, idx, count, mode, startedAt, done, start, progress, finish } = useStudySession()
+  const { queue, idx, count, mode, done, start, progress, finish } = useStudySession()
   return (
     <Page title={t('study.title')}>
       <Suspense fallback={<PageSpinner />}>
@@ -325,9 +324,6 @@ export function StudyPage() {
                   <CircleCheck className="size-6 text-success" />
                   <span className="text-sm">お疲れさまでした！ {done} 枚のカードに回答しました。</span>
                 </div>
-                <Suspense fallback={null}>
-                  <StudyReaction since={startedAt} />
-                </Suspense>
               </Card>
             )}
             <StudyHome onStart={start} />

@@ -2,7 +2,7 @@ import { Fingerprint, ListChecks, Plus, Trash2, X } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { selectClass } from '@/components/ui/Form'
-import { PROVIDERS, TASKS, useAiConfig, type ApiKeyEntry, type ProviderId } from './config'
+import { PROVIDERS, useAiConfig, type ApiKeyEntry, type ProviderId } from './config'
 import { usePersonas } from './personas'
 import { ModelPicker } from './ModelPicker'
 import { inputClass, UnlockPanel } from './UnlockPanel'
@@ -114,37 +114,28 @@ function KeyCard({ k }: { k: ApiKeyEntry }) {
 }
 
 function Routing() {
-  const { keys, routes, setRoute } = useAiConfig()
+  const { keys, route, setRoute } = useAiConfig()
   const conns = keys.flatMap((k) => k.models.map((m) => ({ value: `${k.id}|${m}`, label: `${PROVIDERS[k.provider].name.split(' (')[0]} / ${k.label} / ${m}` })))
   if (!conns.length) return <p className="text-sm text-muted">API キーとモデルを登録すると設定できます。</p>
+  const valid = route && conns.some((c) => c.value === `${route.keyId}|${route.model}`)
   return (
-    <div className="flex flex-col gap-2">
-      {TASKS.map((t) => {
-        const r = routes[t.id]
-        return (
-          <div key={t.id} className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
-            <div className="sm:w-40">
-              <div className="text-sm">{t.label}</div>
-              <div className="text-[11px] text-muted">{t.hint}</div>
-            </div>
-            <select
-              className={selectClass + ' w-full max-w-none sm:flex-1'}
-              value={r ? `${r.keyId}|${r.model}` : ''}
-              onChange={(e) => {
-                const [keyId, ...rest] = e.target.value.split('|')
-                setRoute(t.id, e.target.value ? { keyId, model: rest.join('|') } : undefined)
-              }}
-            >
-              <option value="">{t.id === 'chat' ? '自動（最初に登録したモデル）' : 'チャットと同じ'}</option>
-              {conns.map((c) => (
-                <option key={c.value} value={c.value}>
-                  {c.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        )
-      })}
+    <div className="flex flex-col gap-1">
+      <select
+        className={selectClass + ' w-full max-w-none'}
+        value={valid ? `${route.keyId}|${route.model}` : ''}
+        onChange={(e) => {
+          const [keyId, ...rest] = e.target.value.split('|')
+          setRoute(e.target.value ? { keyId, model: rest.join('|') } : undefined)
+        }}
+      >
+        <option value="">自動（最初に登録したモデル）</option>
+        {conns.map((c) => (
+          <option key={c.value} value={c.value}>
+            {c.label}
+          </option>
+        ))}
+      </select>
+      <p className="text-[11px] text-muted">AI チャットと単語ページの「AI に聞く」で使います。それぞれの画面でも切り替えられます。</p>
     </div>
   )
 }
@@ -234,14 +225,12 @@ function Cast() {
 export function AiSettings() {
   const v = useVault()
   const keys = useAiConfig((s) => s.keys)
-  const reaction = useAiConfig((s) => s.reactionAfterStudy)
-  const setCfg = useAiConfig((s) => s.set)
   const [adding, setAdding] = useState(false)
   const [msg, setMsg] = useState('')
   return (
     <div>
       <p className="mb-4 text-xs leading-relaxed text-muted">
-        AI はなくてもアプリは使えます。API キーを登録すると、AI チャット、単語の解説、学習後のリアクションが使えるようになります。API キーは端末内に暗号化して保存され、各 AI サービスへ直接送信されます。
+        AI はなくてもアプリは使えます。API キーを登録すると、AI チャットや、単語ページでの追加の解説の作成が使えるようになります。API キーは端末内に暗号化して保存され、各 AI サービスへ直接送信されます。
       </p>
       <Sub title="ロック">
         <UnlockPanel />
@@ -338,17 +327,11 @@ export function AiSettings() {
           </div>
         </Sub>
       )}
-      <Sub title="用途ごとのモデル割り当て">
+      <Sub title="使用するモデル">
         <Routing />
       </Sub>
       <Sub title="キャラクター">
         <Cast />
-      </Sub>
-      <Sub title="その他">
-        <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" className="size-4 accent-[var(--accent)]" checked={reaction} onChange={(e) => setCfg({ reactionAfterStudy: e.target.checked })} />
-          学習セッションの後に AI がひとことコメントする
-        </label>
       </Sub>
     </div>
   )

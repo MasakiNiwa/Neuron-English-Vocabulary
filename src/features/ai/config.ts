@@ -39,15 +39,7 @@ export interface ApiKeyEntry {
   models: string[]
 }
 
-/** 用途（タスク）ごとの割り当て先 */
-export type TaskId = 'chat' | 'explain' | 'reaction' | 'generate'
-export const TASKS: { id: TaskId; label: string; hint: string }[] = [
-  { id: 'chat', label: 'AI チャット', hint: '会話・深掘り（高性能モデル向き）' },
-  { id: 'explain', label: '単語の解説', hint: '語源の物語・覚え方の提案' },
-  { id: 'reaction', label: 'リアクション', hint: '学習後のひとこと（軽量モデル向き）' },
-  { id: 'generate', label: '例文・問題の生成', hint: '構造化データの生成' },
-]
-
+/** 使う接続（API キーとモデル）。アプリ全体で 1 つ（チャット・追加解説の生成で共通） */
 export interface Route {
   keyId: string
   model: string
@@ -65,15 +57,13 @@ interface AiConfigState {
   keys: ApiKeyEntry[]
   custom: CustomPersona | null
   setCustom: (p: CustomPersona | null) => void
-  routes: Partial<Record<TaskId, Route>>
+  route?: Route
   cast: string[]
-  reactionAfterStudy: boolean
   addKey: (k: ApiKeyEntry) => void
   updateKey: (id: string, patch: Partial<ApiKeyEntry>) => void
   removeKey: (id: string) => void
-  setRoute: (task: TaskId, r: Route | undefined) => void
+  setRoute: (r: Route | undefined) => void
   setCast: (ids: string[]) => void
-  set: (patch: Partial<Pick<AiConfigState, 'reactionAfterStudy'>>) => void
 }
 
 export const useAiConfig = create<AiConfigState>()(
@@ -83,40 +73,47 @@ export const useAiConfig = create<AiConfigState>()(
       custom: null,
       setCustom: (custom) =>
         set((s) => ({ custom, cast: custom ? s.cast : s.cast.filter((c) => c !== 'custom') })),
-      routes: {},
+      route: undefined,
       cast: DEFAULT_CAST,
-      reactionAfterStudy: true,
       addKey: (k) => set((s) => ({ keys: [...s.keys, k] })),
       updateKey: (id, patch) => set((s) => ({ keys: s.keys.map((k) => (k.id === id ? { ...k, ...patch } : k)) })),
       removeKey: (id) =>
         set((s) => ({
           keys: s.keys.filter((k) => k.id !== id),
-          routes: Object.fromEntries(Object.entries(s.routes).filter(([, r]) => r?.keyId !== id)),
+          route: s.route?.keyId === id ? undefined : s.route,
         })),
-      setRoute: (task, r) => set((s) => ({ routes: { ...s.routes, [task]: r } })),
+      setRoute: (route) => set({ route }),
       setCast: (cast) => set({ cast }),
-      set: (patch) => set(patch),
     }),
     {
       name: 'nev-ai',
-      version: 2,
+      version: 3,
       migrate: (state, version) => {
-        const s = state as { cast?: string[] }
+        const s = state as { cast?: string[]; route?: Route; routes?: Record<string, Route | undefined>; reactionAfterStudy?: boolean }
         // v1 の既定（先生 + ミライ）のままなら新しい既定に置き換える
         if (version < 2 && s.cast?.join() === 'sensei,mirai') s.cast = DEFAULT_CAST
+        // v3: 用途ごとの割り当てをやめて 1 つに（チャット用の設定を引き継ぐ）。学習後のリアクションは廃止
+        if (version < 3) {
+          s.route = s.routes?.chat
+          delete s.routes
+          delete s.reactionAfterStudy
+        }
         return s as never
       },
     },
   ),
 )
 
-/** タスクの接続先を解決（未設定ならチャット用 → 最初に登録したモデルの順で代替） */
-export function resolveRoute(task: TaskId): (Route & { key: ApiKeyEntry }) | null {
-  const { keys, routes } = useAiConfig.getState()
-  const pick = (r?: Route) => {
-    const key = r && keys.find((k) => k.id === r.keyId)
-    return key && r ? { ...r, key } : null
-  }
+/** 使う接続を解決（未設定・削除済みなら、最初に登録したモデル） */
+export function resolveRoute(): (Route & { key: ApiKeyEntry }) | null {
+  const { keys, route } = useAiConfig.getState()
+  const key = route && keys.find((k) => k.id === route.keyId && k.models.includes(route.model))
+  if (route && key) return { ...route, key }
   const first = keys.find((k) => k.models.length)
-  return pick(routes[task]) ?? pick(routes.chat) ?? (first ? { keyId: first.id, model: first.models[0], key: first } : null)
+  return first ? { keyId: first.id, model: first.models[0], key: first } : null
+}
+
+/** 応答に記録するモデル名（API キーの名前 / モデル） */
+export function routeLabel(r: Route & { key: ApiKeyEntry }) {
+  return `${r.key.label} / ${r.model}`
 }
