@@ -68,3 +68,64 @@ parts	curvy	curv=w:curve y=suf:y
 parts	spiral	spir al=suf:al
 parts	impairment	im=pre:into pair ment=suf:ment
 noparts	parent,saline,saloon,irony,flower,corner,bullet,patio
+
+# Batch 3 (C051-C054, C075-C080, C099, C105-C155): 再分割 (-nat- / -rat- / 複合語等)
+parts	inspiration	in=pre:into spir=r:spir ation=suf:ation
+parts	cooperation	co=pre:com oper=r:oper ation=suf:ation
+parts	determination	de=pre:de termin=r:termin ation=suf:ation
+parts	nomination	nomin=r:nom ation=suf:ation
+parts	biker	bik=w:bike er=suf:er
+parts	comedic	comed=w:comedy ic=suf:ic
+parts	psychotherapy	psych=r:psych o therapy=w:therapy
+parts	theorist	theor=w:theory ist=suf:ist
+parts	consultant	consult=w:consult ant=suf:ant
+parts	participation	particip=w:participate ation=suf:ation
+parts	parasitic	parasit=w:parasite ic=suf:ic
+parts	sentimental	sentiment=w:sentiment al=suf:al
+parts	departmental	department=w:department al=suf:al
+parts	fragmentation	fragment=w:fragment ation=suf:ation
+parts	rudimentary	rudiment ary=suf:ary
+parts	fermentation	ferment ation=suf:ation
+parts	alternative	alter=r:alter n ative=suf:ive
+parts	dominate	dom=r:dom in ate=suf:ate
+parts	alternate	alter=r:alter n ate=suf:ate
+parts	donation	don=r:dat ation=suf:ation
+parts	resignation	re=pre:re sign=r:sign ation=suf:ation
+parts	coordination	co=pre:com ordin=r:ord ation=suf:ation
+parts	designation	de=pre:de sign=r:sign ation=suf:ation
+parts	discriminate	dis=pre:dis cri=r:cern min ate=suf:ate
+parts	ordination	ordin=r:ord ation=suf:ation
+parts	designate	de=pre:de sign=r:sign ate=suf:ate
+parts	inclination	in=pre:into clin=r:clin ation=suf:ation
+parts	affectionate	af=pre:ad fect=r:fac ion=suf:ation ate=suf:ate
+parts	denomination	de=pre:de nomin=r:nom ation=suf:ation
+parts	dissemination	dis=pre:dis semin ation=suf:ation
+parts	ornate	orn ate=suf:ate
+parts	detonate	de=pre:de ton ate=suf:ate
+parts	corporate	corp=r:corp or ate=suf:ate
+parts	corporation	corp=r:corp or ation=suf:ation
+parts	collaboration	col=pre:com labor=r:labor ation=suf:ation
+parts	concentration	con=pre:com centr=r:centr ation=suf:ation
+parts	federation	fed=r:fid er ation=suf:ation
+parts	demonstrate	de=pre:de mon=r:mon str ate=suf:ate
+parts	separation	se=pre:se par=r:para ation=suf:ation
+parts	declaration	de=pre:de clar=r:clar ation=suf:ation
+parts	apparatus	ap=pre:ad par=r:para atus
+parts	acceleration	ac=pre:ad celer ation=suf:ation
+parts	aspiration	a=pre:ad spir=r:spir ation=suf:ation
+parts	expiration	ex=pre:ex pir=r:spir ation=suf:ation
+parts	incorporation	in=pre:into corp=r:corp or ation=suf:ation
+parts	iteration	iter=r:it ation=suf:ation
+parts	doctorate	doct=r:doc or=suf:er ate=suf:ate
+parts	saturation	sat=r:sat ur ation=suf:ation
+parts	temperate	temp=r:temp er ate=suf:ate
+parts	exaggeration	ex=pre:ex agger ation=suf:ation
+parts	commemoration	com=pre:com memor=r:memor ation=suf:ation
+parts	disparate	dis=pre:dis par=r:para ate=suf:ate
+parts	reparation	re=pre:re par=r:para ation=suf:ation
+parts	consecrate	con=pre:com secr=r:sacr ate=suf:ate
+parts	deliberation	de=pre:de liber ation=suf:ation
+parts	reiterate	re=pre:re iter=r:it ate=suf:ate
+parts	consultation	consult=w:consult ation=suf:ation
+parts	congratulate	con=pre:com grat=r:grat ul ate=suf:ate
+noparts	consult

@@ -1,0 +1,987 @@
+{
+  "validation_scope": "structural_only_not_semantic_approval",
+  "structural_errors": [],
+  "historical_case_drift": [
+    {
+      "id": "C001",
+      "key": "immigration",
+      "old_id": "pre:in",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C002",
+      "key": "import",
+      "old_id": "pre:in",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C003",
+      "key": "inside",
+      "old_id": "pre:in",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C004",
+      "key": "independence",
+      "old_id": "pre:into",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C005",
+      "key": "ignorant",
+      "old_id": "pre:into",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C006",
+      "key": "integer",
+      "old_id": "pre:into",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C007",
+      "key": "around",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C008",
+      "key": "away",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C009",
+      "key": "ahead",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C010",
+      "key": "alive",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C011",
+      "key": "agree",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C012",
+      "key": "announce",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C013",
+      "key": "aspect",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C014",
+      "key": "ascend",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C015",
+      "key": "director",
+      "old_id": "pre:dia",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C016",
+      "key": "direct",
+      "old_id": "pre:dia",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C017",
+      "key": "district",
+      "old_id": "pre:dia",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C018",
+      "key": "diverse",
+      "old_id": "pre:dia",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C019",
+      "key": "antigen",
+      "old_id": "pre:ante",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C020",
+      "key": "antisocial",
+      "old_id": "pre:ante",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C021",
+      "key": "unanimous",
+      "old_id": "pre:un",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C022",
+      "key": "unanimously",
+      "old_id": "pre:un",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C023",
+      "key": "Monday",
+      "old_id": "pre:mono",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C024",
+      "key": "passion",
+      "old_id": "r:pass",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C025",
+      "key": "passive",
+      "old_id": "r:pass",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C026",
+      "key": "compassion",
+      "old_id": "r:pass",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C027",
+      "key": "important",
+      "old_id": "r:part",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C028",
+      "key": "importance",
+      "old_id": "r:part",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C029",
+      "key": "reporter",
+      "old_id": "r:part",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C030",
+      "key": "attention",
+      "old_id": "r:ten",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C031",
+      "key": "extent",
+      "old_id": "r:ten",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C032",
+      "key": "intent",
+      "old_id": "r:ten",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C033",
+      "key": "curious",
+      "old_id": "r:cur",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C034",
+      "key": "curiosity",
+      "old_id": "r:cur",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C035",
+      "key": "accuracy",
+      "old_id": "r:cur",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C036",
+      "key": "geometric",
+      "old_id": "r:mater",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C037",
+      "key": "symmetric",
+      "old_id": "r:mater",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C038",
+      "key": "apparent",
+      "old_id": "r:para",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C039",
+      "key": "transparent",
+      "old_id": "r:para",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C040",
+      "key": "preparation",
+      "old_id": "r:par",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C041",
+      "key": "pair",
+      "old_id": "r:para",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C042",
+      "key": "parent",
+      "old_id": "r:parere",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C043",
+      "key": "gastric",
+      "old_id": "r:aster",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C044",
+      "key": "visceral",
+      "old_id": "r:vid",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C045",
+      "key": "viscosity",
+      "old_id": "r:vid",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C046",
+      "key": "tentative",
+      "old_id": "r:ten",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C047",
+      "key": "tactic",
+      "old_id": "r:tact",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C048",
+      "key": "tactical",
+      "old_id": "r:tact",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C049",
+      "key": "saline",
+      "old_id": "r:sal",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C050",
+      "key": "saloon",
+      "old_id": "r:sal",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C051",
+      "key": "inspiration",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C052",
+      "key": "cooperation",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C053",
+      "key": "determination",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C054",
+      "key": "nomination",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C055",
+      "key": "fundamental",
+      "old_id": "r:ment",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C056",
+      "key": "instrumental",
+      "old_id": "r:ment",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C057",
+      "key": "detrimental",
+      "old_id": "r:ment",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C058",
+      "key": "lateral",
+      "old_id": "r:lat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C059",
+      "key": "Latin",
+      "old_id": "r:lat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C060",
+      "key": "regulate",
+      "old_id": "r:lat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C061",
+      "key": "speculate",
+      "old_id": "r:lat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C062",
+      "key": "circulate",
+      "old_id": "r:lat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C063",
+      "key": "contemplate",
+      "old_id": "r:lat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C064",
+      "key": "irony",
+      "old_id": "w:iron",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C065",
+      "key": "flower",
+      "old_id": "w:flow",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C066",
+      "key": "corner",
+      "old_id": "w:corn",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C067",
+      "key": "bullet",
+      "old_id": "w:bull",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C068",
+      "key": "voltage",
+      "old_id": "w:age",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C069",
+      "key": "patronage",
+      "old_id": "w:age",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C070",
+      "key": "orphanage",
+      "old_id": "w:age",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C071",
+      "key": "signage",
+      "old_id": "w:age",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C072",
+      "key": "kindred",
+      "old_id": "w:red",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C073",
+      "key": "cinematic",
+      "old_id": "w:tic",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C074",
+      "key": "kidnap",
+      "old_id": "w:nap",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C075",
+      "key": "biker",
+      "old_id": "pre:bi",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C076",
+      "key": "comedic",
+      "old_id": "r:medi",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C077",
+      "key": "parenthesis",
+      "old_id": "r:the",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C078",
+      "key": "psychotherapy",
+      "old_id": "r:the",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C079",
+      "key": "theorist",
+      "old_id": "r:the",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C080",
+      "key": "consultant",
+      "old_id": "r:sal",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C096",
+      "key": "curvy",
+      "old_id": "r:cur",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C097",
+      "key": "spiral",
+      "old_id": "r:spir",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C098",
+      "key": "compassionate",
+      "old_id": "r:pass",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C099",
+      "key": "participation",
+      "old_id": "r:path",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C100",
+      "key": "patio",
+      "old_id": "r:path",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C101",
+      "key": "transparency",
+      "old_id": "r:para",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C102",
+      "key": "compare",
+      "old_id": "r:para",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C103",
+      "key": "impairment",
+      "old_id": "r:para",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C104",
+      "key": "parcel",
+      "old_id": "r:par",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C105",
+      "key": "parasitic",
+      "old_id": "r:par",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C106",
+      "key": "sentimental",
+      "old_id": "r:ment",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C107",
+      "key": "departmental",
+      "old_id": "r:ment",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C108",
+      "key": "fragmentation",
+      "old_id": "r:ment",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C109",
+      "key": "rudimentary",
+      "old_id": "r:ment",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C110",
+      "key": "fermentation",
+      "old_id": "r:fer",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C111",
+      "key": "fermentation",
+      "old_id": "r:ment",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C112",
+      "key": "alternative",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C113",
+      "key": "dominate",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C114",
+      "key": "alternate",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C115",
+      "key": "donation",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C116",
+      "key": "resignation",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C117",
+      "key": "coordination",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C118",
+      "key": "designation",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C119",
+      "key": "discriminate",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C120",
+      "key": "ordination",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C121",
+      "key": "designate",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C122",
+      "key": "inclination",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C123",
+      "key": "affectionate",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C124",
+      "key": "denomination",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C125",
+      "key": "dissemination",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C126",
+      "key": "ornate",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C127",
+      "key": "detonate",
+      "old_id": "r:nat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C128",
+      "key": "corporate",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C129",
+      "key": "corporation",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C130",
+      "key": "collaboration",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C131",
+      "key": "concentration",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C132",
+      "key": "federation",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C133",
+      "key": "demonstrate",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C134",
+      "key": "separation",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C135",
+      "key": "declaration",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C136",
+      "key": "apparatus",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C137",
+      "key": "acceleration",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C138",
+      "key": "aspiration",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C139",
+      "key": "expiration",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C140",
+      "key": "incorporation",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C141",
+      "key": "iteration",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C142",
+      "key": "doctorate",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C143",
+      "key": "saturation",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C144",
+      "key": "temperate",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C145",
+      "key": "exaggeration",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C146",
+      "key": "commemoration",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C147",
+      "key": "disparate",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C148",
+      "key": "reparation",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C149",
+      "key": "consecrate",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C150",
+      "key": "deliberation",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C151",
+      "key": "reiterate",
+      "old_id": "r:rat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C152",
+      "key": "aspiration",
+      "old_id": "pre:a",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C153",
+      "key": "consult",
+      "old_id": "r:sal",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C154",
+      "key": "consultation",
+      "old_id": "r:sal",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    },
+    {
+      "id": "C155",
+      "key": "congratulate",
+      "old_id": "r:lat",
+      "guard_matches": false,
+      "proposed_target_exists": true
+    }
+  ],
+  "instruction": "Review drift against DECISIONS.tsv and FIX_LOG.md; it is not automatic proof of a resolved case."
+}

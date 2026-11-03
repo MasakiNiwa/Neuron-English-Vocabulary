@@ -92,3 +92,32 @@
 - 代表語の表示確認：`passion` (`r:path`), `attention` (`r:tend`), `curious` (`r:cura`), `apparent` (`r:parere`), `preparation` (`r:para`), `compare` (`r:par`), `parent` (`noparts`), `regulate` (`reg=r:reg ul ate=suf:ate`), `circulate` (`circul=w:circle ate=suf:ate`), `irony` (`noparts`), `voltage` (`volt=w:volt age`) を確認
 - 次の未完了ID・保留理由：次はバッチ3（C051〜C054, C075〜C080, C099, C105〜C155：再分割 `-nat-` / `-rat-` / 複合語等 全61件）へ進む
 - コミットSHA（コミット後の報告に記載）：次ステップでコミット
+
+
+## 2026-11-03 JST：バッチ3（C051〜C054, C075〜C080, C099, C105〜C155：形態素境界の再分割＋解説ブラッシュアップ）
+
+- 日付・担当モデル・開始コミット：2026-11-03 JST / Gemini / `b891840`
+- 対象ケースID / 見出し語：
+  - 代表例の再分割（4件）：C051 (`inspiration`), C052 (`cooperation`), C053 (`determination`), C054 (`nomination`)
+  - 語基・複合語の再分割（13件）：C075 (`biker`), C076 (`comedic`), C077 (`parenthesis`), C078 (`psychotherapy`), C079 (`theorist`), C080 (`consultant`), C099 (`participation`), C105 (`parasitic`), C106 (`sentimental`), C107 (`departmental`), C108 (`fragmentation`), C109 (`rudimentary`), C110/C111 (`fermentation`)
+  - `-nat-` 境界の再分割（16件）：C112 (`alternative`), C113 (`dominate`), C114 (`alternate`), C115 (`donation`), C116 (`resignation`), C117 (`coordination`), C118 (`designation`), C119 (`discriminate`), C120 (`ordination`), C121 (`designate`), C122 (`inclination`), C123 (`affectionate`), C124 (`denomination`), C125 (`dissemination`), C126 (`ornate`), C127 (`detonate`)
+  - `-rat-` 境界および関連語の再分割（28件）：C128 (`corporate`), C129 (`corporation`), C130 (`collaboration`), C131 (`concentration`), C132 (`federation`), C133 (`demonstrate`), C134 (`separation`), C135 (`declaration`), C136 (`apparatus`), C137 (`acceleration`), C138/C152 (`aspiration`), C139 (`expiration`), C140 (`incorporation`), C141 (`iteration`), C142 (`doctorate`), C143 (`saturation`), C144 (`temperate`), C145 (`exaggeration`), C146 (`commemoration`), C147 (`disparate`), C148 (`reparation`), C149 (`consecrate`), C150 (`deliberation`), C151 (`reiterate`), C153 (`consult`), C154 (`consultation`), C155 (`congratulate`)
+- 採用 / 修正して採用 / 保留 / 却下（ID付き）：
+  - 採用 (`accept`)：C051〜C054, C075〜C080, C099, C105〜C152, C154, C155（計61件）
+  - 修正して採用 (`revise`)：C153 (`consult`：ラテン語 `consulere` の後半 `-sulere` は究極語源が未確定であり、`salire`（跳ぶ: `r:sal`）への誤リンクを外すと単一語基となるため `noparts` 化）
+- 実際に適用したケースID（採否判断だけと区別）：上記62件（60見出し語）すべてデータ実装済み
+- 参照した辞典URL・語義・根拠：`DECISIONS.tsv` の対応行（`embedded source only`）
+- 変更ファイルと変更理由：
+  - `data/overrides/038.tsv`, `063.tsv`：`parenthesis` の既存オーバーライド修正および新規再分割 `parts` / `noparts` 定義の追加
+  - `data/explanations/003.tsv`, `005.tsv`, `012.tsv`：`collaboration`（`labor` 語幹の明示）、`consultant`（`sult=跳ぶ` の記述を改め `consult` + `-ant` に整理）、`deliberation`（天秤 `libra` 由来であり `liberate` とは別語源である旨を補足）の解説ブラッシュアップ
+  - `public/data/entries/*.json`, `public/data/index.json`, `public/data/morphemes.json`, `public/data/meta.json`：同期スクリプトによる再生成
+  - `docs/audit/2026-11-03-resumed/DECISIONS.tsv`, `docs/etymology-review/results/batch-03.json`：判断記録と検証レポートの保存
+- 再生成：ガード付き限定同期（`scripts/data/10_sync_fixes.py`）
+- 同期処理の再適用結果（2回目の差分）：`changed_files: []`（差分0件）
+- 検証コマンド・終了結果・テスト数・未実行項目：
+  - `python scripts/data/06_lint.py`：エラー0件 / 警告0件
+  - `python scripts/data/09_verify_after_fixes.py --report docs/etymology-review/results/batch-03.json`：`structural_errors: []`、C001〜C080, C096〜C155 全140件の `guard_matches: false` を確認
+  - `python -m unittest discover -s scripts/data -p "test_*.py" -v`：11件成功
+- 代表語の表示確認：`inspiration`, `parenthesis`, `participation`, `alternative`, `donation`, `corporate`, `aspiration` (`a=pre:ad spir=r:spir ation=suf:ation`), `consult` (`noparts`), `consultation` (`consult=w:consult ation=suf:ation`) を確認
+- 次の未完了ID・保留理由：次は最終バッチ4（C081〜C095：語義・解説・PIE・例文の確認と修正、および C156〜C163：保持対照8件の最終確認）へ進む
+- コミットSHA（コミット後の報告に記載）：次ステップでコミット
