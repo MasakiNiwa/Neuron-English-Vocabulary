@@ -1,0 +1,6 @@
+{
+  "validation_scope": "structural_only_not_semantic_approval",
+  "structural_errors": [],
+  "historical_case_drift": [],
+  "instruction": "Review drift against DECISIONS.tsv and FIX_LOG.md; it is not automatic proof of a resolved case."
+}

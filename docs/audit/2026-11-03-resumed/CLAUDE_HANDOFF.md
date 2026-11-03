@@ -1,5 +1,7 @@
 # Claudeへの引継ぎ
 
+現在の共通作業入口は [語源分解・解説の修正作業](../../etymology-review/README.md) です。Geminiでの修正後はそのFIX_LOGとDECISIONSを確認してください。以下は修正前の監査の引継ぎ記録です。修正後に08をデフォルト実行せず、共通手順の09を使ってください。
+
 最初に [REPORT.md](REPORT.md) と [PROGRESS.md](PROGRESS.md) を読む。旧添付原本の「300件反映済み」は現在のGit状態では確認できない。今回の公開データはmainと同じで、修正案はレビュー資料にのみ保存してある。
 
 1. `data/audit/2026-11-03-resumed/cases.tsv` で一覧し、`case-evidence.json` の同じIDで現分解・原文・解説・TSV所在・修正方向を確認する。

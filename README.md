@@ -71,6 +71,8 @@ npm run build      # 本番ビルド（dist/）
 
 `main` への push で GitHub Actions が GitHub Pages にデプロイします。
 
+語源分解・解説の品質改善は [修正作業の共通入口](docs/etymology-review/README.md) を参照してください。Antigravity / Geminiでの開始手順、監査資料、後日のレビューに渡す方法をまとめています。
+
 ## 今後の予定
 
 改善の予定は [docs/ROADMAP.md](docs/ROADMAP.md) にまとめています。
