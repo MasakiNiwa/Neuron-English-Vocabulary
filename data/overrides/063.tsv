@@ -1,0 +1,132 @@
+# 第70弾: 語源監査（2026-11-03 再開分）に基づく語源分解の精査・修正（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
+# Batch 1 (C001-C023): 接頭辞の同形異源（in-/into, a-/ad-, dia-/dis-, ante-/anti-, un-/uni-, mono-/moon）の分離
+parts	import	im=pre:into port=r:port
+parts	inside	in=pre:into side=w:side
+parts	independence	in=pre:in de pend=r:pend ence=suf:ance
+parts	ignorant	i=pre:in gnor=r:gno ant=suf:ant
+parts	integer	in=pre:in teg=r:tact er
+parts	around	a round=w:round
+parts	away	a way=w:way
+parts	ahead	a head=w:head
+parts	agree	a=pre:ad gree=r:grat
+parts	announce	an=pre:ad nounc=r:nunci e
+parts	aspect	a=pre:ad spect=r:spec
+parts	ascend	a=pre:ad scend=r:scend
+parts	director	di=pre:dis rect=r:reg or=suf:er
+parts	direct	di=pre:dis rect=r:reg
+parts	district	di=pre:dis strict=r:strict
+parts	diverse	di=pre:dis vers=r:vers e
+parts	antigen	anti=pre:anti gen=r:gen
+parts	antisocial	anti=pre:anti soci=r:soci al=suf:al
+parts	unanimous	un=pre:uni anim=r:anim ous=suf:ous
+parts	unanimously	un=pre:uni anim=r:anim ous=suf:ous ly=suf:ly
+parts	Monday	mon=w:moon day=w:day
+
+# Batch 2 (C024-C050, C055-C074, C096-C098, C100-C104): 同形異語根・誤語基リンク修正
+parts	passion	pass=r:path ion=suf:ation
+parts	passive	pass=r:path ive=suf:ive
+parts	compassion	com=pre:com pass=r:path ion=suf:ation
+parts	compassionate	com=pre:com pass=r:path ion ate=suf:ate
+parts	important	im=pre:into port=r:port ant=suf:ant
+parts	importance	im=pre:into port=r:port ance=suf:ance
+parts	reporter	re=pre:re port=r:port er=suf:er
+parts	attention	at=pre:ad tent=r:tend ion=suf:ation
+parts	extent	ex=pre:ex tent=r:tend
+parts	intent	in=pre:into tent=r:tend
+parts	curious	cur=r:cura ious=suf:ous
+parts	curiosity	cur=r:cura ios ity=suf:ity
+parts	geometric	geo=r:geo metr=r:meter ic=suf:ic
+parts	symmetric	sym=pre:syn metr=r:meter ic=suf:ic
+parts	apparent	ap=pre:ad pare=r:parere nt
+parts	transparent	trans=pre:trans pare=r:parere nt
+parts	transparency	trans=pre:trans pare=r:parere n cy=suf:cy
+parts	pair	pair=r:par
+parts	compare	com=pre:com pare=r:par
+parts	parcel	par=r:part cel
+parts	gastric	gastr ic=suf:ic
+parts	visceral	viscer al=suf:al
+parts	viscosity	viscos ity=suf:ity
+parts	tentative	tent ative=suf:ive
+parts	tactic	tact ic=suf:ic
+parts	tactical	tact ic al=suf:al
+parts	fundamental	fund=r:fund a ment=suf:ment al=suf:al
+parts	instrumental	in=pre:into stru=r:struct ment=suf:ment al=suf:al
+parts	detrimental	de=pre:de tri ment=suf:ment al=suf:al
+parts	lateral	later al=suf:al
+parts	regulate	reg=r:reg ul ate=suf:ate
+parts	speculate	spec=r:spec ul ate=suf:ate
+parts	circulate	circul=w:circle ate=suf:ate
+parts	contemplate	con=pre:com templ ate=suf:ate
+parts	voltage	volt=w:volt age
+parts	patronage	patron=w:patron age
+parts	orphanage	orphan=w:orphan age
+parts	signage	sign=w:sign age
+parts	kindred	kin=w:kin d red
+parts	cinematic	cinema=w:cinema tic
+parts	kidnap	kid=w:kid nap
+parts	curvy	curv=w:curve y=suf:y
+parts	spiral	spir al=suf:al
+parts	impairment	im=pre:into pair ment=suf:ment
+noparts	parent,saline,saloon,irony,flower,corner,bullet,patio
+
+# Batch 3 (C051-C054, C075-C080, C099, C105-C155): 再分割 (-nat- / -rat- / 複合語等)
+parts	inspiration	in=pre:into spir=r:spir ation=suf:ation
+parts	cooperation	co=pre:com oper=r:oper ation=suf:ation
+parts	determination	de=pre:de termin=r:termin ation=suf:ation
+parts	nomination	nomin=r:nom ation=suf:ation
+parts	biker	bik=w:bike er=suf:er
+parts	comedic	comed=w:comedy ic=suf:ic
+parts	psychotherapy	psych=r:psych o therapy=w:therapy
+parts	theorist	theor=w:theory ist=suf:ist
+parts	consultant	consult=w:consult ant=suf:ant
+parts	participation	particip=w:participate ation=suf:ation
+parts	parasitic	parasit=w:parasite ic=suf:ic
+parts	sentimental	sentiment=w:sentiment al=suf:al
+parts	departmental	department=w:department al=suf:al
+parts	fragmentation	fragment=w:fragment ation=suf:ation
+parts	rudimentary	rudiment ary=suf:ary
+parts	fermentation	ferment ation=suf:ation
+parts	alternative	alter=r:alter n ative=suf:ive
+parts	dominate	dom=r:dom in ate=suf:ate
+parts	alternate	alter=r:alter n ate=suf:ate
+parts	donation	don=r:dat ation=suf:ation
+parts	resignation	re=pre:re sign=r:sign ation=suf:ation
+parts	coordination	co=pre:com ordin=r:ord ation=suf:ation
+parts	designation	de=pre:de sign=r:sign ation=suf:ation
+parts	discriminate	dis=pre:dis cri=r:cern min ate=suf:ate
+parts	ordination	ordin=r:ord ation=suf:ation
+parts	designate	de=pre:de sign=r:sign ate=suf:ate
+parts	inclination	in=pre:into clin=r:clin ation=suf:ation
+parts	affectionate	af=pre:ad fect=r:fac ion=suf:ation ate=suf:ate
+parts	denomination	de=pre:de nomin=r:nom ation=suf:ation
+parts	dissemination	dis=pre:dis semin ation=suf:ation
+parts	ornate	orn ate=suf:ate
+parts	detonate	de=pre:de ton ate=suf:ate
+parts	corporate	corp=r:corp or ate=suf:ate
+parts	corporation	corp=r:corp or ation=suf:ation
+parts	collaboration	col=pre:com labor=r:labor ation=suf:ation
+parts	concentration	con=pre:com centr=r:centr ation=suf:ation
+parts	federation	fed=r:fid er ation=suf:ation
+parts	demonstrate	de=pre:de mon=r:mon str ate=suf:ate
+parts	separation	se=pre:se par=r:para ation=suf:ation
+parts	declaration	de=pre:de clar=r:clar ation=suf:ation
+parts	apparatus	ap=pre:ad par=r:para atus
+parts	acceleration	ac=pre:ad celer ation=suf:ation
+parts	aspiration	a=pre:ad spir=r:spir ation=suf:ation
+parts	expiration	ex=pre:ex pir=r:spir ation=suf:ation
+parts	incorporation	in=pre:into corp=r:corp or ation=suf:ation
+parts	iteration	iter ation=suf:ation
+parts	doctorate	doct=r:doc or=suf:er ate=suf:ate
+parts	saturation	sat=r:sat ur ation=suf:ation
+parts	temperate	temp=r:temp er ate=suf:ate
+parts	exaggeration	ex=pre:ex agger ation=suf:ation
+parts	commemoration	com=pre:com memor=r:memor ation=suf:ation
+parts	disparate	dis=pre:dis par=r:para ate=suf:ate
+parts	reparation	re=pre:re par=r:para ation=suf:ation
+parts	consecrate	con=pre:com secr=r:sacr ate=suf:ate
+parts	deliberation	de=pre:de liber ation=suf:ation
+parts	reiterate	re=pre:re iter ate=suf:ate
+parts	consultation	consult=w:consult ation=suf:ation
+parts	congratulate	con=pre:com grat=r:grat ul ate=suf:ate
+# Batch 4 (C081-C095): 語義・解説・例文等の確認修正
+noparts	consult,shuttle,tier

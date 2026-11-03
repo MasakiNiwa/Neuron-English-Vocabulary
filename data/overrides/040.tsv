@@ -248,7 +248,7 @@ parts	lucky	luck=w:luck y=suf:y
 parts	neither	n either=w:either
 parts	possibly	possib=w:possible ly=suf:ly
 parts	software	soft=w:soft ware
-parts	alive	a=pre:a live=w:life
+parts	alive	a live=w:life
 parts	connection	con=pre:com nect ion
 parts	driver	driv=w:drive er=suf:er
 parts	investigation	investig=w:investigate ation=suf:ation
