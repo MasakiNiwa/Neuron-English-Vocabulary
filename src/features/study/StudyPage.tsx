@@ -13,6 +13,7 @@ import { useDictionary } from '@/features/dictionary/hooks'
 import { Segmented, selectClass } from '@/components/ui/Form'
 import { useSettings } from '@/stores/settings'
 import { usePersistentState } from '@/lib/persist'
+import { useMinuteTick } from '@/lib/clock'
 import { formatInterval, removeFromStudy, retrievability } from './cards'
 import { ReviewSession } from './ReviewSession'
 import { useStudySession } from './sessionStore'
@@ -113,13 +114,19 @@ function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
   const start = async () => {
     setBusy(true)
     setMsg('')
-    const keys = await pickNewWords(source, count, { type, rootId: rootId || roots[0]?.id })
-    if (!keys.length) {
-      setMsg(source === 'recent' ? '最近見た単語はすべて学習済みです。' : '新しく学べる単語がありません。')
+    try {
+      const keys = await pickNewWords(source, count, { type, rootId: rootId || roots[0]?.id })
+      if (!keys.length) {
+        setMsg(source === 'recent' ? '最近見た単語はすべて学習済みです。' : '新しく学べる単語がありません。')
+        return
+      }
+      onStart(await startLearning(keys), 'learn')
+    } catch (e) {
+      // 失敗してもボタンが押せないままにならないようにする（B16）
+      setMsg(`学習を始められませんでした: ${e instanceof Error ? e.message : String(e)}`)
+    } finally {
       setBusy(false)
-      return
     }
-    onStart(await startLearning(keys), 'learn')
   }
   return (
     <Card>
@@ -188,28 +195,57 @@ function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
   )
 }
 
+/** 今日の学習: 復習の時期が来たカード＋追加済みでまだ学習していないカード（辞書の「学習に追加」など） */
 function ReviewCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
-  const stats = useLiveQuery(getStudyStats, [])
+  const tick = useMinuteTick()
+  const stats = useLiveQuery(getStudyStats, [tick])
   const due = stats?.due ?? 0
+  const fresh = stats?.newAvailable ?? 0
+  const [busy, setBusy] = useState(false)
+  const [msg, setMsg] = useState('')
+  const go = async () => {
+    setBusy(true)
+    setMsg('')
+    try {
+      const q = await buildQueue()
+      if (q.length) onStart(q, 'review')
+      else setMsg('今は学習するカードがありません。')
+    } catch (e) {
+      setMsg(`始められませんでした: ${e instanceof Error ? e.message : String(e)}`)
+    } finally {
+      setBusy(false)
+    }
+  }
   return (
-    <Card className="flex items-center gap-4">
-      <div className="flex-1">
-        <SectionTitle className="flex items-center gap-1.5">
-          <RotateCcw className="size-4" /> 復習
-        </SectionTitle>
-        <p className="text-sm">
-          {due ? (
-            <>
-              復習の時期が来たカードが <strong className="text-lg">{due}</strong> 枚あります
-            </>
+    <Card className="flex flex-col gap-2">
+      <div className="flex items-center gap-4">
+        <div className="flex-1">
+          <SectionTitle className="flex items-center gap-1.5">
+            <RotateCcw className="size-4" /> 今日の学習
+          </SectionTitle>
+          {due || fresh ? (
+            <p className="text-sm">
+              {due > 0 && (
+                <>
+                  復習 <strong className="text-lg">{due}</strong> 枚
+                </>
+              )}
+              {due > 0 && fresh > 0 && <span className="mx-1 text-muted">＋</span>}
+              {fresh > 0 && (
+                <>
+                  追加済みの新しいカード <strong className="text-lg">{fresh}</strong> 枚
+                </>
+              )}
+            </p>
           ) : (
-            <span className="text-muted">今は復習の時期が来たカードはありません</span>
+            <p className="text-sm text-muted">今は復習の時期が来たカードはありません</p>
           )}
-        </p>
+        </div>
+        <Button variant={due || fresh ? 'primary' : 'secondary'} disabled={(!due && !fresh) || busy} onClick={() => void go()}>
+          学習する
+        </Button>
       </div>
-      <Button variant={due ? 'primary' : 'secondary'} disabled={!due} onClick={async () => onStart(await buildQueue(), 'review')}>
-        復習する
-      </Button>
+      {msg && <p className="text-xs text-muted">{msg}</p>}
     </Card>
   )
 }
@@ -271,18 +307,20 @@ function FormatPicker() {
 
 function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
   const { t } = useTranslation()
-  const stats = useLiveQuery(getStudyStats, [])
+  const tick = useMinuteTick()
+  const stats = useLiveQuery(getStudyStats, [tick])
+  const today = (stats?.due ?? 0) + (stats?.newAvailable ?? 0)
   return (
     <div className="flex flex-col gap-4">
       <Steps />
       <FormatPicker />
-      {/* 復習待ちがあれば復習を先頭に、なければ「新しく学ぶ」を先頭に */}
-      {!!stats?.due && <ReviewCard onStart={onStart} />}
+      {/* 今日の学習（復習・追加済みの新規）があれば先頭に、なければ「新しく学ぶ」を先頭に */}
+      {today > 0 && <ReviewCard onStart={onStart} />}
       <div className="grid gap-4 md:grid-cols-2">
         <LearnCard onStart={onStart} />
         <PracticeCard onStart={onStart} />
       </div>
-      {!stats?.due && <ReviewCard onStart={onStart} />}
+      {today === 0 && <ReviewCard onStart={onStart} />}
       <div className="grid grid-cols-3 gap-2">
         <Stat label="学習中のカード" value={stats?.total ?? '–'} />
         <Stat label="今日の回答" value={stats?.reviewedToday ?? '–'} />

@@ -66,11 +66,13 @@ export async function removeFromStudy(entryId: string) {
 
 /** 評価して次回の復習日を更新 */
 export async function review(entryId: string, rating: Grade, opts: { durationMs?: number; mode?: string } = {}) {
-  const c = await db.cards.get(entryId)
-  if (!c) return
-  const now = new Date()
-  const { card, log } = scheduler().next(toCard(c), now, rating)
+  // カードの読み込みから書き込みまでを 1 つのトランザクションで行い、同時に 2 回呼ばれても
+  // 古いカードを元に 2 回計算することがないようにする（B02）
   await db.transaction('rw', db.cards, db.reviews, async () => {
+    const c = await db.cards.get(entryId)
+    if (!c) return
+    const now = new Date()
+    const { card, log } = scheduler().next(toCard(c), now, rating)
     await db.cards.put({ ...fromCard(entryId, card, c.addedAt), suspended: c.suspended })
     await db.reviews.add({
       entryId,

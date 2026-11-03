@@ -45,7 +45,7 @@ const ja = {
     searchPlaceholder: '単語・熟語・語根を検索',
     continue: '最近見た単語',
     noHistory: 'まだ閲覧履歴はありません。',
-    todayReview: '今日の復習',
+    todayReview: '今日の学習',
     startStudy: '学習を始める',
     randomRoot: 'きょうの語根',
     randomWord: 'ランダムな単語',
