@@ -63,3 +63,32 @@
 - 代表語の表示確認：`immigration` (`im=pre:into`), `ignorant` (`ig=pre:in`), `alive` (`a` 無リンク + `live=w:life`), `agree` (`a=pre:ad`), `direct` (`di=pre:dis`), `antigen` (`anti=pre:anti`), `unanimous` (`un=r:uni`), `Monday` (`Mon=w:moon day=w:day`) の JSON 構造・逆引き・解説テキストを確認
 - 次の未完了ID・保留理由：次はバッチ2（C024〜C050, C055〜C074, C096〜C104：同形異語根・誤語基リンク修正）へ進む
 - コミットSHA（コミット後の報告に記載）：次ステップでコミット
+
+
+## 2026-11-03 JST：バッチ2（C024〜C050, C055〜C074, C096〜C098, C100〜C104：同形異語根・誤語基リンク修正＋解説ブラッシュアップ）
+
+- 日付・担当モデル・開始コミット：2026-11-03 JST / Gemini / `74716ca`
+- 対象ケースID / 見出し語：
+  - 同形異語根置換（24件）：C024 (`passion`), C025 (`passive`), C026 (`compassion`), C098 (`compassionate`), C027 (`important`), C028 (`importance`), C029 (`reporter`), C030 (`attention`), C031 (`extent`), C032 (`intent`), C033 (`curious`), C034 (`curiosity`), C035 (`accuracy`), C036 (`geometric`), C037 (`symmetric`), C038 (`apparent`), C039 (`transparent`), C101 (`transparency`), C040 (`preparation`), C041 (`pair`), C102 (`compare`), C055 (`fundamental`), C056 (`instrumental`), C057 (`detrimental`), C104 (`parcel`)
+  - 誤語根・誤語基リンク解除および再構成（31件）：C042 (`parent`), C043 (`gastric`), C044 (`visceral`), C045 (`viscosity`), C046 (`tentative`), C047 (`tactic`), C048 (`tactical`), C049 (`saline`), C050 (`saloon`), C058 (`lateral`), C059 (`Latin`), C060 (`regulate`), C061 (`speculate`), C062 (`circulate`), C063 (`contemplate`), C064 (`irony`), C065 (`flower`), C066 (`corner`), C067 (`bullet`), C068 (`voltage`), C069 (`patronage`), C070 (`orphanage`), C071 (`signage`), C072 (`kindred`), C073 (`cinematic`), C074 (`kidnap`), C096 (`curvy`), C097 (`spiral`), C100 (`patio`), C103 (`impairment`)
+- 採用 / 修正して採用 / 保留 / 却下（ID付き）：
+  - 採用 (`accept`)：C024〜C041, C043〜C048, C055〜C058, C068〜C074, C096〜C098, C101〜C104
+  - 修正して採用 (`revise`)：
+    - C042 (`parent`), C049 (`saline`), C050 (`saloon`), C059 (`Latin`), C064 (`irony`), C065 (`flower`), C066 (`corner`), C067 (`bullet`), C100 (`patio`)：誤リンク解除後に有効な形態素リンクが残らないため `noparts` 化（`Latin` は `004.tsv` / `014.tsv` の大文字 `Latin` 追加で対応）
+    - C060 (`regulate`), C061 (`speculate`), C062 (`circulate`), C063 (`contemplate`)：語幹末 `l` + `-ate` が `r:lat` に誤結合していた問題を解消し、それぞれ本来の語根・語基と `ate=suf:ate` に再構成
+- 実際に適用したケースID（採否判断だけと区別）：上記55件すべてデータ実装済み
+- 参照した辞典URL・語義・根拠：`DECISIONS.tsv` の対応行（`embedded source only`）
+- 変更ファイルと変更理由：
+  - `data/overrides/004.tsv`, `014.tsv`, `043.tsv`, `044.tsv`, `061.tsv`, `063.tsv`：既存の手動オーバーライド修正および新規 `parts` / `noparts` 定義追加
+  - `data/explanations/011.tsv`, `016.tsv`, `018.tsv`, `025.tsv`, `036.tsv`, `037.tsv`, `040.tsv`, `043.tsv`, `044.tsv`：同形異語源（`parent` vs `appear`, `irony` vs `iron`, `flower` vs `flow`, `corner` vs `corn`, `bullet` vs `bull`, `kidnap` vs `nap` 等）の識別を助ける解説ブラッシュアップ
+  - `public/data/entries/*.json`, `public/data/index.json`, `public/data/morphemes.json`, `public/data/meta.json`：同期スクリプトによる再生成
+  - `docs/audit/2026-11-03-resumed/DECISIONS.tsv`, `docs/etymology-review/results/batch-02.json`：判断記録と検証レポートの保存
+- 再生成：ガード付き限定同期（`scripts/data/10_sync_fixes.py`）
+- 同期処理の再適用結果（2回目の差分）：`changed_files: []`（差分0件）
+- 検証コマンド・終了結果・テスト数・未実行項目：
+  - `python scripts/data/06_lint.py`：エラー0件 / 警告0件
+  - `python scripts/data/09_verify_after_fixes.py --report docs/etymology-review/results/batch-02.json`：`structural_errors: []`、C001〜C050, C055〜C074, C096〜C098, C100〜C104 計78件の `guard_matches: false` を確認
+  - `python -m unittest discover -s scripts/data -p "test_*.py" -v`：11件成功
+- 代表語の表示確認：`passion` (`r:path`), `attention` (`r:tend`), `curious` (`r:cura`), `apparent` (`r:parere`), `preparation` (`r:para`), `compare` (`r:par`), `parent` (`noparts`), `regulate` (`reg=r:reg ul ate=suf:ate`), `circulate` (`circul=w:circle ate=suf:ate`), `irony` (`noparts`), `voltage` (`volt=w:volt age`) を確認
+- 次の未完了ID・保留理由：次はバッチ3（C051〜C054, C075〜C080, C099, C105〜C155：再分割 `-nat-` / `-rat-` / 複合語等 全61件）へ進む
+- コミットSHA（コミット後の報告に記載）：次ステップでコミット

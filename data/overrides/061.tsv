@@ -13,7 +13,7 @@ parts	tent	tent=r:tend
 parts	during	dur=r:dur ing
 parts	please	pleas=r:plac e
 parts	miss	miss=r:mit
-parts	parent	par=r:parere ent
+# parent: ラテン語 pario（産む）由来であり、pareo（現れる: r:parere）ではないため noparts (063.tsv) で処理
 parts	medical	med=r:med ical
 parts	stage	sta=r:sta ge
 parts	justice	jus=r:jus tice

@@ -3,7 +3,7 @@ exclude	r:ver	severe,severely,severity
 exclude	r:sol	solar,soldier
 exclude	r:cap	cap,cape,caps
 exclude	r:vad	vast,vastly
-exclude	r:lat	latin
+exclude	r:lat	latin,Latin
 exclude	r:vers	poverty
 exclude	r:cad	castle,cast,caste,casual,cassette
 exclude	r:temp	temple,temptation,tempt,tempo
