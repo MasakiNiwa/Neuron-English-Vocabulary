@@ -85,20 +85,39 @@ export async function getEntries(keys: string[]): Promise<Entry[]> {
 /** 表示用の見出し語（熟語の _ を空白に） */
 export const headword = (key: string) => key.replace(/_/g, ' ')
 
+/** 規則で戻せない活用形・代名詞（「is → I」「his → hi」のような誤リンクを防ぐ。ROADMAP B04） */
+const IRREGULAR: Record<string, string> = {
+  is: 'be', am: 'be', are: 'be', was: 'be', were: 'be', been: 'be', being: 'be', "isn't": 'be', "aren't": 'be', "wasn't": 'be',
+  has: 'have', had: 'have', having: 'have', does: 'do', did: 'do', done: 'do', doing: 'do',
+  his: 'he', him: 'he', her: 'she', hers: 'she', its: 'it', us: 'we', our: 'we', ours: 'we', them: 'they', their: 'they', theirs: 'they',
+  me: 'I', my: 'I', mine: 'I', your: 'you', yours: 'you',
+  went: 'go', gone: 'go', goes: 'go', better: 'good', best: 'good', worse: 'bad', worst: 'bad',
+  children: 'child', men: 'man', women: 'woman', people: 'person', feet: 'foot', teeth: 'tooth', mice: 'mouse',
+}
+
+/** 語尾を外した結果として認める最短の長さ（短すぎると別の語に化ける: best → be, her → he） */
+const MIN_STEM = 3
+
 /** 英単語の簡易な見出し語化（活用形 → 原形）。辞書に存在する候補を返す */
 export function lookupWord(dict: Dictionary, token: string): string | null {
   const w = token.toLowerCase().replace(/[’']s$/, '')
-  const cands = [w]
+  const exact = dict.byLower.get(w)
+  if (exact) return exact
+  const irr = IRREGULAR[w]
+  if (irr) return dict.byLower.get(irr.toLowerCase()) ?? null
+  const cands: string[] = []
   if (w.endsWith('ies')) cands.push(w.slice(0, -3) + 'y')
   if (w.endsWith('es')) cands.push(w.slice(0, -2))
-  if (w.endsWith('s')) cands.push(w.slice(0, -1))
+  if (w.endsWith('s') && !w.endsWith('ss')) cands.push(w.slice(0, -1))
   if (w.endsWith('ied')) cands.push(w.slice(0, -3) + 'y')
-  if (w.endsWith('ed')) cands.push(w.slice(0, -2), w.slice(0, -1), w.slice(0, -3))
+  // used → use（us ではない）、united → unite（unit ではない）のように、e を残す候補を先に見る
+  if (w.endsWith('ed')) cands.push(w.slice(0, -1), w.slice(0, -2), w.slice(0, -3))
   if (w.endsWith('ing')) cands.push(w.slice(0, -3), w.slice(0, -3) + 'e', w.slice(0, -4))
   if (w.endsWith('er')) cands.push(w.slice(0, -2), w.slice(0, -1))
   if (w.endsWith('est')) cands.push(w.slice(0, -3), w.slice(0, -2))
   if (w.endsWith('ly')) cands.push(w.slice(0, -2))
   for (const c of cands) {
+    if (c.length < MIN_STEM) continue
     const k = dict.byLower.get(c)
     if (k) return k
   }
