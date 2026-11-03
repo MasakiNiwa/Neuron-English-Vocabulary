@@ -122,12 +122,19 @@ body {
     transform: translateY(6px);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation: none !important;
-  }
+/* モーションを減らす（OS の設定・アプリの設定のどちらでも。data-reduce-motion は src/lib/motion.ts が付ける） */
+:root[data-reduce-motion] ::view-transition-group(*),
+:root[data-reduce-motion] ::view-transition-old(*),
+:root[data-reduce-motion] ::view-transition-new(*) {
+  animation: none !important;
+}
+:root[data-reduce-motion] *,
+:root[data-reduce-motion] *::before,
+:root[data-reduce-motion] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
 
 /* Radix Accordion の開閉アニメーション */

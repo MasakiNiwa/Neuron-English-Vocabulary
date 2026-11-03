@@ -1,4 +1,5 @@
 import { Check, Eye, Mic, X } from 'lucide-react'
+import { reduceMotion } from '@/lib/motion'
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -166,27 +167,29 @@ export function ReviewSession({
     startRef.current = Date.now()
     // 表面に英語が出る形式だけ最初に読み上げる。日→英・穴埋めでは答えになるので、答えを見たときに読む（B13）
     if (autoSpeak && SPEAK_FIRST.has(format)) speak(c.entryId.replace(/_/g, ' '))
-    // カードの登場アニメーション（Web Animations API）
-    cardRef.current?.animate(
-      [
-        { opacity: 0, transform: 'translateY(12px) scale(0.98)' },
-        { opacity: 1, transform: 'none' },
-      ],
-      { duration: 220, easing: 'ease-out' },
-    )
+    // カードの登場アニメーション（Web Animations API。モーションを減らすときは省く）
+    if (!reduceMotion())
+      cardRef.current?.animate(
+        [
+          { opacity: 0, transform: 'translateY(12px) scale(0.98)' },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: 220, easing: 'ease-out' },
+      )
   }, [idx, queue, autoSpeak, format])
 
   const reveal = useCallback(() => {
     setShown(true)
-    requestAnimationFrame(() =>
-      backRef.current?.animate(
-        [
-          { opacity: 0, transform: 'rotateX(-70deg)' },
-          { opacity: 1, transform: 'rotateX(0)' },
-        ],
-        { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' },
-      ),
-    )
+    if (!reduceMotion())
+      requestAnimationFrame(() =>
+        backRef.current?.animate(
+          [
+            { opacity: 0, transform: 'rotateX(-70deg)' },
+            { opacity: 1, transform: 'rotateX(0)' },
+          ],
+          { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' },
+        ),
+      )
     if (card) void recordView(card.entryId, 'study')
     if (card && autoSpeak && !SPEAK_FIRST.has(format)) speak(card.entryId.replace(/_/g, ' '))
   }, [card, autoSpeak, format])

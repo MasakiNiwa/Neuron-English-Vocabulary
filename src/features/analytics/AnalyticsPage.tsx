@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { scrollBehavior } from '@/lib/motion'
 import * as Comlink from 'comlink'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Lightbulb, X } from 'lucide-react'
@@ -93,7 +94,7 @@ function AnalyticsInner() {
   const data = useAnalytics()
   const [drill, setDrill] = usePersistentState<Drill | null>('analytics:drill', null)
   useEffect(() => {
-    if (drill) document.getElementById('drill')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    if (drill) document.getElementById('drill')?.scrollIntoView({ behavior: scrollBehavior(), block: 'nearest' })
   }, [drill])
   if (!data) return <PageSpinner />
   const t = data.totals

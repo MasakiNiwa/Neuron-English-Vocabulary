@@ -1,4 +1,5 @@
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
+import { scrollBehavior } from '@/lib/motion'
 import { useLiveQuery } from 'dexie-react-hooks'
 import {
   ArrowDown,
@@ -409,7 +410,7 @@ function ChatView() {
   const [atBottom, setAtBottom] = useState(true)
   const handledParams = useRef<string | null>(null)
 
-  const scrollToBottom = (behavior: ScrollBehavior = 'smooth') => {
+  const scrollToBottom = (behavior: ScrollBehavior = scrollBehavior()) => {
     const el = scroller.current
     if (el) el.scrollTo({ top: el.scrollHeight, behavior })
   }
@@ -419,7 +420,7 @@ function ChatView() {
   }, [current, messages === undefined])
   // 新しいメッセージ・ストリーミング中は、一番下を見ているときだけ追従する
   useEffect(() => {
-    if (atBottom) scrollToBottom(busy ? 'instant' : 'smooth')
+    if (atBottom) scrollToBottom(busy ? 'instant' : scrollBehavior())
   }, [messages?.length, streaming, busy])
 
   /** アシスタントの応答を生成して保存する */
