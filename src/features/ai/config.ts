@@ -59,6 +59,9 @@ interface AiConfigState {
   setCustom: (p: CustomPersona | null) => void
   route?: Route
   cast: string[]
+  /** AI に学習状況（復習予定数・最近見た単語・苦手な単語）を伝えるか */
+  shareLearning: boolean
+  setShareLearning: (v: boolean) => void
   addKey: (k: ApiKeyEntry) => void
   updateKey: (id: string, patch: Partial<ApiKeyEntry>) => void
   removeKey: (id: string) => void
@@ -75,6 +78,8 @@ export const useAiConfig = create<AiConfigState>()(
         set((s) => ({ custom, cast: custom ? s.cast : s.cast.filter((c) => c !== 'custom') })),
       route: undefined,
       cast: DEFAULT_CAST,
+      shareLearning: true,
+      setShareLearning: (shareLearning) => set({ shareLearning }),
       addKey: (k) => set((s) => ({ keys: [...s.keys, k] })),
       updateKey: (id, patch) => set((s) => ({ keys: s.keys.map((k) => (k.id === id ? { ...k, ...patch } : k)) })),
       removeKey: (id) =>

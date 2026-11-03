@@ -4,6 +4,7 @@ import { searchDictionary } from '@/features/dictionary/search'
 import { addManyToStudy } from '@/features/study/cards'
 import { getStudyStats } from '@/features/study/session'
 import type { ToolDef } from './providers'
+import { useAiConfig } from './config'
 
 /**
  * LLM に渡すアプリの「道具」。判断の根拠となるデータはアプリのアルゴリズム（辞書・FSRS・集計）から取り、
@@ -100,6 +101,7 @@ export async function runAppTool(name: string, args: Record<string, unknown>): P
       }
     }
     case 'get_learning_status':
+      if (!useAiConfig.getState().shareLearning) return { error: 'ユーザーは学習状況を AI に共有しない設定にしています' }
       return learningSnapshot()
     case 'add_to_study': {
       const words = Array.isArray(args.words) ? (args.words as string[]) : []
@@ -128,8 +130,9 @@ export async function buildContext(about?: string) {
   const ctx: Record<string, unknown> = {
     app: 'ニューロン英単語（語源や意味のつながりで辿る英単語アプリ）',
     now: new Date().toISOString().slice(0, 16),
-    learning: await learningSnapshot(),
   }
+  // 学習状況の共有を切っている場合は送らない（B07）
+  if (useAiConfig.getState().shareLearning) ctx.learning = await learningSnapshot()
   if (about) ctx.currentWord = await wordSummary(about)
   return ctx
 }

@@ -169,14 +169,17 @@ export function HelpPage() {
             </li>
             <li>
               <kbd className="rounded bg-surface-2 px-1.5 font-mono">1</kbd>〜
-              <kbd className="rounded bg-surface-2 px-1.5 font-mono">4</kbd> 学習中：評価（もう一度／難しい／正解／簡単）
+              <kbd className="rounded bg-surface-2 px-1.5 font-mono">4</kbd> 学習中：評価（もう一度／難しい／正解／簡単）。4択では答えの選択
             </li>
           </ul>
         </AccordionSection>
         <AccordionSection value="privacy" title={t('help.privacy')} icon={<Shield className="size-5" />}>
           <div className="space-y-2 text-sm leading-relaxed">
-            <p>学習履歴・設定などのデータは全てお使いのブラウザ内（IndexedDB / localStorage）にのみ保存され、外部サーバーへ送信されません。</p>
-            <p>AI 機能を使う場合のみ、入力内容が選択した AI サービスへ直接送信されます。API キーはパスフレーズで暗号化して保存されます。</p>
+            <p>学習履歴・設定などのデータは全てお使いのブラウザ内（IndexedDB / localStorage）に保存され、このアプリのサーバーへは送信されません。</p>
+            <p>
+              AI 機能を使うときだけ、選んだ AI サービスへ直接、入力したメッセージ・会話のやりとり・話題の単語の辞書の内容と、学習状況（復習予定数・最近見た単語・苦手な単語）が送信されます。学習状況は「設定 → AI 連携 → AI に送る情報」で送らないようにできます。
+            </p>
+            <p>API キーはパスフレーズで暗号化して保存され、バックアップファイルにも含まれません。</p>
           </div>
         </AccordionSection>
         <AccordionSection value="data-sources" title={t('help.dataSources')} icon={<Database className="size-5" />}>
