@@ -30,6 +30,7 @@ import { headword } from '@/features/dictionary/data'
 import { useAiConfig } from './config'
 import { Markdown } from './Markdown'
 import { ModelSelect } from './ModelSelect'
+import { INCOMPLETE_LABEL } from './providers'
 import { personaById, splitBySpeaker, usePersonas } from './personas'
 import { createThread, deleteAllThreads, deleteMessagesFrom, deleteThread, MAX_THREADS, renameThread, touchThread, useChatUi } from './threads'
 import type { AiSearch } from './search'
@@ -159,6 +160,11 @@ function AssistantMessage({ m, live, onRegenerate }: { m: ChatRecord; live?: boo
           </div>
         ))}
       </div>
+      {!live && m.incomplete && INCOMPLETE_LABEL[m.incomplete] && (
+        <p className="mt-2 ml-11 rounded-lg bg-warn/10 px-2 py-1 text-xs text-warn">
+          ⚠ {INCOMPLETE_LABEL[m.incomplete]}。必要なら「再生成」してください
+        </p>
+      )}
       {!live && (
         <div className="mt-1 flex items-center gap-0.5 pl-11 text-[11px] text-muted">
           <CopyButton text={m.content} />
@@ -394,6 +400,9 @@ function ChatView() {
   const [drawer, setDrawer] = useState(false)
   const [castOpen, setCastOpen] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
+  const busyRef = useRef(false)
+  // ページを離れたら生成を止める（戻ってきたときに裏で生成が続いて二重に答えないように。途中までの応答は保存される）
+  useEffect(() => () => abortRef.current?.abort(), [])
   const [error, setError] = useState('')
   const [listening, setListening] = useState(false)
   const scroller = useRef<HTMLDivElement>(null)
@@ -415,6 +424,9 @@ function ChatView() {
 
   /** アシスタントの応答を生成して保存する */
   const generate = async (threadId: string, about: string | undefined, history: { role: 'user' | 'assistant'; content: string }[]) => {
+    // 同時に 2 つ生成しない（state の busy は次の描画まで反映されないので ref でも止める。B14）
+    if (busyRef.current) return
+    busyRef.current = true
     setError('')
     setBusy(true)
     setTools([])
@@ -423,6 +435,7 @@ function ChatView() {
     const ac = new AbortController()
     abortRef.current = ac
     const used: string[] = []
+    let partial = ''
     try {
       const res = await runTask({
         messages: history.slice(-20),
@@ -432,32 +445,33 @@ function ChatView() {
           used.push(n)
           setTools([...used])
         },
-        onText: (d) => setStreaming((x) => x + d),
+        onText: (d) => {
+          partial += d
+          setStreaming((x) => x + d)
+        },
         signal: ac.signal,
       })
-      await db.chats.add({ thread: threadId, role: 'assistant', content: res.text || '（応答が空でした）', createdAt: Date.now(), tools: used, model: res.model, usage: res.usage })
+      await db.chats.add({ thread: threadId, role: 'assistant', content: res.text || '（応答が空でした）', createdAt: Date.now(), tools: used, model: res.model, usage: res.usage, incomplete: res.incomplete })
       await touchThread(threadId)
     } catch (e) {
       if (ac.signal.aborted) {
-        // 停止した場合は、そこまでの応答を保存する
-        setStreaming((partial) => {
-          if (partial) void db.chats.add({ thread: threadId, role: 'assistant', content: partial + '\n\n（停止しました）', createdAt: Date.now(), tools: used })
-          return ''
-        })
+        // 停止した場合（停止ボタン・別のチャットへ移動・ページ離脱）は、そこまでの応答を保存する
+        if (partial) await db.chats.add({ thread: threadId, role: 'assistant', content: partial + '\n\n（停止しました）', createdAt: Date.now(), tools: used })
         return
       }
       setError(e instanceof AiNotReadyError ? e.message : `エラー: ${e instanceof Error ? e.message : String(e)}`)
     } finally {
+      busyRef.current = false
       setBusy(false)
       setStreaming('')
-      abortRef.current = null
+      if (abortRef.current === ac) abortRef.current = null
     }
   }
 
   /** メッセージを送信（threadOverride: 新しく作ったスレッドに送る場合 / prior: それまでの会話） */
   const send = async (text: string, threadOverride?: ChatThread, prior?: ChatRecord[]) => {
     const content = text.trim()
-    if (!content || busy) return
+    if (!content || busy || busyRef.current) return
     setInput('')
     let t = threadOverride ?? thread ?? null
     if (!t) {

@@ -9,6 +9,7 @@ import { headword } from '@/features/dictionary/data'
 import { resolveRoute, useAiConfig } from './config'
 import { addExtra, extractJson, extraPrompt, moveExtra, removeExtra, sanitizeExtra } from './extras'
 import { ModelSelect } from './ModelSelect'
+import { INCOMPLETE_LABEL } from './providers'
 import { AiNotReadyError, runTask } from './service'
 import { UnlockPanel } from './UnlockPanel'
 
@@ -147,6 +148,7 @@ export function WordAiPanel({ entryKey }: { entryKey: string }) {
   }, [entryKey])
 
   const generate = async () => {
+    if (abortRef.current) return // 連打で 2 つ作らない（B14）
     setError('')
     setNeedUnlock(false)
     setBusy(true)
@@ -161,6 +163,7 @@ export function WordAiPanel({ entryKey }: { entryKey: string }) {
         onText: () => setStatus('書いています'),
         signal: ac.signal,
       })
+      if (res.incomplete) throw new Error(`${INCOMPLETE_LABEL[res.incomplete]}。もう一度お試しください`)
       const fields = sanitizeExtra(extractJson(res.text))
       if (!fields) throw new Error('解説の形式を読み取れませんでした。もう一度お試しください')
       const model = resolveRoute()?.model
