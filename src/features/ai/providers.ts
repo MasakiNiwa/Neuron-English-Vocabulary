@@ -13,6 +13,12 @@ export interface ToolDef {
   parameters: { type: 'object'; properties: Record<string, unknown>; required?: string[] }
 }
 
+/** 消費トークン数（ツール呼び出しで複数回やり取りした場合は合計） */
+export interface Usage {
+  input: number
+  output: number
+}
+
 export interface ChatTurn {
   role: 'user' | 'assistant'
   content: string
@@ -31,6 +37,14 @@ export interface CompleteParams {
   onText?: (delta: string) => void
   signal?: AbortSignal
   maxTokens?: number
+  /** 1 回のやり取りごとの消費トークン数（取得できる場合） */
+  onUsage?: (u: Usage) => void
+}
+
+function reportUsage(p: CompleteParams, input: unknown, output: unknown) {
+  const i = Number(input) || 0
+  const o = Number(output) || 0
+  if (i || o) p.onUsage?.({ input: i, output: o })
 }
 
 const MAX_ROUNDS = 6
@@ -129,6 +143,11 @@ async function completeAnthropic(p: CompleteParams) {
       p.onText?.(d)
     })
     const res = await stream.finalMessage()
+    reportUsage(
+      p,
+      res.usage.input_tokens + (res.usage.cache_read_input_tokens ?? 0) + (res.usage.cache_creation_input_tokens ?? 0),
+      res.usage.output_tokens,
+    )
     if (res.stop_reason === 'refusal') return all + '（この依頼には回答できませんでした）'
     const uses = res.content.filter((b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use')
     if (res.stop_reason !== 'tool_use' || !uses.length) return all
@@ -154,6 +173,7 @@ async function completeAnthropic(p: CompleteParams) {
 interface RespFinal {
   id: string
   output: RespItem[]
+  usage?: { input_tokens?: number; output_tokens?: number }
 }
 interface RespItem {
   type: string
@@ -189,6 +209,7 @@ async function completeOpenAIResponses(p: CompleteParams) {
         p.onText?.(ev.delta)
       } else if (ev.type === 'response.completed') {
         final = ev.response as RespFinal
+        reportUsage(p, final.usage?.input_tokens, final.usage?.output_tokens)
       } else if (ev.type === 'response.failed' || ev.type === 'error') {
         throw new Error(JSON.stringify(ev).slice(0, 300))
       }
@@ -225,12 +246,14 @@ async function completeOpenAICompat(p: CompleteParams, url: string, extraHeaders
       method: 'POST',
       signal: p.signal,
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${p.apiKey}`, ...extraHeaders },
-      body: JSON.stringify({ model: p.model, messages, stream: true, ...(tools?.length ? { tools } : {}) }),
+      body: JSON.stringify({ model: p.model, messages, stream: true, stream_options: { include_usage: true }, ...(tools?.length ? { tools } : {}) }),
     })
     await ensureOk(res)
     let text = ''
     const calls: OAIToolCall[] = []
     for await (const ev of readSSE(res)) {
+      const u = ev.usage as { prompt_tokens?: number; completion_tokens?: number } | undefined
+      if (u) reportUsage(p, u.prompt_tokens, u.completion_tokens)
       const delta = (ev.choices as { delta?: { content?: string; tool_calls?: { index: number; id?: string; function?: { name?: string; arguments?: string } }[] } }[] | undefined)?.[0]?.delta
       if (!delta) continue
       if (delta.content) {
@@ -284,7 +307,10 @@ async function completeGemini(p: CompleteParams) {
     })
     await ensureOk(res)
     const parts: GPart[] = []
+    let usage: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number } | undefined
     for await (const ev of readSSE(res)) {
+      // 使用量は届くたびに累計が更新されるので、最後のものを使う
+      if (ev.usageMetadata) usage = ev.usageMetadata as typeof usage
       const ps = (ev.candidates as { content?: { parts?: GPart[] } }[] | undefined)?.[0]?.content?.parts ?? []
       for (const x of ps) {
         parts.push(x)
@@ -294,6 +320,7 @@ async function completeGemini(p: CompleteParams) {
         }
       }
     }
+    reportUsage(p, usage?.promptTokenCount, (usage?.candidatesTokenCount ?? 0) + (usage?.thoughtsTokenCount ?? 0))
     const calls = parts.filter((x) => x.functionCall)
     if (!calls.length) return all
     contents.push({ role: 'model', parts })

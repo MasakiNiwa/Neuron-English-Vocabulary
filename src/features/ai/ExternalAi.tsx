@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { db } from '@/lib/db'
 import { loadDictionary } from '@/features/dictionary/data'
+import { addExtra, extractJson, sanitizeExtra } from './extras'
 
 /**
  * 外部 AI 連携: アプリがプロンプトを作り、ユーザーが好きな AI（ChatGPT / Gemini / Claude など）に貼り付けて
@@ -25,12 +26,6 @@ function buildPrompt(words: string[]) {
 ]`
 }
 
-function parseJson(text: string): unknown {
-  const t = text.trim().replace(/^```(?:json)?/i, '').replace(/```$/, '').trim()
-  const start = t.indexOf('[')
-  return JSON.parse(start >= 0 ? t.slice(start, t.lastIndexOf(']') + 1) : t)
-}
-
 export function ExternalAi({ defaultWords = '' }: { defaultWords?: string }) {
   const [words, setWords] = useState(defaultWords)
   const [copied, setCopied] = useState(false)
@@ -44,7 +39,7 @@ export function ExternalAi({ defaultWords = '' }: { defaultWords?: string }) {
   return (
     <div className="flex flex-col gap-3 text-sm">
       <p className="text-xs leading-relaxed text-muted">
-        アプリ内の AI では重い処理を、外部の AI サービスに任せる機能です。① プロンプトをコピーして外部 AI に貼り付け、② 返ってきた JSON を下に貼り付けて取り込むと、単語ページに「追加の解説」として表示されます。API キーは不要です。
+        アプリ内の AI では重い処理を、外部の AI サービスに任せる機能です。① プロンプトをコピーして外部 AI に貼り付け、② 返ってきた JSON を下に貼り付けて取り込むと、単語ページの「追加の解説」にタブとして追加されます。API キーは不要です。
       </p>
       <label className="flex flex-col gap-1">
         <span className="text-xs text-muted">対象の単語（カンマ・改行区切り、最大30語）</span>
@@ -84,21 +79,31 @@ export function ExternalAi({ defaultWords = '' }: { defaultWords?: string }) {
           onClick={async () => {
             try {
               const dict = await loadDictionary()
-              const arr = parseJson(json) as { word: string; mnemonic?: string; story?: string; note?: string; examples?: { en: string; ja: string }[] }[]
-              const rows = arr
-                .map((x) => ({ key: dict.byLower.get(String(x.word).toLowerCase().trim()), x }))
-                .filter((r) => r.key)
-                .map(({ key, x }) => ({
-                  entryId: key!,
-                  mnemonic: x.mnemonic,
-                  story: x.story,
-                  note: x.note,
-                  examples: Array.isArray(x.examples) ? x.examples.slice(0, 5) : undefined,
-                  source: 'external',
-                  importedAt: Date.now(),
-                }))
-              await db.enrichments.bulkPut(rows)
-              setResult(`${rows.length} 語の解説を取り込みました（${arr.length - rows.length} 語は辞書に見つかりませんでした）`)
+              const parsed = extractJson(json)
+              const arr: unknown[] = Array.isArray(parsed) ? parsed : [parsed]
+              let added = 0
+              let missing = 0
+              let invalid = 0
+              for (const x of arr) {
+                const word = x && typeof x === 'object' && typeof (x as { word?: unknown }).word === 'string' ? (x as { word: string }).word : ''
+                const key = word ? dict.byLower.get(word.toLowerCase().trim()) : undefined
+                if (!key) {
+                  missing++
+                  continue
+                }
+                const fields = sanitizeExtra(x)
+                if (!fields) {
+                  invalid++
+                  continue
+                }
+                await addExtra(key, fields, { title: '外部 AI', source: 'external' })
+                added++
+              }
+              setResult(
+                `${added} 語の解説を取り込みました` +
+                  (missing ? `（${missing} 件は辞書に見つかりませんでした）` : '') +
+                  (invalid ? `（${invalid} 件は形式が正しくないため取り込みませんでした）` : ''),
+              )
               setJson('')
             } catch (e) {
               setResult(`読み込めませんでした: ${String(e)}`)

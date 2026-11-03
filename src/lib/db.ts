@@ -63,6 +63,8 @@ export interface ChatRecord {
   /** 呼び出したツール名（表示用） */
   tools?: string[]
   model?: string
+  /** 消費トークン数（取得できた場合） */
+  usage?: { input: number; output: number }
 }
 
 /** AI チャットのスレッド（会話のまとまり） */
@@ -75,7 +77,7 @@ export interface ChatThread {
   updatedAt: number
 }
 
-/** 外部 AI などで作成し取り込んだ追加解説 */
+/** 外部 AI などで作成し取り込んだ追加解説（v3 まで。v4 で extras に移行） */
 export interface EnrichmentRecord {
   entryId: string
   mnemonic?: string
@@ -84,6 +86,24 @@ export interface EnrichmentRecord {
   examples?: { en: string; ja: string }[]
   source?: string
   importedAt: number
+}
+
+/** 単語ごとの追加解説（1 語に複数。タブで切り替える） */
+export interface ExtraNote {
+  id: string
+  entryId: string
+  /** タブに表示する名前（作成したモデル名など） */
+  title: string
+  /** api = アプリ内の AI で作成 / external = 外部 AI から取り込み */
+  source: 'api' | 'external'
+  model?: string
+  mnemonic?: string
+  story?: string
+  note?: string
+  examples?: { en: string; ja: string }[]
+  /** タブの並び順（小さいほど左） */
+  order: number
+  createdAt: number
 }
 
 export class NeuronDB extends Dexie {
@@ -95,6 +115,7 @@ export class NeuronDB extends Dexie {
   chats!: EntityTable<ChatRecord, 'id'>
   enrichments!: EntityTable<EnrichmentRecord, 'entryId'>
   threads!: EntityTable<ChatThread, 'id'>
+  extras!: EntityTable<ExtraNote, 'id'>
 
   constructor(name = 'neuron-english-vocabulary') {
     super(name)
@@ -119,6 +140,27 @@ export class NeuronDB extends Dexie {
           const now = Date.now()
           await tx.table('threads').put({ id: 'main', title: '以前のチャット', createdAt: now, updatedAt: now })
         }
+      })
+    this.version(4)
+      .stores({ extras: 'id, entryId, [entryId+order]' })
+      .upgrade(async (tx) => {
+        // v3 までの追加解説（1 語に 1 件）を、複数持てる extras に移す
+        const old = (await tx.table('enrichments').toArray()) as EnrichmentRecord[]
+        await tx.table('extras').bulkPut(
+          old.map((e) => ({
+            id: crypto.randomUUID(),
+            entryId: e.entryId,
+            title: '外部 AI',
+            source: 'external',
+            mnemonic: e.mnemonic,
+            story: e.story,
+            note: e.note,
+            examples: e.examples,
+            order: 0,
+            createdAt: e.importedAt ?? Date.now(),
+          })),
+        )
+        await tx.table('enrichments').clear()
       })
   }
 }
@@ -158,6 +200,31 @@ export async function exportAll(): Promise<Record<string, unknown[]>> {
 }
 
 export async function importAll(data: Record<string, unknown[]>) {
+  // 古いバックアップの追加解説（enrichments: 1 語 1 件）は extras の形に直して取り込む
+  if (Array.isArray(data.enrichments) && data.enrichments.length) {
+    const old = data.enrichments as EnrichmentRecord[]
+    data = {
+      ...data,
+      enrichments: [],
+      extras: [
+        ...(Array.isArray(data.extras) ? data.extras : []),
+        ...old
+          .filter((e) => e && typeof e.entryId === 'string')
+          .map((e) => ({
+            id: crypto.randomUUID(),
+            entryId: e.entryId,
+            title: '外部 AI',
+            source: 'external',
+            mnemonic: e.mnemonic,
+            story: e.story,
+            note: e.note,
+            examples: e.examples,
+            order: 1000,
+            createdAt: e.importedAt ?? Date.now(),
+          })),
+      ],
+    }
+  }
   await db.transaction('rw', db.tables, async () => {
     for (const t of db.tables) {
       const rows = data[t.name]
