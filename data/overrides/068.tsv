@@ -12,7 +12,7 @@ parts	despite	de=pre:de spit=r:spec e
 parts	interest	inter=pre:inter est=r:ess
 parts	approach	ap=pre:ad proach
 parts	address	ad=pre:ad dress=w:dress
-parts	professor	pro=pre:pro fess or=suf:er
+parts	professor	pro=pre:pro fess=r:fess or=suf:er
 parts	executive	ex=pre:ex ecut=r:sequ ive=suf:ive
 parts	display	dis=pre:dis play=r:plic
 parts	entitle	en=pre:en title=w:title
@@ -20,27 +20,27 @@ parts	complaint	com=pre:com plain t
 parts	balance	ba=pre:bi lance
 parts	experience	ex=pre:ex peri ence=suf:ance
 parts	expect	ex=pre:ex pect=r:spec
-parts	impact	im=pre:into pact
-parts	protect	pro=pre:pro tect
-parts	detect	de=pre:de tect
+parts	impact	im=pre:into pact=r:pact
+parts	protect	pro=pre:pro tect=r:tect
+parts	detect	de=pre:de tect=r:tect
 parts	detail	de=pre:de tail
 parts	advice	ad=pre:ad vice=r:vid
 parts	supply	sup=pre:sub ply=r:ple
 parts	ensure	en=pre:en sure=w:sure
 parts	assure	as=pre:ad sure=w:sure
 parts	engage	en=pre:en gage
-parts	exhaust	ex=pre:ex haust
+parts	exhaust	ex=pre:ex haust=r:haust
 parts	inevitable	in=pre:in e=pre:ex vit able=suf:able
 parts	inevitably	in=pre:in e=pre:ex vit ably
-parts	rebel	re=pre:re bel
-parts	compute	com=pre:com pute
+parts	rebel	re=pre:re bel=r:bell
+parts	compute	com=pre:com pute=r:put
 parts	indication	in=pre:into dic=r:dict ation=suf:ation
-parts	insert	in=pre:into sert
+parts	insert	in=pre:into sert=r:sert
 parts	absurd	ab=pre:ab surd
-parts	refuge	re=pre:re fuge
-parts	elimination	e=pre:ex limin ation=suf:ation
-parts	devote	de=pre:de vote
-parts	accuse	ac=pre:ad cuse
+parts	refuge	re=pre:re fuge=r:fug
+parts	elimination	e=pre:ex limin=r:limin ation=suf:ation
+parts	devote	de=pre:de vote=r:vot
+parts	accuse	ac=pre:ad cuse=r:caus
 parts	execute	ex=pre:ex ecute=r:sequ
 parts	adjacent	ad=pre:ad jac ent=suf:ant
 parts	console	con=pre:com sole
@@ -49,3 +49,7 @@ parts	surplus	sur=pre:super plus
 parts	hypothesis	hypo=pre:hypo thesis
 parts	system	sy=pre:syn stem
 parts	escape	es=pre:ex cape
+# 追加した語根の誤った自動の結びつきを外す（dessert は des + servir、put は英語本来の語、belle は bellus「美しい」）
+exclude	r:sert	dessert
+exclude	r:put	put
+exclude	r:bell	belle

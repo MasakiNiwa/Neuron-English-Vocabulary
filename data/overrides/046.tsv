@@ -184,7 +184,7 @@ parts	embassy	em bassy
 parts	goodness	good=w:good ness=suf:ness
 parts	helicopter	helico pter
 parts	homework	home=w:home work=w:work
-parts	profession	pro=pre:pro fess ion
+parts	profession	pro=pre:pro fess=r:fess ion
 parts	publisher	publish=w:publish er=suf:er
 parts	surgeon	surg eon
 parts	appreciation	appreci=w:appreciate ation=suf:ation

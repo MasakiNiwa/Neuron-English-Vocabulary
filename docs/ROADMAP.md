@@ -34,7 +34,7 @@
 | C06 | 動詞の熟語に活用形を持たせ（take place → took place / taken place …）、例文が活用形でも穴埋めに使えるように。ハイフンでつながった例文も対象に。穴埋めに使えない熟語の例文は 174 → 3 件 |
 | — | pre:in（否定）と pre:into（中へ）を使っている全 295 語を意味別に監査し、47 語を修正（inform・invest・install・insect・increment などが「否定」に、inability・instability・intact・integral などが「中へ」になっていた。intermediate・interrupt は inter- に、inbound・inpatient は英語の in に）。解説と語源分解で in- の意味が食い違うと lint がエラーにするように |
 | C08（一部） | 同じ綴りで意味の違う形態素（a- の否定 / ab / ad、di- の dia / dis、sur- の super、en- と in-、語根 sent・tent・cour など）を、解説の「綴り（意味）」と照合して 43 語を修正。照合を lint に組み込み、今後の食い違いはエラーになる |
-| — | 語源ネットワークの拡充: 解説で語根を説明しているのに自動の語源分解が付いていなかった頻出語 50 語に分解を登録（education・experience・decision・expect・protect・supply・execute など） |
+| — | 語源ネットワークの拡充: 解説で語根を説明しているのに自動の語源分解が付いていなかった頻出語 50 語に分解を登録（education・experience・decision・expect・protect・supply・execute など）。足りなかった語根 11 個（tect 覆う・pact 打ち込む・fess 公言する・sert つなぐ・vot 誓う・fug 逃げる・put 考える・bell 戦争・limin 敷居・haust くみ出す・caus 理由）を追加し 44 語をつないだ |
 | B05 | 外部 AI・アプリ内 AI の追加解説を、保存前に型・長さで検証（`sanitizeExtra`）。表示側も文字列以外は描画しない |
 | — | ChatGPT / Gemini による語源監査（PR #85）のうち、元データからのフルビルドで確認できた修正を取り込み |
 

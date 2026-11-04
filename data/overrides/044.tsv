@@ -239,7 +239,7 @@ parts	satisfy	satis fy=suf:fy
 parts	specialist	special=w:special ist=suf:ist
 parts	stranger	strange=w:strange r
 parts	tourism	tour=w:tour ism=suf:ism
-parts	dispute	dis=pre:dis pute
+parts	dispute	dis=pre:dis pute=r:put
 parts	overcome	over=pre:over come=w:come
 parts	psychological	psycho=r:psych logical=r:log
 parts	radiation	radi ation=suf:ation
@@ -250,7 +250,7 @@ parts	encounter	en=pre:en counter=w:counter
 parts	guardian	guard=w:guard ian
 parts	homeless	home=w:home less=suf:less
 parts	lover	lov=w:love er=suf:er
-parts	refugee	re=pre:re fug ee=suf:ee
+parts	refugee	re=pre:re fug=r:fug ee=suf:ee
 parts	accompany	ac=pre:ad company=w:company
 parts	arrangement	arrange=w:arrange ment=suf:ment
 parts	boundary	bound=w:bound ary=suf:ary

@@ -244,11 +244,11 @@ parts	teacher	teach=w:teach er=suf:er
 parts	freedom	free=w:free dom=suf:dom
 parts	powerful	power=w:power ful=suf:ful
 parts	awesome	awe=w:awe some=suf:some
-parts	protection	pro=pre:pro tect ion
+parts	protection	pro=pre:pro tect=r:tect ion
 parts	investment	in=pre:into vest=w:vest ment=suf:ment
 parts	equipment	equip=w:equip ment=suf:ment
 parts	environment	environ ment=suf:ment
-parts	computer	com=pre:com put er=suf:er
+parts	computer	com=pre:com put=r:put er=suf:er
 parts	directly	direct=w:direct ly=suf:ly
 parts	finally	final=w:final ly=suf:ly
 parts	recently	recent=w:recent ly=suf:ly

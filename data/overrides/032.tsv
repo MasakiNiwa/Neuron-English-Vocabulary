@@ -312,14 +312,14 @@ parts	discredit	dis=pre:dis cred=r:cred it
 parts	equitable	equ=r:equ it able=suf:able
 parts	handshake	hand=w:hand shake=w:shake
 parts	incarceration	in=pre:into carcer ation=suf:ation
-parts	insertion	in=pre:into sert ion=suf:ation
+parts	insertion	in=pre:into sert=r:sert ion=suf:ation
 parts	mastermind	master=w:master mind=w:mind
 parts	modernization	mod=r:mod ern iz=suf:ize ation=suf:ation
 parts	outsourcing	out=w:out sourc=w:source ing
 parts	payload	pay=w:pay load=w:load
 parts	pertinent	per=pre:per tin=r:ten ent=suf:ant
 parts	plentiful	plenti=w:plenty ful=suf:ful
-parts	rebellious	re=pre:re bell i ous=suf:ous
+parts	rebellious	re=pre:re bell=r:bell i ous=suf:ous
 parts	soften	soft=w:soft en=suf:en
 parts	souvenir	sou=pre:sub ven=r:ven ir
 parts	spaceship	space=w:space ship=w:ship
@@ -335,7 +335,7 @@ parts	wastewater	waste=w:waste water=w:water
 parts	weaponry	weapon=w:weapon ry
 parts	wildfire	wild=w:wild fire=w:fire
 parts	withholding	with=pre:with hold=w:hold ing
-parts	computation	com=pre:com put ation=suf:ation
+parts	computation	com=pre:com put=r:put ation=suf:ation
 parts	crackdown	crack=w:crack down=w:down
 parts	elongated	e=pre:ex long=w:long at ed
 parts	exceedingly	ex=pre:ex ceed=r:ced ing ly=suf:ly
