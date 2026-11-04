@@ -15,7 +15,7 @@ export const BACKUP_APP = 'neuron-english-vocabulary'
 export const BACKUP_SCHEMA = 2
 
 /** バックアップに含める表（この順で復元する） */
-export const BACKUP_TABLES = ['views', 'cards', 'reviews', 'threads', 'chats', 'extras'] as const
+export const BACKUP_TABLES = ['views', 'cards', 'reviews', 'threads', 'chats', 'extras', 'rootLessons'] as const
 export type BackupTable = (typeof BACKUP_TABLES)[number]
 
 export const TABLE_LABEL: Record<BackupTable, string> = {
@@ -25,6 +25,7 @@ export const TABLE_LABEL: Record<BackupTable, string> = {
   threads: 'AI チャット',
   chats: 'チャットのメッセージ',
   extras: '追加の解説',
+  rootLessons: '語根レッスン',
 }
 
 export interface BackupFile {
@@ -87,6 +88,10 @@ const CLEAN: Record<BackupTable, (r: Row) => Row | null> = {
     if (r.incomplete === 'length' || r.incomplete === 'filtered' || r.incomplete === 'interrupted') out.incomplete = r.incomplete
     return out
   },
+  rootLessons: (r) =>
+    isStr(r.id) && r.id.length <= 64 && isTime(r.completedAt) && isCount(r.correct) && isCount(r.total) && isCount(r.best) && isCount(r.plays) && (r.correct as number) <= (r.total as number)
+      ? pick(r, ['id', 'completedAt', 'correct', 'total', 'best', 'plays'])
+      : null,
   extras: (r) => {
     if (!isStr(r.id) || !isStr(r.entryId) || typeof r.title !== 'string' || (r.source !== 'api' && r.source !== 'external') || !isNum(r.order) || !isNum(r.createdAt) || !optStr(r.model)) return null
     const fields = sanitizeExtra(r)

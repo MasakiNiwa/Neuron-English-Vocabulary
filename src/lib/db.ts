@@ -108,6 +108,21 @@ export interface ExtraNote {
   createdAt: number
 }
 
+/** 語根レッスンの記録（語根図鑑に使う） */
+export interface RootLesson {
+  /** 形態素 ID（r:spec など） */
+  id: string
+  /** 最後に終えた日時 */
+  completedAt: number
+  /** 最後の結果（正解数 / 問題数） */
+  correct: number
+  total: number
+  /** これまでの最高の正解数 */
+  best: number
+  /** 挑戦した回数 */
+  plays: number
+}
+
 export class NeuronDB extends Dexie {
   views!: EntityTable<ViewRecord, 'id'>
   cards!: EntityTable<StudyCard, 'entryId'>
@@ -118,6 +133,7 @@ export class NeuronDB extends Dexie {
   enrichments!: EntityTable<EnrichmentRecord, 'entryId'>
   threads!: EntityTable<ChatThread, 'id'>
   extras!: EntityTable<ExtraNote, 'id'>
+  rootLessons!: EntityTable<RootLesson, 'id'>
 
   constructor(name = 'neuron-english-vocabulary') {
     super(name)
@@ -164,6 +180,8 @@ export class NeuronDB extends Dexie {
         )
         await tx.table('enrichments').clear()
       })
+    // v5: 語根レッスンの記録
+    this.version(5).stores({ rootLessons: 'id, completedAt' })
   }
 }
 
