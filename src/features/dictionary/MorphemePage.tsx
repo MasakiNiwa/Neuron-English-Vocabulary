@@ -1,5 +1,5 @@
 import { Link, useParams } from '@tanstack/react-router'
-import { GitBranch, Network } from 'lucide-react'
+import { GitBranch, Network, Sparkles } from 'lucide-react'
 import { Suspense, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/Button'
@@ -89,6 +89,15 @@ function MorphemeView({ id }: { id: string }) {
         >
           <Network className="size-3.5" /> つながりで見る
         </Link>
+        {m.type === 'root' && m.words.length >= 5 && (
+          <Link
+            to="/lesson/$id"
+            params={{ id: m.id }}
+            className="ml-3 mt-2 inline-flex items-center gap-1 text-xs text-accent hover:underline"
+          >
+            <Sparkles className="size-3.5" /> この語根のレッスン
+          </Link>
+        )}
       </div>
 
       {m.desc && (

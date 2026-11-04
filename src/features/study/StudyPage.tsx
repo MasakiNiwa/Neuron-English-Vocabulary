@@ -1,5 +1,8 @@
+import { Link } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { CircleCheck, Mic, Play, RotateCcw, Shuffle, Sparkles } from 'lucide-react'
+import { useNextRoot } from '@/features/lesson/RootsPage'
+
+import { BookOpenCheck, CircleCheck, Mic, Play, RotateCcw, Shuffle, Sparkles } from 'lucide-react'
 import { Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
@@ -8,7 +11,7 @@ import { Card, SectionTitle } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { PageSpinner } from '@/components/ui/Spinner'
 import { db, type StudyCard } from '@/lib/db'
-import { EntryLink } from '@/features/dictionary/components/links'
+import { EntryLink, morphLabel } from '@/features/dictionary/components/links'
 import { useDictionary } from '@/features/dictionary/hooks'
 import { Segmented, selectClass } from '@/components/ui/Form'
 import { useSettings } from '@/stores/settings'
@@ -360,6 +363,33 @@ function LevelPicker({ value, onChange }: { value: number; onChange: (rank: numb
   )
 }
 
+/** 語根レッスンへの入口（次に学ぶとよい語根と、図鑑の進み具合） */
+function RootLessonCard() {
+  const info = useNextRoot()
+  return (
+    <Card className="flex flex-col gap-2">
+      <SectionTitle className="flex items-center gap-1.5">
+        <BookOpenCheck className="size-4" /> 語根で学ぶ
+      </SectionTitle>
+      <p className="text-xs text-muted">1 つの語根と、それを使う単語をまとめて学びます。部品の意味から単語の意味を当てるクイズ形式です。</p>
+      <div className="flex flex-wrap items-center gap-2">
+        {info?.next && (
+          <Link
+            to="/lesson/$id"
+            params={{ id: info.next.id }}
+            className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-accent px-4 text-sm font-medium text-accent-fg hover:opacity-90"
+          >
+            <Sparkles className="size-4" /> <span className="font-en">{morphLabel(info.next)}</span>（{info.next.meaning.ja}）のレッスン
+          </Link>
+        )}
+        <Link to="/roots" className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-border px-3 text-sm hover:bg-surface-2">
+          語根図鑑 {info && <span className="tabular-nums text-muted">{info.done} / {info.total}</span>}
+        </Link>
+      </div>
+    </Card>
+  )
+}
+
 function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
   const { t } = useTranslation()
   const tick = useMinuteTick()
@@ -371,6 +401,7 @@ function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
       <FormatPicker />
       {/* 今日の学習（復習・追加済みの新規）があれば先頭に、なければ「新しく学ぶ」を先頭に */}
       {today > 0 && <ReviewCard onStart={onStart} />}
+      <RootLessonCard />
       <div className="grid gap-4 md:grid-cols-2">
         <LearnCard onStart={onStart} />
         <PracticeCard onStart={onStart} />
