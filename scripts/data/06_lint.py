@@ -171,6 +171,46 @@ for path in sorted(glob.glob(os.path.join(REPO, 'public', 'data', 'entries', '*.
             if others and not affix_fits(mid, mean):
                 errors.append(f'{k}: 解説では {seg}（{mean}）ですが、語源分解が {mid} です（{" / ".join(others)} では？）')
 
+# ---- 公開データの不変条件（ROADMAP T03。公開データがあれば）
+# 書式だけでなく、教材として壊れていないことを確かめる
+if os.path.exists(idx_path) and os.path.exists(mpath):
+    index = {r[0]: r for r in json.load(open(idx_path, encoding='utf-8'))['e']}
+    mids = {x['id'] for x in json.load(open(mpath, encoding='utf-8'))}
+    seen_keys = set()
+    PLACEHOLDER = ('（手動の訳で置き換え）', 'TODO', 'FIXME')
+    for path in sorted(glob.glob(os.path.join(REPO, 'public', 'data', 'entries', '*.json'))):
+        shard = os.path.splitext(os.path.basename(path))[0]
+        for k, e in json.load(open(path, encoding='utf-8')).items():
+            seen_keys.add(k)
+            ir = index.get(k)
+            if not ir:
+                errors.append(f'{k}: 詳細データにあるが索引にない')
+                continue
+            if ir[5] != shard:
+                errors.append(f'{k}: 索引のシャード {ir[5]} と実際のシャード {shard} が違う')
+            if not e.get('g') or not any(g.get('ja') for g in e['g']):
+                errors.append(f'{k}: 日本語訳がない')
+            text = json.dumps(e.get('g'), ensure_ascii=False) + (e.get('note') or {}).get('ja', '')
+            if any(t in text for t in PLACEHOLDER):
+                errors.append(f'{k}: 仮の文字列が残っている')
+            parts = e.get('parts') or []
+            if parts:
+                joined = ''.join(p_['s'] for p_ in parts).lower()
+                if joined != e['h'].lower().replace(' ', '') and joined.replace('-', '') != e['h'].lower().replace('-', ''):
+                    errors.append(f'{k}: 語源分解の綴り {joined} が見出し語と一致しない')
+                for p_ in parts:
+                    m_ = p_.get('m')
+                    if m_ and not m_.startswith('w:') and m_ not in mids:
+                        errors.append(f'{k}: 存在しない形態素 {m_} を参照している')
+                    if m_ and m_.startswith('w:') and m_[2:].replace(' ', '_') not in index and m_[2:] not in index:
+                        warnings.append(f'{k}: 語源分解の参照先 {m_[2:]} が見出し語にない')
+            for ex in e.get('ex') or []:
+                if not ex.get('en') or not ex.get('ja'):
+                    errors.append(f'{k}: 例文の英文か訳が空')
+    for k in index:
+        if k not in seen_keys:
+            errors.append(f'{k}: 索引にあるが詳細データにない')
+
 for w in warnings:
     print('WARN', w)
 for e in errors:
