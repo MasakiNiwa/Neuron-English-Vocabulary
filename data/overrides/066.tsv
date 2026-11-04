@@ -1,0 +1,42 @@
+# 同じ綴りで意味の違う接頭辞の取り違えを直す（解説の「a（〜へ）」などと語源分解を照合して検出）
+# a-: 否定（pre:a）/ 離れて（ab）/ 〜へ（ad）。arise・asleep などの a- は英語本来の「〜に・〜の状態に」で、どの形態素にもつながない
+# di-: 横切って（dia）/ 離れて（dis）、sur-: 上に（super。sub の変化形ではない）、en-: 〜にする（en）/ 中へ・上に（in）
+parts	ascertain	a=pre:ad s cert=r:cert ain
+parts	announcer	an=pre:ad nounc=r:nunci er=suf:er
+parts	avenue	a=pre:ad ven=r:ven ue
+parts	aspire	a=pre:ad spir=r:spir e
+parts	apart	a=pre:ad part=r:part
+parts	apartment	a=pre:ad part=r:part ment=suf:ment
+parts	aversion	a=pre:ab vers=r:vers ion=suf:ation
+parts	avert	a=pre:ab vert=r:vers
+parts	avoid	a=pre:ex void=r:vac
+parts	distance	di=pre:dis stan=r:sta ce
+parts	distant	di=pre:dis stan=r:sta t
+parts	direction	di=pre:dis rect=r:reg ion=suf:ation
+parts	directory	di=pre:dis rect=r:reg ory=suf:ary
+parts	directive	di=pre:dis rect=r:reg ive=suf:ive
+parts	diversity	di=pre:dis vers=r:vers ity=suf:ity
+parts	divert	di=pre:dis vert=r:vers
+parts	diversion	di=pre:dis vers=r:vers ion=suf:ation
+parts	diversify	di=pre:dis vers=r:vers ify=suf:fy
+parts	diversification	di=pre:dis vers=r:vers i fic=r:fac ation=suf:ation
+parts	divorce	di=pre:dis vorc=r:vers e
+parts	digest	di=pre:dis gest=r:gest
+parts	digestive	di=pre:dis gest=r:gest ive=suf:ive
+parts	surprise	sur=pre:super pris=r:prehend e
+parts	survey	sur=pre:super vey=r:vid
+parts	ensue	en=pre:into su=r:sequ e
+parts	arise	a rise=w:rise
+parts	afar	a far=w:far
+# 同じ綴りで意味の違う語根: present・represent の sent は esse（ある）、attentive・contention の tent は tendere（伸ばす）、
+# courier の cour は currere（走る）。scourge は corium（皮）からで cor（心）ではない
+parts	present	pre=pre:pre sent=r:ess
+parts	represent	re=pre:re pre sent=r:ess
+parts	representation	re=pre:re pre sent=r:ess ation=suf:ation
+parts	presentation	pre=pre:pre sent=r:ess ation=suf:ation
+parts	presenter	pre=pre:pre sent=r:ess er=suf:er
+parts	contention	con=pre:com tent=r:tend ion=suf:ation
+parts	contentious	con=pre:com tent=r:tend ious=suf:ous
+parts	attentive	at=pre:ad tent=r:tend ive=suf:ive
+parts	courier	cour=r:cur ier=suf:er
+noparts	scourge

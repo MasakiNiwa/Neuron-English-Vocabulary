@@ -272,7 +272,7 @@ parts	timeline	time=w:time line=w:line
 parts	urgent	urg=w:urge ent
 parts	violation	viol ation=suf:ation
 parts	workshop	work=w:work shop=w:shop
-parts	aboard	a=pre:a board=w:board
+parts	aboard	a board=w:board
 parts	accent	ac=pre:ad cent
 parts	addiction	ad=pre:ad dict=r:dict ion
 parts	awake	a=pre:a wake=w:wake
