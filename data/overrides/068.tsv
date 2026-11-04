@@ -1,0 +1,51 @@
+# 語源ネットワークの拡充: 解説で語根を説明しているのに、自動の語源分解が付いていなかった頻出語
+parts	community	com=pre:com mun=r:mun ity=suf:ity
+parts	company	com=pre:com pany
+parts	education	e=pre:ex duc=r:duc ation=suf:ation
+parts	account	ac=pre:ad count=w:count
+parts	evidence	e=pre:ex vid=r:vid ence=suf:ance
+parts	official	of=pre:ob fic=r:fac ial=suf:al
+parts	decision	de=pre:de cis=r:caed ion=suf:ation
+parts	addition	ad=pre:ad dit=r:dat ion=suf:ation
+parts	condition	con=pre:com dit=r:dict ion=suf:ation
+parts	despite	de=pre:de spit=r:spec e
+parts	interest	inter=pre:inter est=r:ess
+parts	approach	ap=pre:ad proach
+parts	address	ad=pre:ad dress=w:dress
+parts	professor	pro=pre:pro fess or=suf:er
+parts	executive	ex=pre:ex ecut=r:sequ ive=suf:ive
+parts	display	dis=pre:dis play=r:plic
+parts	entitle	en=pre:en title=w:title
+parts	complaint	com=pre:com plain t
+parts	balance	ba=pre:bi lance
+parts	experience	ex=pre:ex peri ence=suf:ance
+parts	expect	ex=pre:ex pect=r:spec
+parts	impact	im=pre:into pact
+parts	protect	pro=pre:pro tect
+parts	detect	de=pre:de tect
+parts	detail	de=pre:de tail
+parts	advice	ad=pre:ad vice=r:vid
+parts	supply	sup=pre:sub ply=r:ple
+parts	ensure	en=pre:en sure=w:sure
+parts	assure	as=pre:ad sure=w:sure
+parts	engage	en=pre:en gage
+parts	exhaust	ex=pre:ex haust
+parts	inevitable	in=pre:in e=pre:ex vit able=suf:able
+parts	inevitably	in=pre:in e=pre:ex vit ably
+parts	rebel	re=pre:re bel
+parts	compute	com=pre:com pute
+parts	indication	in=pre:into dic=r:dict ation=suf:ation
+parts	insert	in=pre:into sert
+parts	absurd	ab=pre:ab surd
+parts	refuge	re=pre:re fuge
+parts	elimination	e=pre:ex limin ation=suf:ation
+parts	devote	de=pre:de vote
+parts	accuse	ac=pre:ad cuse
+parts	execute	ex=pre:ex ecute=r:sequ
+parts	adjacent	ad=pre:ad jac ent=suf:ant
+parts	console	con=pre:com sole
+parts	combat	com=pre:com bat
+parts	surplus	sur=pre:super plus
+parts	hypothesis	hypo=pre:hypo thesis
+parts	system	sy=pre:syn stem
+parts	escape	es=pre:ex cape
