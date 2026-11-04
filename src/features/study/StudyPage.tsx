@@ -305,6 +305,46 @@ function FormatPicker() {
   )
 }
 
+/** 初めて学習するときの開始位置の選択（ROADMAP U01）。カードが 1 枚もないあいだだけ出す */
+const LEVELS: { rank: number; title: string; hint: string }[] = [
+  { rank: 1, title: '基本から', hint: '頻度 1 位〜（the、have など最頻出語も確認）' },
+  { rank: 500, title: '中学〜高校基礎', hint: '頻度 500 位〜' },
+  { rank: 1000, title: '高校レベル', hint: '頻度 1000 位〜' },
+  { rank: 2000, title: '大学入試レベル', hint: '頻度 2000 位〜' },
+  { rank: 3000, title: '上級', hint: '頻度 3000 位〜' },
+  { rank: 5000, title: '難関', hint: '頻度 5000 位〜' },
+]
+
+function FirstLevel() {
+  const startRank = useSettings((s) => s.studyStartRank)
+  const set = useSettings((s) => s.set)
+  return (
+    <Card>
+      <SectionTitle>どこから始めますか？</SectionTitle>
+      <p className="mb-3 text-xs text-muted">
+        「新しい単語を学ぶ」の「よく使う順」で、ここで選んだ位置から順に単語を学びます。あとから変えられます。
+      </p>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        {LEVELS.map((l) => (
+          <button
+            key={l.rank}
+            type="button"
+            aria-pressed={startRank === l.rank}
+            onClick={() => set('studyStartRank', l.rank)}
+            className={
+              'rounded-xl border p-2.5 text-left ' +
+              (startRank === l.rank ? 'border-accent bg-accent-soft' : 'border-border hover:bg-surface-2')
+            }
+          >
+            <div className="text-sm font-medium">{l.title}</div>
+            <div className="text-[11px] text-muted">{l.hint}</div>
+          </button>
+        ))}
+      </div>
+    </Card>
+  )
+}
+
 function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
   const { t } = useTranslation()
   const tick = useMinuteTick()
@@ -313,6 +353,7 @@ function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
   return (
     <div className="flex flex-col gap-4">
       <Steps />
+      {stats?.total === 0 && <FirstLevel />}
       <FormatPicker />
       {/* 今日の学習（復習・追加済みの新規）があれば先頭に、なければ「新しく学ぶ」を先頭に */}
       {today > 0 && <ReviewCard onStart={onStart} />}
