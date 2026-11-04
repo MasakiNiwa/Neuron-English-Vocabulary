@@ -98,6 +98,8 @@ export interface Morpheme {
 export interface DataMeta {
   version: string
   generatedAt: string
+  /** 元データのファイル名・サイズ・SHA-256 と、生成に使ったツールの版（再現・検証用） */
+  sources?: { files: { file: string; bytes: number; sha256: string }[]; tools: Record<string, string | null> }
   counts: {
     words: number
     phrases: number

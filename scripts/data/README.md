@@ -33,7 +33,7 @@ python3 scripts/data/04_build.py --work $WORK --raw $RAW --repo .
 - `index.json` — 全見出し語の索引 `[key, 種別(0=単語/1=熟語), 順位, 短い訳, 品詞[], shard, 形態素ID[]]`
 - `entries/<shard>.json` — 詳細データ（200 語ごとに分割。w=単語, p=熟語）
 - `morphemes.json` — 語根・接頭辞・接尾辞と、それを含む見出し語
-- `meta.json` — 生成日時・件数
+- `meta.json` — 生成日時・件数・元データの記録（`sources`: 各ファイルのサイズと SHA-256、Python と wordfreq の版）。同じ元データと `data/` からは同じ出力になるので、ダウンロードし直した元データが同じ版かをこのハッシュで確認できる
 
 スキーマの型定義は `src/features/dictionary/types.ts` を参照。
 

@@ -1038,9 +1038,36 @@ with open(os.path.join(OUT, 'index.json'), 'w', encoding='utf-8') as f:
     json.dump({'v': version, 'e': index_rows}, f, ensure_ascii=False, separators=(',', ':'))
 with open(os.path.join(OUT, 'morphemes.json'), 'w', encoding='utf-8') as f:
     json.dump(morphemes, f, ensure_ascii=False, separators=(',', ':'))
+def source_info():
+    """
+    元データの版の記録（ROADMAP T04）。ファイル名・サイズ・SHA-256 と、使ったツールの版。
+    同じ元データ・同じ手で書くデータからは同じ出力になる（決定性は v0.80.0 で確認済み）ので、
+    これがあれば公開データを後から再現・検証できる
+    """
+    import hashlib
+    import platform
+    out = []
+    for name in sorted(os.listdir(R)):
+        path = os.path.join(R, name)
+        if not os.path.isfile(path) or name in ('DONE', 'dl.log') or os.path.getsize(path) == 0:
+            continue
+        h = hashlib.sha256()
+        with open(path, 'rb') as f:
+            for chunk in iter(lambda: f.read(1 << 20), b''):
+                h.update(chunk)
+        out.append({'file': name, 'bytes': os.path.getsize(path), 'sha256': h.hexdigest()})
+    try:
+        from importlib.metadata import version as pkg_version
+        wf = pkg_version('wordfreq')
+    except Exception:
+        wf = None
+    return {'files': out, 'tools': {'python': platform.python_version(), 'wordfreq': wf}}
+
+
 meta = {
     'version': version,
     'generatedAt': datetime.now(timezone.utc).isoformat(),
+    'sources': source_info(),
     'counts': {
         'words': sum(1 for e in entries.values() if e['t'] == 'w'),
         'phrases': sum(1 for e in entries.values() if e['t'] == 'p'),
