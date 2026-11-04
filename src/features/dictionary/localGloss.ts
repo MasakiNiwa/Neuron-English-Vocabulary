@@ -3,7 +3,7 @@ import { dataLang, joinWords, localWords, type Lang } from '@/lib/lang'
 import { useLang } from '@/lib/useLang'
 import { fetchJson } from './data'
 import { useDictionary } from './hooks'
-import type { IndexEntry } from './types'
+import type { IndexEntry, Morpheme } from './types'
 
 /**
  * 一覧用の韓国語・中国語の短い訳（public/data/gloss-ko.json / gloss-zh.json）。
@@ -63,4 +63,18 @@ export function useGlossText() {
     },
     [d, map, lang],
   )
+}
+
+/** 語根・接辞の意味を表示言語で（訳がなければ日本語） */
+export function morphMeaning(m: Morpheme, lang: Lang): string {
+  const x = m.meaning
+  if (lang === 'ko') return x.ko ?? x.ja
+  if (lang === 'zh-Hant') return x['zh-Hant'] ?? x.zh ?? x.ja
+  if (lang === 'zh-Hans') return x.zh ?? x['zh-Hant'] ?? x.ja
+  return x.ja
+}
+
+export function useMorphMeaning() {
+  const lang = useLang()
+  return useCallback((m: Morpheme) => morphMeaning(m, lang), [lang])
 }

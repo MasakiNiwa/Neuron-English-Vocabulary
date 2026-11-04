@@ -67,3 +67,10 @@ python3 scripts/data/04_build.py --work $WORK --raw $RAW --repo .
 - 手で書いたデータ（`gloss`・`parts`・解説）がある語は、単語数の上限（`--words`）を超えても残す
 - 訳語を手で書いた語は、一覧に出す短い訳も書いた順のまま使う
 
+
+## 韓国語・中国語の訳
+
+- 既定では、Wiktionary の訳の表から韓国語・中国語の訳を集める（04_build.py の `collect_tr`）。
+  一覧用の短い訳は `public/data/gloss-ko.json`・`gloss-zh.json` に出力し、表示言語がその言語のときだけアプリが読み込む
+- 外部の翻訳（AI など）で作った訳は `data/translations/<言語>/` に置くと、Wiktionary の訳より優先して使う。
+  訳すもとは `08_translation_export.py` で書き出す。形式は `data/translations/README.md` を参照

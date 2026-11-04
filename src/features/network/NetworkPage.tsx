@@ -13,7 +13,7 @@ import { useResolvedTheme } from '@/lib/theme'
 import { buildEntryGraph, buildMorphGraph, buildMorphemeMap, EDGE_LABEL, readPalette, type EdgeKind, type NetGraph, type NodeAttrs } from './graph'
 import { SigmaGraph } from './SigmaGraph'
 import type { NetworkSearch } from './search'
-import { useGlossText } from '@/features/dictionary/localGloss'
+import { useGlossText, useMorphMeaning } from '@/features/dictionary/localGloss'
 
 const KIND_LABEL: Record<string, string> = {
   word: '単語',
@@ -128,6 +128,7 @@ function MapGraph({ onSelect }: { onSelect: (id: string, a: NodeAttrs) => void }
 }
 
 function FocusPanel({ focus }: { focus: string }) {
+  const mm = useMorphMeaning()
   const dict = useDictionary()
   const gloss = useGlossText()
   const { t } = useTranslation()
@@ -140,7 +141,7 @@ function FocusPanel({ focus }: { focus: string }) {
           <div className="text-[11px] text-muted">{KIND_LABEL[m.type]}</div>
           <div className="truncate">
             <span className="font-en text-lg font-semibold">{morphLabel(m)}</span>
-            <span className="ml-2 text-sm">{m.meaning.ja}</span>
+            <span className="ml-2 text-sm">{mm(m)}</span>
           </div>
           <div className="text-xs text-muted">
             {m.origin} ・ {t('common.count', { count: m.words.length })}
@@ -178,6 +179,7 @@ function FocusPanel({ focus }: { focus: string }) {
 }
 
 function FocusSearch({ onPick }: { onPick: (focus: string) => void }) {
+  const mm = useMorphMeaning()
   const [q, setQ] = useState('')
   const [hits, setHits] = useState<SearchHit[]>([])
   const dict = useDictionary()
@@ -200,7 +202,7 @@ function FocusSearch({ onPick }: { onPick: (focus: string) => void }) {
               h.kind === 'morpheme'
                 ? (() => {
                     const m = dict.morphById.get(h.key)
-                    return m ? `${morphLabel(m)}  ${m.meaning.ja}` : h.key
+                    return m ? `${morphLabel(m)}  ${mm(m)}` : h.key
                   })()
                 : `${headword(h.key)}  ${gloss(dict.byKey.get(h.key))}`
             return (

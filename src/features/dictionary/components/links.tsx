@@ -7,6 +7,7 @@ import { speak } from '@/lib/speech'
 import { headword, lookupWord } from '../data'
 import { useDictionary } from '../hooks'
 import type { Morpheme } from '../types'
+import { useMorphMeaning } from '@/features/dictionary/localGloss'
 
 /** 単語・熟語へのリンク（アプリ内のどこからでも直接移動できるようにする共通部品） */
 export function EntryLink({ k, className, children }: { k: string; className?: string; children?: ReactNode }) {
@@ -18,6 +19,7 @@ export function EntryLink({ k, className, children }: { k: string; className?: s
 }
 
 export function MorphemeLink({ m, className }: { m: Morpheme; className?: string }) {
+  const mm = useMorphMeaning()
   return (
     <Link
       to="/m/$id"
@@ -25,7 +27,7 @@ export function MorphemeLink({ m, className }: { m: Morpheme; className?: string
       className={cn('inline-flex items-baseline gap-1 rounded-lg bg-accent-soft px-2 py-0.5 text-sm text-accent hover:opacity-80', className)}
     >
       <span className="font-en font-medium">{morphLabel(m)}</span>
-      <span className="text-xs opacity-80">{m.meaning.ja}</span>
+      <span className="text-xs opacity-80">{mm(m)}</span>
     </Link>
   )
 }
