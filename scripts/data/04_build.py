@@ -1070,26 +1070,8 @@ with open(os.path.join(REPO, 'data', 'root_stories.tsv'), encoding='utf-8') as f
 # ---------------------------------------------------------------- 韓国語・中国語の訳（data/translations/<言語>/*.tsv）
 # 08_translation_export.py で書き出した日本語の訳などを、外部の翻訳（AI など）で訳して置く。
 # ある語・品詞は Wiktionary から集めた訳をこちらで置き換える。中国語は zh-Hant / zh-Hans を「繁体 /简体」にまとめる
-TR_LANGS = ('ko', 'zh-Hans', 'zh-Hant')
-
-
-def read_tr(lang, name, ncols):
-    out = {}
-    path = os.path.join(REPO, 'data', 'translations', lang, name)
-    if not os.path.exists(path):
-        return out
-    with open(path, encoding='utf-8') as f:
-        for n, line in enumerate(f, 1):
-            line = line.rstrip('\n')
-            if not line.strip() or line.startswith('#'):
-                continue
-            cols = line.split('\t')
-            if len(cols) != ncols or not cols[-1].strip():
-                print(f'WARN translations/{lang}/{name}:{n} 列の数が {ncols} ではないか、訳が空です')
-                continue
-            words = [w.strip() for w in cols[-1].split('|') if w.strip()]
-            out[tuple(cols[:-1])] = words
-    return out
+_tr = runpy.run_path(os.path.join(os.path.dirname(__file__), 'translation_src.py'))
+TR_LANGS = _tr['TR_LANGS']
 
 
 def merge_zh(hant, hans):
@@ -1102,36 +1084,53 @@ def merge_zh(hant, hans):
     return out + hans[len(out):]
 
 
-tr_gloss = {lang: read_tr(lang, 'gloss.tsv', 3) for lang in TR_LANGS}
-tr_morph = {lang: read_tr(lang, 'morphemes.tsv', 2) for lang in TR_LANGS}
+tr_gloss = {lang: _tr['read_translations'](REPO, lang, 'gloss') for lang in TR_LANGS}
+tr_morph = {lang: _tr['read_translations'](REPO, lang, 'morphemes') for lang in TR_LANGS}
 tr_count = Counter()
-for kp in set().union(*[set(v) for v in tr_gloss.values()]):
+# 訳したあとに日本語が変わった（指紋が合わない）訳。訳は使うが、訳し直しの候補として知らせる
+tr_stale = defaultdict(list)
+
+
+def tr_words(table, lang, k, src):
+    v = table[lang].get(k)
+    if not v:
+        return None
+    if v[0] != src:
+        tr_stale[lang].append(' '.join(k))
+    return v[1]
+
+
+for kp in sorted(set().union(*[set(v) for v in tr_gloss.values()])):
     key, pos = kp
     e = entry_for(key)
     g = next((x for x in e['g'] if x['p'] == pos), None) if e else None
     if not g:
         print('WARN translations: 語・品詞が見つかりません', key, pos)
         continue
-    if kp in tr_gloss['ko']:
-        g['ko'] = tr_gloss['ko'][kp][:4]
+    src = _tr['gloss_src'](pos, g['ja'])
+    ko = tr_words(tr_gloss, 'ko', kp, src)
+    if ko:
+        g['ko'] = ko[:4]
         tr_count['gloss ko'] += 1
-    zh = merge_zh(tr_gloss['zh-Hant'].get(kp), tr_gloss['zh-Hans'].get(kp))
+    zh = merge_zh(tr_words(tr_gloss, 'zh-Hant', kp, src), tr_words(tr_gloss, 'zh-Hans', kp, src))
     if zh:
         g['zh'] = zh[:4]
         tr_count['gloss zh'] += 1
-for (mid,) in set().union(*[set(v) for v in tr_morph.values()]):
+for (mid,) in sorted(set().union(*[set(v) for v in tr_morph.values()])):
     m = by_id.get(mid)
     if not m:
         print('WARN translations: 形態素が見つかりません', mid)
         continue
-    if (mid,) in tr_morph['ko']:
-        m['meaning']['ko'] = '・'.join(tr_morph['ko'][(mid,)])
-        tr_count['morpheme ko'] += 1
+    src = _tr['morph_src'](m['meaning']['ja'])
     # 形態素の意味は 1 つの文字列なので、簡体字は zh、繁体字は zh-Hant に分けて持つ
-    for lang, field in (('zh-Hans', 'zh'), ('zh-Hant', 'zh-Hant')):
-        if (mid,) in tr_morph[lang]:
-            m['meaning'][field] = '・'.join(tr_morph[lang][(mid,)])
+    for lang, field in (('ko', 'ko'), ('zh-Hans', 'zh'), ('zh-Hant', 'zh-Hant')):
+        words = tr_words(tr_morph, lang, (mid,), src)
+        if words:
+            m['meaning'][field] = '・'.join(words)
             tr_count['morpheme ' + lang] += 1
+for lang, keys in tr_stale.items():
+    print(f'WARN translations/{lang}: 日本語が変わった訳 {len(keys)} 件（08_translation_export.py --needed で訳し直す分を書き出せる）: '
+          + ', '.join(keys[:10]) + (' …' if len(keys) > 10 else ''))
 if tr_count:
     print('translations:', dict(tr_count))
 
