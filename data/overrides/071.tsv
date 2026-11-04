@@ -1,0 +1,11 @@
+# 語根の追加（preci・cent・phys・radi・coron・nutr・dynam・horr・cit・aug・alt・fals・rap・optim・proxim・firm・opt・cens・plant・dors・caut）と、
+# 判定キーが空だった語根（mod・cresc・cre・fend・stinct・insul・mir・veh・rot）へのキーの追加で、綴りだけ一致して誤ってつながった語を外す
+exclude	r:alt	salt
+exclude	r:cre	crest,cream,creek,crew,discrepancy
+exclude	r:cens	incense
+exclude	r:aug	inaugural
+exclude	r:opt	optic
+exclude	r:preci	precinct
+exclude	r:rot	troll
+parts	magnificent	magn=r:magn i fic=r:fac ent=suf:ant
+parts	endorse	en=pre:into dors=r:dors e
