@@ -315,7 +315,7 @@ parts	openness	open=w:open ness=suf:ness
 parts	reassuring	re=pre:re as=pre:ad sur=w:sure ing
 parts	rebirth	re=pre:re birth=w:birth
 parts	reliably	re=pre:re li=r:lig ab=suf:able ly=suf:ly
-parts	appropriation	ap=pre:ad propri ation=suf:ation
+parts	appropriation	ap=pre:ad propri=r:propri ation=suf:ation
 parts	barefoot	bare foot=w:foot
 parts	checkpoint	check=w:check point=w:point
 parts	coefficient	co=pre:com ef=pre:ex fic=r:fac i ent=suf:ant
@@ -329,7 +329,7 @@ parts	hotline	hot=w:hot line=w:line
 parts	inhibition	in=pre:into hib=r:hab it ion=suf:ation
 parts	interdisciplinary	inter=pre:inter disciplin ary=suf:ary
 parts	intermittent	inter=pre:inter mitt=r:mit ent=suf:ant
-parts	intimidation	in=pre:into timid at ion=suf:ation
+parts	intimidation	in=pre:into timid=r:timid at ion=suf:ation
 parts	overflow	over=w:over flow=w:flow
 parts	preface	pre=pre:pre face=w:face
 parts	rainforest	rain=w:rain forest=w:forest
@@ -347,7 +347,7 @@ parts	authorize	author=w:author ize=suf:ize
 parts	bodyguard	body=w:body guard=w:guard
 parts	borrower	borrow=w:borrow er=suf:er
 parts	compressor	com=pre:com press=r:press or=suf:er
-parts	defamation	de=pre:de fam ation=suf:ation
+parts	defamation	de=pre:de fam=r:fam ation=suf:ation
 parts	downright	down=w:down right=w:right
 parts	impartial	im=pre:in part=r:part ial=suf:al
 parts	infancy	in=pre:in fan cy=suf:cy
@@ -364,7 +364,7 @@ parts	constellation	con=pre:com stell ation=suf:ation
 parts	discontent	dis=pre:dis content=w:content
 parts	enlist	en=pre:en list=w:list
 parts	improvised	im=pre:in pro=pre:pro vis=r:vid ed
-parts	insurgent	in=pre:into surg ent=suf:ant
+parts	insurgent	in=pre:into surg=r:surg ent=suf:ant
 parts	intruder	in=pre:into trud er=suf:er
 parts	lessen	less=w:less en=suf:en
 parts	lifespan	life=w:life span=w:span

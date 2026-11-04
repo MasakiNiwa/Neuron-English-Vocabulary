@@ -226,7 +226,7 @@ parts	everywhere	every=w:every where=w:where
 parts	payment	pay=w:pay ment=suf:ment
 parts	relatively	relative=w:relative ly=suf:ly
 parts	actor	act=r:act or
-parts	confidence	con=pre:com fid=r:fid ence
+parts	confidence	con=pre:com fid=r:fid ence=suf:ance
 parts	reveal	re=pre:re veal=w:veil
 parts	specifically	specific=w:specific ally=suf:ly
 parts	aircraft	air=w:air craft=w:craft
@@ -237,7 +237,7 @@ parts	document	doc=r:doc ument
 parts	friendly	friend=w:friend ly=suf:ly
 parts	properly	proper=w:proper ly=suf:ly
 parts	requirement	require=w:require ment=suf:ment
-parts	resident	re=pre:re sid=r:sed ent
+parts	resident	re=pre:re sid=r:sed ent=suf:ant
 parts	basically	basic=w:basic ally=suf:ly
 parts	besides	be=w:by side=w:side s
 parts	coverage	cover=w:cover age
@@ -264,7 +264,7 @@ parts	territory	terr=r:terr itory
 parts	aside	a side=w:side
 parts	assistance	as=pre:ad sist=r:sta ance=suf:ance
 parts	delivery	deliver=w:deliver y=suf:y
-parts	typical	typ=w:type ical
+parts	typical	typ=w:type ical=suf:ic
 parts	universe	uni=pre:uni verse=r:vers
 parts	decade	dec ade
 parts	dedicate	de=pre:de dic=r:dict ate=suf:ate
@@ -282,7 +282,7 @@ parts	hopefully	hope=w:hope ful=suf:ful ly=suf:ly
 parts	pregnant	pre=pre:pre gn=r:nat ant=suf:ant
 parts	depth	dep=w:deep th
 parts	dirty	dirt=w:dirt y=suf:y
-parts	existence	ex=pre:ex ist=r:sta ence
+parts	existence	ex=pre:ex ist=r:sta ence=suf:ance
 parts	legislation	legis=r:lex lation=r:lat
 parts	nearby	near=w:near by=w:by
 parts	personality	personal=w:personal ity=suf:ity
@@ -293,7 +293,7 @@ parts	surely	sure=w:sure ly=suf:ly
 parts	baseball	base=w:base ball=w:ball
 parts	bathroom	bath=w:bath room=w:room
 parts	championship	champion=w:champion ship=suf:ship
-parts	expansion	ex=pre:ex pans ion
+parts	expansion	ex=pre:ex pans ion=suf:ation
 parts	politician	politic ian
 parts	significantly	significant=w:significant ly=suf:ly
 parts	worldwide	world=w:world wide=w:wide

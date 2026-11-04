@@ -177,14 +177,14 @@ gloss	freshness	noun:新鮮さ
 # 第41弾の語源分解
 parts	alike	a=pre:a like=w:like
 parts	availability	avail=w:avail abil ity=suf:ity
-parts	companion	com=pre:com pan ion
+parts	companion	com=pre:com pan ion=suf:ation
 parts	consciousness	conscious=w:conscious ness=suf:ness
 parts	controller	control=w:control ler
 parts	embassy	em bassy
 parts	goodness	good=w:good ness=suf:ness
 parts	helicopter	helico pter
 parts	homework	home=w:home work=w:work
-parts	profession	pro=pre:pro fess=r:fess ion
+parts	profession	pro=pre:pro fess=r:fess ion=suf:ation
 parts	publisher	publish=w:publish er=suf:er
 parts	surgeon	surg eon
 parts	appreciation	appreci=w:appreciate ation=suf:ation
@@ -235,7 +235,7 @@ parts	sunset	sun=w:sun set=w:set
 parts	workplace	work=w:work place=w:place
 parts	cowboy	cow=w:cow boy=w:boy
 parts	headline	head=w:head line=w:line
-parts	accelerate	ac=pre:ad celer ate=suf:ate
+parts	accelerate	ac=pre:ad celer=r:celer ate=suf:ate
 parts	figurative	figur=w:figure ative
 parts	freshness	fresh=w:fresh ness=suf:ness
 

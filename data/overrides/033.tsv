@@ -361,14 +361,14 @@ parts	embodiment	em=pre:en bodi=w:body ment=suf:ment
 parts	engraving	en=pre:en grav=w:grave ing
 parts	extremism	extrem=w:extreme ism=suf:ism
 parts	incidental	in=pre:into cid=r:cad ent=suf:ant al=suf:al
-parts	insurgency	in=pre:into surg ency=suf:ance
-parts	intimidate	in=pre:into timid ate=suf:ate
+parts	insurgency	in=pre:into surg=r:surg ency=suf:ance
+parts	intimidate	in=pre:into timid=r:timid ate=suf:ate
 parts	irregularity	ir=pre:in reg=r:reg ular ity=suf:ity
 parts	mailbox	mail=w:mail box=w:box
 parts	oblivious	ob=pre:ob liv ious=suf:ous
 parts	patriarch	patri=r:pater arch
 parts	perjury	per=pre:per jur=r:jus y=suf:y
-parts	resurgence	re=pre:re surg ence=suf:ance
+parts	resurgence	re=pre:re surg=r:surg ence=suf:ance
 parts	shoreline	shore=w:shore line=w:line
 parts	spreadsheet	spread=w:spread sheet=w:sheet
 parts	weekday	week=w:week day=w:day
@@ -389,7 +389,7 @@ parts	believable	believ=w:believe able=suf:able
 parts	bloodshed	blood=w:blood shed=w:shed
 parts	daredevil	dare=w:dare devil=w:devil
 parts	dishwasher	dish=w:dish wash=w:wash er=suf:er
-parts	eradicate	e=pre:ex radic ate=suf:ate
+parts	eradicate	e=pre:ex radic=r:radic ate=suf:ate
 parts	hardworking	hard=w:hard work=w:work ing
 parts	housekeeper	house=w:house keep=w:keep er=suf:er
 parts	ineligible	in=pre:in e=pre:ex lig=r:lect ible=suf:able

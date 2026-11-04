@@ -351,7 +351,7 @@ parts	shortcut	short=w:short cut=w:cut
 parts	summarize	summar=w:summary ize=suf:ize
 parts	takeoff	take=w:take off
 parts	unavoidable	un=pre:un avoid=w:avoid able=suf:able
-parts	unilateral	uni=pre:uni later al=suf:al
+parts	unilateral	uni=pre:uni later=r:later al=suf:al
 parts	watermelon	water=w:water melon=w:melon
 parts	widen	wid=w:wide en=suf:en
 parts	adherence	ad=pre:ad her=r:her ence=suf:ance

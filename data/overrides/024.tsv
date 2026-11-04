@@ -610,7 +610,7 @@ gloss	overhear	verb:ふと耳にする
 gloss	oversized	adj:特大の
 gloss	papal	adj:ローマ教皇の
 # 第19弾の語源分解
-parts	infamous	in=pre:in fam ous=suf:ous
+parts	infamous	in=pre:in fam=r:fam ous=suf:ous
 parts	ideally	ide=w:idea al=suf:al ly=suf:ly
 parts	lifelong	life=w:life long=w:long
 parts	limestone	lime=w:lime stone=w:stone
@@ -627,7 +627,7 @@ parts	villager	villag=w:village er=suf:er
 parts	allocation	al=pre:ad loc=r:loc ation=suf:ation
 parts	antibiotic	anti=pre:anti bio=r:bio tic=suf:ic
 parts	anticipation	anti=pre:ante cip=r:cap ation=suf:ation
-parts	appropriately	ap=pre:ad propri ate=suf:ate ly=suf:ly
+parts	appropriately	ap=pre:ad propri=r:propri ate=suf:ate ly=suf:ly
 parts	arrogant	ar=pre:ad rog=r:rog ant=suf:ant
 parts	credentials	cred=r:cred ent=suf:ant ial=suf:al s
 parts	emergence	e=pre:ex merg=r:merg ence=suf:ance

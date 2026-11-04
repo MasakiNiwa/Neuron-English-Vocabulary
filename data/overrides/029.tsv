@@ -339,7 +339,7 @@ parts	teamwork	team=w:team work=w:work
 parts	unnatural	un=pre:un nat=r:nat ural=suf:al
 parts	apprenticeship	apprentice=w:apprentice ship=suf:ship
 parts	biodiversity	bio=r:bio di=pre:dis vers=r:vers ity=suf:ity
-parts	connector	con=pre:com nect or=suf:er
+parts	connector	con=pre:com nect=r:nect or=suf:er
 parts	consolidate	con=pre:com solid=w:solid ate=suf:ate
 parts	dangerously	danger=w:danger ous=suf:ous ly=suf:ly
 parts	experimentation	experiment=w:experiment ation=suf:ation
@@ -356,9 +356,9 @@ parts	unmarried	un=pre:un marri=w:marry ed
 parts	boredom	bore=w:bore dom=suf:dom
 parts	cleanup	clean=w:clean up=w:up
 parts	confinement	con=pre:com fine=r:fin ment=suf:ment
-parts	convergence	con=pre:com verg ence=suf:ance
+parts	convergence	con=pre:com verg=r:verg ence=suf:ance
 parts	diminish	di=pre:dis min=r:min ish
-parts	disconnect	dis=pre:dis con=pre:com nect
+parts	disconnect	dis=pre:dis con=pre:com nect=r:nect
 parts	endlessly	end=w:end less=suf:less ly=suf:ly
 parts	excavation	ex=pre:ex cav ation=suf:ation
 parts	flashlight	flash=w:flash light=w:light

@@ -249,14 +249,14 @@ parts	achievement	achieve=w:achieve ment=suf:ment
 parts	asleep	a sleep=w:sleep
 parts	automatic	auto=pre:auto matic
 parts	headquarters	head=w:head quarters=w:quarter
-parts	residence	re=pre:re sid=r:sed ence
+parts	residence	re=pre:re sid=r:sed ence=suf:ance
 parts	threaten	threat=w:threat en=suf:en
 parts	discount	dis=pre:dis count=w:count
 parts	expand	ex=pre:ex pand
 parts	grateful	grate=r:grat ful=suf:ful
 parts	input	in=w:in put=w:put
 parts	outcome	out=w:out come=w:come
-parts	absence	ab=pre:ab s=r:ess ence
+parts	absence	ab=pre:ab s=r:ess ence=suf:ance
 parts	commonwealth	common=w:common wealth=w:wealth
 parts	genetic	gene=w:gene tic=suf:ic
 parts	investor	invest=w:invest or
@@ -268,7 +268,7 @@ parts	elementary	element=w:element ary=suf:ary
 parts	greatly	great=w:great ly=suf:ly
 parts	guidance	guid=w:guide ance=suf:ance
 parts	pregnancy	pregnan=w:pregnant cy=suf:cy
-parts	prominent	pro=pre:pro min ent
+parts	prominent	pro=pre:pro min ent=suf:ant
 parts	wildlife	wild=w:wild life=w:life
 parts	wooden	wood=w:wood en=suf:en
 parts	desperate	de=pre:de sper ate=suf:ate
@@ -302,4 +302,4 @@ parts	partly	part=w:part ly=suf:ly
 parts	similarly	similar=w:similar ly=suf:ly
 parts	wisdom	wis=w:wise dom=suf:dom
 parts	awkward	awk ward=suf:ward
-parts	celebration	celebrat=w:celebrate ion
+parts	celebration	celebrat=w:celebrate ion=suf:ation

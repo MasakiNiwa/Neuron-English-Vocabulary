@@ -14,7 +14,7 @@ parts	during	dur=r:dur ing
 parts	please	pleas=r:plac e
 parts	miss	miss=r:mit
 # parent: ラテン語 pario（産む）由来であり、pareo（現れる: r:parere）ではないため noparts (063.tsv) で処理
-parts	medical	med=r:med ical
+parts	medical	med=r:med ical=suf:ic
 parts	stage	sta=r:sta ge
 parts	justice	jus=r:jus tice
 parts	regular	reg=r:reg ular
@@ -34,14 +34,14 @@ parts	prefer	pre=pre:pre fer=r:fer
 parts	expose	ex=pre:ex pos=r:pon e
 parts	monster	mon=r:mon ster
 parts	format	form=r:form at
-parts	translation	trans=pre:trans lat=r:lat ion
+parts	translation	trans=pre:trans lat=r:lat ion=suf:ation
 parts	genuine	gen=r:gen uine
 parts	gene	gen=r:gen e
 parts	dialog	dia=pre:dia log=r:log
 parts	integrate	in=pre:in teg=r:tact rate
 parts	logo	log=r:log o
 parts	sacred	sacr=r:sacr ed
-parts	casual	cas=r:cad ual
+parts	casual	cas=r:cad ual=suf:al
 parts	integrity	in=pre:in teg=r:tact rity
 parts	congressional	con=pre:com gress=r:grad ional
 parts	victor	vict=r:vinc or
@@ -61,10 +61,10 @@ parts	graph	graph=r:graph
 parts	majesty	maj=r:magn esty
 parts	medieval	medi=r:medi eval
 parts	sentiment	senti=r:sens ment=suf:ment
-parts	precision	pre=pre:pre cis=r:caed ion
+parts	precision	pre=pre:pre cis=r:caed ion=suf:ation
 parts	vitamin	vit=r:viv amin
 parts	habitat	hab=r:hab itat
-parts	coincidence	co=pre:com in=pre:into cid=r:cad ence
+parts	coincidence	co=pre:com in=pre:into cid=r:cad ence=suf:ance
 parts	maritime	mar=r:mar itime
 parts	distress	di=pre:dis stress=r:strict
 parts	meditation	medit=r:med ation=suf:ation
