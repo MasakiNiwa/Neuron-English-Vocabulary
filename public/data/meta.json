@@ -1,6 +1,49 @@
 {
  "version": "20261104",
- "generatedAt": "2026-11-04T12:42:05.700743+00:00",
+ "generatedAt": "2026-11-04T12:51:57.131853+00:00",
+ "sources": {
+  "files": [
+   {
+    "file": "JMdict_e.gz",
+    "bytes": 10591320,
+    "sha256": "7cbacefaf3264a72476327c7bff837348b239ea605ad7818d5cf79c7f5ea9dcb"
+   },
+   {
+    "file": "NGSL_12_lemmatized_for_research.csv",
+    "bytes": 89485,
+    "sha256": "d814f2a0a3c61479a2c5ad037661719a0cc6e7dbcde31f181b54f12d0f1e11a4"
+   },
+   {
+    "file": "NGSL_12_stats.csv",
+    "bytes": 62566,
+    "sha256": "2098bab8955a120a9766c6282a51d7d578c6cb0a7d946600d2ffb73ba25a0b44"
+   },
+   {
+    "file": "eng_sentences.tsv.bz2",
+    "bytes": 24923592,
+    "sha256": "07f33d399f0a55b917202abbd901f23c39c54a6dd562252985ce8c7e168db6ef"
+   },
+   {
+    "file": "jpn_sentences.tsv.bz2",
+    "bytes": 3418173,
+    "sha256": "2aa65d2dc7bdf3c47716605bd184b6d55e54c362e08ead1787bc3152d18af373"
+   },
+   {
+    "file": "kaikki.org-dictionary-English.jsonl.gz",
+    "bytes": 534137553,
+    "sha256": "3ff7bef28ce7ad077ea55cedd9bde2cb7981c40f68adf63c8ceea347341392dc"
+   },
+   {
+    "file": "links.tar.bz2",
+    "bytes": 150383611,
+    "sha256": "69a55057566127a4c2f5cd618ae47167cb66972d67a3f8f39f368c106cd6f50c"
+   }
+  ],
+  "tools": {
+   "python": "3.13.18",
+   "wordfreq": "3.1.1"
+  }
+ },
  "counts": {
   "words": 11887,
   "phrases": 1331,
