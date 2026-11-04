@@ -1,7 +1,6 @@
 import { db, type EnrichmentRecord } from '@/lib/db'
 import { defaultSettings, useSettings, type Settings } from '@/stores/settings'
 import { sanitizeExtra } from '@/features/ai/extras'
-import { isLangSetting } from '@/lib/lang'
 
 /**
  * バックアップ（JSON）の作成・検証・復元。
@@ -113,7 +112,7 @@ export function cleanSettings(x: unknown): Partial<Settings> {
   const out: Partial<Settings> = {}
   const inRange = (v: unknown, lo: number, hi: number) => isNum(v) && v >= lo && v <= hi
   if (x.theme === 'system' || x.theme === 'light' || x.theme === 'dark') out.theme = x.theme
-  if (isLangSetting(x.language)) out.language = x.language
+  if (x.language === defaultSettings.language) out.language = x.language
   if (typeof x.reduceMotion === 'boolean') out.reduceMotion = x.reduceMotion
   if (x.ttsVoiceURI === null || (typeof x.ttsVoiceURI === 'string' && x.ttsVoiceURI.length < 500)) out.ttsVoiceURI = x.ttsVoiceURI
   if (inRange(x.ttsRate, 0.3, 3)) out.ttsRate = x.ttsRate as number

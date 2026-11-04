@@ -215,31 +215,6 @@ if os.path.exists(idx_path) and os.path.exists(mpath):
         if k not in seen_keys:
             errors.append(f'{k}: 索引にあるが詳細データにない')
 
-# ---- 韓国語・中国語の訳（data/translations）: 訳したあとに日本語が変わった訳・見出し語にない訳
-if os.path.isdir(os.path.join(REPO, 'data', 'translations')):
-    import runpy
-    TR = runpy.run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'translation_src.py'))
-    cur_gloss, cur_morph = {}, {}
-    for f in glob.glob(os.path.join(REPO, 'public', 'data', 'entries', '*.json')):
-        with open(f, encoding='utf-8') as fh:
-            for k, e in json.load(fh).items():
-                if k != '_v':
-                    for g in e['g']:
-                        cur_gloss[(k, g['p'])] = TR['gloss_src'](g['p'], g['ja'])
-    with open(os.path.join(REPO, 'public', 'data', 'morphemes.json'), encoding='utf-8') as fh:
-        for m in json.load(fh):
-            cur_morph[(m['id'],)] = TR['morph_src'](m['meaning']['ja'])
-    for lang in TR['TR_LANGS']:
-        for kind, cur in (('gloss', cur_gloss), ('morphemes', cur_morph)):
-            tr = TR['read_translations'](REPO, lang, kind, warn=lambda msg: warnings.append(msg.removeprefix('WARN ')))
-            missing = [' '.join(k) for k in tr if k not in cur]
-            stale = [' '.join(k) for k, (src, _) in tr.items() if k in cur and cur[k] != src]
-            if missing:
-                warnings.append(f'translations/{lang}/{kind}: 見出し語・形態素にない訳 {len(missing)} 件: ' + ', '.join(missing[:10]))
-            if stale:
-                warnings.append(f'translations/{lang}/{kind}: 訳したあとに日本語が変わった訳 {len(stale)} 件'
-                                f'（08_translation_export.py --needed {lang} で訳し直す分を書き出せる）: ' + ', '.join(stale[:10]))
-
 for w in warnings:
     print('WARN', w)
 for e in errors:

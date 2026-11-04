@@ -12,7 +12,6 @@ import { useNextRoot } from '@/features/lesson/RootsPage'
 import { addManyToStudy } from '@/features/study/cards'
 import { db } from '@/lib/db'
 import { categoryById, LEVEL_CATEGORIES, PHRASE_CATEGORIES, POS_CATEGORIES, TOEIC_CATEGORIES, type Category } from './categories'
-import { useMorphMeaning } from '@/features/dictionary/localGloss'
 
 function Section({ icon, title, note, children }: { icon: React.ReactNode; title: string; note?: string; children: React.ReactNode }) {
   return (
@@ -35,7 +34,7 @@ function Tile({ c, count }: { c: Category; count: number }) {
     >
       <span className="text-sm font-medium">{c.title}</span>
       {c.hint && <span className="text-[11px] text-muted">{c.hint}</span>}
-      <span className="mt-1 text-xs tabular-nums text-accent">{count.toLocaleString()} 語</span>
+      <span className="mt-1 text-xs tabular-nums text-accent">{count.toLocaleString('ja-JP')} 語</span>
     </Link>
   )
 }
@@ -44,7 +43,6 @@ function Tile({ c, count }: { c: Category; count: number }) {
  * 単語ページの入口。検索していないときに、レベル・TOEIC・語源・品詞・熟語などから学びを始められるようにする
  */
 export function WordsHub() {
-  const mm = useMorphMeaning()
   const dict = useDictionary()
   const navigate = useNavigate()
   const next = useNextRoot()
@@ -92,7 +90,7 @@ export function WordsHub() {
             >
               <span className="text-sm font-medium">次の語根レッスン</span>
               <span className="text-[11px] text-muted">
-                <span className="font-en">{morphLabel(next.next)}</span>（{mm(next.next)}）
+                <span className="font-en">{morphLabel(next.next)}</span>（{next.next.meaning.ja}）
               </span>
               <span className="mt-1 text-xs text-accent">はじめる →</span>
             </Link>
@@ -121,7 +119,7 @@ export function WordsHub() {
               search={{ c: c.id }}
               className="rounded-full border border-border px-3 py-1.5 text-sm hover:border-accent hover:text-accent"
             >
-              {c.title} <span className="text-xs tabular-nums text-muted">{(counts.get(c.id) ?? 0).toLocaleString()}</span>
+              {c.title} <span className="text-xs tabular-nums text-muted">{(counts.get(c.id) ?? 0).toLocaleString('ja-JP')}</span>
             </Link>
           ))}
         </div>
@@ -175,7 +173,7 @@ export function CategoryList({ id }: { id: string }) {
           <h1 className="text-xl font-semibold">{c.title}</h1>
           <p className="text-xs text-muted">
             {c.hint && `${c.hint}・`}
-            {list.length.toLocaleString()} 語（よく使う順）
+            {list.length.toLocaleString('ja-JP')} 語（よく使う順）
           </p>
         </div>
         <Button size="sm" onClick={() => void addTop()} disabled={added !== null}>

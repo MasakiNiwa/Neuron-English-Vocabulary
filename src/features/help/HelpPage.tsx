@@ -88,7 +88,7 @@ function DataStatus() {
           .map(([k, v]) => (
             <div key={k} className="flex justify-between gap-2">
               <span className="text-muted">{k}</span>
-              <span className="font-mono">{v!.toLocaleString()}</span>
+              <span className="font-mono">{v!.toLocaleString('ja-JP')}</span>
             </div>
           ))}
       </div>
@@ -118,7 +118,7 @@ export function HelpPage() {
           </div>
         </div>
         <InfoRow label={t('help.version')} value={`v${appInfo.version}`} />
-        <InfoRow label={t('help.buildDate')} value={new Date(appInfo.buildDate).toLocaleString()} />
+        <InfoRow label={t('help.buildDate')} value={new Date(appInfo.buildDate).toLocaleString('ja-JP')} />
         <InfoRow label={t('help.commit')} value={appInfo.commit} />
       </Card>
 
@@ -150,7 +150,6 @@ export function HelpPage() {
             <li>出題形式: 英→日・日→英・例文の穴埋め・4択・ミックス（読んで答える）、発音・日→話す（話して答える）</li>
             <li>FSRS による記憶定着スケジューリング</li>
             <li>音声読み上げ（Web Speech API）</li>
-            <li>表示言語: 設定 → 表示 → 表示言語で、日本語・韓国語・中国語（簡体字・繁体字）を切り替え。最初は端末の言語に合わせます。単語の意味（訳）とメニューなどが切り替わり、解説・語源の説明は日本語のままです。韓国語・中国語の訳は Wiktionary から自動で集めたもので（韓国語は約 7,300 語、中国語は約 9,600 語）、訳がない語は日本語で表示します</li>
             <li>発音チェック（音声認識）: 単語ページの見出し語・例文のマイクを押して英語を話すと、聞き取れた単語を緑、おしい単語を黄、言えていない単語を赤で示し、点数と聞き取った英語を表示。Chrome・Edge・Safari で使え、音声はブラウザの音声認識サービスに送られます</li>
             <li>単語ごとの表示履歴の記録</li>
             <li>学習データの分析・ドリルダウン</li>

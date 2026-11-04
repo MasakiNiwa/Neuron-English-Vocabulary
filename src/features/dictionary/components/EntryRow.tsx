@@ -1,12 +1,10 @@
 import { Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { headword } from '../data'
-import { useGlossText } from '../localGloss'
 import type { IndexEntry } from '../types'
 
 /** 一覧表示用の1行 */
 export function EntryRow({ e, right }: { e: IndexEntry; right?: ReactNode }) {
-  const gloss = useGlossText()
   return (
     <Link
       to="/e/$key"
@@ -18,7 +16,7 @@ export function EntryRow({ e, right }: { e: IndexEntry; right?: ReactNode }) {
         {e.rank}
       </span>
       <span className="font-en min-w-0 shrink-0 font-medium">{headword(e.key)}</span>
-      <span className="min-w-0 flex-1 truncate text-sm text-muted">{gloss(e)}</span>
+      <span className="min-w-0 flex-1 truncate text-sm text-muted">{e.gloss}</span>
       {right}
     </Link>
   )

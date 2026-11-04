@@ -87,8 +87,7 @@ export interface Morpheme {
   type: MorphemeType
   label: string
   forms: string[]
-  /** 意味。zh は簡体字、zh-Hant は繁体字（data/translations から） */
-  meaning: { ja: string; ko?: string; zh?: string; 'zh-Hant'?: string }
+  meaning: { ja: string; ko?: string; zh?: string }
   origin: string
   words: string[]
   /** この語源自体の成り立ち（語源の語源分解）: 構成する形態素ID */
