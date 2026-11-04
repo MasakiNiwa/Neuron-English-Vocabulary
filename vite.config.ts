@@ -116,6 +116,13 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,woff2}'],
         runtimeCaching: [
           {
+            // 索引・meta は版の付かない URL なので、まずサーバーに確かめる（古い索引のまま新しい詳細データと食い違わないように）。
+            // オフラインやつながりが遅いときはキャッシュを使う
+            urlPattern: ({ url }) => /\/data\/(index|meta)\.json$/.test(url.pathname),
+            handler: 'NetworkFirst',
+            options: { cacheName: 'nev-data-index', networkTimeoutSeconds: 4 },
+          },
+          {
             urlPattern: ({ url }) => url.pathname.includes('/data/'),
             handler: 'StaleWhileRevalidate',
             // 詳細データは ?v=<索引の版> 付きで取るので、版ごとに別のキャッシュになる（古い版は件数の上限で順に消える）
