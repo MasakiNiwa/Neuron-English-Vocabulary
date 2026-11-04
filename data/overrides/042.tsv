@@ -223,7 +223,7 @@ parts	somehow	some=w:some how=w:how
 parts	unknown	un=pre:un known=w:know
 parts	external	extern al=suf:al
 parts	singer	sing=w:sing er=suf:er
-parts	adopt	ad=pre:ad opt
+parts	adopt	ad=pre:ad opt=r:opt
 parts	childhood	child=w:child hood=suf:hood
 parts	musical	music=w:music al=suf:al
 parts	organize	organ=w:organ ize=suf:ize
@@ -246,7 +246,7 @@ parts	surround	sur=pre:super round=w:round
 parts	visitor	visit=w:visit or
 parts	meanwhile	mean=w:mean while=w:while
 parts	partnership	partner=w:partner ship=suf:ship
-parts	percentage	per=pre:per cent age
+parts	percentage	per=pre:per cent=r:cent age
 parts	practical	practic=w:practice al=suf:al
 parts	primarily	primari=w:primary ly=suf:ly
 parts	symptom	sym=pre:syn ptom
@@ -285,7 +285,7 @@ parts	deeply	deep=w:deep ly=suf:ly
 parts	expectation	ex=pre:ex pect=r:spec ation=suf:ation
 parts	explanation	ex=pre:ex plan=r:plan ation=suf:ation
 parts	happiness	happi=w:happy ness=suf:ness
-parts	horrible	horr ible=suf:able
+parts	horrible	horr=r:horr ible=suf:able
 parts	lieutenant	lieu ten=r:ten ant=suf:ant
 parts	replacement	re=pre:re place=w:place ment=suf:ment
 parts	retire	re=pre:re tire

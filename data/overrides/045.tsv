@@ -230,7 +230,7 @@ parts	collapse	col=pre:com lapse=w:lapse
 parts	endless	end=w:end less=suf:less
 parts	identification	ident ific ation=suf:ation
 parts	mixture	mix=w:mix ture=suf:ure
-parts	physician	physic ian
+parts	physician	physic=r:phys ian
 parts	restore	re=pre:re store
 parts	runner	runn=w:run er=suf:er
 parts	significance	sign=r:sign ific ance=suf:ance

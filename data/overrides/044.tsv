@@ -216,7 +216,7 @@ gloss	sink	verb:沈む、沈める|noun:（台所の）流し
 gloss	slavery	noun:奴隷制度
 
 # 第39弾の語源分解
-parts	certificate	cert=r:cert ific ate=suf:ate
+parts	certificate	cert=r:cert ific=r:fac ate=suf:ate
 parts	colleague	col=pre:com league
 parts	derive	de=pre:de rive
 parts	educate	e=pre:ex duc=r:duc ate=suf:ate
@@ -235,14 +235,14 @@ parts	peaceful	peace=w:peace ful=suf:ful
 parts	photographer	photograph=w:photograph er=suf:er
 parts	publicly	public=w:public ly=suf:ly
 parts	revenge	re=pre:re venge
-parts	satisfy	satis fy=suf:fy
+parts	satisfy	satis=r:sat fy=suf:fy
 parts	specialist	special=w:special ist=suf:ist
 parts	stranger	strange=w:strange r
 parts	tourism	tour=w:tour ism=suf:ism
 parts	dispute	dis=pre:dis pute=r:put
 parts	overcome	over=pre:over come=w:come
 parts	psychological	psycho=r:psych logical=r:log
-parts	radiation	radi ation=suf:ation
+parts	radiation	radi=r:radi ation=suf:ation
 parts	wherever	wher=w:where ever=w:ever
 parts	classical	classic=w:classic al=suf:al
 parts	disappear	dis=pre:dis appear=w:appear
@@ -270,7 +270,7 @@ parts	destination	destin ation=suf:ation
 parts	formerly	former=w:former ly=suf:ly
 parts	functional	function=w:function al=suf:al
 parts	grandfather	grand=w:grand father=w:father
-parts	isolate	isol ate=suf:ate
+parts	isolate	isol=r:insul ate=suf:ate
 parts	popularity	popular=w:popular ity=suf:ity
 parts	terrorism	terror=w:terror ism=suf:ism
 parts	treasury	treasur=w:treasure y=suf:y
@@ -292,7 +292,7 @@ parts	affordable	afford=w:afford able=suf:able
 parts	departure	de=pre:de part=r:part ure=suf:ure
 parts	developer	develop=w:develop er=suf:er
 parts	imagination	imagin=w:imagine ation=suf:ation
-parts	integration	integr ation=suf:ation
+parts	integration	in=pre:in tegr=r:tact ation=suf:ation
 parts	interpretation	interpret=w:interpret ation=suf:ation
 parts	magical	magic=w:magic al=suf:al
 parts	outfit	out=w:out fit=w:fit

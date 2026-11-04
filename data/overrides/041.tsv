@@ -294,6 +294,6 @@ parts	baseball	base=w:base ball=w:ball
 parts	bathroom	bath=w:bath room=w:room
 parts	championship	champion=w:champion ship=suf:ship
 parts	expansion	ex=pre:ex pans ion=suf:ation
-parts	politician	politic ian
+parts	politician	polit=r:pol ic=suf:ic ian
 parts	significantly	significant=w:significant ly=suf:ly
 parts	worldwide	world=w:world wide=w:wide
