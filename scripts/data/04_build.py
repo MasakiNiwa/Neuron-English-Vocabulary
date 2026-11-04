@@ -127,6 +127,42 @@ def entries_for(w: str) -> list[dict]:
     return es
 
 
+# 活用形として表示・索引に使ってよいタグ（これ以外のタグ: archaic / nonstandard / colloquial / proscribed /
+# alternative / 方言・地域名 / 古い二人称の活用表 などが 1 つでも付いた形は使わない。ROADMAP C03）
+# 二人称の行（art / wast など）は古形にタグが付いていないことがあるので使わない。一人称は am / was のため使う
+STD_FORM_TAGS = {'plural', 'singular', 'first-person', 'third-person', 'present', 'past', 'participle', 'comparative', 'superlative'}
+
+
+def std_forms(e, siblings=(), poses=None) -> list[str]:
+    """
+    エントリの標準的な活用形（複数形・三単現・-ing・過去・過去分詞・比較級・最上級）。
+    同じ品詞にもっと意味の多いエントリがあるとき、意味が 1 つしかない別語源のエントリの活用形は使わない
+    （get の「離婚証書」の複数形 gittim など）。
+    """
+    out = []
+    head = e.get('word', '')
+    n = sum(1 for s_ in e.get('senses') or [] if good_sense(s_))
+    # 日本語訳のない品詞で、意味も少ない用法（woman の動詞用法など）の活用形は出さない（womaning のような形が並ぶため）。
+    # 意味の多い用法（revolt の動詞など）は、日本語訳が名詞だけでも出す
+    if poses and POS_MAP.get(e.get('pos'), e.get('pos')) not in poses and n < 5:
+        return out
+    if n < 2 and any(o is not e and o.get('pos') == e.get('pos') and sum(1 for s_ in o.get('senses') or [] if good_sense(s_)) > n for o in siblings):
+        return out
+    for x in e.get('forms') or []:
+        if isinstance(x, str):  # 旧形式（タグなし）
+            fm = x
+        else:
+            tags = set(x.get('tags') or [])
+            if not tags or not tags <= STD_FORM_TAGS:
+                continue
+            fm = x['form']
+        # 1 文字の見出し語（I など）の「複数形」（Is）は活用形ではない
+        if len(head) <= 1 or fm in out:
+            continue
+        out.append(fm)
+    return out
+
+
 def good_sense(s) -> bool:
     if s.get('form_of') or s.get('alt_of'):
         return False
@@ -263,7 +299,7 @@ with open(os.path.join(W, 'skipped_words.txt'), 'w', encoding='utf-8') as f:
 infl: dict[str, str] = {}
 for L, v in lemmas.items():
     for e in v['entries']:
-        for fm in e.get('forms') or []:
+        for fm in std_forms(e, v['entries'], {p for p, _ in v.get('ja') or []}):
             fm = fm.lower()
             if re.fullmatch(r'[a-z-]+', fm) and fm not in lemmas:
                 infl.setdefault(fm, L)
@@ -603,12 +639,77 @@ def defs(es, n=2):
     return out[:4]
 
 
-def ipa_of(es):
-    for e in es:
-        for x in e.get('ipa') or []:
-            if x.startswith('/'):
-                return x
+# 発音記号: 標準的な発音（英国・米国）を優先し、古形・方言・弱形は使わない
+SOUND_RANK = {'Received-Pronunciation': 0, 'General-American': 1, 'UK': 3, 'US': 3, 'British': 3, 'Standard': 3, 'Southern': 3, 'Canada': 4}
+SOUND_BAD = {'archaic', 'obsolete', 'Early', 'Modern', 'dialectal', 'nonstandard', 'rare', 'dated'}
+
+
+def best_ipa(e):
+    sounds = e.get('sounds')
+    if sounds is None:  # 旧形式
+        return next((x for x in e.get('ipa') or [] if x.startswith('/')), None)
+    cands = []
+    for i, s_ in enumerate(sounds):
+        ipa, tags, note = s_.get('ipa', ''), set(s_.get('tags') or []), (s_.get('note') or '')
+        ipa = ipa.split(' ')[0]
+        if not ipa.startswith('/') or not ipa.endswith('/') or '-' in ipa or '…' in ipa or tags & SOUND_BAD or 'weak' in note:
+            continue
+        if tags and not tags & set(SOUND_RANK):
+            continue  # 方言・オーストラリアなど、標準の英米を含まない地域名だけが付いた発音
+        # 地域の指定がない発音は、英米の標準発音の次に優先する
+        rank = min((SOUND_RANK[t] for t in tags if t in SOUND_RANK), default=2)
+        cands.append((rank, i, ipa))  # 同じ優先度なら辞書に先に書かれている発音（golf は /ɡɒlf/。/ɡɒf/ ではなく）
+    return min(cands)[2] if cands else None
+
+
+def ipa_key(ipa: str) -> str:
+    """発音の違いを比べるための正規化（強勢記号・非音節記号・括弧は無視）"""
+    return re.sub(r'[ˈˌ̯()/.]', '', ipa).replace('ɹ', 'r')
+
+
+def ja_label(e) -> str | None:
+    """エントリ（語源・品詞ごと）の意味の手がかりになる日本語訳"""
+    for t in e.get('translations') or []:
+        if t.get('lang_code') == 'ja' and is_ja(t.get('word', '')) and (len(t['word']) >= 2 or re.match(r'[一-鿿]', t['word'])):
+            return t['word']
+    for s_ in e.get('senses') or []:
+        if not good_sense(s_):
+            continue
+        for t in s_.get('translations') or []:
+            if t.get('lang_code') == 'ja' and is_ja(t.get('word', '')) and (len(t['word']) >= 2 or re.match(r'[一-鿿]', t['word'])):
+                return t['word']
     return None
+
+
+def ipa_info(es, main_pos=None):
+    """
+    主な発音と、語源・品詞によって発音が変わる場合の一覧（ROADMAP C04）。
+    lead（導く /liːd/・鉛 /lɛd/）のように、意味の多い方の発音を主にする（これまでは辞書の最初のエントリの発音だった）。
+    """
+    groups: dict[str, dict] = {}
+    for e in es:
+        n = sum(1 for s_ in e['senses'] if good_sense(s_))
+        ipa = best_ipa(e)
+        if not ipa or not n:
+            continue
+        g = groups.setdefault(ipa_key(ipa), {'ipa': ipa, 'n': 0, 'p': [], 'ja': None})
+        g['n'] += n
+        pos = POS_MAP.get(e['pos'], e['pos'])
+        if pos not in g['p']:
+            g['p'].append(pos)
+        g['ja'] = g['ja'] or ja_label(e)
+    if not groups:
+        return next((best_ipa(e) for e in es if best_ipa(e)), None), None
+    # 意味（日本語訳）の最初の品詞を含む発音を主にする（live は動詞 /lɪv/）。同じなら意味の多い方
+    ordered = sorted(groups.values(), key=lambda g: (main_pos not in g['p'], -g['n']))
+    if len(ordered) == 1:
+        return ordered[0]['ipa'], None
+    # 意味の手がかり（日本語訳）がない発音は、並べても区別がつかないので出さない
+    # 意味が 1 つしかない発音（present の「前もって送る」/priːˈsɛnt/ など）も、主な発音の違いではないので出さない
+    variants = [{'ipa': g['ipa'], 'p': g['p'], 'ja': g['ja']} for g in ordered[:3] if g['ja'] and (g is ordered[0] or g['n'] >= 2)]
+    if len(variants) < 2 or variants[0]['ipa'] != ordered[0]['ipa']:
+        return ordered[0]['ipa'], None
+    return ordered[0]['ipa'], variants
 
 
 def collect_rel(es, field):
@@ -649,13 +750,15 @@ for rank, (L, v) in enumerate(lemma_list, 1):
     parts, texts = analyze(L, es)
     forms = []
     for e in es:
-        for fm in e.get('forms') or []:
+        for fm in std_forms(e, es, {p for p, _ in v['ja']}):
             if re.fullmatch(r"[A-Za-z-]+", fm) and fm.lower() != L and fm not in forms:
                 forms.append(fm)
+    ipa, ipas = ipa_info(es, v['ja'][0][0] if v['ja'] else None)
     fset = {L} | {f.lower() for f in forms if infl.get(f.lower()) == L or f.lower() not in lemmas}
     entries[key_of(head)] = {
         'k': key_of(head), 'h': head, 't': 'w', 'r': rank,
-        'ipa': ipa_of(es),
+        'ipa': ipa,
+        **({'ipas': ipas} if ipas else {}),
         'g': merge_gloss(v['ja'], collect_tr(es, 'ko'), collect_tr(es, 'zh')),
         'd': defs(es),
         'parts': parts,
@@ -697,7 +800,7 @@ for prank, (w, c, es, tr) in enumerate(phr_sel, 1):
             comps.append(key_of(lemmas[lt]['head']))
     entries[key_of(w)] = {
         'k': key_of(w), 'h': w, 't': 'p', 'r': prank,
-        'ipa': ipa_of(es),
+        'ipa': ipa_info(es)[0],
         'g': merge_gloss(tr, collect_tr(es, 'ko'), collect_tr(es, 'zh')),
         'd': defs(es),
         'parts': phrase_parts(toks),
