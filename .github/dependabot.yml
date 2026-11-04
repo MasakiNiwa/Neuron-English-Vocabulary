@@ -1,0 +1,7 @@
+# GitHub Actions をコミット SHA で固定しているので、新しい版が出たら Dependabot が SHA を更新する PR を作る
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
