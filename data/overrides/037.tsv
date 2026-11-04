@@ -210,7 +210,7 @@ parts	equivalence	equ=r:equ i val=r:val ence
 parts	grapefruit	grape=w:grape fruit=w:fruit
 parts	hairdresser	hair=w:hair dress=w:dress er=suf:er
 parts	hardness	hard=w:hard ness=suf:ness
-parts	incite	in=pre:in cite=w:cite
+parts	incite	in=pre:into cite=w:cite
 parts	intolerable	in=pre:in toler able=suf:able
 parts	laziness	lazi=w:lazy ness=suf:ness
 parts	miserably	miserab=w:miserable ly=suf:ly
@@ -272,9 +272,9 @@ parts	fortitude	fort=r:fort itude
 parts	gambler	gambl=w:gamble er=suf:er
 parts	harmonious	harmoni=w:harmony ous=suf:ous
 parts	hyperbolic	hyper=pre:hyper bol=r:bol ic=suf:ic
-parts	impedance	im=pre:in ped=r:ped ance=suf:ance
-parts	incubation	in=pre:in cub ation=suf:ation
-parts	insignia	in=pre:in sign=r:sign ia
+parts	impedance	im=pre:into ped=r:ped ance=suf:ance
+parts	incubation	in=pre:into cub ation=suf:ation
+parts	insignia	in=pre:into sign=r:sign ia
 parts	lander	land=w:land er=suf:er
 parts	mischievous	mischiev=w:mischief ous=suf:ous
 parts	misunderstand	mis=pre:mis understand=w:understand

@@ -32,6 +32,7 @@
 | C04 | 発音を地域・古形のタグ付きで抽出し、英米の標準発音を優先。語源・品詞で発音が変わる語（lead・tear・live・close・use・record・present・desert など）は、意味の手がかり付きで並べる。主な発音は日本語訳の最初の品詞に合わせる（lead は /liːd/） |
 | C05 | 頻度上位 600 件の熟語のうち、手動の訳がなかった約 250 件の訳を校閲して書き直し（how much の「どこ」、go with の「連れる、乗る」、when it comes to の「は、なら」など）。手動の訳は 369 → 617 件。601 位以降は今後も続ける |
 | C06 | 動詞の熟語に活用形を持たせ（take place → took place / taken place …）、例文が活用形でも穴埋めに使えるように。ハイフンでつながった例文も対象に。穴埋めに使えない熟語の例文は 174 → 3 件 |
+| — | pre:in（否定）と pre:into（中へ）を使っている全 295 語を意味別に監査し、47 語を修正（inform・invest・install・insect・increment などが「否定」に、inability・instability・intact・integral などが「中へ」になっていた。intermediate・interrupt は inter- に、inbound・inpatient は英語の in に）。解説と語源分解で in- の意味が食い違うと lint がエラーにするように |
 | B05 | 外部 AI・アプリ内 AI の追加解説を、保存前に型・長さで検証（`sanitizeExtra`）。表示側も文字列以外は描画しない |
 | — | ChatGPT / Gemini による語源監査（PR #85）のうち、元データからのフルビルドで確認できた修正を取り込み |
 
@@ -47,7 +48,6 @@
 | ID | 状態 | 内容 | 方針 |
 |---|---|---|---|
 | C08 | — | 07_note_parts_report の候補は誤り確定一覧ではない | 語基を介したつながり・異説を確認しながら少しずつ直す（自動一括修正はしない） |
-| — | — | pre:in（否定）と pre:into（中へ）を使っている全語を意味別に監査 | |
 
 ## その後: スマホ・ネットワーク・オフライン・保守（P2〜P3）
 
