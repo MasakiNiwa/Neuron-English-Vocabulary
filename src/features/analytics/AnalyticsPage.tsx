@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { scrollBehavior } from '@/lib/motion'
 import * as Comlink from 'comlink'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Lightbulb, X } from 'lucide-react'
+import { Lightbulb, ListTodo, X } from 'lucide-react'
 import { Suspense, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
@@ -16,6 +16,8 @@ import { useSettings } from '@/stores/settings'
 import { EntryRow } from '@/features/dictionary/components/EntryRow'
 import { useDictionary } from '@/features/dictionary/hooks'
 import { addManyToStudy } from '@/features/study/cards'
+import { getStudyStats } from '@/features/study/session'
+import { useMinuteTick } from '@/lib/clock'
 import type { AnalyticsApi } from './analytics.worker'
 import type { AnalyticsResult } from './compute'
 import { analyticsModules } from './modules'
@@ -90,6 +92,68 @@ function DrillPanel({ drill, onClose }: { drill: Drill; onClose: () => void }) {
   )
 }
 
+/** 分析の結論として「次に何をするか」を先頭に出す（ROADMAP U07） */
+function NextActions({ data, onDrill }: { data: AnalyticsResult; onDrill: (d: Drill) => void }) {
+  const tick = useMinuteTick()
+  const stats = useLiveQuery(getStudyStats, [tick])
+  const today = stats ? stats.due + stats.newAvailable : 0
+  const weak = data.insights.find((x) => x.kind === 'weak')
+  const gap = data.insights.find((x) => x.kind === 'coverage')
+  const actions: { key: string; title: string; detail: string; node: React.ReactNode }[] = []
+  if (today > 0)
+    actions.push({
+      key: 'study',
+      title: `今日の学習 ${today} 枚`,
+      detail: '復習の時期が来たカードと、追加済みの新しいカード',
+      node: (
+        <Link to="/study" className="inline-flex h-8 items-center rounded-lg bg-accent px-3 text-xs font-medium text-accent-fg">
+          学習する
+        </Link>
+      ),
+    })
+  if (weak?.keys?.length)
+    actions.push({
+      key: 'weak',
+      title: `苦手な単語 ${weak.keys.length} 語を見直す`,
+      detail: weak.keys.slice(0, 4).map((k) => k.replace(/_/g, ' ')).join('、'),
+      node: (
+        <Button size="sm" onClick={() => onDrill({ title: '苦手な単語', keys: weak.keys! })}>
+          一覧
+        </Button>
+      ),
+    })
+  if (gap?.keys?.length)
+    actions.push({
+      key: 'gap',
+      title: '次に学ぶ単語の候補',
+      detail: gap.text,
+      node: (
+        <Button size="sm" onClick={() => onDrill({ title: '次に学ぶ単語の候補', keys: gap.keys! })}>
+          一覧
+        </Button>
+      ),
+    })
+  if (!actions.length) return null
+  return (
+    <Card>
+      <h2 className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-muted">
+        <ListTodo className="size-4" /> 次にすること
+      </h2>
+      <ul className="flex flex-col divide-y divide-border">
+        {actions.map((a) => (
+          <li key={a.key} className="flex items-center gap-3 py-2">
+            <div className="min-w-0 flex-1">
+              <div className="text-sm font-medium">{a.title}</div>
+              <div className="truncate text-xs text-muted">{a.detail}</div>
+            </div>
+            {a.node}
+          </li>
+        ))}
+      </ul>
+    </Card>
+  )
+}
+
 function AnalyticsInner() {
   const data = useAnalytics()
   const [drill, setDrill] = usePersistentState<Drill | null>('analytics:drill', null)
@@ -100,6 +164,7 @@ function AnalyticsInner() {
   const t = data.totals
   return (
     <div className="flex flex-col gap-4">
+      <NextActions data={data} onDrill={setDrill} />
       <div className="grid grid-cols-3 gap-2 md:grid-cols-6">
         <Tile label="閲覧した語" value={t.uniqueViewed} />
         <Tile label="閲覧回数" value={t.views} />
