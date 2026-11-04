@@ -148,7 +148,7 @@ parts	seasonal	season=w:season al=suf:al
 parts	teammate	team=w:team mate=w:mate
 parts	admire	ad=pre:ad mir=r:mir e
 parts	bullying	bully=w:bully ing
-parts	certification	cert=r:cert ific=suf:fy ation=suf:ation
+parts	certification	cert=r:cert ific=r:fac ation=suf:ation
 parts	continuously	con=pre:com tin=r:ten u ous=suf:ous ly=suf:ly
 parts	frontier	front=w:front ier
 parts	headache	head=w:head ache=w:ache

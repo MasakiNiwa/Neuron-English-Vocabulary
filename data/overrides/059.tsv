@@ -2,8 +2,8 @@
 parts	military	milit ary=suf:ary
 parts	quality	qual ity=suf:ity
 parts	perhaps	per=pre:per haps
-parts	percent	per=pre:per cent
-parts	century	cent ury
+parts	percent	per=pre:per cent=r:cent
+parts	century	cent=r:cent ury
 parts	individual	in=pre:in divid ual=suf:al
 parts	favorite	favor=w:favor ite
 parts	library	libr ary=suf:ary

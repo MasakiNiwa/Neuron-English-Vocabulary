@@ -601,7 +601,7 @@ parts	inheritance	in=pre:into her it ance=suf:ance
 parts	microwave	micro=pre:micro wave=w:wave
 parts	originate	origin=w:origin ate=suf:ate
 parts	primitive	prim=r:prim it ive=suf:ive
-parts	psychologist	psych=r:psych olog=suf:logy ist=suf:ist
+parts	psychologist	psych=r:psych o log=r:log ist=suf:ist
 parts	retrieve	re=pre:re trieve
 parts	sufficiently	suf=pre:sub fic=r:fac i ent=suf:ant ly=suf:ly
 parts	unrelated	un=pre:un re=pre:re lat=r:lat ed
@@ -657,6 +657,6 @@ parts	unusually	un=pre:un usu al=suf:al ly=suf:ly
 parts	username	user=w:user name=w:name
 parts	await	a wait=w:wait
 parts	eligibility	e=pre:ex lig=r:lect ibil=suf:able ity=suf:ity
-parts	endorsement	en=pre:into dorse ment=suf:ment
+parts	endorsement	en=pre:into dors=r:dors e ment=suf:ment
 parts	eyebrow	eye=w:eye brow
 parts	flagship	flag=w:flag ship=w:ship

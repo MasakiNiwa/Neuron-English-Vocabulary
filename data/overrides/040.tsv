@@ -253,7 +253,7 @@ parts	connection	con=pre:com nect=r:nect ion=suf:ation
 parts	driver	driv=w:drive er=suf:er
 parts	investigation	investig=w:investigate ation=suf:ation
 parts	slightly	slight=w:slight ly=suf:ly
-parts	appreciate	ap=pre:ad preci ate=suf:ate
+parts	appreciate	ap=pre:ad preci=r:preci ate=suf:ate
 parts	discover	dis=pre:dis cover=w:cover
 parts	excite	ex=pre:ex cite=w:cite
 parts	forever	for=w:for ever=w:ever
