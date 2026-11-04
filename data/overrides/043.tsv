@@ -224,7 +224,7 @@ parts	layer	lay=w:lay er=suf:er
 parts	nowhere	no=w:no where=w:where
 parts	ownership	owner=w:owner ship=suf:ship
 parts	poetry	poet=w:poet ry
-parts	abroad	a=pre:a broad=w:broad
+parts	abroad	a broad=w:broad
 parts	broadcast	broad=w:broad cast=w:cast
 parts	fitness	fit=w:fit ness=suf:ness
 parts	friendship	friend=w:friend ship=suf:ship
@@ -246,7 +246,7 @@ parts	prisoner	prison=w:prison er=suf:er
 parts	remind	re=pre:re mind=w:mind
 parts	scary	scar=w:scare y=suf:y
 parts	achievement	achieve=w:achieve ment=suf:ment
-parts	asleep	a=pre:a sleep=w:sleep
+parts	asleep	a sleep=w:sleep
 parts	automatic	auto=pre:auto matic
 parts	headquarters	head=w:head quarters=w:quarter
 parts	residence	re=pre:re sid=r:sed ence
