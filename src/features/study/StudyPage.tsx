@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { CircleCheck, Play, RotateCcw, Shuffle, Sparkles } from 'lucide-react'
+import { CircleCheck, Mic, Play, RotateCcw, Shuffle, Sparkles } from 'lucide-react'
 import { Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
@@ -17,7 +17,7 @@ import { useMinuteTick } from '@/lib/clock'
 import { formatInterval, removeFromStudy, retrievability } from './cards'
 import { ReviewSession } from './ReviewSession'
 import { useStudySession } from './sessionStore'
-import { FORMAT_OPTIONS, type StudyFormat } from './formats'
+import { formatOptions, type StudyFormat } from './formats'
 import { buildPracticeQueue, buildQueue, getStudyStats, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
 
 const STATE_LABEL = ['新規', '学習中', '復習', '再学習']
@@ -153,21 +153,11 @@ function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
                 { value: 'p', label: '熟語' },
               ]}
             />
-            {type === 'w' && (
-              <select
-                className={selectClass + ' w-32'}
-                value={startRank}
-                onChange={(e) => setSetting('studyStartRank', Number(e.target.value))}
-                aria-label="開始する頻度順位"
-              >
-                {[1, 500, 1000, 2000, 3000, 5000, 7000].map((r) => (
-                  <option key={r} value={r}>
-                    頻度 {r} 位〜
-                  </option>
-                ))}
-              </select>
-            )}
           </div>
+        )}
+        {source === 'frequency' && type === 'w' && (
+          // どこから始めるか（レベル）。初回だけでなく常に選べる
+          <LevelPicker value={startRank} onChange={(r) => setSetting('studyStartRank', r)} />
         )}
         {source === 'root' && (
           <select className={selectClass + ' w-full max-w-none'} value={rootId || roots[0]?.id} onChange={(e) => setRootId(e.target.value)}>
@@ -295,17 +285,49 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => 
 function FormatPicker() {
   const format = useSettings((s) => s.studyFormat)
   const set = useSettings((s) => s.set)
+  const options = formatOptions()
+  const groups: { title: string; values: StudyFormat[] }[] = [
+    { title: '読んで答える', values: ['en2ja', 'ja2en', 'cloze', 'choice', 'mix'] },
+    { title: '話して答える', values: ['speak', 'ja2speak'] },
+  ]
+  const HINT: Partial<Record<StudyFormat, string>> = {
+    speak: '英語を見て発音し、音声認識で聞き取れるか確かめる',
+    ja2speak: '日本語の意味を見て、英語を声に出して答える',
+  }
   return (
-    <div className="flex flex-wrap items-center gap-2 text-sm">
+    <div className="flex flex-col gap-2 text-sm">
       <span className="text-muted">出題形式</span>
-      <div className="max-w-full overflow-x-auto">
-        <Segmented<StudyFormat> value={format} onChange={(v) => set('studyFormat', v)} options={FORMAT_OPTIONS} />
-      </div>
+      {groups.map((g) => {
+        const opts = options.filter((o) => g.values.includes(o.value))
+        if (!opts.length) return null
+        return (
+          <div key={g.title} className="flex flex-wrap items-center gap-1.5">
+            <span className="w-20 shrink-0 text-[11px] text-muted">{g.title}</span>
+            {opts.map((o) => (
+              <button
+                key={o.value}
+                type="button"
+                aria-pressed={format === o.value}
+                onClick={() => set('studyFormat', o.value)}
+                title={HINT[o.value]}
+                className={
+                  'inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs ' +
+                  (format === o.value ? 'border-accent bg-accent-soft font-medium text-accent' : 'border-border text-muted hover:text-fg')
+                }
+              >
+                {g.title === '話して答える' && <Mic className="size-3.5" />}
+                {o.label}
+              </button>
+            ))}
+          </div>
+        )
+      })}
+      {HINT[format] && <p className="text-[11px] text-muted">{HINT[format]}</p>}
     </div>
   )
 }
 
-/** 初めて学習するときの開始位置の選択（ROADMAP U01）。カードが 1 枚もないあいだだけ出す */
+/** どこから始めるか（よく使う順の開始位置）。ROADMAP U01。「新しい単語を学ぶ」の中で常に選べる */
 const LEVELS: { rank: number; title: string; hint: string }[] = [
   { rank: 1, title: '基本から', hint: '頻度 1 位〜（the、have など最頻出語も確認）' },
   { rank: 500, title: '中学〜高校基礎', hint: '頻度 500 位〜' },
@@ -315,33 +337,26 @@ const LEVELS: { rank: number; title: string; hint: string }[] = [
   { rank: 5000, title: '難関', hint: '頻度 5000 位〜' },
 ]
 
-function FirstLevel() {
-  const startRank = useSettings((s) => s.studyStartRank)
-  const set = useSettings((s) => s.set)
+function LevelPicker({ value, onChange }: { value: number; onChange: (rank: number) => void }) {
   return (
-    <Card>
-      <SectionTitle>どこから始めますか？</SectionTitle>
-      <p className="mb-3 text-xs text-muted">
-        「新しい単語を学ぶ」の「よく使う順」で、ここで選んだ位置から順に単語を学びます。あとから変えられます。
-      </p>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {LEVELS.map((l) => (
-          <button
-            key={l.rank}
-            type="button"
-            aria-pressed={startRank === l.rank}
-            onClick={() => set('studyStartRank', l.rank)}
-            className={
-              'rounded-xl border p-2.5 text-left ' +
-              (startRank === l.rank ? 'border-accent bg-accent-soft' : 'border-border hover:bg-surface-2')
-            }
-          >
-            <div className="text-sm font-medium">{l.title}</div>
-            <div className="text-[11px] text-muted">{l.hint}</div>
-          </button>
-        ))}
-      </div>
-    </Card>
+    <div role="radiogroup" aria-label="どこから始めるか" className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
+      {LEVELS.map((l) => (
+        <button
+          key={l.rank}
+          type="button"
+          role="radio"
+          aria-checked={value === l.rank}
+          onClick={() => onChange(l.rank)}
+          className={
+            'rounded-xl border px-2.5 py-1.5 text-left ' +
+            (value === l.rank ? 'border-accent bg-accent-soft' : 'border-border hover:bg-surface-2')
+          }
+        >
+          <div className={'text-sm ' + (value === l.rank ? 'font-medium text-accent' : '')}>{l.title}</div>
+          <div className="text-[11px] text-muted">{l.hint}</div>
+        </button>
+      ))}
+    </div>
   )
 }
 
@@ -353,7 +368,6 @@ function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
   return (
     <div className="flex flex-col gap-4">
       <Steps />
-      {stats?.total === 0 && <FirstLevel />}
       <FormatPicker />
       {/* 今日の学習（復習・追加済みの新規）があれば先頭に、なければ「新しく学ぶ」を先頭に */}
       {today > 0 && <ReviewCard onStart={onStart} />}

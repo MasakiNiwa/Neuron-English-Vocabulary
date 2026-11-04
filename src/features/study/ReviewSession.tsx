@@ -1,11 +1,13 @@
-import { Check, Eye, Mic, X } from 'lucide-react'
+import { Eye } from 'lucide-react'
+import { SpeakPrompt, suggestFromScore } from './SpeakPrompt'
+import { SpeakCheck } from '@/features/speech/SpeakCheck'
 import { reduceMotion } from '@/lib/motion'
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { PageSpinner } from '@/components/ui/Spinner'
 import { db, type StudyCard } from '@/lib/db'
-import { getSpeechRecognition, speak } from '@/lib/speech'
+import { speak } from '@/lib/speech'
 import { useSettings } from '@/stores/settings'
 import { EntryLink, LinkedText, SpeakButton } from '@/features/dictionary/components/links'
 import { useDictionary, useEntry, recordView } from '@/features/dictionary/hooks'
@@ -36,57 +38,6 @@ function GradeHelp() {
         <li className="pt-1">ボタンの下の時間は、それを選んだときの次の復習までの間隔です。自由練習で答えた分も記録され、次の復習日に反映されます。</li>
       </ul>
     </details>
-  )
-}
-
-/** 発音チェック（Web Speech API の音声認識） */
-function PronunciationCheck({ target }: { target: string }) {
-  const SR = getSpeechRecognition()
-  const [state, setState] = useState<'idle' | 'listening' | 'ok' | 'ng'>('idle')
-  const [heard, setHeard] = useState('')
-  if (!SR) return null
-  const start = () => {
-    const rec = new SR()
-    rec.lang = 'en-US'
-    rec.interimResults = false
-    rec.maxAlternatives = 5
-    rec.continuous = false
-    setState('listening')
-    setHeard('')
-    rec.onresult = (e) => {
-      const alts = Array.from(e.results[0] as ArrayLike<{ transcript: string }>).map((a) => a.transcript.trim())
-      const norm = (s: string) => s.toLowerCase().replace(/[^a-z ]/g, '').trim()
-      const ok = alts.some((a) => norm(a) === norm(target) || norm(a).split(' ').includes(norm(target)))
-      setHeard(alts[0] ?? '')
-      setState(ok ? 'ok' : 'ng')
-    }
-    rec.onerror = () => setState('idle')
-    rec.onend = () => setState((s) => (s === 'listening' ? 'idle' : s))
-    rec.start()
-  }
-  return (
-    <div className="flex items-center justify-center gap-2 text-sm">
-      <button
-        type="button"
-        onClick={start}
-        className={
-          'inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-3 text-muted hover:text-fg ' +
-          (state === 'listening' ? 'animate-pulse border-accent text-accent' : '')
-        }
-      >
-        <Mic className="size-4" /> 発音チェック
-      </button>
-      {state === 'ok' && (
-        <span className="inline-flex items-center gap-1 text-success">
-          <Check className="size-4" /> {heard}
-        </span>
-      )}
-      {state === 'ng' && (
-        <span className="inline-flex items-center gap-1 text-danger">
-          <X className="size-4" /> {heard || '聞き取れませんでした'}
-        </span>
-      )}
-    </div>
   )
 }
 
@@ -336,7 +287,8 @@ function CardFace({
   const fmt = useMemo(() => resolveFormat(format, entry), [format, entry])
   const [answered, setAnswered] = useState<number | null>(null)
   const head = entryKey.replace(/_/g, ' ')
-  const showHead = fmt === 'en2ja' || fmt === 'choice' || shown
+  const showHead = fmt === 'en2ja' || fmt === 'choice' || fmt === 'speak' || shown
+  const speaking = fmt === 'speak' || fmt === 'ja2speak'
   return (
     <>
       {showHead && (
@@ -345,7 +297,20 @@ function CardFace({
           <SpeakButton text={head} />
         </div>
       )}
-      {entry && fmt === 'ja2en' && !shown && <JaPrompt entry={entry} />}
+      {entry && (fmt === 'ja2en' || fmt === 'ja2speak') && !shown && <JaPrompt entry={entry} spoken={fmt === 'ja2speak'} />}
+      {speaking && (
+        // 発音で答える: 話し終えたら答えを表示し、点数から評価を提案する（もう一度話すと提案も更新）
+        <SpeakPrompt
+          target={head}
+          mode={fmt}
+          onResult={(r) => {
+            const s = suggestFromScore(r.score)
+            onSuggest(s === 'good' ? Rating.Good : s === 'hard' ? Rating.Hard : Rating.Again)
+            navigator.vibrate?.(s === 'again' ? [20, 40, 20] : 10)
+            onReveal()
+          }}
+        />
+      )}
       {entry && fmt === 'cloze' && <ClozePrompt entry={entry} revealed={shown} />}
       {entry && fmt === 'choice' && (
         <ChoicePrompt
@@ -361,16 +326,31 @@ function CardFace({
       )}
       {!shown && fmt !== 'choice' && (
         <>
-          {fmt === 'en2ja' && <PronunciationCheck target={head} />}
-          <Button variant="primary" size="lg" className="mt-2 w-full max-w-xs" onClick={onReveal}>
-            <Eye className="size-5" /> 答えを見る
-          </Button>
-          <span className="hidden text-[11px] text-muted md:block">Space</span>
+          {speaking ? (
+            <button type="button" onClick={onReveal} className="text-xs text-muted underline-offset-4 hover:text-fg hover:underline">
+              声を出せないときは、答えを見る（Space）
+            </button>
+          ) : (
+            <>
+              <Button variant="primary" size="lg" className="mt-2 w-full max-w-xs" onClick={onReveal}>
+                <Eye className="size-5" /> 答えを見る
+              </Button>
+              <span className="hidden text-[11px] text-muted md:block">Space</span>
+            </>
+          )}
         </>
       )}
       {shown && (
         <div ref={backRef} className="w-full origin-top">
-          {fmt !== 'en2ja' && fmt !== 'choice' && <PronunciationCheck target={head} />}
+          {!speaking && (
+            // 発音で答える形式以外でも、答えを見たあとに発音を試せる
+            <details className="mb-3 text-left">
+              <summary className="cursor-pointer select-none text-center text-xs text-accent">この単語を発音してみる</summary>
+              <div className="mt-2 rounded-xl border border-border p-3">
+                <SpeakCheck target={head} compact autoStart />
+              </div>
+            </details>
+          )}
           <CardBack entryKey={entryKey} />
         </div>
       )}
