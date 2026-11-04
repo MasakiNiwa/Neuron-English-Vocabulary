@@ -30,11 +30,13 @@ export function findCloze(entry: Entry) {
   for (const ex of entry.ex ?? []) {
     const lower = ex.en.toLowerCase()
     for (const f of forms) {
-      const re = new RegExp(`(^|[^a-z])(${f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})(?![a-z])`, 'i')
+      // 熟語は空白とハイフンを同じものとして探す（state of the art → state-of-the-art）
+      const pat = f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/ /g, '[ -]')
+      const re = new RegExp(`(^|[^a-z])(${pat})(?![a-z])`, 'i')
       const m = re.exec(lower)
       if (m) {
         const start = m.index + m[1].length
-        return { ex, start, end: start + f.length }
+        return { ex, start, end: start + m[2].length }
       }
     }
   }
