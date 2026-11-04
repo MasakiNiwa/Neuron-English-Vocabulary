@@ -80,7 +80,8 @@ export default defineConfig({
           {
             urlPattern: ({ url }) => url.pathname.includes('/data/'),
             handler: 'StaleWhileRevalidate',
-            options: { cacheName: 'nev-data', expiration: { maxEntries: 200 } },
+            // 詳細データは ?v=<索引の版> 付きで取るので、版ごとに別のキャッシュになる（古い版は件数の上限で順に消える）
+            options: { cacheName: 'nev-data', expiration: { maxEntries: 400 } },
           },
         ],
       },

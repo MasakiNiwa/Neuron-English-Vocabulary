@@ -17,6 +17,8 @@ export interface Dictionary {
 }
 
 let dictPromise: Promise<Dictionary> | null = null
+/** 読み込んだ索引の版。詳細データ・形態素の URL に付けて、キャッシュ上で索引と版が食い違わないようにする（ROADMAP T01） */
+let dataVersion = ''
 const shardCache = new Map<string, Promise<Record<string, Entry>>>()
 
 export function rowToEntry(r: IndexRow): IndexEntry {
@@ -31,10 +33,9 @@ async function fetchJson<T>(path: string): Promise<T> {
 
 export function loadDictionary(): Promise<Dictionary> {
   dictPromise ??= (async () => {
-    const [index, morphemes] = await Promise.all([
-      fetchJson<{ v: string; e: IndexRow[] }>('data/index.json'),
-      fetchJson<Morpheme[]>('data/morphemes.json'),
-    ])
+    const index = await fetchJson<{ v: string; e: IndexRow[] }>('data/index.json')
+    dataVersion = index.v
+    const morphemes = await fetchJson<Morpheme[]>(`data/morphemes.json?v=${index.v}`)
     const entries = index.e.map(rowToEntry)
     const byKey = new Map(entries.map((e) => [e.key, e]))
     const byLower = new Map<string, string>()
@@ -62,11 +63,51 @@ export function loadMeta(): Promise<DataMeta> {
 function loadShard(shard: string) {
   let p = shardCache.get(shard)
   if (!p) {
-    p = fetchJson<Record<string, Entry>>(`data/entries/${shard}.json`)
+    p = fetchJson<Record<string, Entry>>(shardPath(shard))
     p.catch(() => shardCache.delete(shard))
     shardCache.set(shard, p)
   }
   return p
+}
+
+function shardPath(shard: string) {
+  return `data/entries/${shard}.json${dataVersion ? `?v=${dataVersion}` : ''}`
+}
+
+/**
+ * オフライン用に辞書の詳細データをすべて取得する（Service Worker がキャッシュする）。
+ * メモリには保持せず、取得だけして捨てる。onProgress(済み, 全体)
+ */
+export async function prefetchAllShards(onProgress?: (done: number, total: number) => void, signal?: AbortSignal) {
+  const dict = await loadDictionary()
+  const shards = [...new Set(dict.entries.map((e) => e.shard))].sort()
+  let done = 0
+  onProgress?.(0, shards.length)
+  // 同時に 4 本まで
+  const queue = [...shards]
+  const worker = async () => {
+    while (queue.length) {
+      if (signal?.aborted) throw new DOMException('aborted', 'AbortError')
+      const s = queue.shift()!
+      const res = await fetch(assetUrl(shardPath(s)), { signal })
+      if (!res.ok) throw new Error(`failed to load ${s}: ${res.status}`)
+      await res.arrayBuffer()
+      onProgress?.(++done, shards.length)
+    }
+  }
+  await Promise.all([worker(), worker(), worker(), worker()])
+  return shards.length
+}
+
+/** 今の版の詳細データのうち、オフライン用キャッシュにあるシャードの数（Service Worker がないときは null） */
+export async function countCachedShards(): Promise<{ cached: number; total: number } | null> {
+  if (!('caches' in window) || !navigator.serviceWorker?.controller) return null
+  const dict = await loadDictionary()
+  const total = new Set(dict.entries.map((e) => e.shard)).size
+  const cache = await caches.open('nev-data')
+  const keys = await cache.keys()
+  const cached = keys.filter((r) => r.url.includes('/data/entries/') && r.url.includes(`v=${dataVersion}`)).length
+  return { cached, total }
 }
 
 export async function getEntry(key: string): Promise<Entry | null> {
