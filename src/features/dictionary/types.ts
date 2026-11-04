@@ -3,7 +3,7 @@
 export type PosCode = 'noun' | 'verb' | 'adj' | 'adv' | 'prep' | 'conj' | 'pron' | 'det' | 'intj' | 'num' | 'phrase' | string
 
 /** index.json の1行: [key, type(0=単語,1=熟語), rank, 短い訳, 品詞[], shard, 形態素ID[], 解説あり(1/0)] */
-export type IndexRow = [string, 0 | 1, number, string, PosCode[], string, string[], (0 | 1)?]
+export type IndexRow = [string, 0 | 1, number, string, PosCode[], string, string[], (0 | 1)?, number?, (0 | 1)?]
 
 export interface IndexEntry {
   key: string
@@ -15,7 +15,13 @@ export interface IndexEntry {
   morphs: string[]
   /** 書き下ろし解説がある */
   hasNote: boolean
+  /** TOEIC のレベルの目安（470 / 600 / 730 / 860 / 990 点。単語のみ） */
+  toeic?: ToeicLevel
+  /** TOEIC で特に多い語（TOEIC Service List に含まれる） */
+  tsl?: boolean
 }
+
+export type ToeicLevel = 470 | 600 | 730 | 860 | 990
 
 export interface Gloss {
   p: PosCode
@@ -67,6 +73,8 @@ export interface Entry {
   note?: { ja: string }
   /** 訳語を手動で確認・修正済み */
   manual?: boolean
+  /** TOEIC のレベルの目安と、TOEIC で特に多い語か */
+  toeic?: { lv: ToeicLevel; tsl?: boolean }
   /** 語源分解を手動で登録した */
   manualParts?: boolean
 }

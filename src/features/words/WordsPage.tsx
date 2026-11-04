@@ -13,6 +13,7 @@ import { useDictionary } from '@/features/dictionary/hooks'
 import { searchDictionary, type SearchFilter, type SearchHit } from '@/features/dictionary/search'
 import type { Morpheme } from '@/features/dictionary/types'
 import type { WordsSearch } from './search'
+import { CategoryList, WordsHub } from './WordsHub'
 import { usePersistentState } from '@/lib/persist'
 
 function MorphemeRow({ m }: { m: Morpheme }) {
@@ -132,7 +133,7 @@ export function WordsPage() {
       <div className="mb-4 overflow-x-auto">
         <Segmented<SearchFilter>
           value={filter}
-          onChange={(f) => void navigate({ to: '/words', search: { ...search, f: f === 'all' ? undefined : f }, replace: true })}
+          onChange={(f) => void navigate({ to: '/words', search: { ...search, c: undefined, f: f === 'all' ? undefined : f }, replace: true })}
           options={[
             { value: 'all', label: t('words.filterAll') },
             { value: 'w', label: t('words.filterWord') },
@@ -142,7 +143,16 @@ export function WordsPage() {
         />
       </div>
       <Suspense fallback={<PageSpinner />}>
-        {deferred.trim() ? <Results query={deferred} filter={filter} /> : <Browse filter={filter} />}
+        {deferred.trim() ? (
+          <Results query={deferred} filter={filter} />
+        ) : search.c ? (
+          <CategoryList id={search.c} />
+        ) : filter === 'all' ? (
+          // 検索していないときは、いろいろな分類から学びを始められる入口を出す
+          <WordsHub />
+        ) : (
+          <Browse filter={filter} />
+        )}
       </Suspense>
     </Page>
   )

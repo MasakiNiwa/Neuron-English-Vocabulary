@@ -71,6 +71,28 @@ ngsl_rank: dict[str, int] = {}
 with open(os.path.join(R, 'NGSL_12_stats.csv'), encoding='utf-8') as f:
     for row in csv.DictReader(f):
         ngsl_rank[row['Lemma'].strip().lower()] = int(row['SFI Rank'])
+# TOEIC Service List（TSL 1.2, Browne, Culligan & Phillips, CC BY-SA 4.0）: TOEIC の教材・模試に特に多い語。なければ使わない
+tsl_rank: dict[str, int] = {}
+_tsl = os.path.join(R, 'TSL_12_stats.csv')
+if os.path.exists(_tsl):
+    with open(_tsl, encoding='latin-1') as f:
+        for row in csv.DictReader(f):
+            tsl_rank[row['Word'].strip().lower()] = int(row['TSL Rank'])
+
+
+def toeic_level(rank: int, word: str):
+    """
+    TOEIC のレベルの目安（470 / 600 / 730 / 860 / 990 点）。公式の基準ではなく、一般的な英語での頻度と、
+    TOEIC で特に多い語（TSL）から推定する。TSL の語は、TOEIC では一般の頻度より早い段階で必要になるとみなす
+    """
+    by_freq = 470 if rank <= 1500 else 600 if rank <= 3000 else 730 if rank <= 5000 else 860 if rank <= 8000 else 990
+    t = tsl_rank.get(word.lower())
+    if t is None:
+        return by_freq, False
+    by_tsl = 600 if t <= 400 else 730 if t <= 850 else 860
+    return min(by_freq, by_tsl), True
+
+
 form2lemma: dict[str, str] = {}
 with open(os.path.join(R, 'NGSL_12_lemmatized_for_research.csv'), encoding='utf-8-sig') as f:
     for line in f:
@@ -1026,9 +1048,13 @@ for k, e in entries.items():
         flat.sort(key=lambda x: bool(re.fullmatch(r'[\u30a0-\u30ffー・]+', x)))
     short = '、'.join(flat[:3])
     pos = ''.join(sorted({g['p'][:4] for g in e['g']}))
+    # TOEIC のレベルの目安（単語のみ）。索引の 9・10 番目に入れ、詳細データにも持たせる
+    lv, in_tsl = toeic_level(e['r'], e['h']) if e['t'] == 'w' else (0, False)
+    if lv:
+        shards[shard][k]['toeic'] = {'lv': lv, **({'tsl': True} if in_tsl else {})}
     index_rows.append([k, 0 if e['t'] == 'w' else 1, e['r'], short, [g['p'] for g in e['g']], shard,
                        [p['m'] for p in (e.get('parts') or []) if p['m'] and not p['m'].startswith('w:')] + (e.get('pie') or []),
-                       1 if e.get('note') else 0])
+                       1 if e.get('note') else 0, lv, 1 if in_tsl else 0])
 index_rows.sort(key=lambda r: (r[1], r[2]))
 # データの版: 公開する内容（索引・形態素・詳細）のハッシュ。同じ内容なら同じ版、1 文字でも変われば別の版になる。
 # 各シャードにも版（_v）を書き込み、アプリは索引と食い違うシャードを見つけたら最新を取り直す（レビュー B03）

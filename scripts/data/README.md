@@ -13,6 +13,7 @@ curl -O https://downloads.tatoeba.org/exports/links.tar.bz2
 curl -O http://ftp.edrdg.org/pub/Nihongo/JMdict_e.gz
 curl -LO https://www.newgeneralservicelist.com/s/NGSL_12_stats.csv
 curl -LO https://www.newgeneralservicelist.com/s/NGSL_12_lemmatized_for_research.csv
+curl -LO https://www.newgeneralservicelist.com/s/TSL_12_stats.csv   # TOEIC Service List（任意。なければ TOEIC 頻出の印なし）
 cd -
 
 python3 scripts/data/01_filter_wiktionary.py $RAW/kaikki.org-dictionary-English.jsonl.gz $WORK/wikt.jsonl

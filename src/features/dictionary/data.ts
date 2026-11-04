@@ -1,5 +1,5 @@
 import { assetUrl } from '@/lib/appInfo'
-import type { DataMeta, Entry, IndexEntry, IndexRow, Morpheme } from './types'
+import type { DataMeta, Entry, IndexEntry, IndexRow, Morpheme, ToeicLevel } from './types'
 
 /**
  * 単語データの読み込み層。全て静的 JSON を fetch し、メモリにキャッシュする。
@@ -22,7 +22,18 @@ let dataVersion = ''
 const shardCache = new Map<string, Promise<Record<string, Entry>>>()
 
 export function rowToEntry(r: IndexRow): IndexEntry {
-  return { key: r[0], type: r[1] === 0 ? 'w' : 'p', rank: r[2], gloss: r[3], pos: r[4], shard: r[5], morphs: r[6], hasNote: r[7] === 1 }
+  return {
+    key: r[0],
+    type: r[1] === 0 ? 'w' : 'p',
+    rank: r[2],
+    gloss: r[3],
+    pos: r[4],
+    shard: r[5],
+    morphs: r[6],
+    hasNote: r[7] === 1,
+    ...(r[8] ? { toeic: r[8] as ToeicLevel } : {}),
+    ...(r[9] === 1 ? { tsl: true } : {}),
+  }
 }
 
 async function fetchJson<T>(path: string): Promise<T> {
