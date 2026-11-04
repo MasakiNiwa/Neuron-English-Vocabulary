@@ -12,7 +12,6 @@ parts	tent	tent=r:tend
 # 語根につながっていなかった語
 parts	during	dur=r:dur ing
 parts	please	pleas=r:plac e
-parts	miss	miss=r:mit
 # parent: ラテン語 pario（産む）由来であり、pareo（現れる: r:parere）ではないため noparts (063.tsv) で処理
 parts	medical	med=r:med ical=suf:ic
 parts	stage	sta=r:sta ge

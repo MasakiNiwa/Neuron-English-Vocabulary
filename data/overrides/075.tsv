@@ -1,0 +1,16 @@
+# 語根の物語を書くために上位の語根の単語を見直して見つかった誤り
+# - opportunity: port は portus（港）。「部分」の pars ではない
+# - remain / remainder / permanent / mansion: manere（とどまる）。「手」の manus ではないので語根 mane を追加した
+# - pollution: pol は pro（前に）の変化形。ギリシャ語 polis（都市）ではない
+# - bipolar・polytechnic: polar（極）・polys（多くの）で、polis とは関係がない
+# - site / situation: ラテン語 situs（置かれた場所）。sedere（座る）ではない
+# - miss: 古英語 missan（的を外す）。mittere（送る）ではない
+parts	opportunity	op=pre:ob port=r:port un ity=suf:ity
+parts	remainder	re=pre:re main=r:mane der
+parts	mansion	mans=r:mane ion=suf:ation
+parts	pollution	pol=pre:pro lut ion=suf:ation
+parts	bipolar	bi=pre:bi polar
+parts	polytechnic	poly techn ic=suf:ic
+noparts	site
+parts	situation	situ at ion=suf:ation
+noparts	miss

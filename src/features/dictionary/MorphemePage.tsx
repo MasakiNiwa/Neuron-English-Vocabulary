@@ -1,5 +1,5 @@
 import { Link, useParams } from '@tanstack/react-router'
-import { GitBranch, Network, Sparkles } from 'lucide-react'
+import { BookOpen, GitBranch, Network, Sparkles } from 'lucide-react'
 import { Suspense, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/Button'
@@ -103,6 +103,14 @@ function MorphemeView({ id }: { id: string }) {
         )}
       </div>
 
+      {m.story && (
+        <Card className="mb-4 p-3 text-sm leading-relaxed">
+          <div className="mb-1 flex items-center gap-1 text-xs font-medium text-accent">
+            <BookOpen className="size-3.5" /> 語根の物語
+          </div>
+          {m.story.ja}
+        </Card>
+      )}
       {m.desc && (
         <Card className="mb-4 p-3 text-sm leading-relaxed">
           <span className="mr-1 text-xs text-accent">イメージ</span>
