@@ -514,7 +514,7 @@ gloss	standoff	noun:にらみ合い、膠着状態
 parts	economical	econom=w:economy ical=suf:ic
 parts	inventor	in=pre:into vent=r:ven or=suf:er
 parts	librarian	librar=w:library ian
-parts	multitude	multi=pre:multi tude
+parts	multitude	mult=r:mult itude
 parts	pancake	pan=w:pan cake=w:cake
 parts	patriotism	patriot=w:patriot ism=suf:ism
 parts	periodically	period=w:period ic=suf:ic al=suf:al ly=suf:ly
@@ -554,7 +554,7 @@ parts	heartbreaking	heart=w:heart break=w:break ing
 parts	homeowner	home=w:home own=w:own er=suf:er
 parts	inexpensive	in=pre:in ex=pre:ex pens=r:pend ive=suf:ive
 parts	intuitive	in=pre:into tuit ive=suf:ive
-parts	metropolis	metro polis
+parts	metropolis	metro polis=r:pol
 parts	offend	of=pre:ob fend=r:fend
 parts	poisonous	poison=w:poison ous=suf:ous
 parts	relocation	re=pre:re loc=r:loc ation=suf:ation
@@ -576,7 +576,7 @@ parts	encryption	en=pre:en crypt ion=suf:ation
 parts	graveyard	grave=w:grave yard=w:yard
 parts	hardship	hard=w:hard ship=suf:ship
 parts	interrogation	inter=pre:inter rog=r:rog ation=suf:ation
-parts	irrational	ir=pre:in ration al=suf:al
+parts	irrational	ir=pre:in rat=r:rat ion=suf:ation al=suf:al
 parts	multimedia	multi=pre:multi media=w:medium
 parts	multinational	multi=pre:multi nat=r:nat ion=suf:ation al=suf:al
 parts	outskirts	out=w:out skirts=w:skirt

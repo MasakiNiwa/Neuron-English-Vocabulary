@@ -326,7 +326,7 @@ parts	repository	re=pre:re pos=r:pon it ory=suf:ary
 parts	trainee	train=w:train ee=suf:ee
 parts	upbringing	up=w:up bring=w:bring ing
 parts	accelerator	ac=pre:ad celer=r:celer at or=suf:er
-parts	annexation	an=pre:ad nex ation=suf:ation
+parts	annexation	an=pre:ad nex=r:nect ation=suf:ation
 parts	ascent	a=pre:ad scent=r:scend
 parts	biotechnology	bio=r:bio techn=r:tech ology=suf:logy
 parts	bookstore	book=w:book store=w:store

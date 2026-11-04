@@ -1,0 +1,82 @@
+# C08 の続き: 07_note_parts_report の候補のうち、もとの語を経由せず語根につながっていなかった語（確かなものだけ）。
+# 誤った自動分解（primer の press、migrate の grat）も直す。
+# つながないもの: right・middle・sit・murder（同じ祖先の別の語）、proof（綴りが別）、latitude（lat「運ばれた」とは別の latus「広い」）、
+# anthology（logos ではなく legein「集める」）、anonymity・acronym（ギリシャ語 onoma。nom はラテン語 nomen）、
+# cascade・escalate・pigment・ditto・torch（綴りが語根の形から離れている）、sentinel・testosterone・rosemary（語源に異説）
+parts	philosophical	philo=r:phil soph=r:soph ical=suf:ic
+parts	demographic	demo=r:dem graph=r:graph ic=suf:ic
+parts	tempo	temp=r:temp o
+parts	sophomore	soph=r:soph omore
+parts	diminished	di=pre:dis min=r:min ished
+parts	cellphone	cell phon=r:phon e
+parts	corporal	corp=r:corp or al=suf:al
+parts	restraint	re=pre:re strain=r:strict t
+parts	coherent	co=pre:com her=r:her ent=suf:ant
+parts	compressed	com=pre:com press=r:press ed
+parts	fertile	fer=r:fer tile
+parts	perpetual	per=pre:per pet=r:pet ual
+parts	simulator	simul=r:simil ator
+parts	pertaining	per=pre:per tain=r:ten ing
+parts	prolific	prol ific=r:fac
+parts	supervised	super=pre:super vis=r:vid ed
+parts	majestic	maj=r:magn estic
+parts	abducted	ab=pre:ab duct=r:duc ed
+parts	intimidating	in=pre:into timid=r:timid ating
+parts	oppressed	op=pre:ob press=r:press ed
+parts	promoter	pro=pre:pro mot=r:mob er=suf:er
+parts	curator	cur=r:cura ator
+parts	prevail	pre=pre:pre vail=r:val
+parts	fugitive	fug=r:fug it ive=suf:ive
+parts	dispose	dis=pre:dis pos=r:pon e
+parts	impending	im=pre:into pend=r:pend ing
+parts	liberated	liber=r:liber ated
+parts	maneuver	man=r:man euver
+parts	omitted	o=pre:ob mit=r:mit ted
+parts	rationale	rat=r:rat ionale
+parts	mediocre	medi=r:medi ocre
+parts	diligence	di=pre:dis lig=r:lect ence=suf:ance
+parts	submerged	sub=pre:sub merg=r:merg ed
+parts	illuminated	il=pre:into lumin=r:lumin ated
+parts	primer	prim=r:prim er=suf:er
+parts	astronomical	astr=r:aster o nom ical=suf:ic
+parts	gravitational	grav=r:grav it ation=suf:ation al=suf:al
+parts	simulated	simul=r:simil ated
+parts	formulation	form=r:form ul ation=suf:ation
+parts	injunction	in=pre:into junct=r:junct ion=suf:ation
+parts	ordained	ord=r:ord ained
+parts	placebo	plac=r:plac ebo
+parts	aggravated	ag=pre:ad grav=r:grav ated
+parts	turbulent	turb=r:turb ul ent=suf:ant
+parts	horrifying	horr=r:horr ify=suf:fy ing
+parts	presiding	pre=pre:pre sid=r:sed ing
+parts	spectral	spec=r:spec tral
+parts	depleted	de=pre:de ple=r:ple ted
+parts	genital	gen=r:gen ital
+parts	curated	cur=r:cura ated
+parts	collusion	col=pre:com lus=r:lud ion=suf:ation
+parts	fortified	fort=r:fort ifi=suf:fy ed
+parts	linguistics	lingu=r:lingu istics
+parts	migrate	migr=r:migr ate=suf:ate
+parts	miraculous	mir=r:mir acul ous=suf:ous
+parts	corona	coron=r:coron a
+parts	elegance	e=pre:ex leg=r:lect ance=suf:ance
+parts	physicist	phys=r:phys ic=suf:ic ist=suf:ist
+parts	solitude	sol=r:sol itude
+parts	hesitant	hes=r:her it ant=suf:ant
+parts	morphology	morpho logy=suf:logy
+parts	optimized	optim=r:optim iz=suf:ize ed
+parts	censored	cens=r:cens ored
+parts	imprint	im=pre:into print=r:press
+parts	insulated	insul=r:insul ated
+parts	delusion	de=pre:de lus=r:lud ion=suf:ation
+parts	fluorescent	flu=r:flu orescent
+parts	oncology	onco logy=suf:logy
+parts	subsidized	sub=pre:sub sid=r:sed iz=suf:ize ed
+parts	annuity	ann=r:ann uity
+parts	degrading	de=pre:de grad=r:grad ing
+parts	grammatical	gramm=r:graph atical
+parts	graphite	graph=r:graph ite
+parts	ligament	lig=r:lig ament
+parts	radiator	radi=r:radi ator
+parts	rector	rect=r:reg or
+parts	ridicule	rid=r:rid icule
