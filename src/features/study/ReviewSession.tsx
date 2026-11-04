@@ -13,6 +13,7 @@ import { EntryLink, LinkedText, SpeakButton } from '@/features/dictionary/compon
 import { useDictionary, useEntry, recordView } from '@/features/dictionary/hooks'
 import { formatInterval, previewIntervals, Rating, review, type Grade } from './cards'
 import { ChoicePrompt, ClozePrompt, JaPrompt, resolveFormat, type StudyFormat } from './formats'
+import { useMorphMeaning } from '@/features/dictionary/localGloss'
 
 /** 表面に見出し語が出る（最初に読み上げても答えにならない）形式 */
 const SPEAK_FIRST = new Set<StudyFormat>(['en2ja', 'choice'])
@@ -42,6 +43,7 @@ function GradeHelp() {
 }
 
 function CardBack({ entryKey }: { entryKey: string }) {
+  const mm = useMorphMeaning()
   const entry = useEntry(entryKey)
   const dict = useDictionary()
   if (!entry) return null
@@ -62,7 +64,7 @@ function CardBack({ entryKey }: { entryKey: string }) {
               <span key={i} className="inline-flex items-center gap-1">
                 {i > 0 && <span className="text-muted">+</span>}
                 <span className="font-en font-semibold">{p.s}</span>
-                {m && <span className="text-xs text-muted">({m.meaning.ja})</span>}
+                {m && <span className="text-xs text-muted">({mm(m)})</span>}
               </span>
             )
           })}

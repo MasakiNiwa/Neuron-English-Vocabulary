@@ -22,7 +22,7 @@ import { ReviewSession } from './ReviewSession'
 import { useStudySession } from './sessionStore'
 import { formatOptions, type StudyFormat } from './formats'
 import { buildPracticeQueue, buildQueue, getStudyStats, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
-import { useGlossText } from '@/features/dictionary/localGloss'
+import { useGlossText, useMorphMeaning } from '@/features/dictionary/localGloss'
 
 const STATE_LABEL = ['新規', '学習中', '復習', '再学習']
 
@@ -100,6 +100,7 @@ function Steps() {
 }
 
 function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
+  const mm = useMorphMeaning()
   const dict = useDictionary()
   const startRank = useSettings((s) => s.studyStartRank)
   const setSetting = useSettings((s) => s.set)
@@ -168,7 +169,7 @@ function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
           <select className={selectClass + ' w-full max-w-none'} value={rootId || roots[0]?.id} onChange={(e) => setRootId(e.target.value)}>
             {roots.map((m) => (
               <option key={m.id} value={m.id}>
-                {m.label}（{m.meaning.ja}）— {m.words.length}語
+                {m.label}（{mm(m)}）— {m.words.length}語
               </option>
             ))}
           </select>
@@ -367,6 +368,7 @@ function LevelPicker({ value, onChange }: { value: number; onChange: (rank: numb
 
 /** 語根レッスンへの入口（次に学ぶとよい語根と、図鑑の進み具合） */
 function RootLessonCard() {
+  const mm = useMorphMeaning()
   const info = useNextRoot()
   return (
     <Card className="flex flex-col gap-2">
@@ -381,7 +383,7 @@ function RootLessonCard() {
             params={{ id: info.next.id }}
             className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-accent px-4 text-sm font-medium text-accent-fg hover:opacity-90"
           >
-            <Sparkles className="size-4" /> <span className="font-en">{morphLabel(info.next)}</span>（{info.next.meaning.ja}）のレッスン
+            <Sparkles className="size-4" /> <span className="font-en">{morphLabel(info.next)}</span>（{mm(info.next)}）のレッスン
           </Link>
         )}
         <Link to="/roots" className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-border px-3 text-sm hover:bg-surface-2">

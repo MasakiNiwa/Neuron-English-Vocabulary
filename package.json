@@ -1,7 +1,7 @@
 {
   "name": "neuron-english-vocabulary",
   "private": true,
-  "version": "0.111.0",
+  "version": "0.112.0",
   "type": "module",
   "description": "ニューロン英単語 — 語源や意味のつながりで辿る英単語アプリ",
   "license": "MIT",

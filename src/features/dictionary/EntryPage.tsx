@@ -16,7 +16,7 @@ import { PageSpinner } from '@/components/ui/Spinner'
 import { WordAiPanel } from '@/features/ai/WordAiPanel'
 import { SpeakCheck, SpeakableRow } from '@/features/speech/SpeakCheck'
 import { speechRecognitionSupported } from '@/features/speech/useSpeechCheck'
-import { useGlossText } from './localGloss'
+import { useGlossText, useMorphMeaning } from './localGloss'
 import { dataLang, joinWords, localWords } from '@/lib/lang'
 import { useLang } from '@/lib/useLang'
 
@@ -68,6 +68,7 @@ function mainGloss(entry: Entry) {
 
 /** 語の成り立ち: con（共に）+ struct（築く）→ 建設する */
 function PartsView({ entry }: { entry: Entry }) {
+  const mm = useMorphMeaning()
   const dict = useDictionary()
   const gloss = useGlossText()
   const parts = entry.parts ?? []
@@ -88,7 +89,7 @@ function PartsView({ entry }: { entry: Entry }) {
                   className="flex flex-col items-center rounded-xl bg-accent-soft px-3 py-1.5 hover:opacity-80"
                 >
                   <span className="font-en text-lg font-semibold text-accent">{p.s}</span>
-                  <span className="text-[11px] text-muted">{m.meaning.ja}</span>
+                  <span className="text-[11px] text-muted">{mm(m)}</span>
                   {m.parts && (
                     <span className="mt-0.5 text-[10px] text-muted">
                       = {m.parts.map((x) => dict.morphById.get(x)?.label ?? '').join(' + ')}

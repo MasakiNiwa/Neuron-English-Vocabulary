@@ -12,9 +12,11 @@ import { EntryRow } from './components/EntryRow'
 import { useDictionary } from './hooks'
 import type { Morpheme } from './types'
 import { usePersistentState } from '@/lib/persist'
+import { useMorphMeaning } from '@/features/dictionary/localGloss'
 
 /** 語源の成り立ち: jud = jus（法）+ dic（言う） */
 function PartsTree({ m }: { m: Morpheme }) {
+  const mm = useMorphMeaning()
   const dict = useDictionary()
   const parts = (m.parts ?? []).map((id) => dict.morphById.get(id)).filter((x): x is Morpheme => !!x)
   if (!parts.length) return null
@@ -40,7 +42,7 @@ function PartsTree({ m }: { m: Morpheme }) {
           .filter((p) => p.parts?.length)
           .map((p) => (
             <p key={p.id} className="text-xs text-muted">
-              └ {morphLabel(p)} = {p.parts!.map((x) => dict.morphById.get(x)).filter(Boolean).map((x) => `${morphLabel(x!)}（${x!.meaning.ja}）`).join(' + ')}
+              └ {morphLabel(p)} = {p.parts!.map((x) => dict.morphById.get(x)).filter(Boolean).map((x) => `${morphLabel(x!)}（${mm(x!)}）`).join(' + ')}
             </p>
           ))}
       </Card>
@@ -65,6 +67,7 @@ function MorphList({ title, ids }: { title: string; ids?: string[] }) {
 }
 
 function MorphemeView({ id }: { id: string }) {
+  const mm = useMorphMeaning()
   const { t } = useTranslation()
   const dict = useDictionary()
   const m = dict.morphById.get(id)
@@ -77,7 +80,7 @@ function MorphemeView({ id }: { id: string }) {
       <div className="mb-4">
         <span className="rounded-md bg-surface-2 px-1.5 py-0.5 text-xs text-muted">{MORPH_TYPE_LABEL[m.type]}</span>
         <h1 className="vt-headword font-en mt-2 text-3xl font-semibold">{morphLabel(m)}</h1>
-        <p className="mt-1 text-lg">{m.meaning.ja}</p>
+        <p className="mt-1 text-lg">{mm(m)}</p>
         <p className="mt-1 text-sm text-muted">
           {t('words.origin')}: {m.origin}
           {m.forms.length > 1 && <span className="font-en"> ・ {m.forms.join(', ')}</span>}

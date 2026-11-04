@@ -14,9 +14,11 @@ import { useDictionary } from '@/features/dictionary/hooks'
 import type { Entry, IndexEntry, Morpheme } from '@/features/dictionary/types'
 import { addManyToStudy } from '@/features/study/cards'
 import { lessonChoices, lessonRoots, lessonWords, stars, type Choice } from './lessons'
+import { useMorphMeaning } from '@/features/dictionary/localGloss'
 
 /** 部品の並び（語根を強調し、各部品の意味を下に出す） */
 function PartsView({ entry, rootId }: { entry: Entry; rootId: string }) {
+  const mm = useMorphMeaning()
   const dict = useDictionary()
   if (!entry.parts?.length) return null
   return (
@@ -24,7 +26,7 @@ function PartsView({ entry, rootId }: { entry: Entry; rootId: string }) {
       {entry.parts.map((p, i) => {
         const m = p.m && !p.m.startsWith('w:') ? dict.morphById.get(p.m) : null
         const w = p.m?.startsWith('w:') ? dict.byKey.get(p.m.slice(2).replace(/ /g, '_')) : null
-        const meaning = m?.meaning.ja ?? w?.gloss.split('、')[0]
+        const meaning = (m ? mm(m) : undefined) ?? w?.gloss.split('、')[0]
         const isRoot = p.m === rootId
         return (
           <div key={i} className="flex items-center gap-1.5">
@@ -48,6 +50,7 @@ function PartsView({ entry, rootId }: { entry: Entry; rootId: string }) {
 type Step = { kind: 'intro' } | { kind: 'question'; i: number; answered: number | null } | { kind: 'summary' }
 
 function Lesson({ root }: { root: Morpheme }) {
+  const mm = useMorphMeaning()
   const dict = useDictionary()
   const navigate = useNavigate()
   const words = useMemo(() => lessonWords(dict, root), [dict, root])
@@ -122,7 +125,7 @@ function Lesson({ root }: { root: Morpheme }) {
       <Card className="flex flex-col items-center gap-3 p-6 text-center">
         <span className="rounded-full bg-surface-2 px-2.5 py-0.5 text-xs text-muted">語根レッスン</span>
         <h1 className="font-en text-5xl font-semibold text-accent">{morphLabel(root)}</h1>
-        <p className="text-xl">{root.meaning.ja}</p>
+        <p className="text-xl">{mm(root)}</p>
         <p className="text-sm text-muted">
           {root.origin}
           {root.forms.length > 1 && <span className="font-en"> ・ {root.forms.join(', ')}</span>}
@@ -259,12 +262,13 @@ function Summary({
   onRetry: () => void
   onNext: () => void
 }) {
+  const mm = useMorphMeaning()
   return (
     <Card className="flex flex-col items-center gap-3 p-6 text-center">
       <StarRow n={s} />
       <p className="text-sm text-muted">語根図鑑に登録しました</p>
       <h1 className="font-en text-4xl font-semibold text-accent">{morphLabel(root)}</h1>
-      <p>{root.meaning.ja}</p>
+      <p>{mm(root)}</p>
       <p className="text-lg font-semibold">
         {correct} / {words.length} 問 正解
       </p>
