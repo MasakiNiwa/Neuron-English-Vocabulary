@@ -15,12 +15,29 @@ import { ChoicePrompt, ClozePrompt, JaPrompt, resolveFormat, type StudyFormat } 
 /** 表面に見出し語が出る（最初に読み上げても答えにならない）形式 */
 const SPEAK_FIRST = new Set<StudyFormat>(['en2ja', 'choice'])
 
-const GRADES: { g: Grade; label: string; key: string; cls: string }[] = [
-  { g: Rating.Again, label: 'もう一度', key: '1', cls: 'border-danger/40 text-danger' },
-  { g: Rating.Hard, label: '難しい', key: '2', cls: 'border-warn/40 text-warn' },
-  { g: Rating.Good, label: '正解', key: '3', cls: 'border-success/40 text-success' },
-  { g: Rating.Easy, label: '簡単', key: '4', cls: 'border-accent/40 text-accent' },
+const GRADES: { g: Grade; label: string; key: string; cls: string; hint: string }[] = [
+  { g: Rating.Again, label: 'もう一度', key: '1', cls: 'border-danger/40 text-danger', hint: '思い出せなかった。数枚後にもう一度出題し、次の復習は近くなる' },
+  { g: Rating.Hard, label: '難しい', key: '2', cls: 'border-warn/40 text-warn', hint: '思い出せたが時間がかかった・自信がない。間隔は少しだけ伸びる' },
+  { g: Rating.Good, label: '正解', key: '3', cls: 'border-success/40 text-success', hint: '思い出せた。ふつうの間隔で次の復習日を決める' },
+  { g: Rating.Easy, label: '簡単', key: '4', cls: 'border-accent/40 text-accent', hint: 'すぐに思い出せた。間隔が大きく伸びる' },
 ]
+
+/** 評価ボタンの意味（U03） */
+function GradeHelp() {
+  return (
+    <details className="text-xs text-muted">
+      <summary className="cursor-pointer select-none text-center">評価の目安</summary>
+      <ul className="mt-1 space-y-0.5 rounded-xl bg-surface-2 p-2.5">
+        {GRADES.map((x) => (
+          <li key={x.g}>
+            <span className={`font-medium ${x.cls.split(' ').find((c) => c.startsWith('text-'))}`}>{x.label}</span>：{x.hint}
+          </li>
+        ))}
+        <li className="pt-1">ボタンの下の時間は、それを選んだときの次の復習までの間隔です。自由練習で答えた分も記録され、次の復習日に反映されます。</li>
+      </ul>
+    </details>
+  )
+}
 
 /** 発音チェック（Web Speech API の音声認識） */
 function PronunciationCheck({ target }: { target: string }) {
@@ -99,6 +116,15 @@ function CardBack({ entryKey }: { entryKey: string }) {
             )
           })}
         </div>
+      )}
+      {entry.note?.ja && (
+        // 書き下ろしの解説（語源と意味のつながり）。カードが長くなりすぎないよう開閉式に（U02）
+        <details className="rounded-xl border border-border p-2.5 text-sm">
+          <summary className="cursor-pointer select-none text-xs font-medium text-accent">解説を読む</summary>
+          <p className="mt-1.5 leading-relaxed">
+            <LinkedText text={entry.note.ja} />
+          </p>
+        </details>
       )}
       {entry.ex?.[0] && (
         <div className="rounded-xl bg-surface-2 p-2.5 text-sm">
@@ -274,6 +300,7 @@ export function ReviewSession({
               key={x.g}
               type="button"
               onClick={() => void rate(x.g)}
+              title={x.hint}
               className={`flex flex-col items-center rounded-xl border bg-surface py-2.5 hover:bg-surface-2 ${x.cls} ${suggested === x.g ? 'ring-2 ring-current' : ''}`}
             >
               <span className="text-sm font-medium">{x.label}</span>
@@ -283,6 +310,7 @@ export function ReviewSession({
           ))}
         </div>
       )}
+      {shown && <GradeHelp />}
       <p className="text-center text-xs text-muted">回答 {count}</p>
     </div>
   )

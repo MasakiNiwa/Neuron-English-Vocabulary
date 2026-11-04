@@ -259,7 +259,7 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => 
       <SectionTitle className="flex items-center gap-1.5">
         <Shuffle className="size-4" /> 自由に練習
       </SectionTitle>
-      <p className="mb-3 text-xs text-muted">復習の時期に関係なく、学習中のカード（{total ?? 0} 枚）から好きなだけ練習できます。</p>
+      <p className="mb-3 text-xs text-muted">復習の時期に関係なく、学習中のカード（{total ?? 0} 枚）から好きなだけ練習できます。答えた評価は記録され、次の復習日にも反映されます。</p>
       <div className="flex flex-col gap-3">
         <Segmented<PracticeMode>
           value={mode}

@@ -45,9 +45,9 @@ function useAnalytics() {
   return data
 }
 
-function Tile({ label, value }: { label: string; value: string | number }) {
+function Tile({ label, value, hint }: { label: string; value: string | number; hint?: string }) {
   return (
-    <div className="rounded-xl bg-surface-2 px-3 py-2.5">
+    <div className="rounded-xl bg-surface-2 px-3 py-2.5" title={hint}>
       <div className="text-xl font-semibold">{value}</div>
       <div className="text-[11px] text-muted">{label}</div>
     </div>
@@ -105,7 +105,11 @@ function AnalyticsInner() {
         <Tile label="閲覧回数" value={t.views} />
         <Tile label="学習カード" value={t.cards} />
         <Tile label="回答数" value={t.reviews} />
-        <Tile label="正答率" value={t.accuracy === null ? '–' : `${Math.round(t.accuracy * 100)}%`} />
+        <Tile
+          label="正答率"
+          value={t.accuracy === null ? '–' : `${Math.round(t.accuracy * 100)}%`}
+          hint="全回答のうち「正解」か「簡単」を選んだ割合（「難しい」「もう一度」は含めない）。自由練習の回答も含みます"
+        />
         <Tile label="連続日数" value={t.streak} />
       </div>
 
