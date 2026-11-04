@@ -609,12 +609,18 @@ def analyze(L: str, es: list[dict]):
 
 # ---------------------------------------------------------------- 例文
 print('indexing examples…')
+# 訳の誤り・不自然な例文の除外（data/example_exclusions.tsv。英文の ID）。除外した例文の代わりに次の候補が選ばれる
+bad_examples = set()
+with open(os.path.join(REPO, 'data', 'example_exclusions.tsv'), encoding='utf-8') as f:
+    for line in f:
+        if line.strip() and not line.startswith('#'):
+            bad_examples.add(int(line.split('\t')[0]))
 pairs = []
 with open(os.path.join(W, 'pairs.tsv'), encoding='utf-8') as f:
     for line in f:
         a, en, b, ja = line.rstrip('\n').split('\t')
         toks = tok_re.findall(en.lower())
-        if 4 <= len(toks) <= 14 and len(ja) <= 60:
+        if 4 <= len(toks) <= 14 and len(ja) <= 60 and int(a) not in bad_examples:
             pairs.append((en, ja, toks, int(a)))
 easy = set(top[:4000])
 post = defaultdict(list)
@@ -1049,6 +1055,17 @@ for m in morphemes:
     if m['type'] == 'pie':
         for x in m['members']:
             by_id[x].setdefault('family', []).append(m['id'])
+
+# 語根の物語（data/root_stories.tsv）。語根ページと語根レッスンの最初に表示する
+with open(os.path.join(REPO, 'data', 'root_stories.tsv'), encoding='utf-8') as f:
+    for n, line in enumerate(f, 1):
+        if not line.strip() or line.startswith('#'):
+            continue
+        mid, story = line.rstrip('\n').split('\t')
+        if mid not in by_id:
+            print(f'WARN root_stories.tsv:{n} 語根が見つかりません: {mid}')
+            continue
+        by_id[mid]['story'] = {'ja': story}
 
 # ---------------------------------------------------------------- 韓国語・中国語の訳（data/translations/<言語>/*.tsv）
 # 08_translation_export.py で書き出した日本語の訳などを、外部の翻訳（AI など）で訳して置く。

@@ -94,6 +94,8 @@ export interface Morpheme {
   /** この語源自体の成り立ち（語源の語源分解）: 構成する形態素ID */
   parts?: string[]
   partsNote?: { ja: string }
+  /** 語根の物語（もとの意味から各単語の意味への枝分かれ。data/root_stories.tsv） */
+  story?: { ja: string }
   /** 補足説明（不変化詞のイメージなど） */
   desc?: { ja: string } | null
   /** この語源を構成要素に含む語源 */

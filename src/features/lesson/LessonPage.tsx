@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { ArrowRight, BookOpenCheck, Check, GraduationCap, RotateCcw, Sparkles, Star, X } from 'lucide-react'
+import { ArrowRight, BookOpen, BookOpenCheck, Check, GraduationCap, RotateCcw, Sparkles, Star, X } from 'lucide-react'
 import { Suspense, useEffect, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -281,6 +281,14 @@ function Summary({
           </li>
         ))}
       </ul>
+      {root.story && (
+        <div className="w-full rounded-xl bg-accent-soft p-3 text-left text-sm leading-relaxed">
+          <div className="mb-1 flex items-center gap-1 text-xs font-medium text-accent">
+            <BookOpen className="size-3.5" /> 語根の物語
+          </div>
+          {root.story.ja}
+        </div>
+      )}
       <div className="flex w-full flex-col gap-2 sm:flex-row">
         <Button className="w-full sm:flex-1" onClick={onAdd} disabled={added !== null}>
           <GraduationCap className="size-4" /> {added === null ? `${words.length} 語を学習カードに追加` : `追加しました（+${added}）`}
