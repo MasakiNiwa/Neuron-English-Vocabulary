@@ -1,6 +1,7 @@
 import { Link, Outlet, useNavigate, useRouter, useRouterState } from '@tanstack/react-router'
+import { onDataOutdated } from '@/features/dictionary/data'
 import { scrollBehavior, useApplyMotion } from '@/lib/motion'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { warmupSearch } from '@/features/dictionary/search'
 import { CircleHelp, Moon, Sun } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -113,6 +114,21 @@ function BottomNav({ pathname }: { pathname: string }) {
   )
 }
 
+/** 辞書データが新しい版に更新されたことを知らせ、再読み込みを促す（レビュー B03） */
+function DataUpdatedBar() {
+  const [show, setShow] = useState(false)
+  useEffect(() => onDataOutdated(() => setShow(true)), [])
+  if (!show) return null
+  return (
+    <div role="status" className="flex items-center gap-2 border-b border-border bg-accent-soft px-4 py-2 text-sm">
+      <span className="flex-1">辞書データが新しくなりました。再読み込みすると最新の内容で表示されます。</span>
+      <button type="button" onClick={() => location.reload()} className="rounded-lg bg-accent px-3 py-1 text-xs font-medium text-accent-fg">
+        再読み込み
+      </button>
+    </div>
+  )
+}
+
 export function RootLayout() {
   useApplyTheme()
   useApplyMotion()
@@ -137,6 +153,7 @@ export function RootLayout() {
     <div className="flex min-h-dvh flex-col">
       <ScrollRestorer />
       <Header />
+      <DataUpdatedBar />
       <div className="flex flex-1">
         <SideNav pathname={pathname} />
         <main className="vt-main min-w-0 flex-1 pb-20 md:pb-0">

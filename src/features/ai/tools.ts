@@ -104,8 +104,12 @@ export async function runAppTool(name: string, args: Record<string, unknown>): P
       if (!useAiConfig.getState().shareLearning) return { error: 'ユーザーは学習状況を AI に共有しない設定にしています' }
       return learningSnapshot()
     case 'add_to_study': {
-      const words = Array.isArray(args.words) ? (args.words as string[]) : []
-      const keys = (await Promise.all(words.map(keyOf))).filter((k): k is string => !!k)
+      const words = Array.isArray(args.words) ? (args.words as unknown[]).filter((w): w is string => typeof w === 'string').slice(0, 20) : []
+      const keys = [...new Set((await Promise.all(words.map(keyOf))).filter((k): k is string => !!k))]
+      if (!keys.length) return { added: 0, words: [] }
+      // AI が勝手にカードを増やさないよう、追加の前に本人に確認する（一度に 20 語まで。レビュー S01）
+      if (typeof window !== 'undefined' && !window.confirm(`AI が次の ${keys.length} 語を学習カードに追加しようとしています。追加しますか？\n\n${keys.map(headword).join(', ')}`))
+        return { added: 0, declined: true, note: 'ユーザーが追加を断りました' }
       return { added: await addManyToStudy(keys), words: keys.map(headword) }
     }
   }
@@ -116,7 +120,8 @@ export async function learningSnapshot() {
   const [stats, recent, weak] = await Promise.all([
     getStudyStats(),
     db.views.orderBy('viewedAt').reverse().limit(30).toArray(),
-    db.cards.orderBy('entryId').filter((c) => c.lapses > 0).limit(10).toArray(),
+    // 全カードから「忘れた回数」が多い順に 10 語（先に 10 件に絞ってから並べると、最も苦手な語にならない）
+    db.cards.filter((c) => c.lapses > 0).toArray().then((cs) => cs.sort((a, b) => b.lapses - a.lapses || b.difficulty - a.difficulty).slice(0, 10)),
   ])
   return {
     study: stats,

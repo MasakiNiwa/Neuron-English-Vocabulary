@@ -212,6 +212,8 @@ async function completeOpenAIResponses(p: CompleteParams) {
         instructions: p.system,
         input,
         stream: true,
+        // 出力の上限を 4 社でそろえる（費用と待ち時間の見通しのため）
+        max_output_tokens: p.maxTokens ?? 16000,
         ...(previous ? { previous_response_id: previous } : {}),
         ...(tools?.length ? { tools } : {}),
       }),
@@ -270,7 +272,14 @@ async function completeOpenAICompat(p: CompleteParams, url: string, extraHeaders
       method: 'POST',
       signal: p.signal,
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${p.apiKey}`, ...extraHeaders },
-      body: JSON.stringify({ model: p.model, messages, stream: true, stream_options: { include_usage: true }, ...(tools?.length ? { tools } : {}) }),
+      body: JSON.stringify({
+        model: p.model,
+        messages,
+        stream: true,
+        stream_options: { include_usage: true },
+        max_tokens: p.maxTokens ?? 16000,
+        ...(tools?.length ? { tools } : {}),
+      }),
     })
     await ensureOk(res)
     let text = ''
@@ -335,6 +344,7 @@ async function completeGemini(p: CompleteParams) {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: p.system }] },
         contents,
+        generationConfig: { maxOutputTokens: p.maxTokens ?? 16000 },
         ...(p.tools?.length ? { tools: [{ functionDeclarations: p.tools }] } : {}),
       }),
     })

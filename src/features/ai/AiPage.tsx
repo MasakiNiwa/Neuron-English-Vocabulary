@@ -26,7 +26,8 @@ import { Card } from '@/components/ui/Card'
 import { PageSpinner } from '@/components/ui/Spinner'
 import { cn } from '@/lib/cn'
 import { db, type ChatRecord, type ChatThread } from '@/lib/db'
-import { getSpeechRecognition } from '@/lib/speech'
+import { getSpeechRecognition, type SpeechRecognitionLike } from '@/lib/speech'
+import { takeInternalAsk } from './internalAsk'
 import { headword } from '@/features/dictionary/data'
 import { useAiConfig } from './config'
 import { Markdown } from './Markdown'
@@ -508,31 +509,59 @@ function ChatView() {
     if ((!search.about && !search.q) || handledParams.current === key || !vault.unlocked) return
     handledParams.current = key
     void (async () => {
-      const title = search.about ? `${headword(search.about)}について` : (search.q ?? '新しいチャット')
+      // アプリ内のボタンから来たときだけ自動送信する。URL だけで来た場合（外部リンクなど）は入力欄への下書きにとどめ、
+      // 本人が送信ボタンを押すまで AI には何も送らない（API の費用や学習情報の送信を、リンクを開くだけで起こさない。レビュー S01）
+      const internal = takeInternalAsk(search.about, search.q)
+      const title = search.about ? `${headword(search.about)}について` : '新しいチャット'
       const t = await createThread(title, search.about)
       setCurrent(t.id)
       void navigate({ to: '/ai', search: {}, replace: true })
-      if (search.q) await send(search.q, t)
+      if (search.q && internal) await send(search.q, t)
+      else if (search.q) setInput(search.q.slice(0, 2000))
     })()
   }, [search.about, search.q, vault.unlocked])
 
   const SR = getSpeechRecognition()
+  // 音声入力の認識器。マイクをもう一度押すと止め、画面を離れたら中止する（レビュー B05）
+  const recRef = useRef<SpeechRecognitionLike | null>(null)
+  useEffect(() => () => recRef.current?.abort(), [])
   const listen = () => {
     if (!SR) return
+    if (recRef.current) {
+      recRef.current.stop()
+      return
+    }
     const rec = new SR()
+    recRef.current = rec
     rec.lang = 'ja-JP'
     rec.interimResults = false
     rec.maxAlternatives = 1
     rec.continuous = false
     setListening(true)
-    rec.onresult = (e) => setInput((v) => v + (e.results[0] as ArrayLike<{ transcript: string }>)[0].transcript)
-    rec.onend = () => setListening(false)
-    rec.onerror = () => setListening(false)
-    rec.start()
+    rec.onresult = (e) => {
+      if (recRef.current === rec) setInput((v) => v + (e.results[0] as ArrayLike<{ transcript: string }>)[0].transcript)
+    }
+    rec.onend = () => {
+      if (recRef.current !== rec) return
+      recRef.current = null
+      setListening(false)
+    }
+    rec.onerror = (e) => {
+      if (recRef.current !== rec) return
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') setError('マイクの使用が許可されていません')
+      else if (e.error === 'network') setError('音声入力にはインターネット接続が必要です')
+    }
+    try {
+      rec.start()
+    } catch {
+      recRef.current = null
+      setListening(false)
+    }
   }
 
   const pick = (id: string | null) => {
     if (busy) abortRef.current?.abort()
+    recRef.current?.abort()
     setCurrent(id)
     setDrawer(false)
     setError('')

@@ -155,6 +155,8 @@ def affix_fits(mid, mean):
 
 for path in sorted(glob.glob(os.path.join(REPO, 'public', 'data', 'entries', '*.json'))):
     for k, e in json.load(open(path, encoding='utf-8')).items():
+        if k == '_v':
+            continue  # シャードの版
         note = (e.get('note') or {}).get('ja', '')
         if not note:
             continue
@@ -181,6 +183,8 @@ if os.path.exists(idx_path) and os.path.exists(mpath):
     for path in sorted(glob.glob(os.path.join(REPO, 'public', 'data', 'entries', '*.json'))):
         shard = os.path.splitext(os.path.basename(path))[0]
         for k, e in json.load(open(path, encoding='utf-8')).items():
+            if k == '_v':
+                continue  # シャードの版
             seen_keys.add(k)
             ir = index.get(k)
             if not ir:

@@ -18,7 +18,7 @@ a = ap.parse_args()
 KATA = re.compile(r'^[゠-ヿー・]+$')
 entries = {}
 for f in glob.glob(os.path.join(a.repo, 'public/data/entries/w*.json')):
-    entries.update(json.load(open(f, encoding='utf-8')))
+    entries.update({k: v for k, v in json.load(open(f, encoding='utf-8')).items() if k != '_v'})
 rows = sorted((e for e in entries.values() if e['r'] <= a.top and not e.get('manual')), key=lambda e: e['r'])
 out = []
 for e in rows:

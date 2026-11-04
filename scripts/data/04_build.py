@@ -1029,11 +1029,20 @@ for k, e in entries.items():
     index_rows.append([k, 0 if e['t'] == 'w' else 1, e['r'], short, [g['p'] for g in e['g']], shard,
                        [p['m'] for p in (e.get('parts') or []) if p['m'] and not p['m'].startswith('w:')] + (e.get('pie') or []),
                        1 if e.get('note') else 0])
+index_rows.sort(key=lambda r: (r[1], r[2]))
+# データの版: 公開する内容（索引・形態素・詳細）のハッシュ。同じ内容なら同じ版、1 文字でも変われば別の版になる。
+# 各シャードにも版（_v）を書き込み、アプリは索引と食い違うシャードを見つけたら最新を取り直す（レビュー B03）
+import hashlib  # noqa: E402
+_h = hashlib.sha256()
+_h.update(json.dumps(index_rows, ensure_ascii=False, separators=(',', ':')).encode())
+_h.update(json.dumps(morphemes, ensure_ascii=False, separators=(',', ':')).encode())
+for name in sorted(shards):
+    _h.update(name.encode())
+    _h.update(json.dumps(shards[name], ensure_ascii=False, separators=(',', ':'), sort_keys=True).encode())
+version = _h.hexdigest()[:12]
 for name, data in shards.items():
     with open(os.path.join(OUT, 'entries', name + '.json'), 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, separators=(',', ':'))
-index_rows.sort(key=lambda r: (r[1], r[2]))
-version = datetime.now(timezone.utc).strftime('%Y%m%d')
+        json.dump({'_v': version, **data}, f, ensure_ascii=False, separators=(',', ':'))
 with open(os.path.join(OUT, 'index.json'), 'w', encoding='utf-8') as f:
     json.dump({'v': version, 'e': index_rows}, f, ensure_ascii=False, separators=(',', ':'))
 with open(os.path.join(OUT, 'morphemes.json'), 'w', encoding='utf-8') as f:

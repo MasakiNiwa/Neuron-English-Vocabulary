@@ -9,6 +9,7 @@ import { headword } from '@/features/dictionary/data'
 import { resolveRoute, useAiConfig } from './config'
 import { addExtra, extractJson, extraPrompt, moveExtra, removeExtra, sanitizeExtra } from './extras'
 import { ModelSelect } from './ModelSelect'
+import { markInternalAsk } from './internalAsk'
 import { INCOMPLETE_LABEL } from './providers'
 import { AiNotReadyError, runTask } from './service'
 import { UnlockPanel } from './UnlockPanel'
@@ -196,12 +197,13 @@ export function WordAiPanel({ entryKey }: { entryKey: string }) {
               key={x.label}
               to="/ai"
               search={{ about: entryKey, q: x.q }}
+              onClick={() => markInternalAsk(entryKey, x.q)}
               className="rounded-full border border-border px-3 py-1 text-xs hover:border-accent hover:text-accent"
             >
               {x.label}
             </Link>
           ))}
-          <Link to="/ai" search={{ about: entryKey }} className="rounded-full border border-border px-3 py-1 text-xs text-muted hover:border-accent hover:text-accent">
+          <Link to="/ai" search={{ about: entryKey }} onClick={() => markInternalAsk(entryKey, undefined)} className="rounded-full border border-border px-3 py-1 text-xs text-muted hover:border-accent hover:text-accent">
             自由に質問…
           </Link>
           {hasKeys &&

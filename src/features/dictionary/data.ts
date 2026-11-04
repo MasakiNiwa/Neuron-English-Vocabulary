@@ -115,7 +115,40 @@ export async function getEntry(key: string): Promise<Entry | null> {
   const ie = dict.byKey.get(key)
   if (!ie) return null
   const shard = await loadShard(ie.shard)
+  const v = (shard as unknown as { _v?: string })._v
+  // 索引と詳細データの版が食い違う（キャッシュに古い索引が残ったまま、新しい詳細データを取った等）か、語が見つからない。
+  // URL に版を付けても、サーバーには最新のファイルしかないので、食い違いは「見つけて取り直す」ことで防ぐ（レビュー B03）
+  if ((v && dataVersion && v !== dataVersion) || !shard[key]) return getEntryFresh(key)
   return shard[key] ?? null
+}
+
+/** キャッシュを通さずに最新の索引と詳細データを取り直して、語を探す。アプリには「辞書が更新された」と知らせる */
+async function getEntryFresh(key: string): Promise<Entry | null> {
+  try {
+    const bust = `fresh=${Date.now()}`
+    const index = await fetchJson<{ v: string; e: IndexRow[] }>(`data/index.json?${bust}`)
+    const row = index.e.find((r) => r[0] === key)
+    if (!row) return null
+    const shard = await fetchJson<Record<string, Entry>>(`data/entries/${row[5]}.json?v=${index.v}&${bust}`)
+    if (index.v !== dataVersion) notifyOutdated()
+    return shard[key] ?? null
+  } catch {
+    return null // オフラインなど。取り直せないときは見つからない扱い
+  }
+}
+
+const outdatedListeners = new Set<() => void>()
+let outdated = false
+function notifyOutdated() {
+  if (outdated) return
+  outdated = true
+  outdatedListeners.forEach((f) => f())
+}
+/** 辞書データが新しい版に更新されたことを知る（再読み込みを促す表示用） */
+export function onDataOutdated(f: () => void) {
+  if (outdated) f()
+  outdatedListeners.add(f)
+  return () => void outdatedListeners.delete(f)
 }
 
 export async function getEntries(keys: string[]): Promise<Entry[]> {

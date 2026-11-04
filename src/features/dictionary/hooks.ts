@@ -17,6 +17,8 @@ export function useEntry(key: string): Entry | null {
   if (!p) {
     p = getEntry(key)
     entryPromises.set(key, p)
+    // 失敗した取得は覚えておかない（オフラインで失敗したあと、オンラインに戻れば取り直せるように。レビュー B04）
+    p.catch(() => entryPromises.delete(key))
   }
   return use(p)
 }

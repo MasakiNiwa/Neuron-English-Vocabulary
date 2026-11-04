@@ -40,6 +40,8 @@ const components: Components = {
     </a>
   ),
   hr: () => <hr className="my-3 border-border" />,
+  // 画像は表示しない（外部の画像を読み込むと、その URL の持ち主に閲覧が伝わり、URL に含めた情報も送られうるため。レビュー S02）
+  img: ({ alt }) => <span className="text-muted">［画像{alt ? `: ${alt}` : ''}］</span>,
 }
 
 export function Markdown({ text }: { text: string }) {
