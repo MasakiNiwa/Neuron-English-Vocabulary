@@ -14,3 +14,6 @@ parts	polytechnic	poly techn ic=suf:ic
 noparts	site
 parts	situation	situ at ion=suf:ation
 noparts	miss
+# - sum・summary: ラテン語 summus（最も上の）・summa（総計）で、sumere（取る）ではない（summary は 059.tsv で修正）
+# - victim: ラテン語 victima（いけにえ）。vincere（打ち勝つ）とは別の語
+noparts	sum,victim
