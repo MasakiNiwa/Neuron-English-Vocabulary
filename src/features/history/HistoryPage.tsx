@@ -9,10 +9,12 @@ import { clearHistory, db } from '@/lib/db'
 import { usePersistentState } from '@/lib/persist'
 import { EntryLink } from '@/features/dictionary/components/links'
 import { useDictionary } from '@/features/dictionary/hooks'
+import { useGlossText } from '@/features/dictionary/localGloss'
 
 function HistoryList() {
   const { t } = useTranslation()
   const dict = useDictionary()
+  const gloss = useGlossText()
   const [limit, setLimit] = usePersistentState('history:limit', 200)
   const views = useLiveQuery(() => db.views.orderBy('viewedAt').reverse().limit(limit).toArray(), [limit])
   if (!views) return <PageSpinner />
@@ -37,7 +39,7 @@ function HistoryList() {
                   {new Date(v.viewedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
                 <EntryLink k={v.entryId} className="font-en shrink-0" />
-                <span className="min-w-0 flex-1 truncate text-sm text-muted">{dict.byKey.get(v.entryId)?.gloss}</span>
+                <span className="min-w-0 flex-1 truncate text-sm text-muted">{gloss(dict.byKey.get(v.entryId))}</span>
               </div>
             ))}
           </Card>

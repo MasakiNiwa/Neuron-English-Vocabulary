@@ -11,6 +11,7 @@ import { useMinuteTick } from '@/lib/clock'
 import { getStudyStats } from '@/features/study/session'
 import { EntryLink, LinkedText, MorphemeLink } from '@/features/dictionary/components/links'
 import { useDictionary, useEntry, useRecentEntries } from '@/features/dictionary/hooks'
+import { useGlossText } from '@/features/dictionary/localGloss'
 
 function dayIndex(n: number) {
   const d = new Date()
@@ -21,6 +22,7 @@ function dayIndex(n: number) {
 function TodayRoot() {
   const { t } = useTranslation()
   const dict = useDictionary()
+  const gloss = useGlossText()
   const roots = useMemo(() => dict.morphemes.filter((m) => m.type === 'root' && m.words.length >= 4), [dict])
   if (!roots.length) return null
   const m = roots[dayIndex(roots.length)]
@@ -35,7 +37,7 @@ function TodayRoot() {
         {m.words.slice(0, 8).map((w) => (
           <span key={w} className="text-sm">
             <EntryLink k={w} className="font-en" />
-            <span className="ml-1 text-xs text-muted">{dict.byKey.get(w)?.gloss.split('、')[0]}</span>
+            <span className="ml-1 text-xs text-muted">{gloss(dict.byKey.get(w), true)}</span>
           </span>
         ))}
       </div>
@@ -72,6 +74,7 @@ function TodayNoteCard({ entryKey }: { entryKey: string }) {
 function Recent() {
   const { t } = useTranslation()
   const dict = useDictionary()
+  const gloss = useGlossText()
   const recent = useRecentEntries(12)
   return (
     <Card>
@@ -86,7 +89,7 @@ function Recent() {
         {recent?.map((r) => (
           <span key={r.entryId} className="text-sm">
             <EntryLink k={r.entryId} className="font-en" />
-            <span className="ml-1 text-xs text-muted">{dict.byKey.get(r.entryId)?.gloss.split('、')[0]}</span>
+            <span className="ml-1 text-xs text-muted">{gloss(dict.byKey.get(r.entryId), true)}</span>
           </span>
         ))}
       </div>

@@ -197,6 +197,18 @@ def is_ja(word: str) -> bool:
     return bool(re.search(r'[぀-ヿ一-鿿]', word)) and len(word) <= 14
 
 
+def clean_tr(w: str, lang: str) -> str | None:
+    """韓国語・中国語の訳の整形。漢字の注記（예약(豫約)하다）を外し、その言語の文字を含まないもの（キリル文字など）は捨てる"""
+    w = re.sub(r'\s*[(（][^)）]*[)）]', '', w).strip()
+    if not w or len(w) > 24:
+        return None
+    if lang == 'ko' and not re.search(r'[\uac00-\ud7a3]', w):
+        return None
+    if lang == 'zh' and (not re.search(r'[\u4e00-\u9fff]', w) or re.search(r'[\u3040-\u30ff\uac00-\ud7a3\u0400-\u04ff]', w)):
+        return None
+    return w
+
+
 def collect_tr(entries: list[dict], lang: str, limit_pos=3, limit_all=7):
     """品詞ごとの訳語リスト [(pos, [訳…])]"""
     langs = {'zh': ('zh', 'cmn')}.get(lang, (lang,))
@@ -204,15 +216,22 @@ def collect_tr(entries: list[dict], lang: str, limit_pos=3, limit_all=7):
     total = 0
     for e in entries:
         seen = []
-        for s in e['senses']:
-            if not good_sense(s):
+        sense_tr = [t for s in e['senses'] if good_sense(s) for t in s.get('translations') or []]
+        # 韓国語・中国語は、語全体の訳表（Wiktionary の訳の節。主な語義の順に並ぶ）を先に使う。
+        # 語義ごとの訳は派生的な語義のものが先に来ることがある（run が「逃げる」になるなど）
+        cands = sense_tr + (e.get('translations') or []) if lang == 'ja' else (e.get('translations') or []) + sense_tr
+        for t in cands:
+            w = t.get('word')
+            if t['lang_code'] not in langs or not w:
                 continue
-            for t in s.get('translations') or []:
-                if t['lang_code'] in langs and t.get('word') and t['word'] not in seen and (lang != 'ja' or is_ja(t['word'])):
-                    seen.append(t['word'])
-        for t in e.get('translations') or []:
-            if t['lang_code'] in langs and t.get('word') and t['word'] not in seen and (lang != 'ja' or is_ja(t['word'])):
-                seen.append(t['word'])
+            if lang == 'ja' and not is_ja(w):
+                continue
+            if lang != 'ja':
+                w = clean_tr(w, lang)
+                if not w:
+                    continue
+            if w not in seen:
+                seen.append(w)
         seen = [re.sub(r'\s+', '', x) if lang == 'ja' else x for x in seen][:limit_pos]
         if seen:
             pos = POS_MAP.get(e['pos'], e['pos'])
@@ -1073,6 +1092,22 @@ with open(os.path.join(OUT, 'index.json'), 'w', encoding='utf-8') as f:
     json.dump({'v': version, 'e': index_rows}, f, ensure_ascii=False, separators=(',', ':'))
 with open(os.path.join(OUT, 'morphemes.json'), 'w', encoding='utf-8') as f:
     json.dump(morphemes, f, ensure_ascii=False, separators=(',', ':'))
+# 一覧用の韓国語・中国語の短い訳（表示言語が ko / zh のときだけ読み込む。詳細データの g[].ko / g[].zh から作る）
+# 中国語は「繁体 /简体」の形のまま入れ、アプリ側で分ける
+for lang in ('ko', 'zh'):
+    short_tr = {}
+    for k, e in entries.items():
+        seen = []
+        for g in e['g']:
+            for x in g.get(lang) or []:
+                if x not in seen:
+                    seen.append(x)
+        if seen:
+            short_tr[k] = seen[:3]
+    with open(os.path.join(OUT, f'gloss-{lang}.json'), 'w', encoding='utf-8') as f:
+        json.dump({'v': version, 'g': short_tr}, f, ensure_ascii=False, separators=(',', ':'), sort_keys=True)
+
+
 def source_info():
     """
     元データの版の記録（ROADMAP T04）。ファイル名・サイズ・SHA-256 と、使ったツールの版。

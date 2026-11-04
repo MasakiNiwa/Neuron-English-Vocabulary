@@ -22,6 +22,7 @@ import { ReviewSession } from './ReviewSession'
 import { useStudySession } from './sessionStore'
 import { formatOptions, type StudyFormat } from './formats'
 import { buildPracticeQueue, buildQueue, getStudyStats, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
+import { useGlossText } from '@/features/dictionary/localGloss'
 
 const STATE_LABEL = ['新規', '学習中', '復習', '再学習']
 
@@ -36,6 +37,7 @@ function Stat({ label, value }: { label: string; value: number | string }) {
 
 function CardList() {
   const dict = useDictionary()
+  const gloss = useGlossText()
   const [limit, setLimit] = useState(100)
   const cards = useLiveQuery(() => db.cards.orderBy('due').limit(limit).toArray(), [limit])
   const total = useLiveQuery(() => db.cards.count(), [])
@@ -50,7 +52,7 @@ function CardList() {
           return (
             <div key={c.entryId} className="flex items-center gap-2 py-2 text-sm">
               <EntryLink k={c.entryId} className="font-en w-32 shrink-0 truncate" />
-              <span className="min-w-0 flex-1 truncate text-xs text-muted">{dict.byKey.get(c.entryId)?.gloss}</span>
+              <span className="min-w-0 flex-1 truncate text-xs text-muted">{gloss(dict.byKey.get(c.entryId))}</span>
               <span className="w-12 shrink-0 text-right text-[11px] text-muted">{STATE_LABEL[c.state]}</span>
               <span className="w-14 shrink-0 text-right font-mono text-[11px] text-muted">
                 {c.state === 0 ? '-' : c.due <= now.getTime() ? '期限' : formatInterval(new Date(c.due), now)}
