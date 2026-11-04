@@ -16,6 +16,13 @@ export const dataSources: DataSource[] = [
     usage: '頻出語リスト・頻度順位 (Browne, C., Culligan, B. & Phillips, J.)',
   },
   {
+    name: 'TOEIC Service List (TSL) 1.2',
+    url: 'https://www.newgeneralservicelist.com/toeic-service-list',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    usage: 'TOEIC で特に多い語と、TOEIC のレベルの目安の推定 (Browne, C. & Culligan, B.)',
+  },
+  {
     name: 'wordfreq',
     url: 'https://github.com/rspeer/wordfreq',
     license: 'CC BY-SA 4.0 (data) / Apache-2.0 (code)',

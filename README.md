@@ -76,5 +76,5 @@ npm run build      # 本番ビルド（dist/）
 
 - ソースコード: [MIT License](LICENSE)
 - 単語データ（`public/data/` および `data/`）: [CC BY-SA 4.0](data/LICENSE.md)
-  - NGSL, wordfreq, Wiktionary (CC BY-SA 4.0)、Tatoeba (CC BY 2.0 FR) を加工したもの
+  - NGSL・TOEIC Service List, wordfreq, Wiktionary (CC BY-SA 4.0)、Tatoeba (CC BY 2.0 FR) を加工したもの
 - 利用ライブラリのライセンスはビルド時に自動収集され、アプリのヘルプページに表示されます。

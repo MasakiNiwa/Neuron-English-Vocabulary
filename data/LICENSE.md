@@ -11,6 +11,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 | データ | 出典 | ライセンス | 用途 |
 |---|---|---|---|
 | New General Service List (NGSL) 1.2 | Browne, C., Culligan, B. & Phillips, J. — https://www.newgeneralservicelist.com/ | CC BY-SA 4.0 | 頻出語リスト、見出し語と活用形の対応 |
+| TOEIC Service List (TSL) 1.2 | Browne, C. & Culligan, B. — https://www.newgeneralservicelist.com/toeic-service-list | CC BY-SA 4.0 | TOEIC で特に多い語、TOEIC のレベルの目安の推定 |
 | wordfreq | Robyn Speer — https://github.com/rspeer/wordfreq | CC BY-SA 4.0（データ） | 単語の頻度順位 |
 | Wiktionary | Wiktionary contributors — https://en.wiktionary.org/ （Wiktextract / kaikki.org 経由、Tatu Ylonen） | CC BY-SA 4.0 | 品詞、発音記号、英語の定義、語源、訳語（日・韓・中）、類義語・反義語・派生語、熟語 |
 | JMdict | Electronic Dictionary Research and Development Group — https://www.edrdg.org/jmdict/j_jmdict.html | CC BY-SA 4.0 | Wiktionary に日本語訳がない語の訳語の補完（逆引き） |

@@ -269,6 +269,17 @@ function EntryView({ entryKey }: { entryKey: string }) {
               {entry.t === 'p' ? '熟語' : t('words.rank')} #{entry.r}
             </span>
             {entry.ngsl && <span className="rounded-md bg-accent-soft px-1.5 text-xs text-accent">NGSL</span>}
+            {entry.toeic && (
+              <Link
+                to="/words"
+                search={{ c: 't' + entry.toeic.lv }}
+                className="rounded-md bg-surface-2 px-1.5 text-xs hover:text-accent"
+                title="TOEIC のレベルの目安（一般の頻度と TOEIC Service List から推定）"
+              >
+                TOEIC {entry.toeic.lv}
+                {entry.toeic.tsl && <span className="ml-1 text-accent">頻出</span>}
+              </Link>
+            )}
           </div>
         </div>
         <StudyButton entryKey={entry.k} />
