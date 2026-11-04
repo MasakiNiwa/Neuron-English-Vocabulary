@@ -44,6 +44,11 @@ export function SigmaGraph({
       labelDensity: 0.8,
       zIndex: true,
       defaultEdgeColor: cs.getPropertyValue('--edge').trim(),
+      // 線のラベル（何のつながりか）は、点にカーソルを合わせたときだけその点の線に出す（U06）
+      renderEdgeLabels: true,
+      edgeLabelSize: 11,
+      edgeLabelColor: { color: muted },
+      edgeLabelFont: 'Inter, "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif',
       minCameraRatio: 0.08,
       maxCameraRatio: 6,
       defaultDrawNodeHover: (ctx, data, settings) => {
@@ -94,9 +99,9 @@ export function SigmaGraph({
         if (hovered) {
           const [s, t] = graph.extremities(edge)
           if (s !== hovered && t !== hovered) return { ...data, hidden: true }
-          return { ...data, color: cs.getPropertyValue('--edge-strong').trim(), size: (data.size ?? 1) + 0.5 }
+          return { ...data, color: cs.getPropertyValue('--edge-strong').trim(), size: (data.size ?? 1) + 0.5, forceLabel: true }
         }
-        return data
+        return { ...data, label: '' }
       },
     })
 

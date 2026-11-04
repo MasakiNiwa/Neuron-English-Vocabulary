@@ -10,7 +10,7 @@ import { useDictionary } from '@/features/dictionary/hooks'
 import { searchDictionary, type SearchHit } from '@/features/dictionary/search'
 import { morphLabel } from '@/features/dictionary/components/links'
 import { useResolvedTheme } from '@/lib/theme'
-import { buildEntryGraph, buildMorphGraph, buildMorphemeMap, readPalette, type NetGraph, type NodeAttrs } from './graph'
+import { buildEntryGraph, buildMorphGraph, buildMorphemeMap, EDGE_LABEL, readPalette, type EdgeKind, type NetGraph, type NodeAttrs } from './graph'
 import { SigmaGraph } from './SigmaGraph'
 import type { NetworkSearch } from './search'
 
@@ -46,9 +46,8 @@ function Legend() {
 
 const entryGraphCache = new Map<string, Promise<NetGraph | null>>()
 
-function EgoGraph({ focus, onSelect }: { focus: string; onSelect: (id: string, a: NodeAttrs) => void }) {
-  const dict = useDictionary()
-  const theme = useResolvedTheme()
+/** 探索モードのグラフ（中心の語・語根ごとにキャッシュ。グラフ表示とつながり一覧で共有する） */
+function egoGraphPromise(dict: ReturnType<typeof useDictionary>, theme: string, focus: string) {
   const cacheKey = `${theme}|${focus}`
   let p = entryGraphCache.get(cacheKey)
   if (!p) {
@@ -61,9 +60,63 @@ function EgoGraph({ focus, onSelect }: { focus: string; onSelect: (id: string, a
     entryGraphCache.set(cacheKey, p)
     if (entryGraphCache.size > 30) entryGraphCache.delete(entryGraphCache.keys().next().value!)
   }
-  const graph = use(p)
+  return p
+}
+
+function EgoGraph({ focus, onSelect }: { focus: string; onSelect: (id: string, a: NodeAttrs) => void }) {
+  const dict = useDictionary()
+  const theme = useResolvedTheme()
+  const graph = use(egoGraphPromise(dict, theme, focus))
   if (!graph) return null
   return <SigmaGraph graph={graph} onNodeClick={onSelect} labelThreshold={0} />
+}
+
+/**
+ * 中心の語・語根のつながりを、種類ごとの一覧で示す（U06）。
+ * タップできない・ホバーできない環境や、キーボード・読み上げでもネットワークを辿れるようにする
+ */
+function ConnectionList({ focus, onPick }: { focus: string; onPick: (id: string) => void }) {
+  const dict = useDictionary()
+  const theme = useResolvedTheme()
+  const graph = use(egoGraphPromise(dict, theme, focus))
+  if (!graph || !graph.hasNode(focus)) return null
+  const groups = new Map<EdgeKind, { id: string; label: string; sub: string }[]>()
+  graph.forEachEdge(focus, (_e, attrs, s, t) => {
+    const other = s === focus ? t : s
+    const a = graph.getNodeAttributes(other)
+    const list = groups.get(attrs.kind) ?? []
+    list.push({ id: other, label: a.label, sub: a.sub })
+    groups.set(attrs.kind, list)
+  })
+  const total = [...groups.values()].reduce((n, l) => n + l.length, 0)
+  if (!total) return null
+  return (
+    <details className="mt-2 border-t border-border pt-2 text-sm">
+      <summary className="cursor-pointer select-none text-xs text-muted">つながり一覧（{total}）</summary>
+      <div className="mt-2 flex max-h-56 flex-col gap-2 overflow-y-auto">
+        {[...groups].map(([kind, list]) => (
+          <section key={kind}>
+            <h3 className="mb-1 text-[11px] font-medium text-muted">{EDGE_LABEL[kind]}</h3>
+            <ul className="flex flex-wrap gap-1">
+              {list.map((x) => (
+                <li key={x.id}>
+                  <button
+                    type="button"
+                    onClick={() => onPick(x.id)}
+                    className="rounded-full border border-border px-2 py-0.5 text-xs hover:border-accent hover:text-accent"
+                    title={x.sub}
+                  >
+                    <span className="font-en">{x.label}</span>
+                    {x.sub && <span className="ml-1 text-muted">{x.sub}</span>}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </details>
+  )
 }
 
 function MapGraph({ onSelect }: { onSelect: (id: string, a: NodeAttrs) => void }) {
@@ -218,6 +271,9 @@ function NetworkInner() {
         {mode === 'ego' && (
           <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-border bg-surface/95 p-3 shadow-lg backdrop-blur md:inset-x-auto md:right-4 md:w-96">
             <FocusPanel focus={focus} />
+            <Suspense fallback={null}>
+              <ConnectionList focus={focus} onPick={setFocus} />
+            </Suspense>
           </div>
         )}
         {mode === 'map' && (

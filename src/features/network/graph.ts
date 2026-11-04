@@ -23,8 +23,20 @@ export interface NodeAttrs {
   color: string
   focus?: boolean
 }
+/** 線（つながり）の種類の名前。ホバー時のラベルと、つながり一覧の見出しに使う（ROADMAP U06） */
+export const EDGE_LABEL: Record<EdgeKind, string> = {
+  morph: '語源（語根・接辞）',
+  syn: '類義語',
+  ant: '反義語',
+  der: '派生語・もとの語',
+  phrase: '熟語・構成語',
+  rel: '関連語',
+  co: '同じ語に含まれる語根',
+}
+
 export interface EdgeAttrs {
   kind: EdgeKind
+  label?: string
   weight: number
   size: number
   color: string
@@ -107,6 +119,7 @@ function link(g: NetGraph, a: string | null, b: string | null, kind: EdgeKind, p
   if (!a || !b || a === b || g.hasEdge(a, b) || g.hasEdge(b, a)) return
   g.addEdge(a, b, {
     kind,
+    label: EDGE_LABEL[kind],
     weight,
     size: kind === 'morph' ? 1.6 : 1,
     color: kind === 'morph' ? pal.edgeStrong : pal.edge,
@@ -206,7 +219,7 @@ export function buildMorphemeMap(dict: Dictionary, pal: Palette, minShared = 1):
   for (const [k, c] of pairCount) {
     if (c < minShared) continue
     const [a, b] = k.split('|')
-    g.addEdge(nodeId.morph(a), nodeId.morph(b), { kind: 'co', weight: c, size: Math.min(3, 0.4 + c / 4), color: pal.edge })
+    g.addEdge(nodeId.morph(a), nodeId.morph(b), { kind: 'co', label: `共通の語 ${c}`, weight: c, size: Math.min(3, 0.4 + c / 4), color: pal.edge })
   }
   g.forEachNode((id) => {
     if (g.degree(id) === 0) g.dropNode(id)
