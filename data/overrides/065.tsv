@@ -1,0 +1,30 @@
+# in-（否定 pre:in）と in-（中へ pre:into）の取り違えを直す（ROADMAP「pre:in と pre:into の監査」）。
+# 否定の in-: 〜でない（impossible, innocent, integer〈触れられていない〉, immune, infant〈話せない〉など）
+# 中への in-: 中へ・上に（inform, invest, install, insect〈切り込まれた〉, increment など）
+parts	intense	in=pre:into tens=r:tend e
+parts	immigrant	im=pre:into migr=r:migr ant=suf:ant
+parts	incorporate	in=pre:into corporate=w:corporate
+parts	insect	in=pre:into sect=r:sect
+parts	initiate	in=pre:into it=r:it i ate=suf:ate
+parts	incentive	in=pre:into cent ive=suf:ive
+parts	influx	in=pre:into flux=r:flu
+parts	intuition	in=pre:into tuit ion=suf:ation
+parts	indict	in=pre:into dict=r:dict
+parts	implicate	im=pre:into plic=r:plic ate=suf:ate
+parts	illuminate	il=pre:into lumin=r:lumin ate
+parts	insurrection	in=pre:into sur rect=r:reg ion=suf:ation
+parts	increment	in=pre:into cre ment=suf:ment
+parts	infect	in=pre:into fect=r:fac
+parts	inability	in=pre:in ability=w:ability
+parts	instability	in=pre:in stability=w:stability
+parts	insecurity	in=pre:in secu=r:sequ r ity=suf:ity
+parts	imperfection	im=pre:in per fect=r:fac ion=suf:ation
+parts	immortality	im=pre:in mort=r:mort al ity=suf:ity
+parts	ignorance	i=pre:in gnor=r:gno ance=suf:ance
+parts	inpatient	in=w:in patient=w:patient
+parts	intermediate	inter=pre:inter medi=r:medi ate=suf:ate
+parts	interrupt	inter=pre:inter rupt=r:rupt
+parts	interruption	inter=pre:inter rupt=r:rupt ion=suf:ation
+parts	intermediary	inter=pre:inter medi=r:medi ary=suf:ary
+parts	intact	in=pre:in tact=r:tact
+parts	integral	in=pre:in teg=r:tact ral

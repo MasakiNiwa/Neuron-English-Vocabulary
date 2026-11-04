@@ -301,7 +301,7 @@ parts	realist	real=w:real ist=suf:ist
 parts	unprofessional	un=pre:un professional=w:professional
 parts	awkwardly	awkward=w:awkward ly=suf:ly
 parts	customization	customiz=w:customize ation=suf:ation
-parts	inbound	in=pre:in bound=w:bound
+parts	inbound	in=w:in bound=w:bound
 parts	intolerant	in=pre:in tolerant=w:tolerant
 parts	manipulative	manipulat=w:manipulate ive=suf:ive
 parts	marginally	marginal=w:marginal ly=suf:ly

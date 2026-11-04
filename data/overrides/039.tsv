@@ -245,7 +245,7 @@ parts	freedom	free=w:free dom=suf:dom
 parts	powerful	power=w:power ful=suf:ful
 parts	awesome	awe=w:awe some=suf:some
 parts	protection	pro=pre:pro tect ion
-parts	investment	in=pre:in vest=w:vest ment=suf:ment
+parts	investment	in=pre:into vest=w:vest ment=suf:ment
 parts	equipment	equip=w:equip ment=suf:ment
 parts	environment	environ ment=suf:ment
 parts	computer	com=pre:com put er=suf:er

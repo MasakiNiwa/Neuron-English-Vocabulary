@@ -123,6 +123,22 @@ for p in sorted(glob.glob(os.path.join(REPO, 'data', 'explanations', '*.tsv'))):
         noted[r[0]] = at
         check_head(r[0], at)
 
+# ---- 解説と語源分解で、接頭辞 in- の意味（否定 / 中へ）が食い違っていないか（公開データがあれば）
+# 例: 解説は「in（中へ）」なのに語源分解が pre:in（否定）になっている
+import re  # noqa: E402
+NEG_NOTE = re.compile(r'(^|[^a-z])(in|im|il|ir|i)（否定）')
+INTO_NOTE = re.compile(r'(^|[^a-z])(in|im|il|ir)（(中へ|中に|中の|上に|〜へ|〜に)）')
+for path in sorted(glob.glob(os.path.join(REPO, 'public', 'data', 'entries', '*.json'))):
+    for k, e in json.load(open(path, encoding='utf-8')).items():
+        note = (e.get('note') or {}).get('ja', '')
+        ids = {p_.get('m') for p_ in e.get('parts') or []}
+        if not note:
+            continue
+        if 'pre:into' in ids and 'pre:in' not in ids and NEG_NOTE.search(note) and not INTO_NOTE.search(note):
+            errors.append(f'{k}: 解説では in-（否定）ですが、語源分解が pre:into（中へ）です')
+        if 'pre:in' in ids and 'pre:into' not in ids and INTO_NOTE.search(note) and not NEG_NOTE.search(note):
+            errors.append(f'{k}: 解説では in-（中へ）ですが、語源分解が pre:in（否定）です')
+
 for w in warnings:
     print('WARN', w)
 for e in errors:

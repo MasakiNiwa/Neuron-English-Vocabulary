@@ -219,7 +219,7 @@ gloss	celebrity	noun:有名人、名声
 parts	congratulations	con=pre:com gratul=r:grat ation=suf:ation s
 parts	delay	de=pre:de lay
 parts	downtown	down=w:down town=w:town
-parts	install	in=pre:in stall=w:stall
+parts	install	in=pre:into stall=w:stall
 parts	layer	lay=w:lay er=suf:er
 parts	nowhere	no=w:no where=w:where
 parts	ownership	owner=w:owner ship=suf:ship
@@ -275,8 +275,8 @@ parts	desperate	de=pre:de sper ate=suf:ate
 parts	feedback	feed=w:feed back=w:back
 parts	fighter	fight=w:fight er=suf:er
 parts	humanity	human=w:human ity=suf:ity
-parts	innovation	in=pre:in nov=r:nov ation=suf:ation
-parts	invest	in=pre:in vest=w:vest
+parts	innovation	in=pre:into nov=r:nov ation=suf:ation
+parts	invest	in=pre:into vest=w:vest
 parts	occupy	oc=pre:ob cupy=r:cap
 parts	operator	oper=r:oper ator
 parts	painful	pain=w:pain ful=suf:ful
@@ -289,7 +289,7 @@ parts	database	data=w:data base=w:base
 parts	discrimination	discrimin=w:discriminate ation=suf:ation
 parts	documentary	document=w:document ary=suf:ary
 parts	implementation	implement=w:implement ation=suf:ation
-parts	investigate	in=pre:in vestig ate=suf:ate
+parts	investigate	in=pre:into vestig ate=suf:ate
 parts	laboratory	labor=r:labor atory
 parts	literary	liter=r:liter ary=suf:ary
 parts	midnight	mid night=w:night
@@ -297,7 +297,7 @@ parts	stability	stab=r:sta ility
 parts	darkness	dark=w:dark ness=suf:ness
 parts	goodbye	good=w:good bye=w:bye
 parts	hardware	hard=w:hard ware
-parts	involvement	in=pre:in volve=r:volv ment=suf:ment
+parts	involvement	in=pre:into volve=r:volv ment=suf:ment
 parts	partly	part=w:part ly=suf:ly
 parts	similarly	similar=w:similar ly=suf:ly
 parts	wisdom	wis=w:wise dom=suf:dom
