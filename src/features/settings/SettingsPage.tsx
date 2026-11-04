@@ -1,4 +1,5 @@
 import { Database, GraduationCap, Palette, Volume2 } from 'lucide-react'
+import { countCachedShards, prefetchAllShards } from '@/features/dictionary/data'
 import { Suspense, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
@@ -23,6 +24,47 @@ function StorageInfo() {
     <span className="text-sm text-muted">
       {mb(est.usage)} / {mb(est.quota)}
     </span>
+  )
+}
+
+/** 辞書の詳細データをオフライン用にまとめて保存する（ROADMAP T01） */
+function OfflinePrep() {
+  const [state, setState] = useState<{ cached: number; total: number } | null | undefined>(undefined)
+  const [busy, setBusy] = useState<{ done: number; total: number } | null>(null)
+  const [msg, setMsg] = useState('')
+  const refresh = () => void countCachedShards().then(setState)
+  useEffect(refresh, [])
+  if (state === null) return <span className="text-xs text-muted">この環境ではオフライン保存を使えません</span>
+  const complete = state && state.cached >= state.total
+  return (
+    <div className="flex flex-col items-end gap-1">
+      <Button
+        size="sm"
+        disabled={!!busy || complete}
+        onClick={async () => {
+          setMsg('')
+          try {
+            await prefetchAllShards((done, total) => setBusy({ done, total }))
+            setMsg('保存しました')
+          } catch (e) {
+            setMsg(`保存できませんでした: ${e instanceof Error ? e.message : String(e)}`)
+          } finally {
+            setBusy(null)
+            refresh()
+            // Service Worker のキャッシュへの書き込みは少し遅れて終わるので、もう一度数え直す
+            setTimeout(refresh, 1500)
+          }
+        }}
+      >
+        {busy ? `保存中… ${busy.done} / ${busy.total}` : complete ? '保存済み' : 'すべて保存'}
+      </Button>
+      {state && !busy && (
+        <span className="text-[11px] text-muted">
+          保存済み {state.cached} / {state.total}
+          {msg && `（${msg}）`}
+        </span>
+      )}
+    </div>
   )
 }
 
@@ -209,6 +251,9 @@ export function SettingsPage() {
         <AccordionSection value="data" title={t('settings.data')} icon={<Database className="size-5" />}>
           <Row label={t('settings.storage')}>
             <StorageInfo />
+          </Row>
+          <Row label="辞書をオフライン用に保存">
+            <OfflinePrep />
           </Row>
           <Row label={t('settings.exportData')}>
             <Button size="sm" onClick={doExport}>
