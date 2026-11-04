@@ -2,6 +2,7 @@ import { Link, useParams } from '@tanstack/react-router'
 import { ArrowRight, BookmarkPlus, Check, History, Mic } from 'lucide-react'
 import { Suspense, useEffect, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { TFunction } from 'i18next'
 import { Card, SectionTitle } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { speak } from '@/lib/speech'
@@ -15,25 +16,23 @@ import { PageSpinner } from '@/components/ui/Spinner'
 import { WordAiPanel } from '@/features/ai/WordAiPanel'
 import { SpeakCheck, SpeakableRow } from '@/features/speech/SpeakCheck'
 import { speechRecognitionSupported } from '@/features/speech/useSpeechCheck'
+import { useGlossText } from './localGloss'
+import { dataLang, joinWords, localWords } from '@/lib/lang'
+import { useLang } from '@/lib/useLang'
 
-const POS_LABEL: Record<string, string> = {
-  noun: '名',
-  verb: '動',
-  adj: '形',
-  adv: '副',
-  prep: '前',
-  conj: '接',
-  pron: '代',
-  det: '限',
-  intj: '間',
-  num: '数',
-  phrase: '句',
+const POS_KEYS = ['noun', 'verb', 'adj', 'adv', 'prep', 'conj', 'pron', 'det', 'intj', 'num', 'phrase'] as const
+type PosKey = (typeof POS_KEYS)[number] | 'other'
+/** 品詞の略号（表示言語に合わせる） */
+function posLabel(t: TFunction, p: string): string {
+  const k: PosKey = (POS_KEYS as readonly string[]).includes(p) ? (p as PosKey) : 'other'
+  return t(`pos.${k}`)
 }
 
 function PosBadge({ p }: { p: string }) {
+  const { t } = useTranslation()
   return (
     <span className="inline-flex size-6 shrink-0 items-center justify-center rounded-md bg-surface-2 text-xs text-muted">
-      {POS_LABEL[p] ?? '他'}
+      {posLabel(t, p)}
     </span>
   )
 }
@@ -70,6 +69,7 @@ function mainGloss(entry: Entry) {
 /** 語の成り立ち: con（共に）+ struct（築く）→ 建設する */
 function PartsView({ entry }: { entry: Entry }) {
   const dict = useDictionary()
+  const gloss = useGlossText()
   const parts = entry.parts ?? []
   return (
     <Card>
@@ -77,7 +77,7 @@ function PartsView({ entry }: { entry: Entry }) {
         {parts.map((p, i) => {
           const m = p.m && !p.m.startsWith('w:') ? dict.morphById.get(p.m) : null
           const base = p.m?.startsWith('w:') ? p.m.slice(2).replace(/ /g, '_') : null
-          const baseGloss = base ? dict.byKey.get(base)?.gloss.split('、')[0] : null
+          const baseGloss = base ? gloss(dict.byKey.get(base), true) : null
           return (
             <div key={i} className="flex items-center gap-1.5">
               {i > 0 && <span className="text-muted">+</span>}
@@ -121,6 +121,7 @@ function PartsView({ entry }: { entry: Entry }) {
 
 function SameRoot({ entry }: { entry: Entry }) {
   const dict = useDictionary()
+  const gloss = useGlossText()
   const { t } = useTranslation()
   const ms = [
     ...(entry.parts ?? []).map((p) => (p.m && !p.m.startsWith('w:') ? dict.morphById.get(p.m) : undefined)),
@@ -148,7 +149,7 @@ function SameRoot({ entry }: { entry: Entry }) {
                 .map((w) => (
                   <span key={w} className="text-sm">
                     <EntryLink k={w} className="font-en" />
-                    <span className="ml-1 text-xs text-muted">{dict.byKey.get(w)?.gloss.split('、')[0]}</span>
+                    <span className="ml-1 text-xs text-muted">{gloss(dict.byKey.get(w), true)}</span>
                   </span>
                 ))}
             </div>
@@ -212,6 +213,7 @@ function StudyButton({ entryKey }: { entryKey: string }) {
 function EntryView({ entryKey }: { entryKey: string }) {
   const { t } = useTranslation()
   const entry = useEntry(entryKey)
+  const lang = useLang()
   const autoSpeak = useSettings((s) => s.autoSpeak)
   // 見出し語の発音チェック欄（別の語へ移ったら閉じる）
   const [practice, setPractice] = useState(false)
@@ -257,7 +259,7 @@ function EntryView({ entryKey }: { entryKey: string }) {
                 <span key={x.ipa} className="inline-flex items-baseline gap-1">
                   <span className="font-en">{x.ipa}</span>
                   <span className="text-xs">
-                    {x.p?.map((p) => POS_LABEL[p] ?? '他').join('・')}
+                    {x.p?.map((p) => posLabel(t, p)).join('・')}
                     {x.ja && `「${x.ja}」`}
                   </span>
                 </span>
@@ -292,12 +294,25 @@ function EntryView({ entryKey }: { entryKey: string }) {
 
       <Section title={t('words.meaning')}>
         <Card className="flex flex-col gap-2 p-3">
-          {entry.g.map((g, i) => (
-            <div key={i} className="flex items-start gap-2">
-              <PosBadge p={g.p} />
-              <span>{g.ja.join('、')}</span>
-            </div>
-          ))}
+          {entry.g.map((g, i) => {
+            const d = dataLang(lang)
+            const local = d ? localWords(g[d], lang) : []
+            return (
+              <div key={i} className="flex items-start gap-2">
+                <PosBadge p={g.p} />
+                {local.length ? (
+                  <span className="flex min-w-0 flex-col">
+                    <span lang={lang}>{joinWords(local, lang)}</span>
+                    <span lang="ja" className="text-xs text-muted">
+                      {t('words.meaningJa')}: {g.ja.join('、')}
+                    </span>
+                  </span>
+                ) : (
+                  <span lang="ja">{g.ja.join('、')}</span>
+                )}
+              </div>
+            )
+          })}
           {!!entry.d?.length && (
             <details className="mt-1 text-sm">
               <summary className="cursor-pointer text-xs text-muted">English definitions</summary>

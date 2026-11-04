@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { Page } from '@/components/ui/Page'
 import { clearHistory, clearStudy } from '@/lib/db'
 import { buildBackup, clearEverything, parseBackup, restoreBackup, TABLE_LABEL, BACKUP_TABLES, type ParsedBackup } from './backup'
-import { supportedLanguages } from '@/lib/i18n'
+import { deviceLang, LANGS, langLabel, type LangSetting } from '@/lib/lang'
 import { speak, ttsSupported, useEnglishVoices } from '@/lib/speech'
 import { useSettings, type ThemeMode } from '@/stores/settings'
 import { settingsExtensions } from './extensions'
@@ -148,9 +148,10 @@ export function SettingsPage() {
               ]}
             />
           </Row>
-          <Row label={t('settings.language')}>
-            <select className={selectClass} value={s.language} onChange={(e) => s.set('language', e.target.value as never)}>
-              {supportedLanguages.map((l) => (
+          <Row label={t('settings.language')} hint={t('settings.languageNote')}>
+            <select className={selectClass} value={s.language} onChange={(e) => s.set('language', e.target.value as LangSetting)}>
+              <option value="auto">{t('settings.languageAuto', { lang: langLabel(deviceLang()) })}</option>
+              {LANGS.map((l) => (
                 <option key={l.code} value={l.code}>
                   {l.label}
                 </option>

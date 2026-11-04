@@ -36,7 +36,7 @@ export function rowToEntry(r: IndexRow): IndexEntry {
   }
 }
 
-async function fetchJson<T>(path: string): Promise<T> {
+export async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(assetUrl(path))
   if (!res.ok) throw new Error(`failed to load ${path}: ${res.status}`)
   return (await res.json()) as T

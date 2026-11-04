@@ -13,6 +13,7 @@ import { useResolvedTheme } from '@/lib/theme'
 import { buildEntryGraph, buildMorphGraph, buildMorphemeMap, EDGE_LABEL, readPalette, type EdgeKind, type NetGraph, type NodeAttrs } from './graph'
 import { SigmaGraph } from './SigmaGraph'
 import type { NetworkSearch } from './search'
+import { useGlossText } from '@/features/dictionary/localGloss'
 
 const KIND_LABEL: Record<string, string> = {
   word: '単語',
@@ -128,6 +129,7 @@ function MapGraph({ onSelect }: { onSelect: (id: string, a: NodeAttrs) => void }
 
 function FocusPanel({ focus }: { focus: string }) {
   const dict = useDictionary()
+  const gloss = useGlossText()
   const { t } = useTranslation()
   if (focus.startsWith('m:')) {
     const m = dict.morphById.get(focus.slice(2))
@@ -162,7 +164,7 @@ function FocusPanel({ focus }: { focus: string }) {
       <div className="min-w-0 flex-1">
         <div className="text-[11px] text-muted">{ie.type === 'p' ? '熟語' : '単語'}</div>
         <div className="font-en truncate text-lg font-semibold">{headword(key)}</div>
-        <div className="truncate text-sm text-muted">{ie.gloss}</div>
+        <div className="truncate text-sm text-muted">{gloss(ie)}</div>
       </div>
       <Link
         to="/e/$key"
@@ -179,6 +181,7 @@ function FocusSearch({ onPick }: { onPick: (focus: string) => void }) {
   const [q, setQ] = useState('')
   const [hits, setHits] = useState<SearchHit[]>([])
   const dict = useDictionary()
+  const gloss = useGlossText()
   useEffect(() => {
     if (!q.trim()) return setHits([])
     let alive = true
@@ -199,7 +202,7 @@ function FocusSearch({ onPick }: { onPick: (focus: string) => void }) {
                     const m = dict.morphById.get(h.key)
                     return m ? `${morphLabel(m)}  ${m.meaning.ja}` : h.key
                   })()
-                : `${headword(h.key)}  ${dict.byKey.get(h.key)?.gloss ?? ''}`
+                : `${headword(h.key)}  ${gloss(dict.byKey.get(h.key))}`
             return (
               <li key={h.kind + h.key}>
                 <button
