@@ -376,7 +376,7 @@ parts	ballpark	ball=w:ball park=w:park
 parts	broaden	broad=w:broad en=suf:en
 parts	cameraman	camera=w:camera man=w:man
 parts	considerate	con=pre:com sider=r:sider ate=suf:ate
-parts	exhaustive	ex=pre:ex haust ive=suf:ive
+parts	exhaustive	ex=pre:ex haust=r:haust ive=suf:ive
 parts	exporter	ex=pre:ex port=r:port er=suf:er
 parts	hastily	hasti=w:hasty ly=suf:ly
 parts	overtake	over=w:over take=w:take

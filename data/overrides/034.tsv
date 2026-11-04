@@ -332,7 +332,7 @@ parts	remuneration	re=pre:re muner=r:mun ation=suf:ation
 parts	richness	rich=w:rich ness=suf:ness
 parts	strategist	strateg=w:strategy ist=suf:ist
 parts	typewriter	type=w:type writ=w:write er=suf:er
-parts	undisputed	un=pre:un dis=pre:dis put ed
+parts	undisputed	un=pre:un dis=pre:dis put=r:put ed
 parts	worldview	world=w:world view=w:view
 parts	wrongdoing	wrong=w:wrong do=w:do ing
 parts	antidote	anti=pre:anti dote=r:dat

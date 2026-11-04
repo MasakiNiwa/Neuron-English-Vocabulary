@@ -599,7 +599,7 @@ parts	reconsider	re=pre:re con=pre:com sider=r:sider
 parts	subdivision	sub=pre:sub di=pre:dis vis ion=suf:ation
 parts	unavailable	un=pre:un a=pre:ad vail=r:val able=suf:able
 parts	unlucky	un=pre:un luck=w:luck y=suf:y
-parts	assert	as=pre:ad sert
+parts	assert	as=pre:ad sert=r:sert
 parts	beforehand	before=w:before hand=w:hand
 parts	demolition	de=pre:de mol ition=suf:ation
 parts	downstream	down=w:down stream=w:stream

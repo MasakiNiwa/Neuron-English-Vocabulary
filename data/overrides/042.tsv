@@ -258,7 +258,7 @@ parts	everyday	every=w:every day=w:day
 parts	immigration	im=pre:into migr=r:migr ation=suf:ation
 parts	killer	kill=w:kill er=suf:er
 parts	membership	member=w:member ship=suf:ship
-parts	reputation	re=pre:re put ation=suf:ation
+parts	reputation	re=pre:re put=r:put ation=suf:ation
 parts	atmosphere	atmo sphere=w:sphere
 parts	awful	aw=w:awe ful=suf:ful
 parts	bedroom	bed=w:bed room=w:room

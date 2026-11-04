@@ -255,7 +255,7 @@ parts	installation	install=w:install ation=suf:ation
 parts	legislature	legis=r:lex lat=r:lat ure=suf:ure
 parts	liability	li abil ity=suf:ity
 parts	moreover	more=w:more over=w:over
-parts	preliminary	pre=pre:pre limin ary=suf:ary
+parts	preliminary	pre=pre:pre limin=r:limin ary=suf:ary
 parts	presidency	presiden=w:president cy=suf:cy
 parts	realistic	real=w:real istic
 parts	sometime	some=w:some time=w:time
@@ -264,7 +264,7 @@ parts	accomplish	ac=pre:ad com=pre:com plish=r:ple
 parts	barrier	barr=w:bar ier
 parts	classroom	class=w:class room=w:room
 parts	earthquake	earth=w:earth quake=w:quake
-parts	eliminate	e=pre:ex limin ate=suf:ate
+parts	eliminate	e=pre:ex limin=r:limin ate=suf:ate
 parts	quietly	quiet=w:quiet ly=suf:ly
 parts	scholarship	scholar=w:scholar ship=suf:ship
 parts	southeast	south=w:south east=w:east
