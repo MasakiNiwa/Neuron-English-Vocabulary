@@ -30,11 +30,11 @@
 | B15 | 4択を数字キー 1〜4 で選べるように。「モーションを減らす」をアプリの設定・OS の設定のどちらでも、CSS のアニメーション・カードの動き・画面切り替え・スムーズスクロールに一律で適用 |
 | C03 | 抽出時に活用形のタグを残し、複数形・三単現・-ing・過去・過去分詞・比較級・最上級だけを採用（古形・非標準・口語・方言・別綴りを除外）。意味の少ない別語源・品詞の活用形も除外（lie の laid、understand の understandest、get の gittim、woman の womaning など）。例文の選択と活用形の索引にも反映 |
 | C04 | 発音を地域・古形のタグ付きで抽出し、英米の標準発音を優先。語源・品詞で発音が変わる語（lead・tear・live・close・use・record・present・desert など）は、意味の手がかり付きで並べる。主な発音は日本語訳の最初の品詞に合わせる（lead は /liːd/） |
-| C05 | 頻度上位 978 位までの熟語のうち、手動の訳がなかった約 610 件の訳を校閲して書き直し（how much の「どこ」、go with の「連れる、乗る」、number one の「小」など）。手動の訳は 369 → 約 980 件。979 位以降は今後も続ける |
+| C05 | 熟語 1,331 件すべての訳を校閲（手動の訳 369 → 1,331 件）。how much の「どこ」、go with の「連れる、乗る」、number one の「小」、wait up の「少々」など、自動抽出の不自然な訳・品詞の誤りを書き直した |
 | C06 | 動詞の熟語に活用形を持たせ（take place → took place / taken place …）、例文が活用形でも穴埋めに使えるように。ハイフンでつながった例文も対象に。穴埋めに使えない熟語の例文は 174 → 3 件 |
 | — | pre:in（否定）と pre:into（中へ）を使っている全 295 語を意味別に監査し、47 語を修正（inform・invest・install・insect・increment などが「否定」に、inability・instability・intact・integral などが「中へ」になっていた。intermediate・interrupt は inter- に、inbound・inpatient は英語の in に）。解説と語源分解で in- の意味が食い違うと lint がエラーにするように |
 | C08（一部） | 同じ綴りで意味の違う形態素（a- の否定 / ab / ad、di- の dia / dis、sur- の super、en- と in-、語根 sent・tent・cour など）を、解説の「綴り（意味）」と照合して 43 語を修正。照合を lint に組み込み、今後の食い違いはエラーになる |
-| — | 語源ネットワークの拡充: 解説で語根を説明しているのに自動の語源分解が付いていなかった頻出語 50 語に分解を登録（education・experience・decision・expect・protect・supply・execute など）。足りなかった語根 11 個（tect 覆う・pact 打ち込む・fess 公言する・sert つなぐ・vot 誓う・fug 逃げる・put 考える・bell 戦争・limin 敷居・haust くみ出す・caus 理由）を追加し 44 語をつないだ |
+| — | 語源ネットワークの拡充: 解説で語根を説明しているのに自動の語源分解が付いていなかった頻出語 50 語に分解を登録（education・experience・decision・expect・protect・supply・execute など）。足りなかった語根 11 個（tect 覆う・pact 打ち込む・fess 公言する・sert つなぐ・vot 誓う・fug 逃げる・put 考える・bell 戦争・limin 敷居・haust くみ出す・caus 理由）を追加し 44 語をつないだ。続けて nect 結ぶ・surg 起き上がる・celer 速い・luct もがく・verg 傾く・cumb 横たわる・apt 適した・propri 自分の・fam 評判・radic 根・timid 恐れる・later 側 の 12 個で 47 語。手作業の分解でつながっていなかった接尾辞（-ion・-ent・-ence・-ical・-ual）もつないだ |
 | B05 | 外部 AI・アプリ内 AI の追加解説を、保存前に型・長さで検証（`sanitizeExtra`）。表示側も文字列以外は描画しない |
 | — | ChatGPT / Gemini による語源監査（PR #85）のうち、元データからのフルビルドで確認できた修正を取り込み |
 

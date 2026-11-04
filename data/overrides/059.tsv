@@ -4,18 +4,18 @@ parts	quality	qual ity=suf:ity
 parts	perhaps	per=pre:per haps
 parts	percent	per=pre:per cent
 parts	century	cent ury
-parts	individual	in=pre:in divid ual
+parts	individual	in=pre:in divid ual=suf:al
 parts	favorite	favor=w:favor ite
 parts	library	libr ary=suf:ary
 parts	profile	pro=pre:pro file
 parts	birthday	birth=w:birth day=w:day
 parts	billion	bi=pre:bi llion
-parts	violence	viol ence
+parts	violence	viol ence=suf:ance
 parts	parliament	parl ia ment=suf:ment
 parts	minimum	min=r:min imum
 parts	communication	com=pre:com mun=r:mun ic ation=suf:ation
 parts	restaurant	re=pre:re staur ant=suf:ant
-parts	appropriate	ap=pre:ad propri ate=suf:ate
+parts	appropriate	ap=pre:ad propri=r:propri ate=suf:ate
 parts	platform	plat form=r:form
 parts	discuss	dis=pre:dis cuss
 parts	holiday	holi=w:holy day=w:day
@@ -25,7 +25,7 @@ parts	ourselves	our selves=w:self
 parts	relevant	re=pre:re lev=r:lev ant=suf:ant
 parts	statistic	sta=r:sta tistic
 parts	register	re=pre:re gist er
-parts	permanent	per=pre:per man=r:man ent
+parts	permanent	per=pre:per man=r:man ent=suf:ant
 parts	personnel	person=w:person nel
 parts	tournament	tourna ment=suf:ment
 parts	electronic	electron=w:electron ic=suf:ic
@@ -38,8 +38,8 @@ parts	household	house=w:house hold=w:hold
 parts	proposal	pro=pre:pro pos=r:pon al=suf:al
 parts	contrast	contra=pre:contra st=r:sta
 parts	superior	super=pre:super ior
-parts	innocent	in=pre:in noc ent
-parts	component	com=pre:com pon=r:pon ent
+parts	innocent	in=pre:in noc ent=suf:ant
+parts	component	com=pre:com pon=r:pon ent=suf:ant
 parts	exposure	ex=pre:ex pos=r:pon ure=suf:ure
 parts	fiction	fic=r:fac tion
 parts	welfare	wel fare

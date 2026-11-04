@@ -232,7 +232,7 @@ parts	dispersal	dispers=w:disperse al=suf:al
 parts	displeasure	dis=pre:dis pleasure=w:pleasure
 parts	effortless	effort=w:effort less=suf:less
 parts	fondness	fond=w:fond ness=suf:ness
-parts	habitual	habit=w:habit ual
+parts	habitual	habit=w:habit ual=suf:al
 parts	imperialist	imperial=w:imperial ist=suf:ist
 parts	jobless	job=w:job less=suf:less
 parts	jurisprudence	juris prudence
@@ -250,7 +250,7 @@ parts	unplanned	un=pre:un planned=w:plan
 parts	unwelcome	un=pre:un welcome=w:welcome
 parts	abomination	ab=pre:ab omin ation=suf:ation
 parts	acutely	acute=w:acute ly=suf:ly
-parts	adherent	ad=pre:ad her=r:her ent
+parts	adherent	ad=pre:ad her=r:her ent=suf:ant
 parts	allotment	allot=w:allot ment=suf:ment
 parts	astray	a stray=w:stray
 parts	blacklist	black=w:black list=w:list
@@ -283,7 +283,7 @@ parts	skillful	skill=w:skill ful=suf:ful
 parts	sugary	sugar=w:sugar y=suf:y
 parts	supernova	super=pre:super nova=r:nov
 parts	toxicology	toxico logy=suf:logy
-parts	transfusion	trans=pre:trans fus=r:fus ion
+parts	transfusion	trans=pre:trans fus=r:fus ion=suf:ation
 parts	upheaval	up=pre:up heav al=suf:al
 parts	viewership	viewer=w:viewer ship=suf:ship
 parts	worsen	worse n
@@ -292,10 +292,10 @@ parts	amplification	ampl ific ation=suf:ation
 parts	arousal	arous al=suf:al
 parts	artistry	artist=w:artist ry
 parts	bouncer	bounc=w:bounce er=suf:er
-parts	cadence	cad=r:cad ence
+parts	cadence	cad=r:cad ence=suf:ance
 parts	cheeseburger	cheese=w:cheese burger=w:burger
 parts	condensation	con=pre:com dens ation=suf:ation
-parts	confluence	con=pre:com flu=r:flu ence
+parts	confluence	con=pre:com flu=r:flu ence=suf:ance
 parts	contraband	contra=pre:contra band
 parts	cookery	cook=w:cook ery
 parts	custodian	custod ian
@@ -305,7 +305,7 @@ parts	democratically	democratic=w:democratic ally=suf:ly
 parts	deodorant	de=pre:de odor=w:odor ant=suf:ant
 parts	dormitory	dorm itory
 parts	emigrate	e=pre:ex migr=r:migr ate=suf:ate
-parts	eradication	e=pre:ex radic ation=suf:ation
+parts	eradication	e=pre:ex radic=r:radic ation=suf:ation
 parts	exhilarating	ex=pre:ex hilar ating
 parts	eyelash	eye=w:eye lash=w:lash
 parts	femininity	feminin=w:feminine ity=suf:ity

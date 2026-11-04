@@ -206,7 +206,7 @@ parts	clergyman	clergy=w:clergy man=w:man
 parts	desolate	de=pre:de sol=r:sol ate=suf:ate
 parts	disarmament	dis=pre:dis arm=w:arm a ment=suf:ment
 parts	dishonesty	dis=pre:dis honesty=w:honesty
-parts	equivalence	equ=r:equ i val=r:val ence
+parts	equivalence	equ=r:equ i val=r:val ence=suf:ance
 parts	grapefruit	grape=w:grape fruit=w:fruit
 parts	hairdresser	hair=w:hair dress=w:dress er=suf:er
 parts	hardness	hard=w:hard ness=suf:ness
@@ -250,7 +250,7 @@ parts	singularity	singular=w:singular ity=suf:ity
 parts	snowman	snow=w:snow man=w:man
 parts	squarely	square=w:square ly=suf:ly
 parts	stepmother	step mother=w:mother
-parts	succumb	suc=pre:sub cumb
+parts	succumb	suc=pre:sub cumb=r:cumb
 parts	unconditionally	un=pre:un conditional=w:conditional ly=suf:ly
 parts	undeniably	un=pre:un deni=w:deny ab=suf:able ly=suf:ly
 parts	vigilance	vigil=w:vigil ance=suf:ance
@@ -273,7 +273,7 @@ parts	gambler	gambl=w:gamble er=suf:er
 parts	harmonious	harmoni=w:harmony ous=suf:ous
 parts	hyperbolic	hyper=pre:hyper bol=r:bol ic=suf:ic
 parts	impedance	im=pre:into ped=r:ped ance=suf:ance
-parts	incubation	in=pre:into cub ation=suf:ation
+parts	incubation	in=pre:into cub=r:cumb ation=suf:ation
 parts	insignia	in=pre:into sign=r:sign ia
 parts	lander	land=w:land er=suf:er
 parts	mischievous	mischiev=w:mischief ous=suf:ous

@@ -221,7 +221,7 @@ parts	colleague	col=pre:com league
 parts	derive	de=pre:de rive
 parts	educate	e=pre:ex duc=r:duc ate=suf:ate
 parts	eligible	e=pre:ex lig=r:lect ible=suf:able
-parts	execution	ex=pre:ex ecut ion
+parts	execution	ex=pre:ex ecut ion=suf:ation
 parts	follower	follow=w:follow er=suf:er
 parts	framework	frame=w:frame work=w:work
 parts	interaction	inter=pre:inter action=w:action
@@ -261,7 +261,7 @@ parts	lonely	lone=w:lone ly=suf:ly
 parts	nevertheless	never=w:never the=w:the less=w:less
 parts	racism	rac=w:race ism=suf:ism
 parts	venue	ven=r:ven ue
-parts	abortion	ab=pre:ab ort=r:ori ion
+parts	abortion	ab=pre:ab ort=r:ori ion=suf:ation
 parts	accuracy	ac=pre:ad cur=r:cura acy=suf:cy
 parts	artificial	arti fic=r:fac ial
 parts	consistently	consistent=w:consistent ly=suf:ly
@@ -280,11 +280,11 @@ parts	civilian	civil=w:civil ian
 parts	disgusting	dis=pre:dis gust ing
 parts	furthermore	further=w:further more=w:more
 parts	healing	heal=w:heal ing
-parts	invasion	in=pre:into vas=r:vad ion
+parts	invasion	in=pre:into vas=r:vad ion=suf:ation
 parts	laptop	lap=w:lap top=w:top
 parts	legendary	legend=w:legend ary=suf:ary
 parts	maker	mak=w:make er=suf:er
-parts	opponent	op=pre:ob pon=r:pon ent
+parts	opponent	op=pre:ob pon=r:pon ent=suf:ant
 parts	outdoor	out=w:out door=w:door
 parts	unexpected	un=pre:un expected=w:expect
 parts	usage	us=w:use age

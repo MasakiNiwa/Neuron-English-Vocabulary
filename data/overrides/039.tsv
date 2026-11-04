@@ -244,7 +244,7 @@ parts	teacher	teach=w:teach er=suf:er
 parts	freedom	free=w:free dom=suf:dom
 parts	powerful	power=w:power ful=suf:ful
 parts	awesome	awe=w:awe some=suf:some
-parts	protection	pro=pre:pro tect=r:tect ion
+parts	protection	pro=pre:pro tect=r:tect ion=suf:ation
 parts	investment	in=pre:into vest=w:vest ment=suf:ment
 parts	equipment	equip=w:equip ment=suf:ment
 parts	environment	environ ment=suf:ment
@@ -279,5 +279,5 @@ parts	once	on=w:one ce
 parts	exchange	ex=pre:ex change=w:change
 parts	attempt	at=pre:ad tempt=w:tempt
 parts	purpose	pur=pre:pro pose=r:pon
-parts	actual	act=r:act ual
+parts	actual	act=r:act ual=suf:al
 parts	Christmas	Christ mas=w:mass

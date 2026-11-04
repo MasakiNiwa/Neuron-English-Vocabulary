@@ -571,7 +571,7 @@ parts	antibody	anti=pre:anti body=w:body
 parts	calmly	calm=w:calm ly=suf:ly
 parts	chemotherapy	chemo therapy=w:therapy
 parts	concussion	con=pre:com cuss ion=suf:ation
-parts	connectivity	con=pre:com nect iv=suf:ive ity=suf:ity
+parts	connectivity	con=pre:com nect=r:nect iv=suf:ive ity=suf:ity
 parts	encryption	en=pre:en crypt ion=suf:ation
 parts	graveyard	grave=w:grave yard=w:yard
 parts	hardship	hard=w:hard ship=suf:ship

@@ -26,7 +26,7 @@ parts	Monday	mon=w:moon day=w:day
 parts	passion	pass=r:path ion=suf:ation
 parts	passive	pass=r:path ive=suf:ive
 parts	compassion	com=pre:com pass=r:path ion=suf:ation
-parts	compassionate	com=pre:com pass=r:path ion ate=suf:ate
+parts	compassionate	com=pre:com pass=r:path ion=suf:ation ate=suf:ate
 parts	important	im=pre:into port=r:port ant=suf:ant
 parts	importance	im=pre:into port=r:port ance=suf:ance
 parts	reporter	re=pre:re port=r:port er=suf:er
@@ -52,7 +52,7 @@ parts	tactical	tact ic al=suf:al
 parts	fundamental	fund=r:fund a ment=suf:ment al=suf:al
 parts	instrumental	in=pre:into stru=r:struct ment=suf:ment al=suf:al
 parts	detrimental	de=pre:de tri ment=suf:ment al=suf:al
-parts	lateral	later al=suf:al
+parts	lateral	later=r:later al=suf:al
 parts	regulate	reg=r:reg ul ate=suf:ate
 parts	speculate	spec=r:spec ul ate=suf:ate
 parts	circulate	circul=w:circle ate=suf:ate
@@ -111,7 +111,7 @@ parts	demonstrate	de=pre:de mon=r:mon str ate=suf:ate
 parts	separation	se=pre:se par=r:para ation=suf:ation
 parts	declaration	de=pre:de clar=r:clar ation=suf:ation
 parts	apparatus	ap=pre:ad par=r:para atus
-parts	acceleration	ac=pre:ad celer ation=suf:ation
+parts	acceleration	ac=pre:ad celer=r:celer ation=suf:ation
 parts	aspiration	a=pre:ad spir=r:spir ation=suf:ation
 parts	expiration	ex=pre:ex pir=r:spir ation=suf:ation
 parts	incorporation	in=pre:into corp=r:corp or ation=suf:ation

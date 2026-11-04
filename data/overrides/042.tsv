@@ -232,7 +232,7 @@ parts	monthly	month=w:month ly=suf:ly
 parts	neighborhood	neighbor=w:neighbor hood=suf:hood
 parts	outstanding	out=pre:out stand=w:stand ing
 parts	regulation	regul=w:regulate ation=suf:ation
-parts	tradition	tra=pre:trans dit=r:dat ion
+parts	tradition	tra=pre:trans dit=r:dat ion=suf:ation
 parts	celebrate	celebr ate=suf:ate
 parts	criticism	critic=w:critic ism=suf:ism
 parts	formation	form=r:form ation=suf:ation
@@ -269,7 +269,7 @@ parts	qualify	qual ify=suf:fy
 parts	railway	rail=w:rail way=w:way
 parts	server	serv=r:serv er=suf:er
 parts	supporter	support=w:support er=suf:er
-parts	violent	viol ent
+parts	violent	viol ent=suf:ant
 parts	voter	vot=w:vote er=suf:er
 parts	administrative	ad=pre:ad minist=r:minist rative
 parts	discovery	discover=w:discover y=suf:y
@@ -304,7 +304,7 @@ parts	walker	walk=w:walk er=suf:er
 parts	dramatic	drama=w:drama tic=suf:ic
 parts	illness	ill=w:ill ness=suf:ness
 parts	priority	prior=w:prior ity=suf:ity
-parts	promotion	pro=pre:pro mot=r:mob ion
+parts	promotion	pro=pre:pro mot=r:mob ion=suf:ation
 parts	reader	read=w:read er=suf:er
 parts	alliance	alli=w:ally ance=suf:ance
 parts	annoying	annoy=w:annoy ing

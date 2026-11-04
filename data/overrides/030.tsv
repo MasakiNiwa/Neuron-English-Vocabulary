@@ -291,7 +291,7 @@ parts	islander	island=w:island er=suf:er
 parts	keystone	key=w:key stone=w:stone
 parts	mistakenly	mistaken=w:mistake ly=suf:ly
 parts	reconnaissance	re=pre:re con=pre:com nais sance=suf:ance
-parts	reluctantly	re=pre:re luct ant=suf:ant ly=suf:ly
+parts	reluctantly	re=pre:re luct=r:luct ant=suf:ant ly=suf:ly
 parts	roadside	road=w:road side=w:side
 parts	shortcoming	short=w:short com=w:come ing
 parts	unfold	un=pre:un fold=w:fold
@@ -325,7 +325,7 @@ parts	relegation	re=pre:re leg=r:lex ation=suf:ation
 parts	repository	re=pre:re pos=r:pon it ory=suf:ary
 parts	trainee	train=w:train ee=suf:ee
 parts	upbringing	up=w:up bring=w:bring ing
-parts	accelerator	ac=pre:ad celer at or=suf:er
+parts	accelerator	ac=pre:ad celer=r:celer at or=suf:er
 parts	annexation	an=pre:ad nex ation=suf:ation
 parts	ascent	a=pre:ad scent=r:scend
 parts	biotechnology	bio=r:bio techn=r:tech ology=suf:logy
@@ -345,7 +345,7 @@ parts	livelihood	live=w:live li hood=suf:hood
 parts	override	over=w:over ride=w:ride
 parts	prehistoric	pre=pre:pre histor=w:history ic=suf:ic
 parts	pronoun	pro=pre:pro noun=r:nom
-parts	reluctance	re=pre:re luct ance=suf:ance
+parts	reluctance	re=pre:re luct=r:luct ance=suf:ance
 parts	sediment	sed=r:sed i ment=suf:ment
 parts	stronghold	strong=w:strong hold=w:hold
 parts	truthful	truth=w:truth ful=suf:ful

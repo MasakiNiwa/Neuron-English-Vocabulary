@@ -210,7 +210,7 @@ parts	laughable	laugh=w:laugh able=suf:able
 parts	microbe	micro=pre:micro be
 parts	mobilize	mob=r:mob il ize=suf:ize
 parts	multiplier	multipli=w:multiply er=suf:er
-parts	nonexistent	non=pre:non exist=w:exist ent
+parts	nonexistent	non=pre:non exist=w:exist ent=suf:ant
 parts	obedient	ob=pre:ob ed=r:aud ient
 parts	perilous	peril=w:peril ous=suf:ous
 parts	periodical	periodic=w:periodic al=suf:al
@@ -237,13 +237,13 @@ parts	watery	water=w:water y=suf:y
 parts	obscurity	obscur=w:obscure ity=suf:ity
 parts	defer	de=pre:de fer=r:fer
 parts	deplorable	de=pre:de plor able=suf:able
-parts	detergent	de=pre:de terg ent
+parts	detergent	de=pre:de terg ent=suf:ant
 parts	detour	de=pre:de tour=w:turn
 parts	exaggerate	ex=pre:ex agger ate=suf:ate
 parts	enclave	en=pre:en clave
 parts	composure	compos=w:compose ure=suf:ure
 parts	delicacy	delica=w:delicate cy=suf:cy
-parts	dispersion	dispers=w:disperse ion
+parts	dispersion	dispers=w:disperse ion=suf:ation
 parts	stagnation	stagn ation=suf:ation
 parts	infertility	in=pre:in fertility=w:fertility
 parts	agitation	agit=r:act ation=suf:ation

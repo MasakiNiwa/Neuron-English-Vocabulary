@@ -274,7 +274,7 @@ parts	exacerbate	ex=pre:ex acerb ate=suf:ate
 parts	madman	mad=w:mad man=w:man
 parts	medalist	medal=w:medal ist=suf:ist
 parts	memorize	memor=r:memor ize=suf:ize
-parts	momentarily	mom=r:mob ent ari=suf:ary ly=suf:ly
+parts	momentarily	mom=r:mob ent=suf:ant ari=suf:ary ly=suf:ly
 parts	northward	north=w:north ward=suf:ward
 parts	payer	pay=w:pay er=suf:er
 parts	redwood	red=w:red wood=w:wood

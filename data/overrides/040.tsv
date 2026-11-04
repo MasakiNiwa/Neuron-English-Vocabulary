@@ -220,11 +220,11 @@ parts	owner	own=w:own er=suf:er
 parts	realize	real=w:real ize=suf:ize
 parts	remain	re=pre:re main=r:man
 parts	surface	sur=pre:super face=w:face
-parts	sexual	sex=w:sex ual
+parts	sexual	sex=w:sex ual=suf:al
 parts	apply	ap=pre:ad ply=r:plic
 parts	artist	art=w:art ist=suf:ist
 parts	chairman	chair=w:chair man=w:man
-parts	edition	e=pre:ex dit=r:dat ion
+parts	edition	e=pre:ex dit=r:dat ion=suf:ation
 parts	healthy	health=w:health y=suf:y
 parts	obviously	obvious=w:obvious ly=suf:ly
 parts	somebody	some=w:some body=w:body
@@ -249,7 +249,7 @@ parts	neither	n either=w:either
 parts	possibly	possib=w:possible ly=suf:ly
 parts	software	soft=w:soft ware
 parts	alive	a live=w:life
-parts	connection	con=pre:com nect ion
+parts	connection	con=pre:com nect=r:nect ion=suf:ation
 parts	driver	driv=w:drive er=suf:er
 parts	investigation	investig=w:investigate ation=suf:ation
 parts	slightly	slight=w:slight ly=suf:ly
@@ -257,12 +257,12 @@ parts	appreciate	ap=pre:ad preci ate=suf:ate
 parts	discover	dis=pre:dis cover=w:cover
 parts	excite	ex=pre:ex cite=w:cite
 parts	forever	for=w:for ever=w:ever
-parts	reference	re=pre:re fer=r:fer ence
+parts	reference	re=pre:re fer=r:fer ence=suf:ance
 parts	somewhere	some=w:some where=w:where
-parts	audience	audi=r:aud ence
+parts	audience	audi=r:aud ence=suf:ance
 parts	democratic	demo=r:dem cratic=r:crat
-parts	excellent	ex=pre:ex cell ent
-parts	presence	pre=pre:pre s=r:ess ence
+parts	excellent	ex=pre:ex cell ent=suf:ant
+parts	presence	pre=pre:pre s=r:ess ence=suf:ance
 parts	reduce	re=pre:re duce=r:duc
 parts	afternoon	after=w:after noon=w:noon
 parts	citizen	citi=w:city zen
@@ -271,19 +271,19 @@ parts	introduce	intro=pre:intro duce=r:duc
 parts	regional	region=w:region al=suf:al
 parts	useful	use=w:use ful=suf:ful
 parts	anywhere	any=w:any where=w:where
-parts	discussion	discuss=w:discuss ion
+parts	discussion	discuss=w:discuss ion=suf:ation
 parts	purchase	pur=pre:pro chase=w:chase
 parts	enemy	en=pre:in emy
 parts	attorney	at=pre:ad torn=w:turn ey
 parts	behavior	be hav=w:have ior
 parts	domestic	dom=r:dom estic
-parts	historical	histor=w:history ical
+parts	historical	histor=w:history ical=suf:ic
 parts	honestly	honest=w:honest ly=suf:ly
 parts	originally	original=w:original ly=suf:ly
 parts	suddenly	sudden=w:sudden ly=suf:ly
 parts	writer	writ=w:write er=suf:er
 parts	combine	com=pre:com bine
-parts	connect	con=pre:com nect
+parts	connect	con=pre:com nect=r:nect
 parts	download	down=w:down load=w:load
 parts	girlfriend	girl=w:girl friend=w:friend
 parts	exercise	ex=pre:ex ercise

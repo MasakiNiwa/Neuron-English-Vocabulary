@@ -1,0 +1,50 @@
+# 語源ネットワークの拡充: 追加した語根（nect・surg・celer・luct・verg・cumb・apt・propri・fam・radic・timid・later）と、
+# 手作業の分解でつながっていなかった接尾辞（-ion・-ent・-ence・-ical・-ual）をつなぐ。surgeon はギリシャ語 kheirourgos からで surgere ではない
+parts	clinically	clin=r:clin ical=suf:ic ly=suf:ly
+parts	divergent	di=pre:dis verg=r:verg ent=suf:ant
+parts	sequential	sequ=r:sequ ent=suf:ant ial=suf:al
+parts	intercontinental	inter=pre:inter con tin=r:ten ent=suf:ant al=suf:al
+parts	discretionary	dis=pre:dis cret=r:cern ion=suf:ation ary=suf:ary
+parts	conventional	con=pre:com vent=r:ven ion=suf:ation al=suf:al
+parts	differently	dif=pre:dis fer=r:fer ent=suf:ant ly=suf:ly
+parts	adaptive	ad=pre:ad apt=r:apt ive=suf:ive
+parts	inadvertently	in=pre:in ad vert=r:vers ent=suf:ant ly=suf:ly
+parts	medically	med=r:med ical=suf:ic ly=suf:ly
+parts	reactionary	re=pre:re act=r:act ion=suf:ation ary=suf:ary
+parts	incumbent	in=pre:into cumb=r:cumb ent=suf:ant
+parts	biologically	bio=r:bio log=r:log ical=suf:ic ly=suf:ly
+parts	persistent	per=pre:per sist=r:sta ent=suf:ant
+parts	professional	pro=pre:pro fess=r:fess ion=suf:ation al=suf:al
+parts	differential	dif=pre:dis fer=r:fer ent=suf:ant ial=suf:al
+parts	missionary	miss=r:mit ion=suf:ation ary=suf:ary
+parts	commissioner	com=pre:com miss=r:mit ion=suf:ation er=suf:er
+parts	accident	ac=pre:ad cid=r:cad ent=suf:ant
+parts	scientist	sci=r:sci ent=suf:ant ist=suf:ist
+parts	consistent	con=pre:com sist=r:sta ent=suf:ant
+parts	emotional	e=pre:ex mot=r:mob ion=suf:ation al=suf:al
+parts	adapter	ad=pre:ad apt=r:apt er=suf:er
+parts	eventually	e=pre:ex vent=r:ven ual=suf:al ly=suf:ly
+parts	agent	ag=r:act ent=suf:ant
+parts	instructional	in=pre:into struct=r:struct ion=suf:ation al=suf:al
+parts	absentee	abs=pre:ab ent=suf:ant ee=suf:ee
+parts	continental	con=pre:com tin=r:ten ent=suf:ant al=suf:al
+parts	dictionary	dict=r:dict ion=suf:ation ary=suf:ary
+parts	adaptation	ad=pre:ad apt=r:apt ation=suf:ation
+parts	politically	polit=r:pol ical=suf:ic ly=suf:ly
+parts	exceptional	ex=pre:ex cept=r:cap ion=suf:ation al=suf:al
+parts	orientation	ori=r:ori ent=suf:ant ation=suf:ation
+parts	dimensional	di=pre:dia mens=r:mens ion=suf:ation al=suf:al
+parts	unconventional	un=pre:un con vent=r:ven ion=suf:ation al=suf:al
+parts	visionary	vis=r:vid ion=suf:ation ary=suf:ary
+parts	annually	ann=r:ann ual=suf:al ly=suf:ly
+parts	intentional	in=pre:into tent=r:tend ion=suf:ation al=suf:al
+parts	reluctant	re=pre:re luct=r:luct ant=suf:ant
+parts	solvent	solv=r:solv ent=suf:ant
+parts	biomedical	bio=r:bio med=r:med ical=suf:ic
+# 追加した語根に、綴りだけ一致して誤ってつながった語を外す
+exclude	r:surg	surgery
+exclude	r:celer	celery
+exclude	r:verg	verge
+exclude	r:cumb	cube,cubic
+exclude	r:fam	family,familiar,familial,famine
+exclude	r:radic	sporadic

@@ -211,7 +211,7 @@ parts	wireless	wire=w:wire less=suf:less
 parts	airline	air=w:air line=w:line
 parts	anytime	any=w:any time=w:time
 parts	coastal	coast=w:coast al=suf:al
-parts	confusion	con=pre:com fus=r:fus ion
+parts	confusion	con=pre:com fus=r:fus ion=suf:ation
 parts	emphasis	em=pre:en phasis
 parts	excitement	excite=w:excite ment=suf:ment
 parts	exploration	explor=w:explore ation=suf:ation
@@ -236,7 +236,7 @@ parts	runner	runn=w:run er=suf:er
 parts	significance	sign=r:sign ific ance=suf:ance
 parts	unnecessary	un=pre:un necessary=w:necessary
 parts	adapt	ad=pre:ad apt=w:apt
-parts	adoption	adopt=w:adopt ion
+parts	adoption	adopt=w:adopt ion=suf:ation
 parts	artistic	artist=w:artist ic=suf:ic
 parts	beloved	be loved=w:love
 parts	compliance	com=pre:com pli=r:ple ance=suf:ance
@@ -269,12 +269,12 @@ parts	quietly	quiet=w:quiet ly=suf:ly
 parts	scholarship	scholar=w:scholar ship=suf:ship
 parts	southeast	south=w:south east=w:east
 parts	timeline	time=w:time line=w:line
-parts	urgent	urg=w:urge ent
+parts	urgent	urg=w:urge ent=suf:ant
 parts	violation	viol ation=suf:ation
 parts	workshop	work=w:work shop=w:shop
 parts	aboard	a board=w:board
 parts	accent	ac=pre:ad cent
-parts	addiction	ad=pre:ad dict=r:dict ion
+parts	addiction	ad=pre:ad dict=r:dict ion=suf:ation
 parts	awake	a=pre:a wake=w:wake
 parts	fifteen	fif=w:five teen
 parts	grandmother	grand=w:grand mother=w:mother
