@@ -22,7 +22,6 @@ import { ReviewSession } from './ReviewSession'
 import { useStudySession } from './sessionStore'
 import { formatOptions, type StudyFormat } from './formats'
 import { buildPracticeQueue, buildQueue, getStudyStats, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
-import { useGlossText, useMorphMeaning } from '@/features/dictionary/localGloss'
 
 const STATE_LABEL = ['新規', '学習中', '復習', '再学習']
 
@@ -37,7 +36,6 @@ function Stat({ label, value }: { label: string; value: number | string }) {
 
 function CardList() {
   const dict = useDictionary()
-  const gloss = useGlossText()
   const [limit, setLimit] = useState(100)
   const cards = useLiveQuery(() => db.cards.orderBy('due').limit(limit).toArray(), [limit])
   const total = useLiveQuery(() => db.cards.count(), [])
@@ -52,7 +50,7 @@ function CardList() {
           return (
             <div key={c.entryId} className="flex items-center gap-2 py-2 text-sm">
               <EntryLink k={c.entryId} className="font-en w-32 shrink-0 truncate" />
-              <span className="min-w-0 flex-1 truncate text-xs text-muted">{gloss(dict.byKey.get(c.entryId))}</span>
+              <span className="min-w-0 flex-1 truncate text-xs text-muted">{dict.byKey.get(c.entryId)?.gloss}</span>
               <span className="w-12 shrink-0 text-right text-[11px] text-muted">{STATE_LABEL[c.state]}</span>
               <span className="w-14 shrink-0 text-right font-mono text-[11px] text-muted">
                 {c.state === 0 ? '-' : c.due <= now.getTime() ? '期限' : formatInterval(new Date(c.due), now)}
@@ -100,7 +98,6 @@ function Steps() {
 }
 
 function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
-  const mm = useMorphMeaning()
   const dict = useDictionary()
   const startRank = useSettings((s) => s.studyStartRank)
   const setSetting = useSettings((s) => s.set)
@@ -169,7 +166,7 @@ function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
           <select className={selectClass + ' w-full max-w-none'} value={rootId || roots[0]?.id} onChange={(e) => setRootId(e.target.value)}>
             {roots.map((m) => (
               <option key={m.id} value={m.id}>
-                {m.label}（{mm(m)}）— {m.words.length}語
+                {m.label}（{m.meaning.ja}）— {m.words.length}語
               </option>
             ))}
           </select>
@@ -368,7 +365,6 @@ function LevelPicker({ value, onChange }: { value: number; onChange: (rank: numb
 
 /** 語根レッスンへの入口（次に学ぶとよい語根と、図鑑の進み具合） */
 function RootLessonCard() {
-  const mm = useMorphMeaning()
   const info = useNextRoot()
   return (
     <Card className="flex flex-col gap-2">
@@ -383,7 +379,7 @@ function RootLessonCard() {
             params={{ id: info.next.id }}
             className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-accent px-4 text-sm font-medium text-accent-fg hover:opacity-90"
           >
-            <Sparkles className="size-4" /> <span className="font-en">{morphLabel(info.next)}</span>（{mm(info.next)}）のレッスン
+            <Sparkles className="size-4" /> <span className="font-en">{morphLabel(info.next)}</span>（{info.next.meaning.ja}）のレッスン
           </Link>
         )}
         <Link to="/roots" className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-border px-3 text-sm hover:bg-surface-2">

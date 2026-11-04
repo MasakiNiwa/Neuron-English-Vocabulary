@@ -183,7 +183,7 @@ function AssistantMessage({ m, live, onRegenerate }: { m: ChatRecord; live?: boo
               {m.model && <span className="break-all">{m.model}</span>}
               {m.usage && (
                 <span className="whitespace-nowrap tabular-nums" title="消費トークン数（入力 / 出力）">
-                  入力 {m.usage.input.toLocaleString()} / 出力 {m.usage.output.toLocaleString()} トークン
+                  入力 {m.usage.input.toLocaleString('ja-JP')} / 出力 {m.usage.output.toLocaleString('ja-JP')} トークン
                 </span>
               )}
             </span>

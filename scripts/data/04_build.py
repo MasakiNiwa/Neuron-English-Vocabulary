@@ -1067,73 +1067,6 @@ with open(os.path.join(REPO, 'data', 'root_stories.tsv'), encoding='utf-8') as f
             continue
         by_id[mid]['story'] = {'ja': story}
 
-# ---------------------------------------------------------------- 韓国語・中国語の訳（data/translations/<言語>/*.tsv）
-# 08_translation_export.py で書き出した日本語の訳などを、外部の翻訳（AI など）で訳して置く。
-# ある語・品詞は Wiktionary から集めた訳をこちらで置き換える。中国語は zh-Hant / zh-Hans を「繁体 /简体」にまとめる
-_tr = runpy.run_path(os.path.join(os.path.dirname(__file__), 'translation_src.py'))
-TR_LANGS = _tr['TR_LANGS']
-
-
-def merge_zh(hant, hans):
-    """繁体・簡体の訳を「繁体 /简体」の形にまとめる（同じ字形なら 1 つだけ）"""
-    if not hant:
-        return hans
-    if not hans:
-        return hant
-    out = [a if a == b else f'{a} /{b}' for a, b in zip(hant, hans)]
-    return out + hans[len(out):]
-
-
-tr_gloss = {lang: _tr['read_translations'](REPO, lang, 'gloss') for lang in TR_LANGS}
-tr_morph = {lang: _tr['read_translations'](REPO, lang, 'morphemes') for lang in TR_LANGS}
-tr_count = Counter()
-# 訳したあとに日本語が変わった（指紋が合わない）訳。訳は使うが、訳し直しの候補として知らせる
-tr_stale = defaultdict(list)
-
-
-def tr_words(table, lang, k, src):
-    v = table[lang].get(k)
-    if not v:
-        return None
-    if v[0] != src:
-        tr_stale[lang].append(' '.join(k))
-    return v[1]
-
-
-for kp in sorted(set().union(*[set(v) for v in tr_gloss.values()])):
-    key, pos = kp
-    e = entry_for(key)
-    g = next((x for x in e['g'] if x['p'] == pos), None) if e else None
-    if not g:
-        print('WARN translations: 語・品詞が見つかりません', key, pos)
-        continue
-    src = _tr['gloss_src'](pos, g['ja'])
-    ko = tr_words(tr_gloss, 'ko', kp, src)
-    if ko:
-        g['ko'] = ko[:4]
-        tr_count['gloss ko'] += 1
-    zh = merge_zh(tr_words(tr_gloss, 'zh-Hant', kp, src), tr_words(tr_gloss, 'zh-Hans', kp, src))
-    if zh:
-        g['zh'] = zh[:4]
-        tr_count['gloss zh'] += 1
-for (mid,) in sorted(set().union(*[set(v) for v in tr_morph.values()])):
-    m = by_id.get(mid)
-    if not m:
-        print('WARN translations: 形態素が見つかりません', mid)
-        continue
-    src = _tr['morph_src'](m['meaning']['ja'])
-    # 形態素の意味は 1 つの文字列なので、簡体字は zh、繁体字は zh-Hant に分けて持つ
-    for lang, field in (('ko', 'ko'), ('zh-Hans', 'zh'), ('zh-Hant', 'zh-Hant')):
-        words = tr_words(tr_morph, lang, (mid,), src)
-        if words:
-            m['meaning'][field] = '・'.join(words)
-            tr_count['morpheme ' + lang] += 1
-for lang, keys in tr_stale.items():
-    print(f'WARN translations/{lang}: 日本語が変わった訳 {len(keys)} 件（08_translation_export.py --needed で訳し直す分を書き出せる）: '
-          + ', '.join(keys[:10]) + (' …' if len(keys) > 10 else ''))
-if tr_count:
-    print('translations:', dict(tr_count))
-
 # ---------------------------------------------------------------- 出力
 if os.path.isdir(OUT):
     shutil.rmtree(OUT)
@@ -1176,20 +1109,6 @@ with open(os.path.join(OUT, 'index.json'), 'w', encoding='utf-8') as f:
     json.dump({'v': version, 'e': index_rows}, f, ensure_ascii=False, separators=(',', ':'))
 with open(os.path.join(OUT, 'morphemes.json'), 'w', encoding='utf-8') as f:
     json.dump(morphemes, f, ensure_ascii=False, separators=(',', ':'))
-# 一覧用の韓国語・中国語の短い訳（表示言語が ko / zh のときだけ読み込む。詳細データの g[].ko / g[].zh から作る）
-# 中国語は「繁体 /简体」の形のまま入れ、アプリ側で分ける
-for lang in ('ko', 'zh'):
-    short_tr = {}
-    for k, e in entries.items():
-        seen = []
-        for g in e['g']:
-            for x in g.get(lang) or []:
-                if x not in seen:
-                    seen.append(x)
-        if seen:
-            short_tr[k] = seen[:3]
-    with open(os.path.join(OUT, f'gloss-{lang}.json'), 'w', encoding='utf-8') as f:
-        json.dump({'v': version, 'g': short_tr}, f, ensure_ascii=False, separators=(',', ':'), sort_keys=True)
 
 
 def source_info():

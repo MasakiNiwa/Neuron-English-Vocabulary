@@ -1,13 +1,12 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { LangSetting } from '@/lib/lang'
+import type { LanguageCode } from '@/lib/i18n'
 
 export type ThemeMode = 'system' | 'light' | 'dark'
 
 export interface Settings {
   theme: ThemeMode
-  /** 表示言語（auto = 端末の言語に合わせる） */
-  language: LangSetting
+  language: LanguageCode
   reduceMotion: boolean
   ttsVoiceURI: string | null
   ttsRate: number
@@ -23,7 +22,7 @@ export interface Settings {
 
 export const defaultSettings: Settings = {
   theme: 'system',
-  language: 'auto',
+  language: 'ja',
   reduceMotion: false,
   ttsVoiceURI: null,
   ttsRate: 0.95,
@@ -49,13 +48,13 @@ export const useSettings = create<SettingsStore>()(
     }),
     {
       name: 'nev-settings',
-      version: 3,
+      version: 4,
       migrate: (state, version) => {
         const s = state as Partial<Settings>
         // v2: 1日の新規カード上限の既定を「無制限 (0)」に変更
         if (version < 2 && s.dailyNewLimit === 20) s.dailyNewLimit = 0
-        // v3: 表示言語に「端末に合わせる」を追加して既定に（それまでは日本語しか選べなかった）
-        if (version < 3 && s.language === 'ja') s.language = 'auto'
+        // v3〜v4: 韓国語・中国語への切り替えを一時的に入れて外した。日本語に戻す
+        if (version < 4) s.language = 'ja'
         return s as never
       },
     },

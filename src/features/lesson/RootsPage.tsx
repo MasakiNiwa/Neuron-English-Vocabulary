@@ -13,7 +13,6 @@ import { morphLabel } from '@/features/dictionary/components/links'
 import { useDictionary } from '@/features/dictionary/hooks'
 import { StarRow } from './LessonPage'
 import { lessonRoots, rootWords, stars } from './lessons'
-import { useMorphMeaning } from '@/features/dictionary/localGloss'
 
 type Filter = 'all' | 'got' | 'todo'
 
@@ -30,7 +29,6 @@ export function useNextRoot() {
 }
 
 function RootsInner() {
-  const mm = useMorphMeaning()
   const dict = useDictionary()
   const roots = useMemo(() => lessonRoots(dict), [dict])
   const records = useLiveQuery(() => db.rootLessons.toArray(), [])
@@ -93,7 +91,7 @@ function RootsInner() {
                 <span className={cn('font-en text-lg font-semibold', !r && 'text-muted')}>{morphLabel(m)}</span>
                 {r && <StarRow n={stars(r.best, r.total)} size="sm" />}
               </div>
-              <span className="truncate text-xs">{mm(m)}</span>
+              <span className="truncate text-xs">{m.meaning.ja}</span>
               <span className="text-[11px] text-muted">{r ? `最高 ${r.best} / ${r.total}・${r.plays} 回` : `${n} 語`}</span>
             </Link>
           )

@@ -40,7 +40,7 @@ function Meta({ m }: { m: ModelInfo }) {
     formatTokens(m.maxOutput) && `出力 ${formatTokens(m.maxOutput)}`,
     m.inputPrice !== undefined &&
       `${formatPrice(m.inputPrice)} / ${formatPrice(m.outputPrice)}${m.priceIsReference ? '（参考）' : ''}`,
-    m.created && new Date(m.created).toLocaleDateString(undefined, { year: 'numeric', month: 'short' }),
+    m.created && new Date(m.created).toLocaleDateString('ja-JP', { year: 'numeric', month: 'short' }),
   ].filter(Boolean)
   if (!items.length) return null
   return <div className="mt-0.5 flex flex-wrap gap-x-2.5 text-[11px] text-muted">{items.map((x, i) => <span key={i}>{x}</span>)}</div>
@@ -179,7 +179,7 @@ export function ModelPicker({ apiKey, open, onOpenChange }: { apiKey: ApiKeyEntr
               <div className="flex-1" />
               <button type="button" onClick={() => void refresh()} disabled={loading} className="inline-flex items-center gap-1 text-muted hover:text-fg">
                 {loading ? <Loader2 className="size-3.5 animate-spin" /> : <RefreshCw className="size-3.5" />}
-                {catalog ? `更新（${new Date(catalog.fetchedAt).toLocaleDateString()}）` : '一覧を取得'}
+                {catalog ? `更新（${new Date(catalog.fetchedAt).toLocaleDateString('ja-JP')}）` : '一覧を取得'}
               </button>
             </div>
             {err && <p className="text-xs text-danger">{err}</p>}

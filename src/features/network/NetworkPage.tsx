@@ -13,7 +13,6 @@ import { useResolvedTheme } from '@/lib/theme'
 import { buildEntryGraph, buildMorphGraph, buildMorphemeMap, EDGE_LABEL, readPalette, type EdgeKind, type NetGraph, type NodeAttrs } from './graph'
 import { SigmaGraph } from './SigmaGraph'
 import type { NetworkSearch } from './search'
-import { useGlossText, useMorphMeaning } from '@/features/dictionary/localGloss'
 
 const KIND_LABEL: Record<string, string> = {
   word: '単語',
@@ -128,9 +127,7 @@ function MapGraph({ onSelect }: { onSelect: (id: string, a: NodeAttrs) => void }
 }
 
 function FocusPanel({ focus }: { focus: string }) {
-  const mm = useMorphMeaning()
   const dict = useDictionary()
-  const gloss = useGlossText()
   const { t } = useTranslation()
   if (focus.startsWith('m:')) {
     const m = dict.morphById.get(focus.slice(2))
@@ -141,7 +138,7 @@ function FocusPanel({ focus }: { focus: string }) {
           <div className="text-[11px] text-muted">{KIND_LABEL[m.type]}</div>
           <div className="truncate">
             <span className="font-en text-lg font-semibold">{morphLabel(m)}</span>
-            <span className="ml-2 text-sm">{mm(m)}</span>
+            <span className="ml-2 text-sm">{m.meaning.ja}</span>
           </div>
           <div className="text-xs text-muted">
             {m.origin} ・ {t('common.count', { count: m.words.length })}
@@ -165,7 +162,7 @@ function FocusPanel({ focus }: { focus: string }) {
       <div className="min-w-0 flex-1">
         <div className="text-[11px] text-muted">{ie.type === 'p' ? '熟語' : '単語'}</div>
         <div className="font-en truncate text-lg font-semibold">{headword(key)}</div>
-        <div className="truncate text-sm text-muted">{gloss(ie)}</div>
+        <div className="truncate text-sm text-muted">{ie.gloss}</div>
       </div>
       <Link
         to="/e/$key"
@@ -179,11 +176,9 @@ function FocusPanel({ focus }: { focus: string }) {
 }
 
 function FocusSearch({ onPick }: { onPick: (focus: string) => void }) {
-  const mm = useMorphMeaning()
   const [q, setQ] = useState('')
   const [hits, setHits] = useState<SearchHit[]>([])
   const dict = useDictionary()
-  const gloss = useGlossText()
   useEffect(() => {
     if (!q.trim()) return setHits([])
     let alive = true
@@ -202,9 +197,9 @@ function FocusSearch({ onPick }: { onPick: (focus: string) => void }) {
               h.kind === 'morpheme'
                 ? (() => {
                     const m = dict.morphById.get(h.key)
-                    return m ? `${morphLabel(m)}  ${mm(m)}` : h.key
+                    return m ? `${morphLabel(m)}  ${m.meaning.ja}` : h.key
                   })()
-                : `${headword(h.key)}  ${gloss(dict.byKey.get(h.key))}`
+                : `${headword(h.key)}  ${dict.byKey.get(h.key)?.gloss}`
             return (
               <li key={h.kind + h.key}>
                 <button

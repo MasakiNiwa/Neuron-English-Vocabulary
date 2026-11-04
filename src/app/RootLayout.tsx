@@ -1,7 +1,6 @@
 import { Link, Outlet, useNavigate, useRouter, useRouterState } from '@tanstack/react-router'
 import { onDataOutdated } from '@/features/dictionary/data'
 import { scrollBehavior, useApplyMotion } from '@/lib/motion'
-import { useApplyLang } from '@/lib/useLang'
 import { useEffect, useState } from 'react'
 import { warmupSearch } from '@/features/dictionary/search'
 import { CircleHelp, Moon, Sun } from 'lucide-react'
@@ -133,7 +132,6 @@ function DataUpdatedBar() {
 export function RootLayout() {
   useApplyTheme()
   useApplyMotion()
-  useApplyLang()
   const navigate = useNavigate()
   useEffect(() => {
     warmupSearch()

@@ -61,7 +61,7 @@ function ExtraBody({ x }: { x: ExtraNote }) {
         </div>
       )}
       <p className="text-[10px] text-muted">
-        {x.source === 'api' ? `AI（${x.model ?? x.title}）で作成` : '外部 AI で作成し取り込んだ内容'}・{new Date(x.createdAt).toLocaleDateString()}。AI の出力のため誤りを含むことがあります
+        {x.source === 'api' ? `AI（${x.model ?? x.title}）で作成` : '外部 AI で作成し取り込んだ内容'}・{new Date(x.createdAt).toLocaleDateString('ja-JP')}。AI の出力のため誤りを含むことがあります
       </p>
     </div>
   )

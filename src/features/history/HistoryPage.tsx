@@ -9,12 +9,10 @@ import { clearHistory, db } from '@/lib/db'
 import { usePersistentState } from '@/lib/persist'
 import { EntryLink } from '@/features/dictionary/components/links'
 import { useDictionary } from '@/features/dictionary/hooks'
-import { useGlossText } from '@/features/dictionary/localGloss'
 
 function HistoryList() {
   const { t } = useTranslation()
   const dict = useDictionary()
-  const gloss = useGlossText()
   const [limit, setLimit] = usePersistentState('history:limit', 200)
   const views = useLiveQuery(() => db.views.orderBy('viewedAt').reverse().limit(limit).toArray(), [limit])
   if (!views) return <PageSpinner />
@@ -22,7 +20,7 @@ function HistoryList() {
   // 日付ごとにグループ化
   const groups = new Map<string, typeof views>()
   for (const v of views) {
-    const d = new Date(v.viewedAt).toLocaleDateString()
+    const d = new Date(v.viewedAt).toLocaleDateString('ja-JP')
     groups.set(d, [...(groups.get(d) ?? []), v])
   }
   return (
@@ -36,10 +34,10 @@ function HistoryList() {
             {list.map((v) => (
               <div key={v.id} className="flex items-center gap-3 px-3 py-2">
                 <span className="w-12 shrink-0 font-mono text-xs text-muted">
-                  {new Date(v.viewedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  {new Date(v.viewedAt).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
                 </span>
                 <EntryLink k={v.entryId} className="font-en shrink-0" />
-                <span className="min-w-0 flex-1 truncate text-sm text-muted">{gloss(dict.byKey.get(v.entryId))}</span>
+                <span className="min-w-0 flex-1 truncate text-sm text-muted">{dict.byKey.get(v.entryId)?.gloss}</span>
               </div>
             ))}
           </Card>
