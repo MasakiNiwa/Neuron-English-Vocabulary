@@ -53,8 +53,12 @@ with gzip.open(src, 'rt', encoding='utf-8') as f, open(out, 'w', encoding='utf-8
             'pos': d.get('pos'),
             'etymology_text': d.get('etymology_text'),
             'etymology_templates': [{'name': t.get('name'), 'args': t.get('args')} for t in d.get('etymology_templates', [])],
+            'etymology_number': d.get('etymology_number'),
             'ipa': [s['ipa'] for s in d.get('sounds', []) if 'ipa' in s][:3],
-            'forms': [x.get('form') for x in d.get('forms', []) if x.get('form') and 'table-tags' not in (x.get('tags') or []) and 'inflection-template' not in (x.get('tags') or [])][:12],
+            # 発音はタグ（地域・古形など）付きで残し、語源・品詞ごとの発音の違いを出せるようにする（ROADMAP C04）
+            'sounds': [{k: s[k] for k in ('ipa', 'tags', 'note') if s.get(k)} for s in d.get('sounds', []) if 'ipa' in s][:10],
+            # 活用形はタグ（past / plural / archaic / nonstandard など）付きで残し、標準形だけを選べるようにする（ROADMAP C03）
+            'forms': [{'form': x['form'], 'tags': x.get('tags') or []} for x in d.get('forms', []) if x.get('form') and 'table-tags' not in (x.get('tags') or []) and 'inflection-template' not in (x.get('tags') or [])][:60],
             'derived': [x.get('word') for x in d.get('derived', [])][:60],
             'related': [x.get('word') for x in d.get('related', [])][:40],
             'synonyms': [x.get('word') for x in d.get('synonyms', [])][:20],

@@ -44,6 +44,8 @@ export interface Entry {
   t: 'w' | 'p'
   r: number
   ipa?: string
+  /** 語源・品詞によって発音が変わる語の発音一覧（lead: 導く /liːd/・鉛 /lɛd/ など）。先頭が ipa と同じ */
+  ipas?: { ipa: string; p?: PosCode[]; ja?: string }[]
   g: Gloss[]
   d?: { p: PosCode; en: string[] }[]
   parts?: Part[]

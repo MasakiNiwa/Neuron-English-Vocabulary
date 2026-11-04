@@ -1,12 +1,12 @@
 {
- "version": "20261103",
- "generatedAt": "2026-11-03T23:04:54.071667+00:00",
+ "version": "20261104",
+ "generatedAt": "2026-11-04T00:08:50.906471+00:00",
  "counts": {
   "words": 11887,
-  "phrases": 1329,
+  "phrases": 1331,
   "morphemes": 432,
   "withParts": 6493,
-  "withExamples": 10440,
+  "withExamples": 10390,
   "pieRoots": 92,
   "withNote": 12211,
   "manualParts": 3076,

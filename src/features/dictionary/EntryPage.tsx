@@ -231,7 +231,20 @@ function EntryView({ entryKey }: { entryKey: string }) {
             <SpeakButton text={entry.h} />
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted">
-            {entry.ipa && <span className="font-en">{entry.ipa}</span>}
+            {entry.ipas && entry.ipas.length > 1 ? (
+              // 意味によって発音が変わる語は、品詞と意味の手がかりを添えて並べる
+              entry.ipas.map((x) => (
+                <span key={x.ipa} className="inline-flex items-baseline gap-1">
+                  <span className="font-en">{x.ipa}</span>
+                  <span className="text-xs">
+                    {x.p?.map((p) => POS_LABEL[p] ?? '他').join('・')}
+                    {x.ja && `「${x.ja}」`}
+                  </span>
+                </span>
+              ))
+            ) : (
+              entry.ipa && <span className="font-en">{entry.ipa}</span>
+            )}
             <span className="rounded-md bg-surface-2 px-1.5 text-xs">
               {entry.t === 'p' ? '熟語' : t('words.rank')} #{entry.r}
             </span>
