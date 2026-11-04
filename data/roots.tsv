@@ -215,23 +215,23 @@ erg	erg,urg,org		仕事・働き	ギリシャ語 ergon
 hod	hod,od		道	ギリシャ語 hodos
 mont	mont,mount		山・上がる	ラテン語 mons
 sider	sider		星	ラテン語 sidus
-cresc	cresc,creas,cret,cruit		育つ・増える	ラテン語 crescere
-mod	mod		尺度・ほどよさ	ラテン語 modus
+cresc	cresc,creas,cret,cruit	crescere,increscere,decrescere,concrescere	育つ・増える	ラテン語 crescere
+mod	mod	modus,moderari,modestus,modificare,modulus	尺度・ほどよさ	ラテン語 modus
 capit	capit,capt,chief,cap		頭	ラテン語 caput
 carr	carr,car,char		荷車・運ぶ	ラテン語 carrus
-cre	cre,creat		生み出す	ラテン語 creare
+cre	cre,creat	creare,creatura,creator	生み出す	ラテン語 creare
 minist	minist		仕える	ラテン語 ministrare
-fend	fend,fens		打つ・防ぐ	ラテン語 -fendere
-stinct	stinct,sting,stingu		印をつける・突く	ラテン語 stinguere
+fend	fend,fens	fendere,defendere,offendere,defensa	打つ・防ぐ	ラテン語 -fendere
+stinct	stinct,sting,stingu	stinguere,distinguere,instinctus,exstinguere	印をつける・突く	ラテン語 stinguere
 merc	merc,merch,mark		商売・取引	ラテン語 merx
-rot	rot,roll,round		車輪・回る	ラテン語 rota
-insul	insul,isol		島	ラテン語 insula
+rot	rot,roll,round	rota,rotare,rotundus,rotulus	車輪・回る	ラテン語 rota
+insul	insul,isol	insula,isola,isolare	島	ラテン語 insula
 plan	plan,plain		平らな	ラテン語 planus
 lax	lax,leas		ゆるめる	ラテン語 laxare
-veh	veh,vect		運ぶ	ラテン語 vehere
+veh	veh,vect	vehere,vehiculum,vector	運ぶ	ラテン語 vehere
 ess	ess,sent		ある・存在する	ラテン語 esse
 tom	tom		切る	ギリシャ語 temnein
-mir	mir		驚く・見とれる	ラテン語 mirari
+mir	mir	mirari,mirabilis,miraculum,admirari	驚く・見とれる	ラテン語 mirari
 tect	tect	tegere,tectus,tegō,tego,tectum	覆う	ラテン語 tegere
 pact	pact,pinge	pangere,pactus,pactum,impingere,compingere	打ち込む・固定する	ラテン語 pangere
 fess	fess	fateri,fessus,confiteri,profiteri,profession	認める・公言する	ラテン語 fateri
@@ -255,3 +255,24 @@ fam	fam	fama,famosus,infamis,diffamare	評判・うわさ	ラテン語 fama
 radic	radic	radix,radicis,radicalis,eradicare	根	ラテン語 radix
 timid	timid	timidus,timere,intimidare	恐れる	ラテン語 timere
 later	later	latus,lateris,lateralis	側・わき	ラテン語 latus
+preci	preci,pric	pretium,pretiosus,appretiare,depretiare	値段・価値	ラテン語 pretium
+cent	cent,centi	centum,centuria,centesimus,centenarius	百	ラテン語 centum
+phys	phys,physi	physis,physikos,physika,phusis	自然	ギリシャ語 physis
+radi	radi	radius,radiare,radiatio	光線・半径	ラテン語 radius
+coron	coron	corona,coronare,coronarius	冠	ラテン語 corona
+nutr	nutr,nutri,nurt,nurs	nutrire,nutrix,nutrimentum	養う	ラテン語 nutrire
+dynam	dynam,dynas	dynamis,dunamis,dynasthai	力	ギリシャ語 dynamis
+horr	horr	horrere,horror,horribilis,horrendus,horridus	震える・ぞっとする	ラテン語 horrere
+cit	cit	citare,excitare,incitare,recitare	動かす・呼び出す	ラテン語 citare
+aug	aug,auct	augere,augmentum,auctio,auctor,augustus	増やす	ラテン語 augere
+alt	alt	altus,altitudo,altare,exaltare	高い	ラテン語 altus
+fals	fals,fallac	fallere,falsus,fallacia	だます・誤る	ラテン語 fallere
+rap	rap,rapt	rapere,rapidus,raptus,raptor	奪う・すばやい	ラテン語 rapere
+optim	optim	optimus,optimum	最良の	ラテン語 optimus
+proxim	proxim	proximus,proximitas,approximare	最も近い	ラテン語 proximus
+firm	firm	firmus,affirmare,confirmare,infirmus,firmare	固い・確かな	ラテン語 firmus
+opt	opt	optare,optio,adoptare	選ぶ・望む	ラテン語 optare
+cens	cens	censere,censor,census	評価する	ラテン語 censere
+plant	plant	plantare,planta,implantare,transplantare	植える	ラテン語 plantare
+dors	dors	dorsum,dorsalis	背中	ラテン語 dorsum
+caut	caut	cavere,cautio,cautus,praecavere	用心する	ラテン語 cavere
