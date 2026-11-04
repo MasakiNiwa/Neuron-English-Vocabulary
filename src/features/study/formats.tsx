@@ -4,6 +4,7 @@ import { SpeakButton } from '@/features/dictionary/components/links'
 import { useDictionary } from '@/features/dictionary/hooks'
 import type { Entry } from '@/features/dictionary/types'
 import { buildChoices } from './choices'
+import { getSpeechRecognition } from '@/lib/speech'
 
 /**
  * 出題形式
@@ -13,7 +14,7 @@ import { buildChoices } from './choices'
  *  choice: 4 択（意味を選ぶ）
  *  mix: 上記をランダムに
  */
-export type StudyFormat = 'en2ja' | 'ja2en' | 'cloze' | 'choice' | 'mix'
+export type StudyFormat = 'en2ja' | 'ja2en' | 'cloze' | 'choice' | 'speak' | 'ja2speak' | 'mix'
 export type ConcreteFormat = Exclude<StudyFormat, 'mix'>
 
 export const FORMAT_OPTIONS: { value: StudyFormat; label: string }[] = [
@@ -21,6 +22,8 @@ export const FORMAT_OPTIONS: { value: StudyFormat; label: string }[] = [
   { value: 'ja2en', label: '日→英' },
   { value: 'cloze', label: '穴埋め' },
   { value: 'choice', label: '4択' },
+  { value: 'speak', label: '発音' },
+  { value: 'ja2speak', label: '日→話す' },
   { value: 'mix', label: 'ミックス' },
 ]
 
@@ -47,11 +50,19 @@ export function resolveFormat(format: StudyFormat, entry: Entry | null): Concret
   if (!entry) return 'en2ja'
   const available: ConcreteFormat[] = ['en2ja', 'ja2en', 'choice']
   if (findCloze(entry)) available.push('cloze')
+  // ミックスには発音の出題を混ぜない（声を出せない場所でも使えるように）
   if (format === 'mix') return available[Math.floor(Math.random() * available.length)]
+  // 発音の出題は音声認識に対応したブラウザだけ。対応していなければ声を使わない形式にする
+  if (format === 'speak' || format === 'ja2speak') return getSpeechRecognition() ? format : format === 'speak' ? 'en2ja' : 'ja2en'
   return available.includes(format) ? format : 'en2ja'
 }
 
-export function JaPrompt({ entry }: { entry: Entry }) {
+/** 選べる出題形式（音声認識に対応していないブラウザでは発音の形式を出さない） */
+export function formatOptions() {
+  return getSpeechRecognition() ? FORMAT_OPTIONS : FORMAT_OPTIONS.filter((o) => o.value !== 'speak' && o.value !== 'ja2speak')
+}
+
+export function JaPrompt({ entry, spoken }: { entry: Entry; spoken?: boolean }) {
   const hint = entry.h
     .split('')
     .map((c, i) => (i === 0 || c === ' ' ? c : '＿'))
@@ -64,7 +75,7 @@ export function JaPrompt({ entry }: { entry: Entry }) {
         ))}
       </div>
       <div className="font-en text-xl tracking-[0.3em] text-muted">{hint}</div>
-      <p className="text-xs text-muted">この意味の英語を思い浮かべてください</p>
+      {!spoken && <p className="text-xs text-muted">この意味の英語を思い浮かべてください</p>}
     </div>
   )
 }

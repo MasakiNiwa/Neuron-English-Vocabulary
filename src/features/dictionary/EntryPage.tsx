@@ -1,6 +1,6 @@
 import { Link, useParams } from '@tanstack/react-router'
-import { ArrowRight, BookmarkPlus, Check, History } from 'lucide-react'
-import { Suspense, useEffect, type ReactNode } from 'react'
+import { ArrowRight, BookmarkPlus, Check, History, Mic } from 'lucide-react'
+import { Suspense, useEffect, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Card, SectionTitle } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
@@ -13,6 +13,8 @@ import { recordView, useDictionary, useEntry, useEntryViews } from './hooks'
 import type { Entry, Morpheme } from './types'
 import { PageSpinner } from '@/components/ui/Spinner'
 import { WordAiPanel } from '@/features/ai/WordAiPanel'
+import { SpeakCheck, SpeakableRow } from '@/features/speech/SpeakCheck'
+import { speechRecognitionSupported } from '@/features/speech/useSpeechCheck'
 
 const POS_LABEL: Record<string, string> = {
   noun: '名',
@@ -211,6 +213,9 @@ function EntryView({ entryKey }: { entryKey: string }) {
   const { t } = useTranslation()
   const entry = useEntry(entryKey)
   const autoSpeak = useSettings((s) => s.autoSpeak)
+  // 見出し語の発音チェック欄（別の語へ移ったら閉じる）
+  const [practice, setPractice] = useState(false)
+  useEffect(() => setPractice(false), [entryKey])
 
   useEffect(() => {
     if (!entry) return
@@ -229,6 +234,21 @@ function EntryView({ entryKey }: { entryKey: string }) {
           <div className="flex flex-wrap items-center gap-x-2">
             <h1 className="vt-headword font-en break-words text-3xl font-semibold tracking-tight">{entry.h}</h1>
             <SpeakButton text={entry.h} />
+            {speechRecognitionSupported() && (
+              <button
+                type="button"
+                onClick={() => setPractice((v) => !v)}
+                aria-label="発音してみる"
+                title="発音してみる"
+                aria-expanded={practice}
+                className={
+                  'inline-flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-surface-2 hover:text-accent ' +
+                  (practice ? 'text-accent' : 'text-muted')
+                }
+              >
+                <Mic className="size-5" />
+              </button>
+            )}
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted">
             {entry.ipas && entry.ipas.length > 1 ? (
@@ -253,6 +273,11 @@ function EntryView({ entryKey }: { entryKey: string }) {
         </div>
         <StudyButton entryKey={entry.k} />
       </div>
+      {practice && (
+        <Card className="mt-3 p-3">
+          <SpeakCheck key={entry.k} target={entry.h} autoStart />
+        </Card>
+      )}
 
       <Section title={t('words.meaning')}>
         <Card className="flex flex-col gap-2 p-3">
@@ -308,14 +333,13 @@ function EntryView({ entryKey }: { entryKey: string }) {
         <Section title={t('words.examples')}>
           <div className="flex flex-col gap-2">
             {entry.ex.map((ex) => (
-              <Card key={ex.id} className="flex items-start gap-2 p-3">
-                <div className="min-w-0 flex-1">
+              <Card key={ex.id} className="p-3">
+                <SpeakableRow target={ex.en} actions={<SpeakButton text={ex.en} size="sm" />}>
                   <p className="font-en leading-relaxed">
                     <LinkedText text={ex.en} highlight={hl} />
                   </p>
                   <p className="mt-0.5 text-sm text-muted">{ex.ja}</p>
-                </div>
-                <SpeakButton text={ex.en} size="sm" />
+                </SpeakableRow>
               </Card>
             ))}
           </div>

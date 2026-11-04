@@ -17,7 +17,7 @@ export interface Settings {
   /** 「カードを追加」で追加を始める頻度順位 */
   studyStartRank: number
   /** 出題形式 */
-  studyFormat: 'en2ja' | 'ja2en' | 'cloze' | 'choice' | 'mix'
+  studyFormat: 'en2ja' | 'ja2en' | 'cloze' | 'choice' | 'speak' | 'ja2speak' | 'mix'
 }
 
 export const defaultSettings: Settings = {
