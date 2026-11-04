@@ -327,9 +327,14 @@ function CardFace({
       {!shown && fmt !== 'choice' && (
         <>
           {speaking ? (
-            <button type="button" onClick={onReveal} className="text-xs text-muted underline-offset-4 hover:text-fg hover:underline">
-              声を出せないときは、答えを見る（Space）
-            </button>
+            // 声を出せないとき用。タップで進めることが一目で分かるようボタンの形にし、キーの案内は PC だけに出す
+            <div className="flex flex-col items-center gap-1">
+              <span className="text-[11px] text-muted">声を出せないときは</span>
+              <Button size="sm" onClick={onReveal}>
+                <Eye className="size-4" /> 答えを見る
+              </Button>
+              <span className="hidden text-[11px] text-muted md:block">Space</span>
+            </div>
           ) : (
             <>
               <Button variant="primary" size="lg" className="mt-2 w-full max-w-xs" onClick={onReveal}>

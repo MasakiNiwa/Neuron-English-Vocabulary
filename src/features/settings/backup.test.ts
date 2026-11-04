@@ -58,3 +58,25 @@ describe('restoreBackup', () => {
     expect((await db.views.toArray()).map((v) => v.entryId)).toEqual(['c'])
   })
 })
+
+describe('parseBackup の値域（レビュー B01・B06）', () => {
+  it('FSRS として成り立たないカードを取り込まない', async () => {
+    const { previewIntervals } = await import('@/features/study/cards')
+    const bad = [{ ...card, state: 1.5 }, { ...card, reps: -1 }, { ...card, reps: 1.2 }, { ...card, due: 9e15 }, { ...card, difficulty: 99 }, { ...card, stability: -1 }]
+    const b = parseBackup({ app: BACKUP_APP, data: { cards: [card, ...bad] } })
+    expect(b.rows.cards).toHaveLength(1)
+    expect(b.skipped).toBe(bad.length)
+    // 取り込んだカードは学習画面の計算で例外にならない
+    expect(() => previewIntervals(b.rows.cards[0] as never)).not.toThrow()
+  })
+  it('途中で終わった回答の印を復元する', () => {
+    const b = parseBackup({
+      app: BACKUP_APP,
+      data: {
+        threads: [{ id: 't', title: 'x', createdAt: 1, updatedAt: 1 }],
+        chats: ['length', 'filtered', 'interrupted', 'bogus'].map((incomplete, i) => ({ id: i, thread: 't', role: 'assistant', content: 'a', createdAt: i, incomplete })),
+      },
+    })
+    expect(b.rows.chats.map((c) => c.incomplete)).toEqual(['length', 'filtered', 'interrupted', undefined])
+  })
+})

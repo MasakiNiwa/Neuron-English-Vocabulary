@@ -6,7 +6,7 @@ import { speak } from '@/lib/speech'
 import { speechRecognitionSupported, useSpeechCheck, type CheckState } from './useSpeechCheck'
 
 const GRADE_VIEW = {
-  perfect: { label: '完璧！', cls: 'bg-success/15 text-success' },
+  perfect: { label: 'ばっちり', cls: 'bg-success/15 text-success' },
   good: { label: 'いいね', cls: 'bg-success/10 text-success' },
   close: { label: 'おしい', cls: 'bg-warn/15 text-warn' },
   retry: { label: 'もう一度', cls: 'bg-danger/10 text-danger' },
@@ -67,6 +67,7 @@ export function ResultView({ result, target, onRetry, compact }: { result: Prono
           ))}
         </ul>
       )}
+      <p className="text-[10px] text-muted">※ 英語として聞き取れたか（通じたか）の判定です。発音記号やアクセントの細かさは測っていません</p>
     </div>
   )
 }

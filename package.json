@@ -1,7 +1,7 @@
 {
   "name": "neuron-english-vocabulary",
   "private": true,
-  "version": "0.105.0",
+  "version": "0.106.0",
   "type": "module",
   "description": "ニューロン英単語 — 語源や意味のつながりで辿る英単語アプリ",
   "license": "MIT",
@@ -51,5 +51,10 @@
     "vite": "^8.3.5",
     "vite-plugin-pwa": "^2.0.0",
     "vitest": "^5.0.5"
+  },
+  "overrides": {
+    "workbox-build": {
+      "glob": "^14.0.3"
+    }
   }
 }

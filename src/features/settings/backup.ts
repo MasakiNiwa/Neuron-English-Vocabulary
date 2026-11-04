@@ -50,6 +50,10 @@ const isNum = (v: unknown): v is number => typeof v === 'number' && Number.isFin
 const isNumOrNull = (v: unknown) => v === null || isNum(v)
 const optNum = (v: unknown) => v === undefined || isNum(v)
 const optStr = (v: unknown) => v === undefined || typeof v === 'string'
+/** 0 以上の整数（回数など） */
+const isCount = (v: unknown) => Number.isInteger(v) && (v as number) >= 0 && (v as number) < 1e9
+/** JavaScript の Date として有効な時刻（ミリ秒） */
+const isTime = (v: unknown) => isNum(v) && Math.abs(v) <= 8.64e15
 
 /** 自動採番の表（id は数値。マージ時は id を付け直す） */
 const AUTO_ID: Partial<Record<BackupTable, true>> = { views: true, reviews: true, chats: true }
@@ -58,9 +62,13 @@ const AUTO_ID: Partial<Record<BackupTable, true>> = { views: true, reviews: true
 const CLEAN: Record<BackupTable, (r: Row) => Row | null> = {
   views: (r) => (isStr(r.entryId) && isNum(r.viewedAt) && optStr(r.source) ? pick(r, ['id', 'entryId', 'viewedAt', 'source']) : null),
   cards: (r) => {
+    // FSRS の状態として成り立つ値だけを受け付ける（小数の状態や不正な日付が入ると、学習画面で例外になるため。レビュー B01）
     const nums = ['due', 'stability', 'difficulty', 'elapsed_days', 'scheduled_days', 'learning_steps', 'reps', 'lapses', 'addedAt']
     if (!isStr(r.entryId) || !nums.every((k) => isNum(r[k])) || !isNumOrNull(r.last_review ?? null)) return null
-    if (!isNum(r.state) || r.state < 0 || r.state > 3 || (r.reps as number) < 0 || (r.lapses as number) < 0) return null
+    if (![0, 1, 2, 3].includes(r.state as number)) return null
+    if (!['reps', 'lapses', 'learning_steps', 'elapsed_days', 'scheduled_days'].every((k) => isCount(r[k]))) return null
+    if (!isTime(r.due) || !isTime(r.addedAt) || (r.last_review != null && !isTime(r.last_review))) return null
+    if ((r.stability as number) < 0 || (r.stability as number) > 1e6 || (r.difficulty as number) < 0 || (r.difficulty as number) > 10) return null
     if (r.suspended !== undefined && r.suspended !== 0 && r.suspended !== 1) return null
     return pick(r, ['entryId', ...nums, 'state', 'last_review', 'suspended'])
   },
@@ -75,6 +83,8 @@ const CLEAN: Record<BackupTable, (r: Row) => Row | null> = {
     const out = pick(r, ['id', 'thread', 'role', 'content', 'createdAt', 'model'])
     if (Array.isArray(r.tools)) out.tools = r.tools.filter((t) => typeof t === 'string')
     if (isObj(r.usage) && isNum(r.usage.input) && isNum(r.usage.output)) out.usage = { input: r.usage.input, output: r.usage.output }
+    // 途中で終わった回答の印も復元する（消えると、復元後に注意なしで表示されてしまう。レビュー B06）
+    if (r.incomplete === 'length' || r.incomplete === 'filtered' || r.incomplete === 'interrupted') out.incomplete = r.incomplete
     return out
   },
   extras: (r) => {

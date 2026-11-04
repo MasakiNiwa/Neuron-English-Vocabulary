@@ -1,6 +1,6 @@
 {
- "version": "20261104",
- "generatedAt": "2026-11-04T13:00:53.259523+00:00",
+ "version": "4abde7ddb84c",
+ "generatedAt": "2026-11-04T20:32:07.756921+00:00",
  "sources": {
   "files": [
    {
@@ -52,7 +52,7 @@
   "withExamples": 10390,
   "pieRoots": 92,
   "withNote": 12211,
-  "manualParts": 3261,
+  "manualParts": 3263,
   "manual": 13218,
   "withPie": 1434
  },
