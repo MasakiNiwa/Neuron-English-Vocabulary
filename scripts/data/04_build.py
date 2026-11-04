@@ -790,6 +790,20 @@ def phrase_parts(toks):
     return out if any(p['m'] and p['m'].startswith('pt:') for p in out) else None
 
 
+def phrase_forms(toks, poses):
+    """
+    熟語の活用形（take place → takes place / took place / taken place …）。
+    例文が活用形でも穴埋め問題に使えるように（ROADMAP C06）。1 語目の活用形の順番は単語の活用形に合わせる
+    """
+    lt = lemma_of(toks[0])
+    # 動詞の熟語だけ（名詞句 state of the art に stating of the art のような形を作らない）
+    if lt not in lemmas or 'verb' not in poses:
+        return []
+    base = entries.get(key_of(lemmas[lt]['head']), {}).get('forms') or []
+    rest = ' '.join(toks[1:])
+    return [f'{f.lower()} {rest}' for f in base if f.lower() != toks[0]][:8]
+
+
 for prank, (w, c, es, tr) in enumerate(phr_sel, 1):
     toks = w.split(' ')
     vforms = {toks[0]} | {f for f, l in infl.items() if l == toks[0]}
@@ -805,7 +819,7 @@ for prank, (w, c, es, tr) in enumerate(phr_sel, 1):
         'd': defs(es),
         'parts': phrase_parts(toks),
         'ety': None,
-        'forms': [],
+        'forms': phrase_forms(toks, {p for p, _ in tr}),
         'comp': comps,
         '_syn': collect_rel(es, 'synonyms'), '_ant': collect_rel(es, 'antonyms'),
         '_der': [], '_rel': collect_rel(es, 'related'),
