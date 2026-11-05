@@ -263,13 +263,11 @@ parts	newspaper	news=w:news paper=w:paper
 parts	territory	terr=r:terr itory
 parts	aside	a side=w:side
 parts	assistance	as=pre:ad sist=r:sta ance=suf:ance
-parts	delivery	deliver=w:deliver y=suf:y
 parts	typical	typ=w:type ical=suf:ic
 parts	universe	uni=pre:uni verse=r:vers
 parts	decade	dec ade
 parts	dedicate	de=pre:de dic=r:dict ate=suf:ate
 parts	definition	de=pre:de fin=r:fin ition
-parts	recovery	recover=w:recover y=suf:y
 parts	pleasure	pleas=w:please ure=suf:ure
 parts	storage	stor=w:store age
 parts	ultimately	ultimate=w:ultimate ly=suf:ly

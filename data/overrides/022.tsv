@@ -676,7 +676,6 @@ parts	startup	start=w:start up=w:up
 parts	straightforward	straight=w:straight forward=w:forward
 parts	thoughtful	thought=w:think ful=suf:ful
 parts	archbishop	arch bishop=w:bishop
-parts	bibliography	biblio graph=r:graph y=suf:y
 parts	broadly	broad=w:broad ly=suf:ly
 parts	certainty	cert=r:cert ain ty=suf:ity
 parts	confined	con=pre:com fin=r:fin ed

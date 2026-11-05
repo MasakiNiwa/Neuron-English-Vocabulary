@@ -4,7 +4,6 @@ parts	president	pre=pre:pre sid=r:sed ent=suf:ant
 parts	current	cur=r:cur r ent=suf:ant
 parts	example	ex=pre:ex ampl=r:em e
 parts	problem	pro=pre:pro blem=r:bol
-parts	energy	en=pre:en erg=r:erg y=suf:y
 parts	period	peri=pre:peri od=r:hod
 parts	episode	epi=pre:epi s ode=r:hod
 parts	especially	e spec=r:spec ial=suf:al ly=suf:ly

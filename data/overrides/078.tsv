@@ -1,0 +1,23 @@
+# 接頭辞の物語を書くために、接頭辞ごとの単語を見直して見つけた誤り
+# - ギリシャ語の a-（〜でない）ではない語: again（古英語 ongēan）、awake・ashamed・anew・akin（英語本来の a-）、alike（古英語 gelīc）、
+#   agreement・amusement・avail・annex・ascension（ラテン語 ad「〜へ」の変化形）
+#   （awake・alike・ashamed・anew は 045・046・036.tsv の登録を直した）
+# - about: 古英語 abūtan で、ラテン語 ab（離れて）ではない
+# - alone: all + one で、ad（〜へ）ではない
+# - dismiss・dismissal・disrupt・dimension・diligent: ラテン語 dis（離れて）で、ギリシャ語 dia（通して）ではない（dimensional は 070.tsv で修正）
+# - pardon: per（完全に）+ donare で、ギリシャ語 para ではない。partake: part + take
+noparts	again,about
+parts	agreement	a=pre:ad gree=r:grat ment=suf:ment
+parts	amusement	a=pre:ad muse ment=suf:ment
+parts	akin	a kin=w:kin
+parts	avail	a=pre:ad vail=r:val
+parts	annex	an=pre:ad nex=r:nect
+parts	ascension	a=pre:ad scens=r:scend ion=suf:ation
+parts	alone	al=w:all one=w:one
+parts	dismiss	dis=pre:dis miss=r:mit
+parts	dismissal	dis=pre:dis miss=r:mit al=suf:al
+parts	disrupt	dis=pre:dis rupt=r:rupt
+parts	dimension	di=pre:dis mens=r:mens ion=suf:ation
+parts	diligent	di=pre:dis lig=r:lect ent=suf:ant
+parts	pardon	par=pre:per don=r:dat
+parts	partake	par take=w:take
