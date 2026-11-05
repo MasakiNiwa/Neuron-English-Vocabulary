@@ -259,7 +259,7 @@ parts	unfounded	un=pre:un found=r:fund ed
 parts	unimportant	un=pre:un im=pre:into port=r:port ant=suf:ant
 parts	untitled	un=pre:un titl=w:title ed
 parts	accompaniment	ac=pre:ad compani=w:company ment=suf:ment
-parts	adoptive	ad=pre:ad opt ive=suf:ive
+parts	adoptive	ad=pre:ad opt=r:opt ive=suf:ive
 parts	alternately	alter=r:alter nate ly=suf:ly
 parts	annihilation	an=pre:ad nihil ation=suf:ation
 parts	armistice	arm i stice=r:sta
