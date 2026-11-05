@@ -17,3 +17,14 @@ noparts	miss
 # - sum・summary: ラテン語 summus（最も上の）・summa（総計）で、sumere（取る）ではない（summary は 059.tsv で修正）
 # - victim: ラテン語 victima（いけにえ）。vincere（打ち勝つ）とは別の語
 noparts	sum,victim
+# - habit: habere（持つ）の過去分詞 habitus。it は「行く」の ire ではない
+# - new: ラテン語 novus と同じ祖先（*néwos）の英語本来の語で、novus から来たのではない
+# - simple・simplicity・simplify: sem（ひとつ）+ plicare（折る）で、similis（似た）ではない
+parts	habit	hab=r:hab it
+parts	simple	sim pl=r:plic e
+parts	simplicity	sim plic=r:plic ity=suf:ity
+parts	simplify	sim pl=r:plic ify=suf:fy
+noparts	new
+# - medicinal・meditate: medicus（医者）・meditari（思いめぐらす）で、medius（真ん中の）ではない（medical・meditation と同じ med）
+parts	medicinal	med=r:med icin al=suf:al
+parts	meditate	medit=r:med ate=suf:ate

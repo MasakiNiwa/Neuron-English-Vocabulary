@@ -1,0 +1,53 @@
+# C08 の続き: 07_note_parts_report の候補のうち、もとの語を経由せず語根につながっていなかった語（確かなものだけ）。
+# sedentary は自動の分解（se + dent「歯」）が誤りだったので sed（座る）に直した。
+# つながないもの: deliberation（liber「自由な」ではなく libra「天秤」）、escalate（scala「はしご」）、tortoise・testicle（語源に異説）
+parts	pathogen	path=r:path o gen=r:gen
+parts	supervisory	super=pre:super vis=r:vid ory=suf:ary
+parts	digestion	di=pre:dis gest=r:gest ion=suf:ation
+parts	proprietor	propri=r:propri etor
+parts	valiant	val=r:val iant
+parts	epidemiology	epi=pre:epi dem=r:dem io logy=suf:logy
+parts	photon	phot=r:phot on
+parts	navigator	nav=r:nav igator
+parts	physique	phys=r:phys ique
+parts	regimen	reg=r:reg imen
+parts	cohesion	co=pre:com hes=r:her ion=suf:ation
+parts	adhesion	ad=pre:ad hes=r:her ion=suf:ation
+parts	recite	re=pre:re cit=r:cit e
+parts	depose	de=pre:de pos=r:pon e
+parts	repressed	re=pre:re press=r:press ed
+parts	auditory	aud=r:aud itory
+parts	centimeter	centi=r:cent meter=r:meter
+parts	confines	con=pre:com fin=r:fin es
+parts	insidious	in=pre:into sid=r:sed ious
+parts	rectangle	rect=r:reg angle
+parts	resurrected	re=pre:re surrect=r:surg ed
+parts	secluded	se=pre:se clud=r:clud ed
+parts	spectre	spect=r:spec re
+parts	aristocratic	aristo crat=r:crat ic=suf:ic
+parts	subversive	sub=pre:sub vers=r:vers ive=suf:ive
+parts	vertebra	vert=r:vers ebra
+parts	vertex	vert=r:vers ex
+parts	aptitude	apt=r:apt itude
+parts	equate	equ=r:equ ate=suf:ate
+parts	synchronized	syn=pre:syn chron=r:chron iz=suf:ize ed
+parts	renounce	re=pre:re nounce=r:nunci
+parts	abstinence	abs=pre:ab tin=r:ten ence=suf:ance
+parts	nutritious	nutr=r:nutr itious
+parts	conceivable	con=pre:com ceiv=r:cap able=suf:able
+parts	divergence	di=pre:dis verg=r:verg ence=suf:ance
+parts	domesticated	dom=r:dom estic ated
+parts	incision	in=pre:into cis=r:caed ion=suf:ation
+parts	transcribed	tran=pre:trans scrib=r:scrib ed
+parts	deluded	de=pre:de lud=r:lud ed
+parts	exalted	ex=pre:ex alt=r:alt ed
+parts	sedentary	sed=r:sed entary
+parts	choreographer	choreo graph=r:graph er=suf:er
+parts	duplex	du plex=r:plic
+parts	aggravating	ag=pre:ad grav=r:grav ating
+parts	clarinet	clar=r:clar inet
+parts	grievance	griev=r:grav ance=suf:ance
+parts	forfeit	for feit=r:fac
+parts	fluoride	flu=r:flu oride
+parts	auspices	au spic=r:spec es
+parts	modulation	mod=r:mod ul ation=suf:ation
