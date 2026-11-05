@@ -1,4 +1,27 @@
 {
   "for_good": {"example_ids": [21606]},
-  "parent": {"pie_ids": ["pie:per"]}
+  "parent": {"pie_ids": ["pie:per"]},
+  "word": {"pie_ids": ["pie:dheh1"]},
+  "wool": {"pie_ids": ["pie:h2welh1"]},
+  "velvet": {"pie_ids": ["pie:h2welh1"]},
+  "herald": {"pie_ids": ["pie:h2welh1"]},
+  "rosemary": {"pie_ids": ["pie:mer"]},
+  "mermaid": {"pie_ids": ["pie:mer"]},
+  "yet": {"pie_ids": ["pie:ghewd", "pie:h2ey", "pie:h2yew"]},
+  "strain": {"pie_ids": ["pie:strew"]},
+  "egg": {"pie_ids": ["pie:h2ek"]},
+  "hear": {"pie_ids": ["pie:h2ek"]},
+  "year": {"pie_ids": ["pie:h-yeh1"]},
+  "variety": {"pie_ids": ["pie:h1weh2"]},
+  "mass": {"pie_ids": ["pie:mey-change"]},
+  "bar": {"pie_ids": ["pie:gwreh2"]},
+  "bad": {"pie_ids": ["pie:bheydh"]},
+  "berry": {"pie_ids": ["pie:bhergh"]},
+  "rugby": {"pie_ids": ["pie:bhergh"]},
+  "system": {"pie_ids": ["pie:sem"]},
+  "pope": {"pie_ids": ["pie:peh2"]},
+  "appear": {"pie_ids": ["pie:peh2"]},
+  "haul": {"pie_ids": ["pie:kelh1"]},
+  "rush": {"pie_ids": ["pie:kers"]},
+  "hurry": {"pie_ids": ["pie:kers"]}
 }
