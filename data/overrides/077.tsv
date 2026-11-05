@@ -1,0 +1,17 @@
+# 語根の物語を書くために、語根レッスンの残りの語根の単語を見直して見つけた誤り（綴りが似ているだけの別の語）
+# - menstrual: mensis（月）で、metiri（測る）の mens ではない
+# - sever: separare（se + parare）で、verus（真実の）ではない
+# - supreme・supremacy: superus（上の）の最上級で、primus（第一の）ではない
+# - deliberate: libra（天秤）で、liber（自由な）ではない（deliberation と同じ）
+# - contempt: contemnere（さげすむ）で、tempus（時）ではない
+# - heritage: heres（相続人）で、haerere（くっつく）ではない（059.tsv の登録を noparts に）
+# - mute: mutus（口のきけない）、mutiny: movere から古フランス語 mutin。どちらも mutare（変える）ではない
+# - volcanic: 火の神ウルカヌス（Vulcanus）で、velle（望む）ではない
+# - confidential: fid（信頼）で、dens（歯）ではない
+# - deluxe: luxus（ぜいたく）で、lux（光）ではない
+# - Islamic: アラビア語 islām で、amare（愛する）ではない
+noparts	menstrual,supreme,supremacy,mute,mutiny,volcanic,deluxe,Islamic
+parts	sever	se=pre:se ver
+parts	deliberate	de=pre:de liber ate
+parts	contempt	con=pre:com temp t
+parts	confidential	con=pre:com fid=r:fid ential

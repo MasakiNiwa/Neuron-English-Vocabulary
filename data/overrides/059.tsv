@@ -49,7 +49,7 @@ parts	incredibly	in=pre:in cred=r:cred ibly
 parts	monitor	mon=r:mon itor
 parts	publishing	publish=w:publish ing
 parts	summary	summ ary=suf:ary
-parts	heritage	her=r:her itage
+noparts	heritage
 parts	landscape	land=w:land scape
 parts	manufacturer	manu=r:man fact=r:fac urer
 parts	upcoming	up=w:up coming=w:come
