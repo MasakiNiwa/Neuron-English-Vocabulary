@@ -36,15 +36,17 @@ export function rowToEntry(r: IndexRow): IndexEntry {
   }
 }
 
-export async function fetchJson<T>(path: string): Promise<T> {
-  const res = await fetch(assetUrl(path))
+export async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(assetUrl(path), init)
   if (!res.ok) throw new Error(`failed to load ${path}: ${res.status}`)
   return (await res.json()) as T
 }
 
 export function loadDictionary(): Promise<Dictionary> {
   dictPromise ??= (async () => {
-    const index = await fetchJson<{ v: string; e: IndexRow[] }>('data/index.json')
+    // 索引は版の付かない URL。ブラウザの HTTP キャッシュ（GitHub Pages は 10 分）で古い索引を使わないよう、毎回サーバーに確かめる
+    // （変わっていなければ 304 で済む）。古い索引のまま新しい詳細データを取ると版が食い違い、更新の表示が出続けていた
+    const index = await fetchJson<{ v: string; e: IndexRow[] }>('data/index.json', { cache: 'no-cache' })
     dataVersion = index.v
     const morphemes = await fetchJson<Morpheme[]>(`data/morphemes.json?v=${index.v}`)
     const entries = index.e.map(rowToEntry)
@@ -68,7 +70,7 @@ export function loadDictionary(): Promise<Dictionary> {
 }
 
 export function loadMeta(): Promise<DataMeta> {
-  return fetchJson<DataMeta>('data/meta.json')
+  return fetchJson<DataMeta>('data/meta.json', { cache: 'no-cache' })
 }
 
 function loadShard(shard: string) {

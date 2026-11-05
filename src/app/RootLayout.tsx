@@ -115,6 +115,21 @@ function BottomNav({ pathname }: { pathname: string }) {
 }
 
 /** 辞書データが新しい版に更新されたことを知らせ、再読み込みを促す（レビュー B03） */
+/** 古い索引をキャッシュから消してから再読み込みする（オフライン用に保存した詳細データは版ごとなので残す） */
+async function reloadWithFreshData() {
+  try {
+    for (const name of await caches.keys()) {
+      if (name === 'nev-data-index' || name === 'nev-data') {
+        const cache = await caches.open(name)
+        for (const req of await cache.keys()) if (/\/data\/(index|meta)\.json/.test(req.url)) await cache.delete(req)
+      }
+    }
+  } catch {
+    // Cache API が使えない環境でも再読み込みはする
+  }
+  location.reload()
+}
+
 function DataUpdatedBar() {
   const [show, setShow] = useState(false)
   useEffect(() => onDataOutdated(() => setShow(true)), [])
@@ -122,7 +137,7 @@ function DataUpdatedBar() {
   return (
     <div role="status" className="flex items-center gap-2 border-b border-border bg-accent-soft px-4 py-2 text-sm">
       <span className="flex-1">辞書データが新しくなりました。再読み込みすると最新の内容で表示されます。</span>
-      <button type="button" onClick={() => location.reload()} className="rounded-lg bg-accent px-3 py-1 text-xs font-medium text-accent-fg">
+      <button type="button" onClick={() => void reloadWithFreshData()} className="rounded-lg bg-accent px-3 py-1 text-xs font-medium text-accent-fg">
         再読み込み
       </button>
     </div>
