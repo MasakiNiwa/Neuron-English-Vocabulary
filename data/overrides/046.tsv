@@ -175,7 +175,7 @@ gloss	forage	verb:（食料を）探し回る|noun:飼料
 gloss	freshness	noun:新鮮さ
 
 # 第41弾の語源分解
-parts	alike	a=pre:a like=w:like
+parts	alike	a like=w:like
 parts	availability	avail=w:avail abil ity=suf:ity
 parts	companion	com=pre:com pan ion=suf:ation
 parts	consciousness	conscious=w:conscious ness=suf:ness
@@ -214,7 +214,7 @@ parts	motorcycle	motor=w:motor cycle=w:cycle
 parts	nationwide	nation=w:nation wide=w:wide
 parts	sunny	sunn=w:sun y=suf:y
 parts	adorable	ador=w:adore able=suf:able
-parts	ashamed	a=pre:a shamed=w:shame
+parts	ashamed	a shamed=w:shame
 parts	halfway	half=w:half way=w:way
 parts	independently	independent=w:independent ly=suf:ly
 parts	northeast	north=w:north east=w:east

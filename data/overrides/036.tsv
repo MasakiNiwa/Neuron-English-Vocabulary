@@ -280,7 +280,7 @@ parts	doomsday	doom=w:doom s day=w:day
 parts	handkerchief	hand=w:hand kerchief
 parts	turnpike	turn=w:turn pike
 parts	blowout	blow=w:blow out=w:out
-parts	anew	a=pre:a new=w:new
+parts	anew	a new=w:new
 parts	baseman	base=w:base man=w:man
 parts	coolant	cool=w:cool ant=suf:ant
 parts	labourer	labour=r:labor er=suf:er

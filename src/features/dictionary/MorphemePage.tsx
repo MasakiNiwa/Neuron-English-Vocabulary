@@ -103,7 +103,7 @@ function MorphemeView({ id }: { id: string }) {
       {m.story && (
         <Card className="mb-4 p-3 text-sm leading-relaxed">
           <div className="mb-1 flex items-center gap-1 text-xs font-medium text-accent">
-            <BookOpen className="size-3.5" /> 語根の物語
+            <BookOpen className="size-3.5" /> {m.type === 'prefix' ? '接頭辞の物語' : m.type === 'suffix' ? '接尾辞の物語' : '語根の物語'}
           </div>
           {m.story.ja}
         </Card>

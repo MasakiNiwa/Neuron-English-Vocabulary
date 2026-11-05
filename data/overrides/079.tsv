@@ -1,0 +1,96 @@
+# 接尾辞の物語を書くために、接尾辞ごとの単語を見直して見つけた誤り
+# - -y には 3 種類ある: 形容詞を作る英語本来の -y（rainy・lucky。suf:y）、名詞を作るギリシャ語・ラテン語の -ia（energy・biology・memory。
+#   新しく suf:ia を追加）、接尾辞ではない語尾（very・city・party・stay）や、愛称の -y（dolly・mummy・bunny）
+#   -ty（honesty・difficulty）は suf:ity、predatory は -ory（suf:ary）
+# - finish・publish・vanish の -ish は古フランス語の動詞の語尾 -iss- で、「〜のような」の -ish ではない
+# - alien（alienus）・maiden（古英語の縮小の -en）は「〜にする」の -en ではない
+parts	very	ver=r:ver y
+parts	every	ever=w:ever y
+parts	city	cit=r:civ y
+parts	party	part=w:part y
+parts	stay	sta=r:sta y
+parts	energy	en=pre:en erg=r:erg y=suf:ia
+parts	policy	polic=r:pol y=suf:ia
+parts	technology	tech=r:tech no log=r:log y=suf:ia
+parts	memory	memor=r:memor y=suf:ia
+parts	injury	in=pre:in jur=r:jus y=suf:ia
+parts	assembly	as=pre:ad sembl=r:simil y=suf:ia
+parts	delivery	deliver=w:deliver y=suf:ia
+parts	recovery	recover=w:recover y=suf:ia
+parts	navy	nav=r:nav y=suf:ia
+parts	democracy	dem=r:dem o crac=r:crat y=suf:ia
+parts	jury	jur=r:jus y=suf:ia
+parts	philosophy	phil=r:phil o soph=r:soph y=suf:ia
+parts	discovery	discover=w:discover y=suf:ia
+parts	photography	phot=r:phot o graph=r:graph y=suf:ia
+parts	buddy	bud=w:bud d y
+parts	difficulty	dif=pre:dis fic=r:fac ult y=suf:ity
+parts	faculty	fac=r:fac ult y=suf:ity
+parts	psychology	psych=r:psych o log=r:log y=suf:ia
+parts	treaty	treat=r:tract y=suf:ia
+parts	controversy	contro=pre:contra vers=r:vers y=suf:ia
+parts	inquiry	in=pre:into quir=r:quer y=suf:ia
+parts	treasury	treasur=w:treasure y=suf:ia
+parts	biology	bio=r:bio log=r:log y=suf:ia
+parts	courtesy	court=w:court es y=suf:ia
+parts	monkey	monk=w:monk e y
+parts	apology	apo log=r:log y=suf:ia
+parts	sympathy	sym=pre:syn path=r:path y=suf:ia
+parts	honesty	honest=w:honest y=suf:ity
+parts	geography	geo=r:geo graph=r:graph y=suf:ia
+parts	theology	the=r:the o log=r:log y=suf:ia
+parts	biography	bio=r:bio graph=r:graph y=suf:ia
+parts	bunny	bun=w:bun n y
+parts	geometry	geo=r:geo metr=r:meter y=suf:ia
+parts	autonomy	auto=pre:auto nom y=suf:ia
+parts	trilogy	tri=pre:tri log=r:log y=suf:ia
+parts	levy	lev=r:lev y
+parts	remedy	re=pre:re med=r:med y=suf:ia
+parts	bibliography	biblio graph=r:graph y=suf:ia
+parts	sociology	soci=r:soci o log=r:log y=suf:ia
+parts	felony	felon=w:felon y=suf:ia
+parts	symphony	sym=pre:syn phon=r:phon y=suf:ia
+parts	geology	geo=r:geo log=r:log y=suf:ia
+parts	ecology	eco log=r:log y=suf:ia
+parts	jealousy	jealous=w:jealous y=suf:ia
+parts	empathy	em=pre:en path=r:path y=suf:ia
+parts	analogy	ana log=r:log y=suf:ia
+parts	terminology	termin=r:termin o log=r:log y=suf:ia
+parts	anthropology	anthropo log=r:log y=suf:ia
+parts	mythology	myth=w:myth o log=r:log y=suf:ia
+parts	query	quer=r:quer y
+parts	autobiography	auto=pre:auto bio=r:bio graph=r:graph y=suf:ia
+parts	physiology	physi=r:phys o log=r:log y=suf:ia
+parts	poppy	pop=w:pop p y
+parts	mastery	master=w:master y=suf:ia
+parts	mummy	mum=w:mum m y
+parts	pathology	path=r:path o log=r:log y=suf:ia
+parts	bureaucracy	bureau=w:bureau crac=r:crat y=suf:ia
+parts	dolly	doll=w:doll y
+parts	symmetry	sym=pre:syn metr=r:meter y=suf:ia
+parts	privy	priv=r:priv y
+parts	trolley	troll=w:troll e y
+parts	pinky	pink=w:pink y
+parts	predatory	predator=w:predator y=suf:ary
+parts	astrology	astr=r:aster o log=r:log y=suf:ia
+parts	enquiry	en=pre:en quir=r:quer y=suf:ia
+parts	genealogy	gen=r:gen ea log=r:log y=suf:ia
+parts	philanthropy	phil=r:phil anthrop y=suf:ia
+parts	perjury	per=pre:per jur=r:jus y=suf:ia
+parts	topography	topo graph=r:graph y=suf:ia
+parts	apathy	a=pre:a path=r:path y=suf:ia
+parts	orthodoxy	orthodox=w:orthodox y=suf:ia
+parts	microbiology	micro=pre:micro bio=r:bio log=r:log y=suf:ia
+parts	cinematography	cinema=w:cinema to graph=r:graph y=suf:ia
+parts	modesty	modest=w:modest y=suf:ity
+parts	chronology	chron=r:chron o log=r:log y=suf:ia
+parts	meteorology	meteor=w:meteor o log=r:log y=suf:ia
+parts	synergy	syn=pre:syn erg=r:erg y=suf:ia
+parts	fallacy	fallac=r:fals y=suf:ia
+parts	telly	tell=w:tell y
+parts	zoology	zoo log=r:log y=suf:ia
+parts	finish	fin=r:fin ish
+parts	publish	publ=r:popul ish
+parts	vanish	van=r:vac ish
+parts	alien	ali=r:alter en
+parts	maiden	maid=w:maid en

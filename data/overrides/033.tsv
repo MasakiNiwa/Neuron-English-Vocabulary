@@ -345,7 +345,6 @@ parts	eyewitness	eye=w:eye witness=w:witness
 parts	gunman	gun=w:gun man=w:man
 parts	manifold	mani=w:many fold=w:fold
 parts	miscarriage	mis=pre:mis carri=r:carr age
-parts	philanthropy	phil=r:phil anthrop y=suf:y
 parts	preparedness	pre=pre:pre par=r:para ed ness=suf:ness
 parts	reelection	re=pre:re e=pre:ex lect=r:lect ion=suf:ation
 parts	relapse	re=pre:re lapse=w:lapse
@@ -367,7 +366,6 @@ parts	irregularity	ir=pre:in reg=r:reg ular ity=suf:ity
 parts	mailbox	mail=w:mail box=w:box
 parts	oblivious	ob=pre:ob liv ious=suf:ous
 parts	patriarch	patri=r:pater arch
-parts	perjury	per=pre:per jur=r:jus y=suf:y
 parts	resurgence	re=pre:re surg=r:surg ence=suf:ance
 parts	shoreline	shore=w:shore line=w:line
 parts	spreadsheet	spread=w:spread sheet=w:sheet

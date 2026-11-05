@@ -275,7 +275,7 @@ parts	workshop	work=w:work shop=w:shop
 parts	aboard	a board=w:board
 parts	accent	ac=pre:ad cent
 parts	addiction	ad=pre:ad dict=r:dict ion=suf:ation
-parts	awake	a=pre:a wake=w:wake
+parts	awake	a wake=w:wake
 parts	fifteen	fif=w:five teen
 parts	grandmother	grand=w:grand mother=w:mother
 parts	invitation	invit=w:invite ation=suf:ation
