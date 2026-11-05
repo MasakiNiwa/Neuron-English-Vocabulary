@@ -1,6 +1,6 @@
 {
- "version": "595c1ca87885",
- "generatedAt": "2026-11-05T11:00:43.391744+00:00",
+ "version": "92dc33bc6e7d",
+ "generatedAt": "2026-11-05T11:20:01.103967+00:00",
  "sources": {
   "files": [
    {
@@ -59,7 +59,7 @@
   "withNote": 12211,
   "manualParts": 3499,
   "manual": 13218,
-  "withPie": 1434
+  "withPie": 1413
  },
  "shardSize": 200
 }
