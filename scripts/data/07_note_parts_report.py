@@ -45,6 +45,46 @@ for p in sorted(glob.glob(os.path.join(REPO, 'data', 'explanations', '*.tsv'))):
             notes[r[0].lower()] = r[1].lower()
 
 index = json.load(open(os.path.join(REPO, 'public', 'data', 'index.json'), encoding='utf-8'))['e']
+# もとの語（w:）を経由したつながり。actually ＝ actual ＋ ly なら、actual がつながる語根も actually のつながりとみなす
+parts_of = {}
+for f in glob.glob(os.path.join(REPO, 'public', 'data', 'entries', '*.json')):
+    for k, e in json.load(open(f, encoding='utf-8')).items():
+        if k != '_v':
+            parts_of[k] = [p['m'] for p in e.get('parts') or [] if p.get('m')]
+
+
+# 形態素自体の成り立ち（-logy は logos、-fy は facere など。morpheme_parts.tsv）も、つながりとみなす
+morph_parts = {m['id']: m.get('parts') or [] for m in json.load(open(os.path.join(REPO, 'public', 'data', 'morphemes.json'), encoding='utf-8'))}
+
+
+def expand(mid, depth=0):
+    out = {mid}
+    if depth < 3:
+        for x in morph_parts.get(mid, []):
+            out |= expand(x, depth + 1)
+    return out
+
+
+def closure(key, seen=None):
+    seen = seen if seen is not None else set()
+    if key in seen:
+        return set()
+    seen.add(key)
+    out = set()
+    for m in parts_of.get(key, []):
+        if m.startswith('w:'):
+            out |= closure(m[2:].replace(' ', '_'), seen)
+        else:
+            out |= expand(m)
+    return out
+
+
+# 確認したうえでつながないと決めた語（data/note_parts_reviewed.tsv）
+reviewed = set()
+for r in rows(os.path.join(REPO, 'data', 'note_parts_reviewed.tsv')):
+    if len(r) >= 2:
+        reviewed.add((r[0].lower(), r[1]))
+
 found = []
 for e in sorted(index, key=lambda r: r[2]):
     if e[1] != 0:
@@ -53,9 +93,9 @@ for e in sorted(index, key=lambda r: r[2]):
     note = notes.get(word)
     if not note or not re.fullmatch(r'[a-z]+', word):
         continue
-    linked = set(e[6])
+    linked = set().union(*[expand(m) for m in e[6]]) | closure(e[0])
     for rid, forms, pat, meaning in roots:
-        if 'r:' + rid in linked:
+        if 'r:' + rid in linked or (word, 'r:' + rid) in reviewed:
             continue
         form = next((f for f in forms if f in word), None)  # 綴りの照合を先に行う（安価なため）
         if not form:

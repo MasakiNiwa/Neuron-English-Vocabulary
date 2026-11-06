@@ -68,3 +68,6 @@ python3 scripts/data/04_build.py --work $WORK --raw $RAW --repo .
 - 訳語を手で書いた語は、一覧に出す短い訳も書いた順のまま使う
 
 
+
+- 07_note_parts_report.py の候補は、もとの語（w:）・形態素の成り立ち（morpheme_parts.tsv）を経由したつながりも数える。
+  確認したうえでつながないと決めた語は data/note_parts_reviewed.tsv に理由つきで書くと、候補から外れる
