@@ -363,7 +363,7 @@ function FormatPicker() {
 
 /** どこから始めるか（よく使う順の開始位置）。ROADMAP U01。「新しい単語を学ぶ」の中で常に選べる */
 const LEVELS: { rank: number; title: string; hint: string }[] = [
-  { rank: 1, title: '基本から', hint: '頻度 1 位〜（the、have など最頻出語も確認）' },
+  { rank: 1, title: '基本から', hint: '頻度 1 位〜（have・make などの最頻出語から。the・of などの機能語は出しません）' },
   { rank: 500, title: '中学〜高校基礎', hint: '頻度 500 位〜' },
   { rank: 1000, title: '高校レベル', hint: '頻度 1000 位〜' },
   { rank: 2000, title: '大学入試レベル', hint: '頻度 2000 位〜' },
@@ -421,21 +421,93 @@ function RootLessonCard() {
   )
 }
 
+/**
+ * はじめての人向けの入口。設定を選ばずに、そのまま 1 問目まで進める（レビュー 2026-11-07 の 09）。
+ * よく使う順（いまの開始レベル）で 10 語、または次の語根レッスン（6 語）
+ */
+function QuickStart({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
+  const info = useNextRoot()
+  const [busy, setBusy] = useState(false)
+  const [msg, setMsg] = useState('')
+  const go = async () => {
+    setBusy(true)
+    setMsg('')
+    try {
+      const keys = await pickNewWords('frequency', 10, { type: 'w' })
+      if (!keys.length) return setMsg('新しく学べる単語がありません。')
+      onStart(await startLearning(keys), 'learn')
+    } catch (e) {
+      setMsg(`学習を始められませんでした: ${e instanceof Error ? e.message : String(e)}`)
+    } finally {
+      setBusy(false)
+    }
+  }
+  return (
+    <Card className="flex flex-col gap-3 border-accent/40">
+      <SectionTitle className="flex items-center gap-1.5">
+        <Sparkles className="size-4" /> まずはここから
+      </SectionTitle>
+      <p className="text-sm text-muted">設定はあとから変えられます。まずは 1 問目を解いてみましょう。</p>
+      <div className="grid gap-2 sm:grid-cols-2">
+        <Button variant="primary" size="lg" disabled={busy} onClick={() => void go()}>
+          <Play className="size-5" /> よく使う単語を 10 語学ぶ
+        </Button>
+        {info?.next && (
+          <Link
+            to="/lesson/$id"
+            params={{ id: info.next.id }}
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-accent/40 bg-accent-soft px-4 text-base font-medium text-accent hover:opacity-90"
+          >
+            <BookOpenCheck className="size-5" /> 語根から 6 語を試す
+          </Link>
+        )}
+      </div>
+      {msg && <p className="text-xs text-muted">{msg}</p>}
+    </Card>
+  )
+}
+
+/** 出題形式の選択（ふだんは選んでいる形式だけを見せ、開くと変えられる） */
+function FormatSection() {
+  const formats = useSettings((s) => s.studyFormats)
+  const auto = useSettings((s) => s.studyAuto)
+  const usable = formats.filter(formatSupported)
+  return (
+    <details className="group rounded-2xl border border-border bg-surface p-3">
+      <summary className="flex cursor-pointer select-none items-center gap-2 text-sm">
+        <span className="text-muted">出題形式</span>
+        <span className="min-w-0 flex-1 truncate font-medium">
+          {usable.map((f) => FORMAT_LABEL[f]).join('・') || FORMAT_LABEL.en2ja}
+          {usable.length > 1 && auto && <span className="ml-1 text-xs font-normal text-muted">（おまかせ）</span>}
+        </span>
+        <span className="text-xs text-accent group-open:hidden">変更</span>
+      </summary>
+      <div className="mt-3">
+        <FormatPicker />
+      </div>
+    </details>
+  )
+}
+
 function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
   const { t } = useTranslation()
   const tick = useMinuteTick()
   const stats = useLiveQuery(getStudyStats, [tick])
   const today = (stats?.due ?? 0) + (stats?.newAvailable ?? 0)
+  // カードがまだない（はじめて）
+  const first = stats?.total === 0
   return (
     <div className="flex flex-col gap-4">
-      <Steps />
-      <FormatPicker />
-      {/* 今日の学習（復習・追加済みの新規）があれば先頭に、なければ「新しく学ぶ」を先頭に */}
+      {first && <QuickStart onStart={onStart} />}
+      {/* 今日の学習（復習・追加済みの新規）があれば先頭に */}
       {today > 0 && <ReviewCard onStart={onStart} />}
+      <FormatSection />
+      {first && <Steps />}
       <RootLessonCard />
       <div className="grid gap-4 md:grid-cols-2">
         <LearnCard onStart={onStart} />
-        <PracticeCard onStart={onStart} />
+        {/* 自由練習は学習中のカードがあるときだけ */}
+        {!first && <PracticeCard onStart={onStart} />}
       </div>
       {today === 0 && <ReviewCard onStart={onStart} />}
       <div className="grid grid-cols-3 gap-2">

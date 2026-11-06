@@ -210,7 +210,14 @@ export function ReviewSession({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.target as HTMLElement).tagName === 'INPUT') return
+      // ボタン・リンク・入力欄などにフォーカスがあるときは、その要素の標準の操作を優先する（Tab で「終了」を選んで Enter など。
+      // レビュー 2026-11-07 の 05）。キーを押し続けたときの繰り返しでは何もしない
+      const el = e.target as HTMLElement
+      if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return
+      // 文字の入力中は何もしない（評価の数字キーも入力として扱う）
+      if (el.closest('input, textarea, select, [contenteditable="true"]')) return
+      // Space・Enter はフォーカスしているボタン・リンクなどの操作として扱う（数字キーの評価はそのまま使える）
+      if ((e.key === ' ' || e.key === 'Enter') && el.closest('button, a, summary, [role="button"]')) return
       if (!shown && (e.key === ' ' || e.key === 'Enter')) {
         e.preventDefault()
         reveal()
@@ -273,7 +280,7 @@ export function ReviewSession({
               className={`flex flex-col items-center rounded-xl border bg-surface py-2.5 hover:bg-surface-2 ${x.cls} ${suggested === x.g ? 'ring-2 ring-current' : ''}`}
             >
               <span className="text-sm font-medium">{x.label}</span>
-              <span className="text-[11px] opacity-80">{formatInterval(intervals[x.g])}</span>
+              <span className="text-[11px]">{formatInterval(intervals[x.g])}</span>
               <span className="hidden text-[10px] text-muted md:block">{x.key}</span>
             </button>
           ))}
@@ -282,6 +289,24 @@ export function ReviewSession({
       {shown && <GradeHelp />}
       <p className="text-center text-xs text-muted">回答 {count}</p>
     </div>
+  )
+}
+
+/**
+ * 答えを見たあとの「この単語を発音してみる」。開いたときだけ発音チェックを置き、聞き取りを始める。
+ * 閉じている間は置かない（カードをめくっただけでマイクが動かないように。レビュー 2026-11-07 の 01）。閉じると聞き取りも止まる
+ */
+function PracticeSpeak({ target }: { target: string }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <details className="mb-3 text-left" open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
+      <summary className="cursor-pointer select-none text-center text-xs text-accent">この単語を発音してみる</summary>
+      {open && (
+        <div className="mt-2 rounded-xl border border-border p-3">
+          <SpeakCheck target={target} compact autoStart />
+        </div>
+      )}
+    </details>
   )
 }
 
@@ -353,7 +378,8 @@ function CardFace({
           key={entryKey}
           entry={entry}
           answer={answer}
-          targets={fmt === 'dictation' ? [head] : targets}
+          targets={fmt === 'dictation' ? [head] : fmt === 'cloze' ? [answer] : targets}
+          related={fmt === 'cloze' && entry ? [head, ...(entry.forms ?? [])] : []}
           shown={shown}
           onReveal={onReveal}
           onSuggest={onSuggest}
@@ -406,12 +432,7 @@ function CardFace({
         <div ref={backRef} className="w-full origin-top">
           {fmt !== 'speak' && (
             // 発音で答える形式以外でも、答えを見たあとに発音を試せる
-            <details className="mb-3 text-left">
-              <summary className="cursor-pointer select-none text-center text-xs text-accent">この単語を発音してみる</summary>
-              <div className="mt-2 rounded-xl border border-border p-3">
-                <SpeakCheck target={head} compact autoStart />
-              </div>
-            </details>
+            <PracticeSpeak target={head} />
           )}
           <CardBack entryKey={entryKey} />
         </div>

@@ -6,7 +6,7 @@ import { Accordion, AccordionSection } from '@/components/ui/Accordion'
 import { Button } from '@/components/ui/Button'
 import { Page } from '@/components/ui/Page'
 import { clearHistory, clearStudy } from '@/lib/db'
-import { buildBackup, clearEverything, parseBackup, restoreBackup, TABLE_LABEL, BACKUP_TABLES, type ParsedBackup } from './backup'
+import { buildBackup, clearEverything, currentCounts, parseBackup, restoreBackup, TABLE_LABEL, BACKUP_TABLES, type BackupTable, type ParsedBackup } from './backup'
 import { speak, ttsSupported, useEnglishVoices } from '@/lib/speech'
 import { useSettings, type ThemeMode } from '@/stores/settings'
 import { settingsExtensions } from './extensions'
@@ -92,6 +92,7 @@ export function SettingsPage() {
   const voices = useEnglishVoices()
 
   const [pending, setPending] = useState<ParsedBackup | null>(null)
+  const [counts, setCounts] = useState<Record<BackupTable, number> | null>(null)
   const [importMsg, setImportMsg] = useState('')
 
   const doExport = async () => {
@@ -112,7 +113,9 @@ export function SettingsPage() {
       if (!file) return
       setImportMsg('')
       try {
-        setPending(parseBackup(JSON.parse(await file.text())))
+        const parsed = parseBackup(JSON.parse(await file.text()))
+        setCounts(await currentCounts())
+        setPending(parsed)
       } catch (e) {
         setPending(null)
         setImportMsg(e instanceof SyntaxError ? 'JSON として読み込めませんでした' : e instanceof Error ? e.message : String(e))
@@ -122,7 +125,11 @@ export function SettingsPage() {
   }
   const doRestore = async (mode: 'replace' | 'merge') => {
     if (!pending) return
-    if (mode === 'replace' && !confirm('今の学習データ・履歴・チャットを消して、バックアップの内容に置き換えます。よろしいですか？')) return
+    if (mode === 'replace') {
+      // 置き換えで減るものを具体的に示す（正当な空のバックアップでも判断できるように。レビュー 2026-11-07 の 02）
+      const lines = pending.present.map((t) => `${TABLE_LABEL[t]}: ${counts?.[t] ?? '?'} 件 → ${pending.rows[t].length} 件`)
+      if (!confirm(`次の内容をバックアップの内容に置き換えます。よろしいですか？\n\n${lines.join('\n')}`)) return
+    }
     try {
       await restoreBackup(pending, mode)
       setImportMsg(mode === 'replace' ? 'バックアップの内容に置き換えました' : '今のデータにバックアップの内容を追加しました')
@@ -260,13 +267,29 @@ export function SettingsPage() {
               <p className="font-medium">
                 バックアップの内容{pending.exportedAt ? `（${new Date(pending.exportedAt).toLocaleString('ja-JP')} に作成）` : ''}
               </p>
-              <ul className="mt-1 grid grid-cols-2 gap-x-4 text-xs text-muted">
-                {BACKUP_TABLES.map((t) => (
-                  <li key={t}>
-                    {TABLE_LABEL[t]}: {pending.rows[t].length.toLocaleString('ja-JP')} 件
-                  </li>
-                ))}
-                <li>設定: {Object.keys(pending.settings).length} 項目</li>
+              <table className="mt-1 w-full text-xs">
+                <thead className="text-muted">
+                  <tr>
+                    <th className="py-0.5 text-left font-normal">内容</th>
+                    <th className="py-0.5 text-right font-normal">この端末</th>
+                    <th className="py-0.5 text-right font-normal">バックアップ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {BACKUP_TABLES.map((t) => (
+                    <tr key={t}>
+                      <td className="py-0.5">{TABLE_LABEL[t]}</td>
+                      <td className="py-0.5 text-right tabular-nums">{counts?.[t].toLocaleString('ja-JP') ?? '…'}</td>
+                      <td className="py-0.5 text-right tabular-nums">
+                        {pending.present.includes(t) ? `${pending.rows[t].length.toLocaleString('ja-JP')} 件` : <span className="text-muted">含まれていない</span>}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <ul className="mt-2 list-disc space-y-0.5 pl-4 text-[11px] text-muted">
+                <li>今のデータに追加: 今のデータは消さず、古いもので上書きしません（カードは復習が新しい方、語根レッスンは最高点と回数の大きい方）。設定は今のままです</li>
+                <li>置き換えて復元: バックアップに含まれている表を、バックアップの内容に置き換えます。含まれていない表は今のままで、設定（{Object.keys(pending.settings).length} 項目）も復元します</li>
               </ul>
               {pending.skipped > 0 && <p className="mt-1 text-xs text-danger">形式が正しくない {pending.skipped} 件は取り込みません</p>}
               <p className="mt-2 text-xs text-muted">API キーと AI の接続設定はバックアップに含まれません（復元後に設定し直してください）。</p>

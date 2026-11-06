@@ -14,4 +14,12 @@ describe('vault', () => {
     expect(await getSecret('k1')).toBe('sk-test-123')
     expect(await getSecret('k2')).toBe('AIza-test')
   }, 20000)
+
+  it('すでに設定済みの保管庫を、別の初期設定で上書きしない（レビュー 2026-11-07 の 04）', async () => {
+    // 上のテストで設定済み。古い初期設定画面から送信しても、最初のパスフレーズと秘密が使えるまま
+    lock()
+    await expect(setupPassphrase('another pass')).rejects.toThrow('すでに設定')
+    await unlockWithPassphrase('correct horse')
+    expect(await getSecret('k1')).toBe('sk-test-123')
+  }, 20000)
 })

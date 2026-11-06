@@ -82,3 +82,46 @@ describe('parseBackup の値域（レビュー B01・B06）', () => {
     expect(b.rows.chats.map((c) => c.incomplete)).toEqual(['length', 'filtered', 'interrupted', undefined])
   })
 })
+
+describe('復元の安全性（レビュー 2026-11-07 の 02・03）', () => {
+  it('表が壊れている（配列でない）バックアップは復元しない', () => {
+    expect(() => parseBackup({ app: BACKUP_APP, schemaVersion: 2, data: { cards: 'damaged' } })).toThrow(/学習カード/)
+  })
+  it('置き換えでも、バックアップに含まれていない表は今のデータのまま残す', async () => {
+    const { db } = await import('@/lib/db')
+    const { restoreBackup } = await import('./backup')
+    await db.cards.clear()
+    await db.cards.put(card as never)
+    await db.views.clear()
+    const b = parseBackup({ app: BACKUP_APP, data: { views: [{ id: 1, entryId: 'x', viewedAt: 1 }] } })
+    expect(b.present).toEqual(['views'])
+    await restoreBackup(b, 'replace')
+    expect(await db.cards.count()).toBe(1)
+    expect(await db.views.count()).toBe(1)
+    // 空の配列は「本当に 0 件」として置き換える
+    await restoreBackup(parseBackup({ app: BACKUP_APP, data: { cards: [] } }), 'replace')
+    expect(await db.cards.count()).toBe(0)
+  })
+  it('追加では語根レッスンの最高点・回数を古いバックアップで戻さない', async () => {
+    const { db } = await import('@/lib/db')
+    const { restoreBackup } = await import('./backup')
+    await db.rootLessons.clear()
+    await db.rootLessons.put({ id: 'r:spec', completedAt: 200, correct: 6, total: 6, best: 6, plays: 3 })
+    const old = parseBackup({ app: BACKUP_APP, data: { rootLessons: [{ id: 'r:spec', completedAt: 100, correct: 2, total: 6, best: 2, plays: 1 }] } })
+    await restoreBackup(old, 'merge')
+    await restoreBackup(old, 'merge') // 同じファイルをもう一度追加しても回数は増えない
+    expect(await db.rootLessons.get('r:spec')).toMatchObject({ completedAt: 200, correct: 6, best: 6, plays: 3 })
+    // 新しい記録は最後の結果として取り込み、最高点は大きい方
+    await restoreBackup(parseBackup({ app: BACKUP_APP, data: { rootLessons: [{ id: 'r:spec', completedAt: 300, correct: 4, total: 6, best: 5, plays: 5 }] } }), 'merge')
+    expect(await db.rootLessons.get('r:spec')).toMatchObject({ completedAt: 300, correct: 4, best: 6, plays: 5 })
+  })
+  it('追加では設定を変えない', async () => {
+    const { useSettings } = await import('@/stores/settings')
+    const { restoreBackup } = await import('./backup')
+    useSettings.setState({ theme: 'light' })
+    await restoreBackup(parseBackup({ app: BACKUP_APP, data: {}, settings: { theme: 'dark' } }), 'merge')
+    expect(useSettings.getState().theme).toBe('light')
+    await restoreBackup(parseBackup({ app: BACKUP_APP, data: {}, settings: { theme: 'dark' } }), 'replace')
+    expect(useSettings.getState().theme).toBe('dark')
+  })
+})

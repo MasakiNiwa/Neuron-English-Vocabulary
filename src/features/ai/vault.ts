@@ -122,7 +122,13 @@ export async function setupPassphrase(pass: string) {
   const salt = rand(16)
   const raw = rand(32)
   const key = await passphraseKey(pass, salt, PBKDF2_ITER)
-  await setMeta({ salt, iterations: PBKDF2_ITER, byPassphrase: await encrypt(key, raw), passkeys: [] })
+  const meta: VaultMeta = { salt, iterations: PBKDF2_ITER, byPassphrase: await encrypt(key, raw), passkeys: [] }
+  // まだ保管庫がないときだけ作る（同じ書き込みの中で確かめる）。別のタブで先に作られていたら上書きしない。
+  // 上書きすると、先に保存した API キーがどのパスフレーズでも読めなくなる（レビュー 2026-11-07 の 04）
+  await db.transaction('rw', db.kv, async () => {
+    if (await db.kv.get('vault')) throw new Error('保管庫は別のタブなどですでに設定されています。そのとき決めたパスフレーズで解除してください')
+    await db.kv.add({ key: 'vault', value: meta })
+  })
   await setUnlocked(raw)
 }
 
