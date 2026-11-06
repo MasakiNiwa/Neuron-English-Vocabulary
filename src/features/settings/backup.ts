@@ -1,6 +1,7 @@
 import { db, type EnrichmentRecord } from '@/lib/db'
 import { defaultSettings, useSettings, type Settings } from '@/stores/settings'
 import { sanitizeExtra } from '@/features/ai/extras'
+import { ALL_FORMATS, migrateFormat, type ConcreteFormat } from '@/features/study/formatDefs'
 
 /**
  * バックアップ（JSON）の作成・検証・復元。
@@ -120,9 +121,14 @@ export function cleanSettings(x: unknown): Partial<Settings> {
   if (inRange(x.dailyNewLimit, 0, 10000) && Number.isInteger(x.dailyNewLimit)) out.dailyNewLimit = x.dailyNewLimit as number
   if (inRange(x.desiredRetention, 0.5, 0.99)) out.desiredRetention = x.desiredRetention as number
   if (inRange(x.studyStartRank, 1, 1_000_000) && Number.isInteger(x.studyStartRank)) out.studyStartRank = x.studyStartRank as number
-  if (['en2ja', 'ja2en', 'cloze', 'choice', 'speak', 'mix'].includes(x.studyFormat as string)) out.studyFormat = x.studyFormat as Settings['studyFormat']
-  // 以前の「日→話す」は日→英の「話す」に統合した
-  if (x.studyFormat === 'ja2speak') out.studyFormat = 'ja2en'
+  if (Array.isArray(x.studyFormats)) {
+    const f = x.studyFormats.filter((v): v is ConcreteFormat => ALL_FORMATS.includes(v as ConcreteFormat))
+    if (f.length) out.studyFormats = [...new Set(f)]
+  } else if (typeof x.studyFormat === 'string' && ['en2ja', 'ja2en', 'cloze', 'choice', 'speak', 'mix', 'ja2speak'].includes(x.studyFormat)) {
+    // 以前のバックアップ（単一選択）
+    out.studyFormats = migrateFormat(x.studyFormat)
+  }
+  if (typeof x.studyAuto === 'boolean') out.studyAuto = x.studyAuto
   return out
 }
 

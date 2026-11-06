@@ -1,4 +1,4 @@
-import { Eye } from 'lucide-react'
+import { Eye, ListChecks } from 'lucide-react'
 import { SpeakPrompt, suggestFromScore } from './SpeakPrompt'
 import { SpeakCheck } from '@/features/speech/SpeakCheck'
 import { reduceMotion } from '@/lib/motion'
@@ -12,11 +12,14 @@ import { useSettings } from '@/stores/settings'
 import { EntryLink, LinkedText, SpeakButton } from '@/features/dictionary/components/links'
 import { useDictionary, useEntry, recordView } from '@/features/dictionary/hooks'
 import { formatInterval, previewIntervals, Rating, review, type Grade } from './cards'
-import { ChoicePrompt, ClozePrompt, findCloze, JaPrompt, resolveFormat, type StudyFormat } from './formats'
+import { ChoicePrompt, ClozePrompt, findCloze, JaPrompt, pickFormat, type ConcreteFormat } from './formats'
+import { ListenPrompt } from './ListenPrompt'
 import { ProduceAnswer } from './ProduceAnswer'
 
 /** 表面に見出し語が出る（最初に読み上げても答えにならない）形式 */
-const SPEAK_FIRST = new Set<StudyFormat>(['en2ja', 'choice'])
+const SPEAK_FIRST = new Set<ConcreteFormat>(['en2ja', 'choice'])
+/** 聞いて答える形式（出題のときに自分で流すので、自動の読み上げはしない） */
+const LISTENING = new Set<ConcreteFormat>(['listen', 'dictation'])
 
 const GRADES: { g: Grade; label: string; key: string; cls: string; hint: string }[] = [
   { g: Rating.Again, label: 'もう一度', key: '1', cls: 'border-danger/40 text-danger', hint: '思い出せなかった。数枚後にもう一度出題し、次の復習は近くなる' },
@@ -100,7 +103,8 @@ export function ReviewSession({
   queue,
   onDone,
   mode = 'review',
-  format = 'en2ja',
+  formats = ['en2ja'],
+  auto = false,
   initialIdx = 0,
   initialCount = 0,
   onProgress,
@@ -108,7 +112,10 @@ export function ReviewSession({
   queue: StudyCard[]
   onDone: (n: number) => void
   mode?: string
-  format?: StudyFormat
+  /** 出題形式（選んだ中からカードごとに選ぶ） */
+  formats?: ConcreteFormat[]
+  /** おまかせ: 覚え具合に合わせて形式を選ぶ */
+  auto?: boolean
   initialIdx?: number
   initialCount?: number
   /** 進み具合（ページ移動後の再開用） */
@@ -126,6 +133,8 @@ export function ReviewSession({
   const cardRef = useRef<HTMLDivElement>(null)
   const [count, setCount] = useState(initialCount)
   const [suggested, setSuggested] = useState<Grade | null>(null)
+  // このカードで実際に出した形式（カードの表面が語を読み込んでから決まる）
+  const [fmt, setFmt] = useState<ConcreteFormat | null>(null)
 
   // 学習中は画面スリープを防止（Screen Wake Lock API）
   useEffect(() => {
@@ -141,10 +150,9 @@ export function ReviewSession({
     void db.cards.get(c.entryId).then((x) => setCard(x ?? c))
     setShown(false)
     setSuggested(null)
+    setFmt(null)
     ratingRef.current = false
     startRef.current = Date.now()
-    // 表面に英語が出る形式だけ最初に読み上げる。日→英・穴埋めでは答えになるので、答えを見たときに読む（B13）
-    if (autoSpeak && SPEAK_FIRST.has(format)) speak(c.entryId.replace(/_/g, ' '))
     // カードの登場アニメーション（Web Animations API。モーションを減らすときは省く）
     if (!reduceMotion())
       cardRef.current?.animate(
@@ -154,7 +162,13 @@ export function ReviewSession({
         ],
         { duration: 220, easing: 'ease-out' },
       )
-  }, [idx, queue, autoSpeak, format])
+  }, [idx, queue])
+
+  // 表面に英語が出る形式だけ最初に読み上げる。日→英・穴埋めでは答えになるので、答えを見たときに読む（B13）
+  useEffect(() => {
+    if (autoSpeak && fmt && SPEAK_FIRST.has(fmt) && card) speak(card.entryId.replace(/_/g, ' '))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fmt])
 
   const reveal = useCallback(() => {
     setShown(true)
@@ -169,8 +183,8 @@ export function ReviewSession({
         ),
       )
     if (card) void recordView(card.entryId, 'study')
-    if (card && autoSpeak && !SPEAK_FIRST.has(format)) speak(card.entryId.replace(/_/g, ' '))
-  }, [card, autoSpeak, format])
+    if (card && autoSpeak && fmt && !SPEAK_FIRST.has(fmt) && !LISTENING.has(fmt)) speak(card.entryId.replace(/_/g, ' '))
+  }, [card, autoSpeak, fmt])
 
   const rate = useCallback(
     async (g: Grade) => {
@@ -178,7 +192,7 @@ export function ReviewSession({
       ratingRef.current = true
       navigator.vibrate?.(g === Rating.Again ? [20, 40, 20] : 10)
       try {
-        await review(card.entryId, g, { durationMs: Date.now() - startRef.current, mode: `${mode}:${format}` })
+        await review(card.entryId, g, { durationMs: Date.now() - startRef.current, mode: `${mode}:${fmt ?? 'en2ja'}` })
       } catch (e) {
         ratingRef.current = false
         throw e
@@ -191,7 +205,7 @@ export function ReviewSession({
       if (idx + 1 >= queue.length) onDone(count + 1)
       else setIdx(idx + 1)
     },
-    [card, idx, queue, onDone, count, mode, format],
+    [card, idx, queue, onDone, count, mode, fmt],
   )
 
   useEffect(() => {
@@ -236,7 +250,10 @@ export function ReviewSession({
             <CardFace
               key={`${idx}-${card.entryId}`}
               entryKey={card.entryId}
-              format={format}
+              card={card}
+              formats={formats}
+              auto={auto}
+              onFormat={setFmt}
               shown={shown}
               onReveal={reveal}
               onSuggest={setSuggested}
@@ -271,26 +288,37 @@ export function ReviewSession({
 /** カードの表面（出題形式ごと）と裏面 */
 function CardFace({
   entryKey,
-  format,
+  card,
+  formats,
+  auto,
+  onFormat,
   shown,
   onReveal,
   onSuggest,
   backRef,
 }: {
   entryKey: string
-  format: StudyFormat
+  card: StudyCard
+  formats: ConcreteFormat[]
+  auto: boolean
+  onFormat: (f: ConcreteFormat) => void
   shown: boolean
   onReveal: () => void
   onSuggest: (g: Grade | null) => void
   backRef: React.RefObject<HTMLDivElement | null>
 }) {
   const entry = useEntry(entryKey)
-  const fmt = useMemo(() => resolveFormat(format, entry), [format, entry])
+  // カードごとに 1 回だけ選ぶ（描画のたびに変わらないように）
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fmt = useMemo(() => pickFormat(formats, auto, entry, card), [entry])
+  useEffect(() => onFormat(fmt), [fmt, onFormat])
   const [answered, setAnswered] = useState<number | null>(null)
+  // 聞いて意味: 答えを見る か 4 択で答える
+  const [listenChoice, setListenChoice] = useState(false)
   const head = entryKey.replace(/_/g, ' ')
   const showHead = fmt === 'en2ja' || fmt === 'choice' || fmt === 'speak' || shown
   // 英語を答える問題（書く / 話す / 答えを見る）。穴埋めは例文中の形も正解にする
-  const produce = fmt === 'ja2en' || fmt === 'cloze'
+  const produce = fmt === 'ja2en' || fmt === 'cloze' || fmt === 'dictation'
   const cloze = entry && fmt === 'cloze' ? findCloze(entry) : null
   const answer = cloze ? cloze.ex.en.slice(cloze.start, cloze.end) : head
   const targets = entry ? [answer, head, ...(entry.forms ?? [])] : [head]
@@ -303,6 +331,9 @@ function CardFace({
         </div>
       )}
       {entry && fmt === 'ja2en' && !shown && <JaPrompt entry={entry} />}
+      {(fmt === 'listen' || fmt === 'dictation') && !shown && (
+        <ListenPrompt text={head} hint={fmt === 'listen' ? '聞こえた英語の意味は？' : '聞こえた英語を書いてください'} />
+      )}
       {fmt === 'speak' && (
         // 発音で答える: 話し終えたら答えを表示し、点数から評価を提案する（もう一度話すと提案も更新）
         <SpeakPrompt
@@ -318,9 +349,19 @@ function CardFace({
       )}
       {entry && fmt === 'cloze' && <ClozePrompt entry={entry} revealed={shown} />}
       {entry && produce && (
-        <ProduceAnswer key={entryKey} entry={entry} answer={answer} targets={targets} shown={shown} onReveal={onReveal} onSuggest={onSuggest} />
+        <ProduceAnswer
+          key={entryKey}
+          entry={entry}
+          answer={answer}
+          targets={fmt === 'dictation' ? [head] : targets}
+          shown={shown}
+          onReveal={onReveal}
+          onSuggest={onSuggest}
+          initialMode={fmt === 'dictation' ? 'write' : null}
+          allowSpeak={fmt !== 'dictation'}
+        />
       )}
-      {entry && fmt === 'choice' && (
+      {entry && (fmt === 'choice' || (fmt === 'listen' && listenChoice)) && (
         <ChoicePrompt
           entry={entry}
           answered={answered}
@@ -340,6 +381,17 @@ function CardFace({
             <Eye className="size-4" /> 答えを見る
           </Button>
           <span className="hidden text-[11px] text-muted md:block">Space</span>
+        </div>
+      )}
+      {!shown && fmt === 'listen' && !listenChoice && (
+        <div className="flex w-full max-w-xs flex-col gap-2">
+          <Button variant="primary" size="lg" onClick={onReveal}>
+            <Eye className="size-5" /> 答えを見る
+          </Button>
+          <Button onClick={() => setListenChoice(true)}>
+            <ListChecks className="size-4" /> 4択で答える
+          </Button>
+          <span className="hidden text-center text-[11px] text-muted md:block">Space で答えを見る</span>
         </div>
       )}
       {!shown && fmt === 'en2ja' && (
