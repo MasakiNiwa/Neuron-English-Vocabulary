@@ -1,11 +1,18 @@
 import FA2Layout from 'graphology-layout-forceatlas2/worker'
 import { useEffect, useRef } from 'react'
-import Sigma from 'sigma'
+import Sigma, { DEFAULT_STYLES } from 'sigma'
 import { useResolvedTheme } from '@/lib/theme'
-import type { NetGraph, NodeAttrs } from './graph'
+import type { EdgeAttrs, NetGraph, NodeAttrs } from './graph'
+
+const FONT = 'Inter, "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif'
+
+/** 点にカーソルを合わせた（タップした）ときの状態。合わせた点の隣の点を「隣」として目立たせる */
+type NodeState = { isNeighbor: boolean }
+type GraphState = { focusing: boolean }
 
 /**
- * Sigma.js（WebGL = GPU 描画）でグラフを表示する。
+ * Sigma.js v4（WebGL = GPU 描画）でグラフを表示する。
+ * 見た目は styles（データと状態から描き方を決める宣言）で指定し、合わせた点とその隣の点・線を状態で目立たせる。
  * liveLayout=true の場合、ForceAtlas2 を Web Worker 上で動かしてレイアウトを計算する。
  */
 export function SigmaGraph({
@@ -28,115 +35,93 @@ export function SigmaGraph({
     const el = ref.current
     if (!el) return
     const cs = getComputedStyle(document.documentElement)
-    const fg = cs.getPropertyValue('--fg').trim()
-    const muted = cs.getPropertyValue('--muted').trim()
-    const surface = cs.getPropertyValue('--surface').trim()
-    let hovered: string | null = null
-    let neighbors = new Set<string>()
+    const v = (n: string) => cs.getPropertyValue(n).trim()
+    const fg = v('--fg')
+    const muted = v('--muted')
+    const surface = v('--surface')
+    const surface2 = v('--surface-2')
+    const edgeColor = v('--edge')
+    const edgeStrong = v('--edge-strong')
+    // 合わせた点と関係のない点・線（薄くする対象）
+    const dimNode = (_a: NodeAttrs, s: NodeState & { isHovered: boolean }, g: GraphState) => g.focusing && !s.isHovered && !s.isNeighbor
+    const offEdge = (_a: EdgeAttrs, s: { isHighlighted: boolean }, g: GraphState) => g.focusing && !s.isHighlighted
 
-    const renderer = new Sigma(graph, el, {
-      allowInvalidContainer: true,
-      labelFont: 'Inter, "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif',
-      labelSize: 13,
-      labelWeight: '500',
-      labelColor: { color: fg },
-      labelRenderedSizeThreshold: labelThreshold,
-      labelDensity: 0.8,
-      zIndex: true,
-      defaultEdgeColor: cs.getPropertyValue('--edge').trim(),
-      // 線のラベル（何のつながりか）は、点にカーソルを合わせたときだけその点の線に出す（U06）
-      renderEdgeLabels: true,
-      edgeLabelSize: 11,
-      edgeLabelColor: { color: muted },
-      edgeLabelFont: 'Inter, "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif',
-      minCameraRatio: 0.08,
-      maxCameraRatio: 6,
-      defaultDrawNodeHover: (ctx, data, settings) => {
-        // ホバー時のラベル（背景付き + 日本語の意味）
-        const size = settings.labelSize
-        ctx.font = `600 ${size}px ${settings.labelFont}`
-        const sub = (data as unknown as NodeAttrs).sub ?? ''
-        const text = data.label ?? ''
-        const w1 = ctx.measureText(text).width
-        ctx.font = `400 ${size - 2}px ${settings.labelFont}`
-        const w2 = ctx.measureText(sub).width
-        const w = Math.max(w1, w2) + 12
-        const x = data.x + data.size + 4
-        const y = data.y - size
-        ctx.fillStyle = surface
-        ctx.shadowColor = 'rgba(0,0,0,0.25)'
-        ctx.shadowBlur = 8
-        ctx.beginPath()
-        ctx.roundRect(x - 4, y - 4, w, sub ? size * 2 + 10 : size + 8, 6)
-        ctx.fill()
-        ctx.shadowBlur = 0
-        ctx.fillStyle = fg
-        ctx.font = `600 ${size}px ${settings.labelFont}`
-        ctx.fillText(text, x + 2, y + size - 2)
-        if (sub) {
-          ctx.fillStyle = muted
-          ctx.font = `400 ${size - 2}px ${settings.labelFont}`
-          ctx.fillText(sub, x + 2, y + size * 2 + 1)
-        }
+    const renderer = new Sigma<NodeAttrs, EdgeAttrs, Record<string, unknown>, NodeState, Record<string, never>, GraphState>(graph, el, {
+      settings: {
+        allowInvalidContainer: true,
+        // v3 と同じく、点の大きさを画面上の大きさで決める
+        itemSizesReference: 'screen',
+        labelRenderedSizeThreshold: labelThreshold,
+        labelDensity: 0.8,
+        // 線のラベル（何のつながりか）は、合わせた点の線にだけ出す（U06）
+        renderEdgeLabels: true,
+        minCameraRatio: 0.08,
+        maxCameraRatio: 6,
+        // スマホで押しやすいよう、点の周りとラベルの文字の上も点として扱う
+        nodePickingPadding: 10,
+        labelPickingPadding: 6,
+        nodeLabelEvents: 'extend',
       },
-      nodeReducer: (node, data) => {
-        const res = { ...data } as Record<string, unknown>
-        if ((data as unknown as NodeAttrs).focus) {
-          res.forceLabel = true
-          res.zIndex = 2
-        }
-        if (hovered && node !== hovered && !neighbors.has(node)) {
-          res.color = cs.getPropertyValue('--surface-2').trim()
-          res.label = ''
-          res.zIndex = 0
-        } else if (hovered) {
-          res.forceLabel = true
-          res.zIndex = 1
-        }
-        return res
-      },
-      edgeReducer: (edge, data) => {
-        if (hovered) {
-          const [s, t] = graph.extremities(edge)
-          if (s !== hovered && t !== hovered) return { ...data, hidden: true }
-          return { ...data, color: cs.getPropertyValue('--edge-strong').trim(), size: (data.size ?? 1) + 0.5, forceLabel: true }
-        }
-        return { ...data, label: '' }
+      customNodeState: { isNeighbor: false },
+      customGraphState: { focusing: false },
+      styles: {
+        nodes: [
+          DEFAULT_STYLES.nodes,
+          {
+            labelFont: FONT,
+            labelSize: 13,
+            labelColor: fg,
+            // 合わせた点のラベルの背景（v3 の defaultDrawNodeHover の代わり）
+            backdropColor: surface,
+            backdropShadowColor: 'rgba(0,0,0,0.25)',
+            backdropShadowBlur: 8,
+            backdropPadding: 6,
+            backdropCornerRadius: 6,
+            // 合わせた点には日本語の意味も添える
+            label: (a, s) => (s.isHovered && a.sub ? `${a.label}  ${a.sub}` : a.label),
+          },
+          // 中心の語はいつもラベルを出し、上に描く
+          { when: (a) => !!a.focus, then: { labelVisibility: 'visible', zIndex: 2 } },
+          // 合わせた点と関係のない点は薄くし、ラベルを隠す
+          { when: dimNode, then: { color: surface2, labelVisibility: 'hidden', zIndex: 0 } },
+          // 隣の点はラベルを出す
+          { whenState: 'isNeighbor', then: { labelVisibility: 'visible', zIndex: 1 } },
+        ],
+        edges: [
+          DEFAULT_STYLES.edges,
+          {
+            color: { attribute: 'color', defaultValue: edgeColor },
+            labelFont: FONT,
+            labelSize: 11,
+            labelColor: muted,
+            // ふだんは線のラベルを出さない
+            labelVisibility: 'hidden',
+          },
+          // 合わせた点の線だけを残し、太く・濃くしてラベルを出す
+          { when: offEdge, then: { visibility: 'hidden' } },
+          {
+            whenState: 'isHighlighted',
+            then: { color: edgeStrong, size: (a) => (a.size ?? 1) + 0.5, labelVisibility: 'visible' },
+          },
+        ],
       },
     })
 
-    renderer.on('enterNode', ({ node }) => {
-      hovered = node
-      neighbors = new Set(graph.neighbors(node))
-      el.style.cursor = 'pointer'
+    const focus = (node: string | null) => {
+      // いったん全部戻してから、合わせた点の隣と線に印を付ける
+      renderer.setNodesState(graph.nodes(), { isNeighbor: false })
+      renderer.setEdgesState(graph.edges(), { isHighlighted: false })
+      if (node) {
+        renderer.setNodesState(graph.neighbors(node), { isNeighbor: true })
+        renderer.setEdgesState(graph.edges(node), { isHighlighted: true })
+      }
+      renderer.setGraphState({ focusing: !!node })
+      el.style.cursor = node ? 'pointer' : ''
       renderer.refresh({ skipIndexation: true })
-    })
-    renderer.on('leaveNode', () => {
-      hovered = null
-      neighbors = new Set()
-      el.style.cursor = ''
-      renderer.refresh({ skipIndexation: true })
-    })
+    }
+    renderer.on('enterNode', ({ node }) => focus(node))
+    renderer.on('leaveNode', () => focus(null))
     renderer.on('clickNode', ({ node }) => clickRef.current?.(node, graph.getNodeAttributes(node)))
-    // 点の中だけでなく、点の周り・ラベル文字の上をタップしても反応するように判定範囲を広げる
-    renderer.on('clickStage', ({ event }) => {
-      let best: string | null = null
-      let bestD = Infinity
-      graph.forEachNode((node, a) => {
-        const vp = renderer.graphToViewport({ x: a.x, y: a.y })
-        const size = renderer.getNodeDisplayData(node)?.size ?? 5
-        const dx = event.x - vp.x
-        const dy = event.y - vp.y
-        const d = Math.hypot(dx, dy)
-        const labelW = (a.label?.length ?? 0) * 7.5
-        const onLabel = dx >= 0 && dx <= size + 8 + labelW && Math.abs(dy) <= 11
-        if ((d <= size + 16 || onLabel) && d < bestD) {
-          best = node
-          bestD = d
-        }
-      })
-      if (best) clickRef.current?.(best, graph.getNodeAttributes(best))
-    })
 
     let layout: FA2Layout | null = null
     let timer: number | undefined
