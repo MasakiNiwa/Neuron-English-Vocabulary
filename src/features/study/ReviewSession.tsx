@@ -12,7 +12,8 @@ import { useSettings } from '@/stores/settings'
 import { EntryLink, LinkedText, SpeakButton } from '@/features/dictionary/components/links'
 import { useDictionary, useEntry, recordView } from '@/features/dictionary/hooks'
 import { formatInterval, previewIntervals, Rating, review, type Grade } from './cards'
-import { ChoicePrompt, ClozePrompt, JaPrompt, resolveFormat, type StudyFormat } from './formats'
+import { ChoicePrompt, ClozePrompt, findCloze, JaPrompt, resolveFormat, type StudyFormat } from './formats'
+import { ProduceAnswer } from './ProduceAnswer'
 
 /** 表面に見出し語が出る（最初に読み上げても答えにならない）形式 */
 const SPEAK_FIRST = new Set<StudyFormat>(['en2ja', 'choice'])
@@ -288,7 +289,11 @@ function CardFace({
   const [answered, setAnswered] = useState<number | null>(null)
   const head = entryKey.replace(/_/g, ' ')
   const showHead = fmt === 'en2ja' || fmt === 'choice' || fmt === 'speak' || shown
-  const speaking = fmt === 'speak' || fmt === 'ja2speak'
+  // 英語を答える問題（書く / 話す / 答えを見る）。穴埋めは例文中の形も正解にする
+  const produce = fmt === 'ja2en' || fmt === 'cloze'
+  const cloze = entry && fmt === 'cloze' ? findCloze(entry) : null
+  const answer = cloze ? cloze.ex.en.slice(cloze.start, cloze.end) : head
+  const targets = entry ? [answer, head, ...(entry.forms ?? [])] : [head]
   return (
     <>
       {showHead && (
@@ -297,12 +302,12 @@ function CardFace({
           <SpeakButton text={head} />
         </div>
       )}
-      {entry && (fmt === 'ja2en' || fmt === 'ja2speak') && !shown && <JaPrompt entry={entry} spoken={fmt === 'ja2speak'} />}
-      {speaking && (
+      {entry && fmt === 'ja2en' && !shown && <JaPrompt entry={entry} />}
+      {fmt === 'speak' && (
         // 発音で答える: 話し終えたら答えを表示し、点数から評価を提案する（もう一度話すと提案も更新）
         <SpeakPrompt
           target={head}
-          mode={fmt}
+          mode="speak"
           onResult={(r) => {
             const s = suggestFromScore(r.score)
             onSuggest(s === 'good' ? Rating.Good : s === 'hard' ? Rating.Hard : Rating.Again)
@@ -312,6 +317,9 @@ function CardFace({
         />
       )}
       {entry && fmt === 'cloze' && <ClozePrompt entry={entry} revealed={shown} />}
+      {entry && produce && (
+        <ProduceAnswer key={entryKey} entry={entry} answer={answer} targets={targets} shown={shown} onReveal={onReveal} onSuggest={onSuggest} />
+      )}
       {entry && fmt === 'choice' && (
         <ChoicePrompt
           entry={entry}
@@ -324,30 +332,27 @@ function CardFace({
           }}
         />
       )}
-      {!shown && fmt !== 'choice' && (
+      {!shown && fmt === 'speak' && (
+        // 声を出せないとき用。タップで進めることが一目で分かるようボタンの形にし、キーの案内は PC だけに出す
+        <div className="flex flex-col items-center gap-1">
+          <span className="text-[11px] text-muted">声を出せないときは</span>
+          <Button size="sm" onClick={onReveal}>
+            <Eye className="size-4" /> 答えを見る
+          </Button>
+          <span className="hidden text-[11px] text-muted md:block">Space</span>
+        </div>
+      )}
+      {!shown && fmt === 'en2ja' && (
         <>
-          {speaking ? (
-            // 声を出せないとき用。タップで進めることが一目で分かるようボタンの形にし、キーの案内は PC だけに出す
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-[11px] text-muted">声を出せないときは</span>
-              <Button size="sm" onClick={onReveal}>
-                <Eye className="size-4" /> 答えを見る
-              </Button>
-              <span className="hidden text-[11px] text-muted md:block">Space</span>
-            </div>
-          ) : (
-            <>
-              <Button variant="primary" size="lg" className="mt-2 w-full max-w-xs" onClick={onReveal}>
-                <Eye className="size-5" /> 答えを見る
-              </Button>
-              <span className="hidden text-[11px] text-muted md:block">Space</span>
-            </>
-          )}
+          <Button variant="primary" size="lg" className="mt-2 w-full max-w-xs" onClick={onReveal}>
+            <Eye className="size-5" /> 答えを見る
+          </Button>
+          <span className="hidden text-[11px] text-muted md:block">Space</span>
         </>
       )}
       {shown && (
         <div ref={backRef} className="w-full origin-top">
-          {!speaking && (
+          {fmt !== 'speak' && (
             // 発音で答える形式以外でも、答えを見たあとに発音を試せる
             <details className="mb-3 text-left">
               <summary className="cursor-pointer select-none text-center text-xs text-accent">この単語を発音してみる</summary>

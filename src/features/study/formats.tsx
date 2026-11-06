@@ -8,22 +8,21 @@ import { getSpeechRecognition } from '@/lib/speech'
 
 /**
  * 出題形式
- *  en2ja: 英語 → 意味を思い出す
- *  ja2en: 意味 → 英語を思い出す
- *  cloze: 例文の穴埋め
- *  choice: 4 択（意味を選ぶ）
+ *  意味を答える: en2ja（英語 → 意味を思い出す）・choice（4 択で意味を選ぶ）
+ *  英語を答える: ja2en（意味 → 英語）・cloze（例文の穴埋め）。書く / 話す / 答えを見る で答える
+ *  発音する: speak（英語を見て発音する）
  *  mix: 上記をランダムに
+ * 以前の ja2speak（日→話す）は ja2en の「話す」に統合した（保存された設定は読み込み時に ja2en へ）
  */
-export type StudyFormat = 'en2ja' | 'ja2en' | 'cloze' | 'choice' | 'speak' | 'ja2speak' | 'mix'
+export type StudyFormat = 'en2ja' | 'ja2en' | 'cloze' | 'choice' | 'speak' | 'mix'
 export type ConcreteFormat = Exclude<StudyFormat, 'mix'>
 
 export const FORMAT_OPTIONS: { value: StudyFormat; label: string }[] = [
   { value: 'en2ja', label: '英→日' },
+  { value: 'choice', label: '4択' },
   { value: 'ja2en', label: '日→英' },
   { value: 'cloze', label: '穴埋め' },
-  { value: 'choice', label: '4択' },
   { value: 'speak', label: '発音' },
-  { value: 'ja2speak', label: '日→話す' },
   { value: 'mix', label: 'ミックス' },
 ]
 
@@ -52,30 +51,26 @@ export function resolveFormat(format: StudyFormat, entry: Entry | null): Concret
   if (findCloze(entry)) available.push('cloze')
   // ミックスには発音の出題を混ぜない（声を出せない場所でも使えるように）
   if (format === 'mix') return available[Math.floor(Math.random() * available.length)]
-  // 発音の出題は音声認識に対応したブラウザだけ。対応していなければ声を使わない形式にする
-  if (format === 'speak' || format === 'ja2speak') return getSpeechRecognition() ? format : format === 'speak' ? 'en2ja' : 'ja2en'
+  // 発音の出題は音声認識に対応したブラウザだけ。対応していなければ英→日にする
+  if (format === 'speak') return getSpeechRecognition() ? 'speak' : 'en2ja'
   return available.includes(format) ? format : 'en2ja'
 }
 
 /** 選べる出題形式（音声認識に対応していないブラウザでは発音の形式を出さない） */
 export function formatOptions() {
-  return getSpeechRecognition() ? FORMAT_OPTIONS : FORMAT_OPTIONS.filter((o) => o.value !== 'speak' && o.value !== 'ja2speak')
+  return getSpeechRecognition() ? FORMAT_OPTIONS : FORMAT_OPTIONS.filter((o) => o.value !== 'speak')
 }
 
-export function JaPrompt({ entry, spoken }: { entry: Entry; spoken?: boolean }) {
-  const hint = entry.h
-    .split('')
-    .map((c, i) => (i === 0 || c === ' ' ? c : '＿'))
-    .join('')
+/** 日→英の問題文（意味だけ。頭文字・文字数のヒントは「ヒント」を押したときに出す） */
+export function JaPrompt({ entry }: { entry: Entry }) {
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-2">
       <div className="flex flex-col gap-1 text-lg">
         {entry.g.map((g, i) => (
           <div key={i}>{g.ja.slice(0, 4).join('、')}</div>
         ))}
       </div>
-      <div className="font-en text-xl tracking-[0.3em] text-muted">{hint}</div>
-      {!spoken && <p className="text-xs text-muted">この意味の英語を思い浮かべてください</p>}
+      <p className="text-xs text-muted">この意味の英語は？</p>
     </div>
   )
 }
@@ -91,7 +86,7 @@ export function ClozePrompt({ entry, revealed }: { entry: Entry; revealed: boole
         {revealed ? (
           <span className="rounded bg-accent-soft px-1 font-semibold text-accent">{word}</span>
         ) : (
-          <span className="inline-block min-w-16 border-b-2 border-accent px-1 text-muted">{word[0]}…</span>
+          <span className="inline-block min-w-16 border-b-2 border-accent px-1 text-muted">&nbsp;</span>
         )}
         {c.ex.en.slice(c.end)}
       </p>
