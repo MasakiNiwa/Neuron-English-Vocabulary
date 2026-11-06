@@ -12,3 +12,16 @@ describe('review', () => {
     expect(await db.reviews.where('entryId').equals('run').count()).toBe(2)
   })
 })
+
+import { shuffle } from './session'
+
+describe('出題の順番', () => {
+  it('shuffle は同じ要素を並べ替えるだけで、元の配列は変えない', () => {
+    const xs = Array.from({ length: 30 }, (_, i) => i)
+    const out = shuffle(xs)
+    expect([...out].sort((a, b) => a - b)).toEqual(xs)
+    expect(xs).toEqual(Array.from({ length: 30 }, (_, i) => i))
+    // 30 個が毎回同じ順になることはまずない
+    expect(Array.from({ length: 5 }, () => shuffle(xs).join(',')).some((s) => s !== xs.join(','))).toBe(true)
+  })
+})

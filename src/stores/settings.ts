@@ -21,6 +21,8 @@ export interface Settings {
   studyFormats: ConcreteFormat[]
   /** おまかせ: 覚え具合に合わせて形式を選ぶ（新しい語は意味を答える、覚えてきた語は英語を答える） */
   studyAuto: boolean
+  /** 学習画面の出題形式の欄を開いておくか（次に開いたときも同じ状態） */
+  studyFormatsOpen: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -35,6 +37,7 @@ export const defaultSettings: Settings = {
   studyStartRank: 500,
   studyFormats: ['en2ja'],
   studyAuto: true,
+  studyFormatsOpen: true,
 }
 
 interface SettingsStore extends Settings {

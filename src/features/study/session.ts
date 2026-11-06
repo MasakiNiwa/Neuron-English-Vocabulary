@@ -3,6 +3,16 @@ import { useSettings } from '@/stores/settings'
 import { loadDictionary } from '@/features/dictionary/data'
 import { addManyToStudy } from './cards'
 
+/** 並びをランダムにする（毎回同じ順で出題しないように）。元の配列は変えない */
+export function shuffle<T>(xs: T[], random: () => number = Math.random): T[] {
+  const a = [...xs]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
 /** 今日 0 時のタイムスタンプ */
 export function startOfToday() {
   const d = new Date()
@@ -48,13 +58,16 @@ export async function getStudyStats(): Promise<StudyStats> {
 export async function buildQueue(): Promise<StudyCard[]> {
   const now = Date.now()
   const cards = (await db.cards.toArray()).filter((c) => !c.suspended)
-  const due = cards.filter((c) => c.state !== 0 && c.due <= now).sort((a, b) => a.due - b.due)
+  let due = cards.filter((c) => c.state !== 0 && c.due <= now).sort((a, b) => a.due - b.due)
   const limit = useSettings.getState().dailyNewLimit
   const remainingNew = limit > 0 ? Math.max(0, limit - (await newIntroducedToday())) : Infinity
-  const fresh = cards
+  let fresh = cards
     .filter((c) => c.state === 0)
     .sort((a, b) => a.addedAt - b.addedAt)
     .slice(0, remainingNew)
+  // どのカードを出すかは期限順・追加順で決め、出す順番はランダムにする（毎回同じ順にならないように）
+  due = shuffle(due)
+  fresh = shuffle(fresh)
   // 新規カードを復習の間に分散させる
   const queue: StudyCard[] = []
   const step = fresh.length ? Math.max(1, Math.floor(due.length / fresh.length)) : 0
@@ -101,7 +114,8 @@ export async function pickNewWords(
 export async function startLearning(keys: string[]): Promise<StudyCard[]> {
   await addManyToStudy(keys)
   const cards = await db.cards.bulkGet(keys)
-  return cards.filter((c): c is StudyCard => !!c)
+  // 選ぶ語はよく使う順などで決め、出題の順番はランダムに
+  return shuffle(cards.filter((c): c is StudyCard => !!c))
 }
 
 export type PracticeMode = 'random' | 'weak' | 'recent'
@@ -110,15 +124,13 @@ export type PracticeMode = 'random' | 'weak' | 'recent'
 export async function buildPracticeQueue(mode: PracticeMode, n: number): Promise<StudyCard[]> {
   const cards = (await db.cards.toArray()).filter((c) => !c.suspended)
   if (mode === 'weak') {
-    return cards
-      .filter((c) => c.state !== 0)
-      .sort((a, b) => b.lapses - a.lapses || b.difficulty - a.difficulty)
-      .slice(0, n)
+    return shuffle(
+      cards
+        .filter((c) => c.state !== 0)
+        .sort((a, b) => b.lapses - a.lapses || b.difficulty - a.difficulty)
+        .slice(0, n),
+    )
   }
-  if (mode === 'recent') return cards.sort((a, b) => b.addedAt - a.addedAt).slice(0, n)
-  for (let i = cards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[cards[i], cards[j]] = [cards[j], cards[i]]
-  }
-  return cards.slice(0, n)
+  if (mode === 'recent') return shuffle(cards.sort((a, b) => b.addedAt - a.addedAt).slice(0, n))
+  return shuffle(cards).slice(0, n)
 }
