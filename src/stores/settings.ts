@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { LanguageCode } from '@/lib/i18n'
+import { migrateFormat, type ConcreteFormat } from '@/features/study/formatDefs'
 
 export type ThemeMode = 'system' | 'light' | 'dark'
 
@@ -16,8 +17,10 @@ export interface Settings {
   desiredRetention: number
   /** 「カードを追加」で追加を始める頻度順位 */
   studyStartRank: number
-  /** 出題形式 */
-  studyFormat: 'en2ja' | 'ja2en' | 'cloze' | 'choice' | 'speak' | 'mix'
+  /** 出題形式（複数選択。選んだ中から出題する） */
+  studyFormats: ConcreteFormat[]
+  /** おまかせ: 覚え具合に合わせて形式を選ぶ（新しい語は意味を答える、覚えてきた語は英語を答える） */
+  studyAuto: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -30,7 +33,8 @@ export const defaultSettings: Settings = {
   dailyNewLimit: 0,
   desiredRetention: 0.9,
   studyStartRank: 500,
-  studyFormat: 'en2ja',
+  studyFormats: ['en2ja'],
+  studyAuto: true,
 }
 
 interface SettingsStore extends Settings {
@@ -48,15 +52,20 @@ export const useSettings = create<SettingsStore>()(
     }),
     {
       name: 'nev-settings',
-      version: 5,
+      version: 6,
       migrate: (state, version) => {
         const s = state as Partial<Settings>
         // v2: 1日の新規カード上限の既定を「無制限 (0)」に変更
         if (version < 2 && s.dailyNewLimit === 20) s.dailyNewLimit = 0
         // v3〜v4: 韓国語・中国語への切り替えを一時的に入れて外した。日本語に戻す
         if (version < 4) s.language = 'ja'
-        // v5: 日→話す（ja2speak）は日→英の「話す」に統合した
-        if (version < 5 && (s.studyFormat as string) === 'ja2speak') s.studyFormat = 'ja2en'
+        // v5〜v6: 出題形式を単一選択（studyFormat。'mix'・'ja2speak' を含む）から複数選択（studyFormats）に
+        if (version < 6) {
+          const old = (s as { studyFormat?: unknown }).studyFormat
+          s.studyFormats = migrateFormat(old)
+          s.studyAuto = true
+          delete (s as { studyFormat?: unknown }).studyFormat
+        }
         return s as never
       },
     },

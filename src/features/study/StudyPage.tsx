@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useNextRoot } from '@/features/lesson/RootsPage'
 
-import { BookOpenCheck, CircleCheck, Mic, Play, RotateCcw, Shuffle, Sparkles } from 'lucide-react'
+import { BookOpenCheck, Check, CircleCheck, Mic, Play, RotateCcw, Shuffle, Sparkles, Volume2 } from 'lucide-react'
 import { Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
@@ -20,7 +20,7 @@ import { useMinuteTick } from '@/lib/clock'
 import { formatInterval, removeFromStudy, retrievability } from './cards'
 import { ReviewSession } from './ReviewSession'
 import { useStudySession } from './sessionStore'
-import { formatOptions, type StudyFormat } from './formats'
+import { ALL_FORMATS, FORMAT_LABEL, formatSupported, type ConcreteFormat } from './formats'
 import { buildPracticeQueue, buildQueue, getStudyStats, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
 
 const STATE_LABEL = ['新規', '学習中', '復習', '再学習']
@@ -286,52 +286,77 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => 
 }
 
 function FormatPicker() {
-  const format = useSettings((s) => s.studyFormat)
+  const formats = useSettings((s) => s.studyFormats)
+  const auto = useSettings((s) => s.studyAuto)
   const set = useSettings((s) => s.set)
-  const options = formatOptions()
-  const groups: { title: string; values: StudyFormat[] }[] = [
-    { title: '意味を答える', values: ['en2ja', 'choice'] },
-    { title: '英語を答える', values: ['ja2en', 'cloze'] },
+  const groups: { title: string; values: ConcreteFormat[] }[] = [
+    { title: '意味を答える', values: ['en2ja', 'choice', 'listen'] },
+    { title: '英語を答える', values: ['ja2en', 'cloze', 'dictation'] },
     { title: '発音する', values: ['speak'] },
-    { title: 'まとめて', values: ['mix'] },
   ]
-  const HINT: Partial<Record<StudyFormat, string>> = {
+  const HINT: Record<ConcreteFormat, string> = {
     en2ja: '英語を見て意味を思い出し、答えを見て自分で評価する',
     choice: '英語を見て、4 つの中から意味を選ぶ',
-    ja2en: '日本語の意味を見て英語を答える。書く・話す・答えを見る から選べ、ヒントは押したときだけ出る',
-    cloze: '例文の空欄に入る英語を答える。書く・話す・答えを見る から選べ、ヒントは押したときだけ出る',
+    listen: '発音だけを聞いて意味を答える（答えを見る・4択で答える）',
+    ja2en: '日本語の意味を見て英語を答える（書く・話す・答えを見る）',
+    cloze: '例文の空欄に入る英語を答える（書く・話す・答えを見る）',
+    dictation: '発音を聞いて綴りを書く',
     speak: '英語を見て発音し、音声認識で聞き取れるか確かめる',
-    mix: '英→日・4択・日→英・穴埋めをまぜて出す',
   }
+  // 1 つは必ず選んでおく
+  const toggle = (f: ConcreteFormat) => {
+    const next = formats.includes(f) ? formats.filter((x) => x !== f) : [...formats, f]
+    if (next.length) set('studyFormats', ALL_FORMATS.filter((x) => next.includes(x)))
+  }
+  const usable = formats.filter(formatSupported)
   return (
     <div className="flex flex-col gap-2 text-sm">
-      <span className="text-muted">出題形式</span>
+      <span className="text-muted">出題形式（複数選べます）</span>
       {groups.map((g) => {
-        const opts = options.filter((o) => g.values.includes(o.value))
+        const opts = g.values.filter(formatSupported)
         if (!opts.length) return null
         return (
           <div key={g.title} className="flex flex-wrap items-center gap-1.5">
             <span className="w-20 shrink-0 text-[11px] text-muted">{g.title}</span>
-            {opts.map((o) => (
-              <button
-                key={o.value}
-                type="button"
-                aria-pressed={format === o.value}
-                onClick={() => set('studyFormat', o.value)}
-                title={HINT[o.value]}
-                className={
-                  'inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs ' +
-                  (format === o.value ? 'border-accent bg-accent-soft font-medium text-accent' : 'border-border text-muted hover:text-fg')
-                }
-              >
-                {g.title === '発音する' && <Mic className="size-3.5" />}
-                {o.label}
-              </button>
-            ))}
+            {opts.map((f) => {
+              const on = formats.includes(f)
+              return (
+                <button
+                  key={f}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => toggle(f)}
+                  title={HINT[f]}
+                  className={
+                    'inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs ' +
+                    (on ? 'border-accent bg-accent-soft font-medium text-accent' : 'border-border text-muted hover:text-fg')
+                  }
+                >
+                  {on && <Check className="size-3.5" />}
+                  {(f === 'listen' || f === 'dictation') && !on && <Volume2 className="size-3.5" />}
+                  {f === 'speak' && !on && <Mic className="size-3.5" />}
+                  {FORMAT_LABEL[f]}
+                </button>
+              )
+            })}
           </div>
         )
       })}
-      {HINT[format] && <p className="text-[11px] text-muted">{HINT[format]}</p>}
+      {usable.length > 1 ? (
+        <label className="flex items-start gap-2 rounded-xl bg-surface-2 p-2.5 text-xs">
+          <input type="checkbox" className="mt-0.5" checked={auto} onChange={(e) => set('studyAuto', e.target.checked)} />
+          <span>
+            <span className="font-medium">おまかせ</span>（覚え具合に合わせて選ぶ）
+            <span className="block text-[11px] text-muted">
+              {auto
+                ? '新しい語・覚えかけの語は「意味を答える」形式、覚えてきた語は「英語を答える」形式を中心に出します'
+                : '選んだ形式からランダムに出します'}
+            </span>
+          </span>
+        </label>
+      ) : (
+        usable[0] && <p className="text-[11px] text-muted">{HINT[usable[0]]}</p>
+      )}
     </div>
   )
 }
@@ -431,7 +456,8 @@ function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
 
 export function StudyPage() {
   const { t } = useTranslation()
-  const format = useSettings((s) => s.studyFormat)
+  const formats = useSettings((s) => s.studyFormats)
+  const auto = useSettings((s) => s.studyAuto)
   const { queue, idx, count, mode, done, start, progress, finish } = useStudySession()
   return (
     <Page title={t('study.title')}>
@@ -440,7 +466,8 @@ export function StudyPage() {
           <ReviewSession
             queue={queue}
             mode={mode}
-            format={format}
+            formats={formats}
+            auto={auto}
             initialIdx={idx}
             initialCount={count}
             onProgress={progress}

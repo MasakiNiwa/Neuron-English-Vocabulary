@@ -42,7 +42,9 @@ describe('parseBackup', () => {
 
 describe('cleanSettings', () => {
   it('型と値域が合う設定だけを残す', () => {
-    expect(cleanSettings({ theme: 'dark', ttsRate: 99, dailyNewLimit: 10, studyFormat: 'evil', unknown: 1 })).toEqual({ theme: 'dark', dailyNewLimit: 10 })
+    expect(cleanSettings({ theme: 'dark', ttsRate: 99, dailyNewLimit: 10, studyFormat: 'evil', studyFormats: ['evil'], unknown: 1 })).toEqual({ theme: 'dark', dailyNewLimit: 10 })
+    expect(cleanSettings({ studyFormat: 'mix' })).toEqual({ studyFormats: ['en2ja', 'choice', 'ja2en', 'cloze'] })
+    expect(cleanSettings({ studyFormats: ['listen', 'listen', 'bad'], studyAuto: false })).toEqual({ studyFormats: ['listen'], studyAuto: false })
   })
 })
 
