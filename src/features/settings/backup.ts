@@ -131,6 +131,7 @@ export function cleanSettings(x: unknown): Partial<Settings> {
     out.studyFormats = migrateFormat(x.studyFormat)
   }
   if (typeof x.studyAuto === 'boolean') out.studyAuto = x.studyAuto
+  if (typeof x.studyFormatsOpen === 'boolean') out.studyFormatsOpen = x.studyFormatsOpen
   return out
 }
 

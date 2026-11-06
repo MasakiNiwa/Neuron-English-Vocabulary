@@ -472,8 +472,11 @@ function FormatSection() {
   const formats = useSettings((s) => s.studyFormats)
   const auto = useSettings((s) => s.studyAuto)
   const usable = formats.filter(formatSupported)
+  // 開いた・閉じた状態を覚えておく（既定は開いて、毎回すぐ選べるように）
+  const open = useSettings((s) => s.studyFormatsOpen)
+  const set = useSettings((s) => s.set)
   return (
-    <details className="group rounded-2xl border border-border bg-surface p-3">
+    <details className="group rounded-2xl border border-border bg-surface p-3" open={open} onToggle={(e) => set('studyFormatsOpen', e.currentTarget.open)}>
       <summary className="flex cursor-pointer select-none items-center gap-2 text-sm">
         <span className="text-muted">出題形式</span>
         <span className="min-w-0 flex-1 truncate font-medium">
@@ -481,6 +484,7 @@ function FormatSection() {
           {usable.length > 1 && auto && <span className="ml-1 text-xs font-normal text-muted">（おまかせ）</span>}
         </span>
         <span className="text-xs text-accent group-open:hidden">変更</span>
+        <span className="hidden text-xs text-muted group-open:inline">たたむ</span>
       </summary>
       <div className="mt-3">
         <FormatPicker />
