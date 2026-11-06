@@ -290,12 +290,18 @@ function FormatPicker() {
   const set = useSettings((s) => s.set)
   const options = formatOptions()
   const groups: { title: string; values: StudyFormat[] }[] = [
-    { title: '読んで答える', values: ['en2ja', 'ja2en', 'cloze', 'choice', 'mix'] },
-    { title: '話して答える', values: ['speak', 'ja2speak'] },
+    { title: '意味を答える', values: ['en2ja', 'choice'] },
+    { title: '英語を答える', values: ['ja2en', 'cloze'] },
+    { title: '発音する', values: ['speak'] },
+    { title: 'まとめて', values: ['mix'] },
   ]
   const HINT: Partial<Record<StudyFormat, string>> = {
+    en2ja: '英語を見て意味を思い出し、答えを見て自分で評価する',
+    choice: '英語を見て、4 つの中から意味を選ぶ',
+    ja2en: '日本語の意味を見て英語を答える。書く・話す・答えを見る から選べ、ヒントは押したときだけ出る',
+    cloze: '例文の空欄に入る英語を答える。書く・話す・答えを見る から選べ、ヒントは押したときだけ出る',
     speak: '英語を見て発音し、音声認識で聞き取れるか確かめる',
-    ja2speak: '日本語の意味を見て、英語を声に出して答える',
+    mix: '英→日・4択・日→英・穴埋めをまぜて出す',
   }
   return (
     <div className="flex flex-col gap-2 text-sm">
@@ -318,7 +324,7 @@ function FormatPicker() {
                   (format === o.value ? 'border-accent bg-accent-soft font-medium text-accent' : 'border-border text-muted hover:text-fg')
                 }
               >
-                {g.title === '話して答える' && <Mic className="size-3.5" />}
+                {g.title === '発音する' && <Mic className="size-3.5" />}
                 {o.label}
               </button>
             ))}

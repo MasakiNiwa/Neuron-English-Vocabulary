@@ -120,7 +120,9 @@ export function cleanSettings(x: unknown): Partial<Settings> {
   if (inRange(x.dailyNewLimit, 0, 10000) && Number.isInteger(x.dailyNewLimit)) out.dailyNewLimit = x.dailyNewLimit as number
   if (inRange(x.desiredRetention, 0.5, 0.99)) out.desiredRetention = x.desiredRetention as number
   if (inRange(x.studyStartRank, 1, 1_000_000) && Number.isInteger(x.studyStartRank)) out.studyStartRank = x.studyStartRank as number
-  if (['en2ja', 'ja2en', 'cloze', 'choice', 'speak', 'ja2speak', 'mix'].includes(x.studyFormat as string)) out.studyFormat = x.studyFormat as Settings['studyFormat']
+  if (['en2ja', 'ja2en', 'cloze', 'choice', 'speak', 'mix'].includes(x.studyFormat as string)) out.studyFormat = x.studyFormat as Settings['studyFormat']
+  // 以前の「日→話す」は日→英の「話す」に統合した
+  if (x.studyFormat === 'ja2speak') out.studyFormat = 'ja2en'
   return out
 }
 

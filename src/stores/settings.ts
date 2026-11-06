@@ -17,7 +17,7 @@ export interface Settings {
   /** 「カードを追加」で追加を始める頻度順位 */
   studyStartRank: number
   /** 出題形式 */
-  studyFormat: 'en2ja' | 'ja2en' | 'cloze' | 'choice' | 'speak' | 'ja2speak' | 'mix'
+  studyFormat: 'en2ja' | 'ja2en' | 'cloze' | 'choice' | 'speak' | 'mix'
 }
 
 export const defaultSettings: Settings = {
@@ -48,13 +48,15 @@ export const useSettings = create<SettingsStore>()(
     }),
     {
       name: 'nev-settings',
-      version: 4,
+      version: 5,
       migrate: (state, version) => {
         const s = state as Partial<Settings>
         // v2: 1日の新規カード上限の既定を「無制限 (0)」に変更
         if (version < 2 && s.dailyNewLimit === 20) s.dailyNewLimit = 0
         // v3〜v4: 韓国語・中国語への切り替えを一時的に入れて外した。日本語に戻す
         if (version < 4) s.language = 'ja'
+        // v5: 日→話す（ja2speak）は日→英の「話す」に統合した
+        if (version < 5 && (s.studyFormat as string) === 'ja2speak') s.studyFormat = 'ja2en'
         return s as never
       },
     },
