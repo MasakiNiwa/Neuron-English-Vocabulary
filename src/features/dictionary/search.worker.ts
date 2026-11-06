@@ -30,17 +30,27 @@ let ready: Promise<void> | null = null
 
 const hasJa = (s: string) => /[぀-ヿ一-鿿]/.test(s)
 
+async function getJson<T>(url: URL): Promise<T> {
+  const r = await fetch(url)
+  if (!r.ok) throw new Error(`索引を取得できませんでした（${r.status}）`)
+  return (await r.json()) as T
+}
+
 function init(base: string) {
   ready ??= (async () => {
     const [idx, ms] = await Promise.all([
-      fetch(new URL('data/index.json', base)).then((r) => r.json() as Promise<{ e: IndexRow[] }>),
-      fetch(new URL('data/morphemes.json', base)).then((r) => r.json() as Promise<Morpheme[]>),
+      getJson<{ e: IndexRow[] }>(new URL('data/index.json', base)),
+      getJson<Morpheme[]>(new URL('data/morphemes.json', base)),
     ])
     rows = idx.e
     morphs = ms
     mini = new MiniSearch<Doc>({ fields: ['head'], storeFields: [], idField: 'id' })
     mini.addAll(rows.map((r, i) => ({ id: i, head: r[0].replace(/_/g, ' ') })))
   })()
+  // 失敗した取得を覚えておかない（回線が戻ったら、次の検索で取り直す。レビュー 2026-11-07 の 07）
+  ready.catch(() => {
+    ready = null
+  })
   return ready
 }
 

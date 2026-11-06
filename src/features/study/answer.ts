@@ -6,7 +6,8 @@ import type { Entry } from '@/features/dictionary/types'
  * 照合は評価の「提案」に使うだけで、評価そのものは学習者が押す
  */
 
-export type TypedVerdict = 'correct' | 'close' | 'wrong'
+/** form: 単語は合っているが、この文で使う形（活用形）が違う（穴埋め） */
+export type TypedVerdict = 'correct' | 'form' | 'close' | 'wrong'
 
 /** 大文字・小文字、空白・ハイフン、アポストロフィの違いをそろえる */
 export function normalizeAnswer(s: string): string {
@@ -35,8 +36,12 @@ export function closeLimit(len: number): number {
  * 書いた答えを、正解の候補（見出し語・活用形・例文中の形）と比べる。
  * 一番近い候補で判定し、その候補を返す（答え合わせの表示用）
  */
-export function checkTyped(input: string, targets: string[]): { verdict: TypedVerdict; target: string; distance: number } {
+export function checkTyped(input: string, targets: string[], related: string[] = []): { verdict: TypedVerdict; target: string; distance: number } {
   const x = normalizeAnswer(input)
+  // 穴埋め: 見出し語やほかの活用形と一致したら「単語は合っているが形が違う」（例文に合う形だけを正解にする。レビュー 2026-11-07 の 06）
+  if (x && related.some((r) => normalizeAnswer(r) === x) && !targets.some((t) => normalizeAnswer(t) === x)) {
+    return { verdict: 'form', target: targets[0] ?? '', distance: levenshtein(x, normalizeAnswer(targets[0] ?? '')) }
+  }
   const cands = [...new Set(targets.filter(Boolean))]
   let best = { target: cands[0] ?? '', distance: Infinity }
   for (const t of cands) {

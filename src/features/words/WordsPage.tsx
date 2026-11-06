@@ -73,13 +73,27 @@ function Results({ query, filter }: { query: string; filter: SearchFilter }) {
   const dict = useDictionary()
   const { t } = useTranslation()
   const [hits, setHits] = useState<SearchHit[] | null>(null)
+  const [failed, setFailed] = useState(false)
+  const [retry, setRetry] = useState(0)
   useEffect(() => {
     let alive = true
-    void searchDictionary(query, filter).then((h) => alive && setHits(h))
+    setFailed(false)
+    searchDictionary(query, filter).then(
+      (h) => alive && setHits(h),
+      () => alive && setFailed(true),
+    )
     return () => {
       alive = false
     }
-  }, [query, filter])
+  }, [query, filter, retry])
+  if (failed)
+    // 「見つからなかった」と「検索の準備に失敗した」を分けて示し、その場でやり直せるようにする
+    return (
+      <div className="flex flex-col items-center gap-3 py-10 text-center">
+        <p className="text-sm text-muted">検索の準備（単語データの取得）に失敗しました。通信状態を確かめて、もう一度お試しください。</p>
+        <Button onClick={() => setRetry((n) => n + 1)}>再試行</Button>
+      </div>
+    )
   if (!hits) return <PageSpinner />
   if (!hits.length) return <p className="py-10 text-center text-muted">{t('words.noResults')}</p>
   return (

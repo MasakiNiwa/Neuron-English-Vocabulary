@@ -5,3 +5,12 @@ updates:
     directory: /
     schedule:
       interval: monthly
+  # npm の依存も月 1 回確認する（レビュー 2026-11-07 の 11）。マイナー・パッチ版はまとめて 1 つの PR に
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]

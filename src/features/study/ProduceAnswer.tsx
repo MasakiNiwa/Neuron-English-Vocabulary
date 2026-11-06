@@ -20,6 +20,7 @@ export function ProduceAnswer({
   entry,
   answer,
   targets,
+  related = [],
   shown,
   onReveal,
   onSuggest,
@@ -31,6 +32,8 @@ export function ProduceAnswer({
   answer: string
   /** 正解とみなす綴り（見出し語・活用形など） */
   targets: string[]
+  /** 単語は合っているが形が違う、とみなす綴り（穴埋めの見出し語・ほかの活用形） */
+  related?: string[]
   shown: boolean
   onReveal: () => void
   onSuggest: (g: Grade | null) => void
@@ -55,9 +58,9 @@ export function ProduceAnswer({
   const withHint = (g: Grade) => (hintLevel > 0 && g === Rating.Good ? Rating.Hard : g)
 
   const check = () => {
-    const r = checkTyped(typed, targets)
+    const r = checkTyped(typed, targets, related)
     setResult({ ...r, input: typed })
-    onSuggest(withHint(r.verdict === 'correct' ? Rating.Good : r.verdict === 'close' ? Rating.Hard : Rating.Again))
+    onSuggest(withHint(r.verdict === 'correct' ? Rating.Good : r.verdict === 'wrong' ? Rating.Again : Rating.Hard))
     navigator.vibrate?.(r.verdict === 'correct' ? 10 : [20, 40, 20])
     onReveal()
   }
@@ -101,7 +104,8 @@ export function ProduceAnswer({
         </form>
       )}
 
-      {!shown && mode === 'speak' && (
+      {mode === 'speak' && (
+        // 答えを表示したあとも、聞き取った英語と点数を残す（もう一度話すと提案も更新）
         <SpeakPrompt
           target={answer}
           mode="ja2speak"
@@ -158,12 +162,18 @@ function TypedResult({ verdict, target, input }: { verdict: TypedVerdict; target
     <div
       className={cn(
         'w-full max-w-sm rounded-xl border p-3 text-left text-sm',
-        verdict === 'correct' ? 'border-success/40 bg-success/10' : verdict === 'close' ? 'border-warn/40 bg-warn/10' : 'border-danger/40 bg-danger/10',
+        verdict === 'correct' ? 'border-success/40 bg-success/10' : verdict === 'wrong' ? 'border-danger/40 bg-danger/10' : 'border-warn/40 bg-warn/10',
       )}
     >
       <div className="mb-1 flex items-center gap-1.5 font-medium">
-        {verdict === 'correct' ? <Check className="size-4 text-success" /> : <X className={cn('size-4', verdict === 'close' ? 'text-warn' : 'text-danger')} />}
-        {verdict === 'correct' ? '正解！' : verdict === 'close' ? 'おしい！ 綴りが少し違います' : 'ちがいます'}
+        {verdict === 'correct' ? <Check className="size-4 text-success" /> : <X className={cn('size-4', verdict === 'wrong' ? 'text-danger' : 'text-warn')} />}
+        {verdict === 'correct'
+          ? '正解！'
+          : verdict === 'form'
+            ? `単語は合っています。この文では ${target}`
+            : verdict === 'close'
+              ? 'おしい！ 綴りが少し違います'
+              : 'ちがいます'}
       </div>
       {verdict !== 'correct' && (
         <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">

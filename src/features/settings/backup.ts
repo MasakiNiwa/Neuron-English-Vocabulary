@@ -43,6 +43,8 @@ export interface ParsedBackup {
   settings: Partial<Settings>
   /** 形式が合わず取り込まない行の数 */
   skipped: number
+  /** バックアップに含まれている表（含まれていない表は、置き換えでも今のデータのまま残す） */
+  present: BackupTable[]
 }
 
 type Row = Record<string, unknown>
@@ -159,6 +161,10 @@ export function parseBackup(json: unknown): ParsedBackup {
   const data = json.data as Row
   const rows = Object.fromEntries(BACKUP_TABLES.map((t) => [t, [] as Row[]])) as Record<BackupTable, Row[]>
   let skipped = 0
+  // 表があるのに配列でない（壊れている）ときは復元しない。空の配列（本当に 0 件）と区別する（レビュー 2026-11-07 の 02）
+  const broken = BACKUP_TABLES.filter((t) => t in data && !Array.isArray(data[t]))
+  if (broken.length) throw new Error(`バックアップの「${broken.map((t) => TABLE_LABEL[t]).join('」「')}」の形式が壊れているため、復元できません`)
+  const present = BACKUP_TABLES.filter((t) => Array.isArray(data[t]) || (t === 'extras' && Array.isArray(data.enrichments)))
   for (const t of BACKUP_TABLES) {
     let src = Array.isArray(data[t]) ? (data[t] as unknown[]) : []
     if (t === 'extras' && Array.isArray(data.enrichments)) src = [...src, ...enrichmentsToExtras(data.enrichments)]
@@ -173,7 +179,7 @@ export function parseBackup(json: unknown): ParsedBackup {
   const before = rows.chats.length
   rows.chats = rows.chats.filter((c) => threadIds.has(c.thread))
   skipped += before - rows.chats.length
-  return { exportedAt: isNum(json.exportedAt) ? json.exportedAt : undefined, rows, settings: cleanSettings(json.settings), skipped }
+  return { exportedAt: isNum(json.exportedAt) ? json.exportedAt : undefined, rows, settings: cleanSettings(json.settings), skipped, present }
 }
 
 /** バックアップを作る */
@@ -192,9 +198,26 @@ const dedupeKey: Partial<Record<BackupTable, (r: Row) => string>> = {
 }
 
 /**
+ * 語根レッスンの記録を合わせる（今のデータに追加するとき。レビュー 2026-11-07 の 03）。
+ * 最後の結果は新しい方、最高点・挑戦回数は大きい方を残す（同じバックアップを何度追加しても回数が増えないように、足し算はしない）
+ */
+export function mergeRootLesson(cur: Row, add: Row): Row {
+  const newer = (add.completedAt as number) > (cur.completedAt as number) ? add : cur
+  return {
+    ...newer,
+    best: Math.max(cur.best as number, add.best as number),
+    plays: Math.max(cur.plays as number, add.plays as number),
+  }
+}
+
+/**
  * 復元する。
- * - replace: 対象の表を空にしてから入れる（端末をバックアップの状態に戻す）
- * - merge: 今のデータに追加する。履歴・ログは重複を除いて追加し、同じ単語のカードは復習が新しい方を残す
+ * - replace: バックアップに含まれている表を空にしてから入れる（端末をバックアップの状態に戻す）。含まれていない表と設定以外はそのまま
+ * - merge: 今のデータに追加する。今のデータを古いもので上書きしない
+ *   - 履歴・ログ・メッセージは重複を除いて追加
+ *   - カードは復習が新しい方、チャットは更新が新しい方を残し、追加の解説は同じものがなければ追加
+ *   - 語根レッスンは最後の結果は新しい方、最高点・回数は大きい方
+ *   - 設定は変えない
  */
 export async function restoreBackup(b: ParsedBackup, mode: 'replace' | 'merge') {
   const tables = BACKUP_TABLES.map((t) => db.table(t))
@@ -203,6 +226,7 @@ export async function restoreBackup(b: ParsedBackup, mode: 'replace' | 'merge') 
       const table = db.table(t)
       let rows = b.rows[t]
       if (mode === 'replace') {
+        if (!b.present.includes(t)) continue
         await table.clear()
       } else if (AUTO_ID[t]) {
         const seen = new Set((await table.toArray()).map((r: Row) => dedupeKey[t]!(r)))
@@ -213,11 +237,27 @@ export async function restoreBackup(b: ParsedBackup, mode: 'replace' | 'merge') 
           const c = cur.get(r.entryId)
           return !c || ((r.last_review as number | null) ?? 0) > ((c.last_review as number | null) ?? 0)
         })
+      } else if (t === 'rootLessons') {
+        const cur = new Map((await table.toArray()).map((c: Row) => [c.id, c]))
+        rows = rows.map((r) => (cur.has(r.id) ? mergeRootLesson(cur.get(r.id)!, r) : r))
+      } else if (t === 'threads') {
+        const cur = new Map((await table.toArray()).map((c: Row) => [c.id, c]))
+        rows = rows.filter((r) => !cur.has(r.id) || (r.updatedAt as number) > (cur.get(r.id)!.updatedAt as number))
+      } else if (t === 'extras') {
+        const cur = new Set((await table.toArray()).map((c: Row) => c.id))
+        rows = rows.filter((r) => !cur.has(r.id))
       }
       if (rows.length) await table.bulkPut(rows)
     }
   })
-  if (Object.keys(b.settings).length) useSettings.setState(b.settings)
+  if (mode === 'replace' && Object.keys(b.settings).length) useSettings.setState(b.settings)
+}
+
+/** 今の端末の各表の件数（復元前に「今 → 復元後」を見せるため） */
+export async function currentCounts(): Promise<Record<BackupTable, number>> {
+  const out = {} as Record<BackupTable, number>
+  for (const t of BACKUP_TABLES) out[t] = await db.table(t).count()
+  return out
 }
 
 /** アプリが保存したものをすべて消す（他のサイトのデータに触れないよう、自分のキーだけを消す。B09） */

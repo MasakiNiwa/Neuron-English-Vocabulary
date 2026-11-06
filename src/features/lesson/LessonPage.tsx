@@ -102,7 +102,10 @@ function Lesson({ root }: { root: Morpheme }) {
   useEffect(() => {
     if (step.kind !== 'question') return
     const onKey = (e: KeyboardEvent) => {
-      if ((e.target as HTMLElement).tagName === 'INPUT') return
+      const el = e.target as HTMLElement
+      if (e.repeat || el.closest('input, textarea, select, [contenteditable="true"]')) return
+      // Enter・Space はフォーカスしているボタン・リンクの操作を優先する（レビュー 2026-11-07 の 05）
+      if ((e.key === 'Enter' || e.key === ' ') && el.closest('button:not(:disabled), a, summary')) return
       if (step.answered === null) {
         const k = Number(e.key) - 1
         if (k >= 0 && k < choices[step.i].length) answer(step.i, k)

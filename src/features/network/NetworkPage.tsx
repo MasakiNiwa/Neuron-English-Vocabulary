@@ -182,7 +182,10 @@ function FocusSearch({ onPick }: { onPick: (focus: string) => void }) {
   useEffect(() => {
     if (!q.trim()) return setHits([])
     let alive = true
-    void searchDictionary(q).then((h) => alive && setHits(h.slice(0, 8)))
+    searchDictionary(q).then(
+      (h) => alive && setHits(h.slice(0, 8)),
+      () => alive && setHits([]),
+    )
     return () => {
       alive = false
     }

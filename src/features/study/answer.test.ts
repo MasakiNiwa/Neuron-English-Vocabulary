@@ -68,3 +68,13 @@ describe('ヒント', () => {
     expect(h[0].text).toBe('c＿＿＿＿＿＿＿＿＿＿＿（12 文字）')
   })
 })
+
+describe('穴埋めの形（レビュー 2026-11-07 の 06）', () => {
+  it('例文に合う形だけを正解にし、別の活用形は「形が違う」とする', () => {
+    const forms = ['go', 'goes', 'went', 'gone', 'going']
+    expect(checkTyped('going', ['going'], forms).verdict).toBe('correct')
+    expect(checkTyped('went', ['going'], forms)).toMatchObject({ verdict: 'form', target: 'going' })
+    expect(checkTyped('goin', ['going'], forms).verdict).toBe('close')
+    expect(checkTyped('take place', ['taken place'], ['take place', 'took place']).verdict).toBe('form')
+  })
+})

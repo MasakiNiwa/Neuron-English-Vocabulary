@@ -25,6 +25,8 @@ export function UnlockPanel({ compact }: { compact?: boolean }) {
       setErr(e instanceof Error ? e.message : String(e))
     } finally {
       setBusy(false)
+      // 別のタブで保管庫が作られていた場合などに、設定画面から解除画面へ切り替える
+      v.refresh()
     }
   }
   if (v.initialized === undefined) return null
