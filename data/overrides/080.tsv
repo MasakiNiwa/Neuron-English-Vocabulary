@@ -1,0 +1,26 @@
+# C08: 07_note_parts_report の候補（もとの語を経由したつながりを数えるようにした後の 66 件）のうち、確かなもの。
+# 接尾辞 -logy（logos）・-fy（facere）は形態素の成り立ち（morpheme_parts.tsv）で語根につなぐ。
+# つながないもの（レポートの候補には残る）:
+#   new・right・middle・sit・murder・mare・mane（同じ祖先の英語本来の語・別の語）、former・miss・parent・track・divide・lateral・latitude・
+#   saline・deliberate・deliberation（綴りが似ている別の語源）、salmon・sentinel・tango・tortoise・testosterone・testicle・frail・scissors
+#   （語源に異説・不明）、anonymity・acronym（ギリシャ語 onoma）、anthology（legein「集める」）、escalate・escalation（scala「はしご」）、
+#   Portuguese・rosemary・nightmare（地名・ほかの語）
+parts	letter	letter=r:liter
+parts	possess	pos=r:pot sess=r:sed
+parts	proof	proof=r:prob
+parts	temp	temp=r:temp
+parts	torch	torch=r:tort
+parts	ensemble	en sembl=r:simil e
+parts	pornography	porno graph=r:graph y=suf:ia
+parts	archaeology	archaeo logy=suf:logy
+parts	neurology	neuro logy=suf:logy
+parts	morphological	morpho log=r:log ical=suf:ic
+parts	cascade	casc=r:cad ade
+parts	ditto	ditt=r:dict o
+parts	pigment	pig=r:pict ment=suf:ment
+parts	pedophile	pedo phil=r:phil e
+parts	mirage	mir=r:mir age
+parts	analogue	ana logue=r:log
+parts	altercation	alter=r:alter c ation=suf:ation
+parts	sally	sall=r:sal y
+parts	rosemary	rose mar=r:mar y

@@ -221,7 +221,7 @@ parts	unimaginable	un=pre:un imagin=w:imagine able=suf:able
 parts	wholeheartedly	whole=w:whole heart=w:heart ed ly=suf:ly
 parts	worsening	worsen=w:worsen ing
 parts	abbreviation	ab=pre:ad brevi ation=suf:ation
-parts	asymmetric	a=pre:a symmetric
+parts	asymmetric	a=pre:a sym=pre:syn metr=r:meter ic=suf:ic
 parts	backstory	back=w:back story=w:story
 parts	bodybuilding	body=w:body build=w:build ing
 parts	bullish	bull=w:bull ish=suf:ish
@@ -239,7 +239,7 @@ parts	jurisprudence	juris prudence
 parts	justifiable	justifi=w:justify able=suf:able
 parts	linkage	link=w:link age
 parts	quarterfinal	quarter=w:quarter final=w:final
-parts	ratification	rat=r:rat ific ation=suf:ation
+parts	ratification	rat=r:rat ific=suf:fy ation=suf:ation
 parts	showroom	show=w:show room=w:room
 parts	sightseeing	sight=w:sight see=w:see ing
 parts	starlight	star=w:star light=w:light
@@ -288,7 +288,7 @@ parts	upheaval	up=pre:up heav al=suf:al
 parts	viewership	viewer=w:viewer ship=suf:ship
 parts	worsen	worse n
 parts	adaptable	adapt=w:adapt able=suf:able
-parts	amplification	ampl ific ation=suf:ation
+parts	amplification	ampl ific=suf:fy ation=suf:ation
 parts	arousal	arous al=suf:al
 parts	artistry	artist=w:artist ry
 parts	bouncer	bounc=w:bounce er=suf:er
