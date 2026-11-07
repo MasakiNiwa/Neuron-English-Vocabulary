@@ -3046,6 +3046,23 @@ scholarly	He wrote a scholarly article on ancient Rome.	彼は古代ローマに
 browse	I like to browse in bookstores on weekends.	週末は本屋をぶらぶら見て回るのが好きだ。
 browse	You can browse the internet on this tablet.	このタブレットでインターネットを閲覧できる。
 geometric	The dress has a bold geometric pattern.	そのドレスは大胆な幾何学模様だ。
+blasphemy	In the past, people could be punished for blasphemy.	昔は神を冒涜した罪で罰せられることがあった。
+nipple	The baby bottle has a soft rubber nipple.	その哺乳瓶には柔らかいゴムの乳首がついている。
+poppy	The field was full of red poppies.	野原は赤いケシの花でいっぱいだった。
+bluff	He said he would quit, but it was only a bluff.	彼は辞めると言ったが、それはただのはったりだった。
+bluff	We climbed to the top of the bluff to see the river.	私たちは川を見るために断崖の上まで登った。
+liaison	She works as a liaison between the two departments.	彼女は二つの部署の間の連絡係として働いている。
+mosaic	The floor of the old church is decorated with a beautiful mosaic.	その古い教会の床は美しいモザイクで飾られている。
+mustang	A herd of wild mustangs ran across the plain.	野生馬の群れが平原を駆け抜けた。
+tango	They learned to dance the tango in Argentina.	彼らはアルゼンチンでタンゴの踊り方を習った。
+overdose	Taking an overdose of this medicine can be dangerous.	この薬を飲みすぎると危険なことがある。
+antibody	The body produces antibodies to fight infection.	体は感染と闘うために抗体を作る。
+hoover	I need to hoover the living room before the guests arrive.	お客さんが来る前に居間に掃除機をかけなきゃ。
+pagan	The festival has its roots in an old pagan tradition.	その祭りは古い異教の伝統に由来している。
+porcelain	She collects antique porcelain from China.	彼女は中国の古い磁器を集めている。
+attendee	Each attendee will receive a free notebook.	参加者全員に無料のノートが配られる。
+deity	The ancient Greeks worshipped many deities.	古代ギリシャ人は多くの神々を崇拝していた。
+messiah	Many people saw the new coach as a messiah who would save the team.	多くの人が新しい監督をチームを救う救世主とみなした。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
