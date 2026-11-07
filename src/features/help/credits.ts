@@ -48,6 +48,6 @@ export const dataSources: DataSource[] = [
     url: 'https://tatoeba.org/',
     license: 'CC BY 2.0 FR',
     licenseUrl: 'https://creativecommons.org/licenses/by/2.0/fr/',
-    usage: '英日対訳の例文 (Tatoeba contributors)。「アプリのオリジナル例文」と表示したものを除く',
+    usage: '英日対訳の例文 (Tatoeba contributors)。一部の例文はこのアプリ独自のもの',
   },
 ]
