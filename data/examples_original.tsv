@@ -2816,6 +2816,13 @@ pallet	The boxes were stacked on a wooden pallet.	箱は木製のパレットに
 murderous	The villain in the film has a murderous look in his eyes.	その映画の悪役は殺意に満ちた目つきをしている。
 tar	The road was covered with fresh tar.	道路には塗りたてのタールが敷かれていた。
 component	Trust is an important component of any team.	信頼はどんなチームにとっても大切な要素だ。
+downtime	The website had two hours of downtime last night.	そのウェブサイトは昨夜２時間停止していた。
+receptor	The drug works by blocking a receptor in the brain.	その薬は脳の受容体の働きを妨げることで効く。
+comprehensive	The book gives a comprehensive guide to Japanese history.	その本は日本の歴史を網羅的に案内している。
+removal	The city is in charge of snow removal.	除雪は市の担当だ。
+virgin	Use extra virgin olive oil for the salad.	サラダにはエクストラバージンオリーブオイルを使ってください。
+commissioner	The police commissioner spoke to reporters.	警察本部長が記者たちに話をした。
+Israeli	The Israeli team won the game.	イスラエルのチームがその試合に勝った。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
