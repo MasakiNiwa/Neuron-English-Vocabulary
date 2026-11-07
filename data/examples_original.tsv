@@ -2307,6 +2307,295 @@ rudder	The captain turned the rudder.	船長はかじを切った。
 seaman	The young seaman was on his first voyage.	その若い船員にとっては初めての航海だった。
 staunch	She is a staunch supporter of the team.	彼女はそのチームの熱心な支持者だ。
 stiffness	I felt some stiffness in my neck.	首に少しこわばりを感じた。
+tentacle	An octopus has eight tentacles.	タコには８本の触手がある。
+topology	The network topology shows how computers are connected.	ネットワークの構成図はコンピューターがどうつながっているかを示している。
+unparalleled	The view from the tower is unparalleled.	塔からの眺めは比類がない。
+unsolicited	I keep getting unsolicited emails.	頼んでもいないメールが次々に届く。
+aerobic	Swimming is a good aerobic exercise.	水泳はよい有酸素運動だ。
+aerodynamic	The new car has an aerodynamic design.	新しい車は空気抵抗の少ないデザインだ。
+aesthetically	The building is aesthetically pleasing.	その建物は見た目が美しい。
+algebraic	Solve the algebraic equation.	その代数方程式を解きなさい。
+artefact	The museum displays artefacts from ancient Egypt.	その博物館は古代エジプトの工芸品を展示している。
+assimilation	The assimilation of new words into a language takes time.	新しい語が言語に溶け込むには時間がかかる。
+augment	He works part-time to augment his income.	彼は収入を増やすためにアルバイトをしている。
+breakaway	A breakaway group formed a new party.	分離したグループが新しい政党を作った。
+caricature	The artist drew a caricature of the president.	その画家は大統領の風刺画を描いた。
+chute	The children slid down the water chute.	子どもたちはウォータースライダーを滑り降りた。
+complacent	We cannot afford to become complacent.	油断している余裕はない。
+complicit	The officials were complicit in the fraud.	役人たちはその詐欺に加担していた。
+coolant	Check the coolant level in your car.	車の冷却液の量を確認してください。
+counteract	Exercise can counteract the effects of stress.	運動はストレスの影響を打ち消すことができる。
+courtship	Their courtship lasted three years.	二人の交際期間は３年に及んだ。
+craven	It was a craven act to run away.	逃げ出すとは臆病な行為だった。
+debilitating	She suffers from a debilitating illness.	彼女は体を衰弱させる病気を患っている。
+devotee	He is a devotee of classical music.	彼はクラシック音楽の熱心な愛好家だ。
+downturn	Many businesses closed during the economic downturn.	景気後退の間に多くの会社が倒産した。
+dystopian	The novel describes a dystopian future.	その小説はディストピア的な未来を描いている。
+electrically	The car is electrically powered.	その車は電気で動く。
+enclave	The area is a small Italian enclave.	その地区は小さなイタリア系住民の居住区だ。
+fibrosis	Smoking can lead to lung fibrosis.	喫煙は肺線維症につながることがある。
+forgery	The painting turned out to be a forgery.	その絵は偽物だと分かった。
+functionally	The two devices are functionally the same.	その二つの機器は機能的には同じだ。
+gimmick	The free gift is just a sales gimmick.	無料の景品は単なる客寄せの仕掛けだ。
+gladiator	The gladiator fought in the arena.	剣闘士は闘技場で戦った。
+glossary	There is a glossary at the end of the book.	本の最後に用語集がある。
+groundwork	The meeting laid the groundwork for future talks.	その会議は今後の話し合いの下地を作った。
+impromptu	We had an impromptu party at home.	私たちは家で急きょパーティーを開いた。
+iodine	Seaweed is rich in iodine.	海藻はヨウ素を多く含んでいる。
+keel	The company is now back on an even keel.	その会社は今では安定を取り戻している。
+liturgy	The liturgy was sung in Latin.	典礼はラテン語で歌われた。
+magma	Magma rises from deep inside the earth.	マグマは地球の深いところから上がってくる。
+mammalian	The study focuses on mammalian brains.	その研究は哺乳類の脳に焦点を当てている。
+notoriety	The case brought him national notoriety.	その事件で彼は全国的に悪名をとどろかせた。
+nutty	The cookies have a nutty flavor.	そのクッキーはナッツの風味がする。
+oculus	Light enters the building through a round oculus in the roof.	光は屋根の丸窓から建物に入る。
+ornate	The palace has ornate ceilings.	その宮殿の天井は装飾が豪華だ。
+oust	The rebels tried to oust the president.	反乱軍は大統領を失脚させようとした。
+palpable	The tension in the room was palpable.	部屋の緊張がはっきりと感じられた。
+perpetuate	Such stories perpetuate old stereotypes.	そうした話は古い固定観念を永続させる。
+philharmonic	She plays the violin in the city philharmonic.	彼女は市の交響楽団でバイオリンを弾いている。
+plume	A plume of smoke rose from the chimney.	煙突から煙が立ちのぼった。
+prequel	The prequel tells the story before the first movie.	その前日譚は１作目より前の話を描いている。
+purified	Drink only purified water while traveling.	旅行中は浄化された水だけを飲みなさい。
+radiology	He works in the radiology department.	彼は放射線科で働いている。
+raffle	I won a bicycle in the school raffle.	学校のくじ引きで自転車が当たった。
+rejoin	She plans to rejoin the team after her injury.	彼女はけがが治ったらチームに復帰するつもりだ。
+remission	Her cancer is in remission.	彼女のがんは寛解している。
+resonate	Her speech resonated with young voters.	彼女の演説は若い有権者の心に響いた。
+restitution	The court ordered him to make restitution.	裁判所は彼に賠償を命じた。
+sacrament	Baptism is a sacrament in the Christian church.	洗礼はキリスト教会の秘跡の一つだ。
+scourge	Malaria was once the scourge of the region.	マラリアはかつてその地域の災いだった。
+signage	The station needs better signage.	その駅には分かりやすい案内表示が必要だ。
+sobriety	He has maintained his sobriety for five years.	彼は５年間禁酒を続けている。
+songwriting	She took a course in songwriting.	彼女は作詞作曲の講座を受けた。
+sorely	Your help is sorely needed.	あなたの助けがどうしても必要です。
+sprawling	The city has sprawling suburbs.	その都市には無秩序に広がった郊外がある。
+sprinter	The sprinter won the 100-meter race.	その短距離走者は１００メートル走で優勝した。
+sprite	In the story, a water sprite lives in the lake.	その物語では、水の妖精が湖に住んでいる。
+stagnation	The country suffered years of economic stagnation.	その国は何年も経済の停滞に苦しんだ。
+structurally	The bridge is structurally sound.	その橋は構造的に問題がない。
+sulfate	Copper sulfate is blue.	硫酸銅は青い。
+tout	The company touts its product as the best on the market.	その会社は自社製品を市場で最高だと宣伝している。
+tracer	The police put a tracer on the phone call.	警察はその通話を逆探知した。
+transporter	A car transporter carried the new cars.	自動車運搬車が新車を運んだ。
+unearthed	The unearthed coins were over a thousand years old.	発掘された硬貨は千年以上前のものだった。
+uniformly	The paint was applied uniformly.	塗料はむらなく塗られた。
+variously	The plant is variously known as "sunflower" or "sun plant."	その植物はさまざまな名前で呼ばれている。
+wasteland	After the war, the city was a wasteland.	戦後、その都市は荒れ地となった。
+abstinence	He practices abstinence from alcohol.	彼は禁酒を実践している。
+adventurer	The adventurer crossed the desert on foot.	その冒険家は徒歩で砂漠を横断した。
+arduous	The climb was long and arduous.	その登山は長く骨の折れるものだった。
+boa	A boa wrapped itself around the branch.	ボアが枝に巻きついた。
+bullion	Gold bullion is stored in the bank's vault.	金塊は銀行の金庫室に保管されている。
+castor	The chair has castors on its legs.	そのいすの脚にはキャスターが付いている。
+codex	The ancient codex was found in a monastery.	その古代の写本は修道院で発見された。
+dilute	Dilute the juice with water.	ジュースを水で薄めてください。
+dispersion	The wind helps the dispersion of seeds.	風は種子の分散を助ける。
+doomsday	The film is about a doomsday asteroid.	その映画は地球最後の日をもたらす小惑星の話だ。
+exploratory	The doctor performed exploratory surgery.	医師は診査のための手術を行った。
+finesse	She handled the difficult situation with finesse.	彼女はその難しい状況を巧みにさばいた。
+fireball	A fireball lit up the night sky.	火の玉が夜空を照らした。
+flannel	He wore a flannel shirt.	彼はフランネルのシャツを着ていた。
+geothermal	Iceland uses geothermal energy.	アイスランドは地熱エネルギーを利用している。
+grievous	He made a grievous mistake.	彼は重大な間違いを犯した。
+hookup	The apartment has a washing machine hookup.	そのアパートには洗濯機の接続口がある。
+hopelessly	We were hopelessly lost.	私たちはどうしようもなく道に迷っていた。
+horticulture	She studied horticulture in college.	彼女は大学で園芸学を学んだ。
+improv	He takes improv classes to improve his acting.	彼は演技力を上げるために即興劇の授業を受けている。
+impunity	The gang acted with impunity.	その一味は罰を受けることなく好き勝手にふるまった。
+informational	The museum offers informational tours.	その博物館は解説付きのツアーを行っている。
+inline	The editor added inline comments to the document.	編集者は文書の行内にコメントを書き込んだ。
+insolvency	The company faces insolvency.	その会社は支払い不能に陥っている。
+intermediary	The bank acted as an intermediary.	銀行が仲介役を務めた。
+interrogate	The police interrogated the suspect for hours.	警察は容疑者を何時間も尋問した。
+jokingly	He jokingly called himself a genius.	彼は冗談で自分を天才と呼んだ。
+locus	The city became the locus of the protest.	その都市は抗議運動の中心地になった。
+makeshift	They built a makeshift shelter from branches.	彼らは枝で間に合わせの小屋を作った。
+marquee	The theater's marquee showed the name of the play.	劇場のひさし看板には劇の名前が出ていた。
+mathematically	It is mathematically impossible.	それは数学的にあり得ない。
+melanoma	Too much sun can cause melanoma.	日に当たりすぎると黒色腫になることがある。
+microbe	A microbe is too small to see without a microscope.	微生物は顕微鏡なしでは見えないほど小さい。
+mobilize	The group mobilized thousands of volunteers.	その団体は何千人ものボランティアを動員した。
+nativity	The children performed a nativity play.	子どもたちはキリスト降誕劇を演じた。
+overdrive	His imagination went into overdrive.	彼の想像力はフル回転した。
+penitentiary	He spent ten years in a state penitentiary.	彼は州の刑務所で１０年過ごした。
+perilous	The journey across the mountains was perilous.	山を越える旅は危険だった。
+polytechnic	He studied engineering at a polytechnic.	彼は工科大学で工学を学んだ。
+popularly	The bridge is popularly known as the "Golden Gate."	その橋は一般に「ゴールデンゲート」と呼ばれている。
+posse	The sheriff formed a posse to catch the outlaws.	保安官は無法者を捕らえるために捜索隊を組織した。
+refrigeration	Milk needs refrigeration.	牛乳は冷蔵が必要だ。
+respite	The rain gave us a brief respite from the heat.	雨で暑さからつかの間解放された。
+sadistic	The villain in the story is sadistic.	その物語の悪役は残酷だ。
+shaggy	They have a big shaggy dog.	彼らは毛むくじゃらの大きな犬を飼っている。
+sitter	We need a sitter for Saturday night.	土曜の夜にベビーシッターが必要だ。
+tampering	He was accused of tampering with evidence.	彼は証拠を改ざんした疑いをかけられた。
+terminus	The bus terminus is near the station.	バスの終点は駅の近くにある。
+throughput	The new machine doubled the factory's throughput.	新しい機械で工場の処理量が２倍になった。
+transnational	Climate change is a transnational problem.	気候変動は国境を越えた問題だ。
+tripod	Use a tripod to keep the camera steady.	カメラを安定させるために三脚を使いなさい。
+turnpike	We took the turnpike to save time.	時間を節約するために有料高速道路を使った。
+undertaker	The undertaker arranged the funeral.	葬儀屋が葬儀を手配した。
+vulture	A vulture circled above the desert.	ハゲワシが砂漠の上空を旋回していた。
+absentee	She voted by absentee ballot.	彼女は不在者投票で投票した。
+accolade	The film received many accolades.	その映画は数々の称賛を受けた。
+anecdotal	The evidence is only anecdotal.	その証拠は個人の体験談にすぎない。
+autoimmune	She has an autoimmune disease.	彼女は自己免疫疾患を患っている。
+bouncy	The children jumped on a bouncy castle.	子どもたちはふわふわ遊具の上で跳びはねた。
+calibrated	The instruments are carefully calibrated.	その計器は注意深く較正されている。
+capacitor	A capacitor stores electrical energy.	コンデンサーは電気エネルギーをためる。
+centrist	He is a centrist politician.	彼は中道派の政治家だ。
+chakra	Yoga teachers often talk about chakras.	ヨガの先生はよくチャクラについて話す。
+condone	We cannot condone such behavior.	そのようなふるまいを容認することはできない。
+contaminant	The water was tested for contaminants.	その水は汚染物質がないか検査された。
+contiguous	The two rooms are contiguous.	その二つの部屋は隣り合っている。
+councilman	The councilman voted against the plan.	その市議会議員は計画に反対票を投じた。
+cranberry	We had turkey with cranberry sauce.	私たちはクランベリーソースを添えた七面鳥を食べた。
+definitively	The question has not been definitively answered.	その疑問にはまだはっきりした答えが出ていない。
+deflect	He tried to deflect attention from his mistake.	彼は自分の失敗から注意をそらそうとした。
+digger	A digger cleared the ground for the new house.	掘削機が新しい家のために土地をならした。
+divergence	There is a divergence of opinion within the team.	チーム内で意見が分かれている。
+doubly	Be doubly careful on icy roads.	凍った道では二重に注意しなさい。
+equivalence	The test shows the equivalence of the two methods.	その試験は二つの方法が同等であることを示している。
+esoteric	The book is too esoteric for most readers.	その本はほとんどの読者にとって難解すぎる。
+euthanasia	Euthanasia is legal in some countries.	安楽死が合法な国もある。
+felon	The escaped felon was caught yesterday.	逃走していた重罪犯が昨日捕まった。
+flammable	Keep flammable materials away from the stove.	燃えやすいものはコンロから遠ざけなさい。
+garnet	She wore a ring with a red garnet.	彼女は赤いガーネットの付いた指輪をしていた。
+hone	She practices every day to hone her skills.	彼女は技術を磨くために毎日練習している。
+incomprehensible	The instructions were incomprehensible.	その説明書は理解できなかった。
+inertia	The company suffers from bureaucratic inertia.	その会社はお役所的な惰性に陥っている。
+infestation	The house had an infestation of termites.	その家にはシロアリがはびこっていた。
+insurrection	The army put down the insurrection.	軍は反乱を鎮圧した。
+meetup	We had a meetup for English learners.	英語学習者の交流会を開いた。
+motorsport	Formula One is the most famous motorsport.	Ｆ１は最も有名なモータースポーツだ。
+palladium	Palladium is used in car parts.	パラジウムは自動車部品に使われている。
+pensioner	The pensioner lives alone in a small flat.	その年金生活者は小さなアパートで一人暮らしをしている。
+piazza	We drank coffee in the piazza.	私たちは広場でコーヒーを飲んだ。
+possessive	He is very possessive of his toys.	彼は自分のおもちゃへの独占欲がとても強い。
+proximal	The injury was to the proximal end of the bone.	けがは骨の近位端にあった。
+rapport	The teacher has a good rapport with her students.	その先生は生徒たちとよい信頼関係を築いている。
+rapture	The audience listened in rapture.	聴衆はうっとりと聞き入った。
+reconnect	The trip helped me reconnect with old friends.	その旅行のおかげで昔の友人たちと再びつながることができた。
+rectify	The company promised to rectify the error.	その会社は誤りを正すと約束した。
+rudimentary	I have only a rudimentary knowledge of French.	私はフランス語を初歩しか知らない。
+sabre	The officer carried a sabre.	その将校はサーベルを持っていた。
+screenwriter	The screenwriter won an award for the film.	その脚本家はその映画で賞を受けた。
+selector	The selectors chose her for the national team.	選考委員たちは彼女を代表チームに選んだ。
+shawl	She wrapped a shawl around her shoulders.	彼女は肩にショールを巻いた。
+shilling	The book cost five shillings.	その本は５シリングだった。
+shroud	A shroud of mist covered the mountain.	霧のとばりが山を覆っていた。
+solicitation	The building does not allow solicitation.	その建物では勧誘は禁止されている。
+starboard	The ship turned to starboard.	船は右に舵を切った。
+stardust	The singer seemed to have a touch of stardust.	その歌手にはどこかスターの輝きがあった。
+supersede	The new rules supersede the old ones.	新しい規則が古い規則に取って代わる。
+Telugu	Telugu is spoken in southern India.	テルグ語はインド南部で話されている。
+traumatized	The children were traumatized by the war.	子どもたちは戦争で心に深い傷を負った。
+uncharted	The ship sailed into uncharted waters.	船は未知の海域へと進んだ。
+unsigned	The letter was unsigned.	その手紙には署名がなかった。
+unspoken	There was an unspoken agreement between them.	二人の間には暗黙の了解があった。
+weakly	She smiled weakly.	彼女は弱々しくほほえんだ。
+wildcard	The new player is a wildcard for the team.	新しい選手はチームにとって未知数の存在だ。
+affordability	Housing affordability is a big problem in the city.	その都市では住宅が手の届く価格かどうかが大きな問題だ。
+alderman	The alderman spoke at the town meeting.	市会議員が町の集会で話をした。
+alienation	Many young people feel a sense of alienation.	多くの若者が疎外感を抱いている。
+amplify	The speaker amplifies the sound.	スピーカーは音を増幅する。
+antidepressant	The doctor prescribed an antidepressant.	医師は抗うつ薬を処方した。
+attrition	The company reduced staff through attrition.	その会社は自然減によって人員を減らした。
+autopilot	The plane was flying on autopilot.	飛行機は自動操縦で飛んでいた。
+bailout	The government approved a bailout for the bank.	政府はその銀行の救済を承認した。
+ballast	The ship carried rocks as ballast.	その船は底荷として岩を積んでいた。
+biotech	She works for a biotech startup.	彼女はバイオテクノロジーの新興企業で働いている。
+blackjack	He played blackjack at the casino.	彼はカジノでブラックジャックをした。
+bloodstream	The medicine enters the bloodstream quickly.	その薬はすぐに血流に入る。
+budgetary	The project was cancelled for budgetary reasons.	そのプロジェクトは予算上の理由で中止された。
+carer	She works as a carer for elderly people.	彼女は高齢者の介護者として働いている。
+cyclic	The process is cyclic.	その過程は周期的だ。
+cyclical	The industry is highly cyclical.	その業界は景気の波を受けやすい。
+deduct	Taxes are deducted from your salary.	税金は給料から差し引かれる。
+deformation	The heat caused deformation of the plastic.	熱でプラスチックが変形した。
+devotional	The temple sells devotional items.	その寺は信仰の品を売っている。
+diversify	Farmers are diversifying their crops.	農家は育てる作物の種類を増やしている。
+downloadable	The app offers downloadable content.	そのアプリではコンテンツをダウンロードできる。
+dynamo	She is a dynamo of energy.	彼女はエネルギーの塊のような人だ。
+elixir	The old man claimed he had found the elixir of life.	その老人は不老不死の霊薬を見つけたと言い張った。
+endgame	The negotiations are entering the endgame.	交渉は最終段階に入りつつある。
+epiphany	She had an epiphany about her career.	彼女は自分の仕事についてふと悟った。
+foothill	The village lies in the foothills of the Alps.	その村はアルプスのふもとの丘陵地帯にある。
+fundamentalist	The group has fundamentalist beliefs.	その集団は原理主義的な信念を持っている。
+hackney	A hackney carriage waited outside the hotel.	ホテルの外で貸し馬車が待っていた。
+hamstring	He pulled a hamstring during the race.	彼はレース中にハムストリングを痛めた。
+incision	The surgeon made a small incision.	外科医は小さく切開した。
+inpatient	He was treated as an inpatient for a week.	彼は１週間入院して治療を受けた。
+invitational	She won an invitational golf tournament.	彼女は招待制のゴルフ大会で優勝した。
+Khmer	Angkor Wat was built by the Khmer.	アンコールワットはクメール人によって建てられた。
+loathing	He felt a deep loathing for war.	彼は戦争に深い嫌悪を感じていた。
+martyrdom	The saint's martyrdom is remembered every year.	その聖人の殉教は毎年追悼されている。
+menopause	Women usually reach menopause around fifty.	女性はふつう５０歳前後で更年期を迎える。
+motherboard	The motherboard of the computer was damaged.	コンピューターのマザーボードが壊れた。
+mutilated	The old book was badly mutilated.	その古い本はひどく傷んでいた。
+nugget	The miner found a gold nugget.	鉱夫は金の塊を見つけた。
+opus	The symphony is his greatest opus.	その交響曲は彼の最高傑作だ。
+overtly	He never overtly criticized the government.	彼は公然と政府を批判したことは一度もなかった。
+painless	The treatment is quick and painless.	その治療は短時間で痛みもない。
+perpetually	He is perpetually late.	彼はいつも遅刻している。
+probate	The will is going through probate.	その遺言は検認手続き中だ。
+propensity	He has a propensity to exaggerate.	彼には大げさに言う癖がある。
+Punjabi	We ate Punjabi food at the festival.	私たちは祭りでパンジャブ料理を食べた。
+roadmap	The company released a roadmap for the next five years.	その会社は今後５年間の工程表を発表した。
+rosary	She prayed with a rosary.	彼女はロザリオを手に祈った。
+rundown	Can you give me a quick rundown of the meeting?	会議の概要を手短に教えてくれますか。
+severance	He received severance pay when he left the company.	彼は退職時に退職手当を受け取った。
+shortlisted	Her novel was shortlisted for the prize.	彼女の小説はその賞の最終候補に残った。
+singularity	Some scientists talk about a technological singularity.	技術的特異点について語る科学者もいる。
+squarely	The ball hit him squarely in the face.	ボールが彼の顔にまともに当たった。
+strut	The rooster strutted around the yard.	おんどりが庭を気取って歩き回った。
+swirl	Leaves swirled in the wind.	木の葉が風に舞って渦を巻いた。
+theta	Write the angle as theta.	その角度をシータで表しなさい。
+tropics	Many colorful birds live in the tropics.	熱帯地方には色鮮やかな鳥がたくさんすんでいる。
+tsar	The last tsar of Russia was Nicholas II.	ロシア最後の皇帝はニコライ２世だった。
+unconditionally	She loves her children unconditionally.	彼女は子どもたちを無条件に愛している。
+undeniably	The movie is undeniably beautiful.	その映画は紛れもなく美しい。
+unorthodox	The coach uses unorthodox training methods.	そのコーチは型破りな練習方法を取り入れている。
+viscount	The viscount lived in a large country house.	その子爵は田舎の大きな屋敷に住んでいた。
+walkway	A covered walkway connects the two buildings.	屋根付きの通路が二つの建物をつないでいる。
+workflow	The new software improved our workflow.	新しいソフトウェアで作業の流れが改善した。
+yogi	The yogi sat quietly in meditation.	ヨガ行者は静かに瞑想していた。
+zee	Americans say "zee" for the letter Z.	アメリカ人は Z の文字を「ズィー」と読む。
+acetate	The old film was printed on acetate.	その古い映画はアセテートのフィルムに焼き付けられていた。
+airstrike	An airstrike destroyed the bridge.	空爆で橋が破壊された。
+anthrax	Anthrax is a serious disease.	炭疽は深刻な病気だ。
+aqueous	The chemical is dissolved in an aqueous solution.	その化学物質は水溶液に溶かされている。
+attainment	The school focuses on academic attainment.	その学校は学業成績の向上に力を入れている。
+auctioneer	The auctioneer called out the final price.	競売人が最終価格を告げた。
+authorship	The authorship of the poem is unknown.	その詩の作者は分かっていない。
+axial	The earth's axial tilt causes the seasons.	地軸の傾きが季節を生む。
+bayonet	The soldier fixed a bayonet to his rifle.	兵士は小銃に銃剣を取り付けた。
+burnout	Long hours can lead to burnout.	長時間労働は燃え尽き症候群につながることがある。
+buttock	He got a shot in the buttock.	彼はお尻に注射を打たれた。
+cancerous	The doctor removed a cancerous tumor.	医師はがん性の腫瘍を取り除いた。
+carat	She wears a two-carat diamond ring.	彼女は２カラットのダイヤの指輪をしている。
+carcinoma	He was diagnosed with a skin carcinoma.	彼は皮膚がんと診断された。
+caveat	There is one caveat: the offer ends today.	一つ注意点がある。その特典は今日で終わりだ。
+contemplation	He sat by the lake in quiet contemplation.	彼は湖のほとりに座って静かに思いにふけった。
+corolla	The flower has a bright yellow corolla.	その花は明るい黄色の花冠を持っている。
+corrugated	The box is made of corrugated cardboard.	その箱は段ボールでできている。
+curvy	The road is very curvy.	その道はカーブが多い。
+deluded	He is deluded if he thinks he can win easily.	簡単に勝てると思っているなら、彼は思い違いをしている。
+disorderly	He was arrested for disorderly conduct.	彼は治安を乱した罪で逮捕された。
+emergent	The country is an emergent economic power.	その国は新興の経済大国だ。
+enchanting	The village is enchanting in spring.	その村は春になると魅惑的だ。
+filly	The filly won her first race.	その雌の子馬は初めてのレースで勝った。
+fortitude	She faced her illness with great fortitude.	彼女は不屈の精神で病気に立ち向かった。
+geopolitical	The region has great geopolitical importance.	その地域は地政学的に非常に重要だ。
+grunt	The pig gave a loud grunt as it ate.	豚は食べながら大きな声でぶうぶう鳴いた。
+hashtag	Use this hashtag when you post photos.	写真を投稿するときはこのハッシュタグを使ってください。
+hyperbolic	His hyperbolic claims were hard to believe.	彼の誇張した主張は信じがたかった。
+impedance	The speaker has an impedance of eight ohms.	そのスピーカーのインピーダンスは８オームだ。
+incubation	The incubation period of the virus is about a week.	そのウイルスの潜伏期間は約１週間だ。
+insignia	The soldier wore his rank insignia on his shoulder.	兵士は肩に階級章を付けていた。
+intercontinental	They took an intercontinental flight to Brazil.	彼らは大陸間を結ぶ便でブラジルへ飛んだ。
+interplay	The book explores the interplay between music and math.	その本は音楽と数学の相互作用を探っている。
+isotope	Carbon has several isotopes.	炭素にはいくつかの同位体がある。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
