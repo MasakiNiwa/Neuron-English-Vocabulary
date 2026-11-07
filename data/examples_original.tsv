@@ -3154,6 +3154,18 @@ burrow	Rabbits live in burrows under the ground.	ウサギは地下の巣穴に�
 motorist	Motorists are advised to drive carefully in the snow.	運転者は雪の中では慎重に運転するよう呼びかけられている。
 tempest	The ship was lost in a tempest.	その船は大嵐の中で行方不明になった。
 unsettling	There was something unsettling about the silence.	その静けさにはどこか不穏なものがあった。
+blacksmith	The blacksmith made a new shoe for the horse.	鍛冶屋は馬に新しい蹄鉄を作った。
+facet	Music is an important facet of her life.	音楽は彼女の生活の大切な一面だ。
+sociological	The book offers a sociological view of family life.	その本は家族生活を社会学的な観点から論じている。
+enthusiastically	The audience applauded enthusiastically.	観客は熱狂的に拍手した。
+interconnected	All the parts of the system are interconnected.	そのシステムのすべての部分は互いにつながっている。
+hoard	He keeps a hoard of old coins in a box.	彼は古い硬貨を箱にためこんでいる。
+hoard	People began to hoard food before the storm.	嵐の前に人々は食料を買いだめし始めた。
+prefix	The prefix "un-" means "not".	接頭辞の un- は「〜でない」という意味だ。
+abrasive	Don't clean the glass with an abrasive sponge.	研磨剤入りのスポンジでガラスを洗ってはいけない。
+abrasive	His abrasive manner made him unpopular.	とげとげしい態度のせいで彼は人気がなかった。
+liberate	The city was liberated at the end of the war.	その都市は戦争の終わりに解放された。
+resurrected	The old TV show was resurrected after twenty years.	その昔のテレビ番組は20年ぶりに復活した。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
