@@ -3099,6 +3099,21 @@ grit	I got some grit in my eye.	目に砂が入った。
 illegitimate	The court ruled that the election was illegitimate.	裁判所はその選挙を不正なものと判断した。
 sinner	The priest said that every sinner can be forgiven.	司祭は、罪人は誰でも許されうると言った。
 extraordinarily	She is an extraordinarily talented pianist.	彼女は並外れて才能のあるピアニストだ。
+strife	The country has suffered years of civil strife.	その国は何年もの内紛に苦しんできた。
+aria	The soprano sang a famous aria from the opera.	そのソプラノ歌手はオペラの有名なアリアを歌った。
+centenary	The school will celebrate its centenary next year.	その学校は来年、創立百周年を迎える。
+maxim	"Waste not, want not" is my mother's favorite maxim.	「無駄をしなければ不自由しない」が母のお気に入りの格言だ。
+pascal	The pascal is a unit of pressure.	パスカルは圧力の単位だ。
+tumour	The doctors removed the tumour successfully.	医師たちはその腫瘍の摘出に成功した。
+elevate	Good music can elevate your mood.	良い音楽は気分を高めてくれる。
+elevate	Keep your leg elevated to reduce the swelling.	腫れを引かせるために、脚を高くしておきなさい。
+transcribed	The interview was recorded and transcribed.	インタビューは録音され、文字に起こされた。
+unconventional	She has an unconventional way of teaching.	彼女には型破りな教え方がある。
+filth	The kitchen was covered in filth.	台所は汚れだらけだった。
+goo	There was some sticky goo on the bottom of my shoe.	靴の裏にべとべとしたものがついていた。
+proactive	We need to be proactive and solve problems before they happen.	問題が起こる前に手を打って解決する、先を見越した行動が必要だ。
+latex	These gloves are made of latex.	この手袋はラテックスでできている。
+openness	I appreciate your openness and honesty.	あなたの率直さと正直さに感謝します。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
