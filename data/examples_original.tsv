@@ -3002,6 +3002,32 @@ lust	She has a lust for adventure.	彼女は冒険への強い欲求を持って
 unlawful	It is unlawful to drive without a license.	無免許で運転するのは違法だ。
 boulder	A huge boulder blocked the mountain road.	大きな岩が山道をふさいでいた。
 lyrical	The film has a beautiful, lyrical quality.	その映画には美しく叙情的な趣がある。
+regulator	Financial regulators are investigating the bank.	金融当局がその銀行を調査している。
+duel	The two men fought a duel with swords.	二人の男は剣で決闘した。
+duel	The final was a thrilling duel between two great players.	決勝は二人の名選手によるはらはらする対決だった。
+helm	The captain stood at the helm of the ship.	船長は船の舵を取っていた。
+helm	She has been at the helm of the company for ten years.	彼女は10年間その会社の舵取りをしている。
+resonance	The cello has a deep, rich resonance.	チェロには深く豊かな響きがある。
+resonance	His words had a special resonance for young people.	彼の言葉は若者たちの心に特に強く響いた。
+breakup	She was very sad after the breakup with her boyfriend.	彼女は恋人と別れた後、とても落ち込んでいた。
+breakup	The breakup of the band surprised its fans.	そのバンドの解散はファンを驚かせた。
+culturally	The city is culturally diverse.	その町は文化的に多様だ。
+disrespectful	It is disrespectful to talk while the teacher is speaking.	先生が話している間におしゃべりするのは失礼だ。
+pest	Farmers use various methods to control pests.	農家は害虫を駆除するためにさまざまな方法を使う。
+pest	My little brother can be a real pest sometimes.	弟はときどき本当にうっとうしい。
+query	If you have any queries, please contact us.	ご質問があれば、お問い合わせください。
+query	The customer queried the amount on the bill.	客は請求書の金額について問いただした。
+rabbi	The rabbi spoke to the children about the history of the holiday.	ラビは子どもたちにその祝日の歴史について話した。
+willow	A willow tree grows beside the pond.	池のそばに柳の木が生えている。
+drown	He nearly drowned while swimming in the river.	彼は川で泳いでいておぼれかけた。
+drown	The music was so loud that it drowned out our voices.	音楽がうるさすぎて、私たちの声はかき消された。
+protector	Wear an ear protector when you use this machine.	この機械を使うときは耳栓をつけなさい。
+protector	The big dog acts as the children's protector.	その大きな犬は子どもたちの守り役をしている。
+panties	She packed her socks and panties into the suitcase.	彼女は靴下とショーツをスーツケースに詰めた。
+proprietary	The company uses proprietary software that is not sold to the public.	その会社は一般には販売されていない独自のソフトを使っている。
+rant	He went on a long rant about the traffic.	彼は渋滞について長々とわめき散らした。
+rant	She ranted about her boss for an hour.	彼女は上司について1時間も怒りをぶちまけた。
+homage	The film pays homage to the great directors of the past.	その映画は過去の名監督たちに敬意を表している。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
