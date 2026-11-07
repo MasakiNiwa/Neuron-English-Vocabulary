@@ -3114,6 +3114,23 @@ goo	There was some sticky goo on the bottom of my shoe.	靴の裏にべとべと
 proactive	We need to be proactive and solve problems before they happen.	問題が起こる前に手を打って解決する、先を見越した行動が必要だ。
 latex	These gloves are made of latex.	この手袋はラテックスでできている。
 openness	I appreciate your openness and honesty.	あなたの率直さと正直さに感謝します。
+meridian	The prime meridian passes through Greenwich in London.	本初子午線はロンドンのグリニッジを通っている。
+rightful	The court returned the land to its rightful owner.	裁判所はその土地を正当な持ち主に返した。
+adhesive	Use a strong adhesive to fix the tile.	タイルを固定するには強力な接着剤を使いなさい。
+adhesive	Put an adhesive bandage on the cut.	切り傷にばんそうこうを貼りなさい。
+interpersonal	Good interpersonal skills are important in this job.	この仕事では対人関係の能力が大切だ。
+vicar	The vicar greeted everyone after the service.	礼拝の後、牧師は皆にあいさつした。
+woe	He told me all his woes.	彼は私に悩みを洗いざらい話した。
+anarchist	The anarchist wanted to get rid of all governments.	その無政府主義者はあらゆる政府をなくしたいと考えていた。
+attribution	You may use this photo with attribution to the photographer.	撮影者の名前を表示すれば、この写真を使ってもよい。
+censor	The government censored news about the protest.	政府は抗議運動に関するニュースを検閲した。
+fumble	He fumbled in his pocket for the key.	彼はポケットの中を手探りして鍵を探した。
+fumble	The player fumbled the ball and lost the game.	その選手はボールを取り落とし、試合に負けた。
+infect	The virus can infect both humans and animals.	そのウイルスは人間にも動物にも感染しうる。
+infect	Her laughter infected everyone in the room.	彼女の笑いは部屋にいる全員に伝染した。
+sensual	The dancer moved with sensual grace.	その踊り手は官能的な優雅さで動いた。
+collage	The children made a collage out of old magazines.	子どもたちは古い雑誌でコラージュを作った。
+giggle	The girls giggled at the funny picture.	女の子たちはその面白い絵を見てくすくす笑った。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
