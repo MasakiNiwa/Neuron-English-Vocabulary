@@ -2834,6 +2834,19 @@ blacklist	The company put the spammer on a blacklist.	その会社は迷惑メ�
 virtual	We took a virtual tour of the museum online.	私たちはネットでその博物館の仮想見学をした。
 dialog	A dialog box appeared on the screen.	画面にダイアログボックスが表示された。
 trademark	The name is a registered trademark of the company.	その名前はその会社の登録商標だ。
+arc	The ball flew through the air in a high arc.	ボールは高い弧を描いて飛んだ。
+additionally	The hotel is cheap; additionally, breakfast is free.	そのホテルは安く、さらに朝食も無料だ。
+marijuana	Marijuana is illegal in Japan.	日本では大麻は違法だ。
+avian	Avian flu spread quickly among the chickens.	鳥インフルエンザが鶏の間で急速に広がった。
+supervised	Young children should swim only in supervised areas.	小さな子どもは、監視員のいる場所でだけ泳ぐべきだ。
+vector	Mosquitoes are a vector for many diseases.	蚊は多くの病気を媒介する。
+regression	The study used regression analysis to predict sales.	その研究は売り上げを予測するために回帰分析を使った。
+classification	The library uses a standard classification of books.	その図書館は標準的な図書の分類法を使っている。
+structural	Engineers found structural damage in the bridge.	技術者たちはその橋に構造上の損傷を見つけた。
+lease	We signed a two-year lease on the apartment.	私たちはそのアパートの２年間の賃貸借契約に署名した。
+icon	Click the icon to open the app.	アイコンをクリックするとアプリが開きます。
+legislature	The state legislature passed a new law.	州議会は新しい法律を可決した。
+protocol	The hospital follows a strict safety protocol.	その病院は厳格な安全手順に従っている。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
