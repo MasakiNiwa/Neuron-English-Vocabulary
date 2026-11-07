@@ -3089,6 +3089,16 @@ trivia	He knows a lot of trivia about baseball.	彼は野球の雑学にとて�
 apostle	He was an apostle of free trade.	彼は自由貿易の熱心な提唱者だった。
 disruptive	The disruptive student was sent out of the classroom.	授業を妨害した生徒は教室から出された。
 obscene	He earns an obscene amount of money.	彼はとんでもない額のお金を稼いでいる。
+battleship	The old battleship is now a museum.	その古い戦艦は今では博物館になっている。
+boon	The new train line has been a boon to local businesses.	新しい鉄道路線は地元の商店にとって恩恵となった。
+provocative	He made a provocative remark to start an argument.	彼は口論を始めようと、挑発的な発言をした。
+undocumented	The software has some undocumented features.	そのソフトには説明書に載っていない機能がいくつかある。
+autistic	Her son is autistic and loves trains.	彼女の息子は自閉症で、電車が大好きだ。
+grit	It takes grit to keep going after so many failures.	何度も失敗した後でも続けるには根性がいる。
+grit	I got some grit in my eye.	目に砂が入った。
+illegitimate	The court ruled that the election was illegitimate.	裁判所はその選挙を不正なものと判断した。
+sinner	The priest said that every sinner can be forgiven.	司祭は、罪人は誰でも許されうると言った。
+extraordinarily	She is an extraordinarily talented pianist.	彼女は並外れて才能のあるピアニストだ。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
