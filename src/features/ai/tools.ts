@@ -123,6 +123,10 @@ export async function learningSnapshot() {
     // 全カードから「忘れた回数」が多い順に 10 語（先に 10 件に絞ってから並べると、最も苦手な語にならない）
     db.cards.filter((c) => c.lapses > 0).toArray().then((cs) => cs.sort((a, b) => b.lapses - a.lapses || b.difficulty - a.difficulty).slice(0, 10)),
   ])
+  // 設定で隠している語は AI に送らない
+  const { hidden } = await loadDictionary()
+  recent.splice(0, recent.length, ...recent.filter((v) => !hidden.has(v.entryId)))
+  weak.splice(0, weak.length, ...weak.filter((c) => !hidden.has(c.entryId)))
   return {
     study: stats,
     recentlyViewed: [...new Set(recent.map((v) => headword(v.entryId)))].slice(0, 12),

@@ -208,6 +208,7 @@ function StudyButton({ entryKey }: { entryKey: string }) {
 function EntryView({ entryKey }: { entryKey: string }) {
   const { t } = useTranslation()
   const entry = useEntry(entryKey)
+  const { hidden } = useDictionary()
   const autoSpeak = useSettings((s) => s.autoSpeak)
   // 見出し語の発音チェック欄（別の語へ移ったら閉じる）
   const [practice, setPractice] = useState(false)
@@ -219,7 +220,18 @@ function EntryView({ entryKey }: { entryKey: string }) {
     if (autoSpeak) speak(headword(entry.k))
   }, [entry, autoSpeak])
 
-  if (!entry) return <p className="text-muted">{t('common.notFound')}</p>
+  if (!entry)
+    return hidden.has(entryKey) ? (
+      <p className="text-muted">
+        この語は、設定で非表示にしている語（卑語・性的な語）です。表示するには
+        <Link to="/settings" className="mx-1 text-accent">
+          設定 → 表示
+        </Link>
+        の「卑語・性的な語を表示する」をオンにしてください。
+      </p>
+    ) : (
+      <p className="text-muted">{t('common.notFound')}</p>
+    )
 
   const hl = new Set([entry.h.toLowerCase(), ...(entry.forms ?? []).map((f) => f.toLowerCase())])
 
@@ -275,6 +287,14 @@ function EntryView({ entryKey }: { entryKey: string }) {
                 TOEIC {entry.toeic.lv}
                 {entry.toeic.tsl && <span className="ml-1 text-accent">頻出</span>}
               </Link>
+            )}
+            {entry.sens && (
+              <span
+                className="rounded-md bg-warn/15 px-1.5 text-xs text-warn"
+                title="意味を知っておくための語です。人に向けて使うと強く不快に思われることがあります"
+              >
+                {entry.sens === 'vulgar' ? '卑語：使う場面に注意' : '性的な語：使う場面に注意'}
+              </span>
             )}
           </div>
         </div>

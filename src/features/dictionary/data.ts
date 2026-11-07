@@ -1,4 +1,5 @@
 import { assetUrl } from '@/lib/appInfo'
+import { useSettings } from '@/stores/settings'
 import type { DataMeta, Entry, IndexEntry, IndexRow, Morpheme, ToeicLevel } from './types'
 
 /**
@@ -14,7 +15,12 @@ export interface Dictionary {
   byLower: Map<string, string>
   morphemes: Morpheme[]
   morphById: Map<string, Morpheme>
+  /** 設定で隠している語（卑語・性的な語。表示する設定なら空） */
+  hidden: Set<string>
 }
+
+/** 索引の行が、学習に向かない語（卑語・性的な語）の印を持つか */
+export const isSensitiveRow = (r: IndexRow) => r[10] === 1
 
 let dictPromise: Promise<Dictionary> | null = null
 /** 読み込んだ索引の版。詳細データ・形態素の URL に付けて、キャッシュ上で索引と版が食い違わないようにする（ROADMAP T01） */
@@ -48,8 +54,11 @@ export function loadDictionary(): Promise<Dictionary> {
     // （変わっていなければ 304 で済む）。古い索引のまま新しい詳細データを取ると版が食い違い、更新の表示が出続けていた
     const index = await fetchJson<{ v: string; e: IndexRow[] }>('data/index.json', { cache: 'no-cache' })
     dataVersion = index.v
-    const morphemes = await fetchJson<Morpheme[]>(`data/morphemes.json?v=${index.v}`)
-    const entries = index.e.map(rowToEntry)
+    const allMorphemes = await fetchJson<Morpheme[]>(`data/morphemes.json?v=${index.v}`)
+    // 設定がオフ（既定）なら、卑語・性的な語を辞書から外す。一覧・検索・つながり・学習・リンクのどこにも出なくなる
+    const hidden = new Set(useSettings.getState().showSensitive ? [] : index.e.filter(isSensitiveRow).map((r) => r[0]))
+    const entries = index.e.filter((r) => !hidden.has(r[0])).map(rowToEntry)
+    const morphemes = hidden.size ? allMorphemes.map((m) => ({ ...m, words: m.words.filter((w) => !hidden.has(w)) })) : allMorphemes
     const byKey = new Map(entries.map((e) => [e.key, e]))
     const byLower = new Map<string, string>()
     for (const e of entries) {
@@ -63,6 +72,7 @@ export function loadDictionary(): Promise<Dictionary> {
       byLower,
       morphemes,
       morphById: new Map(morphemes.map((m) => [m.id, m])),
+      hidden,
     }
   })()
   dictPromise.catch(() => (dictPromise = null))

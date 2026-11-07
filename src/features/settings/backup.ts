@@ -134,6 +134,7 @@ export function cleanSettings(x: unknown): Partial<Settings> {
   }
   if (typeof x.studyAuto === 'boolean') out.studyAuto = x.studyAuto
   if (typeof x.studyFormatsOpen === 'boolean') out.studyFormatsOpen = x.studyFormatsOpen
+  if (typeof x.showSensitive === 'boolean') out.showSensitive = x.showSensitive
   return out
 }
 

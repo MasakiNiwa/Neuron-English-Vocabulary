@@ -60,7 +60,8 @@ export function ExternalAi({ defaultWords = '' }: { defaultWords?: string }) {
         <Button
           size="sm"
           onClick={async () => {
-            const recent = await db.views.orderBy('viewedAt').reverse().limit(60).toArray()
+            const { hidden } = await loadDictionary()
+            const recent = (await db.views.orderBy('viewedAt').reverse().limit(60).toArray()).filter((v) => !hidden.has(v.entryId))
             setWords([...new Set(recent.map((v) => v.entryId.replace(/_/g, ' ')))].slice(0, 15).join(', '))
           }}
         >

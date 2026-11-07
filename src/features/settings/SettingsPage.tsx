@@ -86,6 +86,7 @@ function DangerButton({ label, action }: { label: string; action: () => Promise<
   )
 }
 
+
 export function SettingsPage() {
   const { t } = useTranslation()
   const s = useSettings()
@@ -164,6 +165,24 @@ export function SettingsPage() {
               ]}
             />
           </Row>
+          <Row label="卑語・性的な語を表示する">
+            <Segmented
+              value={s.showSensitive ? 'on' : 'off'}
+              onChange={(v) => {
+                if ((v === 'on') === s.showSensitive) return
+                s.set('showSensitive', v === 'on')
+                // 辞書・検索の索引を作り直すため、再読み込みする（設定は保存済み）
+                setTimeout(() => location.reload(), 50)
+              }}
+              options={[
+                { value: 'off', label: '表示しない' },
+                { value: 'on', label: '表示する' },
+              ]}
+            />
+          </Row>
+          <p className="-mt-1 text-xs text-muted">
+            「表示しない」（既定）では、卑語・性的な語を一覧・検索・つながり・学習・分析などアプリのどこにも出しません。切り替えるとアプリを読み込み直します。
+          </p>
         </AccordionSection>
 
         <AccordionSection value="speech" title={t('settings.speech')} icon={<Volume2 className="size-5" />}>
