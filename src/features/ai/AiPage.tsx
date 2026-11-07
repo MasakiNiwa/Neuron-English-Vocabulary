@@ -35,7 +35,7 @@ import { headword } from '@/features/dictionary/data'
 import { useAiConfig } from './config'
 import { Markdown } from './Markdown'
 import { ModelSelect } from './ModelSelect'
-import { INCOMPLETE_LABEL } from './providers'
+import { describeAiError, INCOMPLETE_LABEL } from './providers'
 import { personaById, splitBySpeaker, usePersonas } from './personas'
 import { createThread, deleteAllThreads, deleteMessagesFrom, deleteThread, MAX_THREADS, renameThread, searchThreads, setPinned, touchThread, useChatUi } from './threads'
 import type { AiSearch } from './search'
@@ -500,7 +500,7 @@ function ChatView() {
         if (partial) await db.chats.add({ thread: threadId, role: 'assistant', content: partial + '\n\n（停止しました）', createdAt: Date.now(), tools: used })
         return
       }
-      setError(e instanceof AiNotReadyError ? e.message : `エラー: ${e instanceof Error ? e.message : String(e)}`)
+      setError(e instanceof AiNotReadyError ? e.message : describeAiError(e))
     } finally {
       busyRef.current = false
       setBusy(false)

@@ -6,7 +6,7 @@ import { db } from '@/lib/db'
 import { useAiConfig } from '@/features/ai/config'
 import { Markdown } from '@/features/ai/Markdown'
 import { ModelSelect } from '@/features/ai/ModelSelect'
-import { INCOMPLETE_LABEL } from '@/features/ai/providers'
+import { describeAiError, INCOMPLETE_LABEL } from '@/features/ai/providers'
 import { AiNotReadyError, runTask } from '@/features/ai/service'
 import { createThread, touchThread, useChatUi } from '@/features/ai/threads'
 import { UnlockPanel } from '@/features/ai/UnlockPanel'
@@ -27,6 +27,8 @@ export default function StudyAdvice({ about, title, prompt }: { about: string; t
   const [error, setError] = useState('')
   const [incomplete, setIncomplete] = useState<string | undefined>()
   const abortRef = useRef<AbortController | null>(null)
+  // このスレッドに AI の答えが入ったか（失敗したときのやり直しで同じスレッドを使うため）
+  const answeredRef = useRef(false)
   // カードを評価して次へ進んだら（この部品が消えたら）生成を止める。途中までの内容は履歴に残る
   useEffect(() => () => abortRef.current?.abort(), [])
 
@@ -52,10 +54,13 @@ export default function StudyAdvice({ about, title, prompt }: { about: string; t
     let partial = ''
     let tid: string | null = null
     try {
-      const t = await createThread(title, about)
+      // 前回が失敗して答えがないなら、同じスレッドでやり直す（履歴に空のチャットを増やさない）
+      const reuse = threadId && !answeredRef.current ? await db.threads.get(threadId) : undefined
+      const t = reuse ?? (await createThread(title, about))
       tid = t.id
       setThreadId(t.id)
-      await db.chats.add({ thread: t.id, role: 'user', content, createdAt: Date.now() })
+      if (!reuse) await db.chats.add({ thread: t.id, role: 'user', content, createdAt: Date.now() })
+      answeredRef.current = false
       const res = await runTask({
         messages: [{ role: 'user', content }],
         about,
@@ -67,14 +72,16 @@ export default function StudyAdvice({ about, title, prompt }: { about: string; t
       })
       setText(res.text)
       setIncomplete(res.incomplete && INCOMPLETE_LABEL[res.incomplete])
+      answeredRef.current = true
       await db.chats.add({ thread: t.id, role: 'assistant', content: res.text || '（応答が空でした）', createdAt: Date.now(), model: res.model, usage: res.usage, incomplete: res.incomplete })
       await touchThread(t.id)
     } catch (e) {
       if (ac.signal.aborted) {
+        if (tid && partial) answeredRef.current = true
         if (tid && partial) await db.chats.add({ thread: tid, role: 'assistant', content: partial + '\n\n（停止しました）', createdAt: Date.now() })
         return
       }
-      setError(e instanceof AiNotReadyError ? e.message : `エラー: ${e instanceof Error ? e.message : String(e)}`)
+      setError(e instanceof AiNotReadyError ? e.message : describeAiError(e))
     } finally {
       if (abortRef.current === ac) abortRef.current = null
       setBusy(false)
@@ -97,7 +104,7 @@ export default function StudyAdvice({ about, title, prompt }: { about: string; t
               </Button>
             ) : (
               <Button size="sm" onClick={() => void ask()}>
-                <Sparkles className="size-4" /> {threadId ? 'もう一度アドバイスをもらう' : 'AI にアドバイスをもらう'}
+                <Sparkles className="size-4" /> {error ? 'もう一度試す' : threadId ? 'もう一度アドバイスをもらう' : 'AI にアドバイスをもらう'}
               </Button>
             )}
             <ModelSelect className="max-w-[55vw] sm:max-w-xs" />

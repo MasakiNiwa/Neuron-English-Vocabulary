@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { complete, type ToolDef } from './providers'
+import { AiHttpError, complete, describeAiError, fetchRetry, type ToolDef } from './providers'
 
 const sse = (events: unknown[]) =>
   new Response(events.map((e) => `data: ${JSON.stringify(e)}\n\n`).join('') + 'data: [DONE]\n\n', { status: 200 })
@@ -90,5 +90,38 @@ describe('providers (streaming + tools)', () => {
     expect(await run('openrouter', [{ choices: [{ delta: { content: 'い' } }] }])).toEqual({ text: 'い', reasons: ['interrupted'] })
     expect(await run('gemini', [{ candidates: [{ content: { parts: [{ text: 'う' }] }, finishReason: 'SAFETY' }] }])).toEqual({ text: 'う', reasons: ['filtered'] })
     expect(await run('gemini', [{ candidates: [{ content: { parts: [{ text: 'う' }] }, finishReason: 'STOP' }] }])).toEqual({ text: 'う', reasons: [] })
+  })
+})
+
+describe('一時的なエラーのやり直しと説明', () => {
+  it('429・503 は待ってやり直し、成功すればその応答を返す', async () => {
+    const calls: number[] = []
+    const seq = [429, 503, 200]
+    vi.stubGlobal('fetch', async () => {
+      const st = seq[calls.length]
+      calls.push(st)
+      return new Response('x', { status: st })
+    })
+    const res = await fetchRetry('https://example.com', {}, [1, 1])
+    expect(res.status).toBe(200)
+    expect(calls).toEqual([429, 503, 200])
+    vi.unstubAllGlobals()
+  })
+  it('400 などはやり直さない。回数を使い切ったら最後の応答を返す', async () => {
+    let n = 0
+    vi.stubGlobal('fetch', async () => (n++, new Response('x', { status: 400 })))
+    expect((await fetchRetry('https://example.com', {}, [1, 1])).status).toBe(400)
+    expect(n).toBe(1)
+    n = 0
+    vi.stubGlobal('fetch', async () => (n++, new Response('x', { status: 503 })))
+    expect((await fetchRetry('https://example.com', {}, [1, 1])).status).toBe(503)
+    expect(n).toBe(3)
+    vi.unstubAllGlobals()
+  })
+  it('状態コードごとに次の行動が分かる説明にする', () => {
+    expect(describeAiError(new AiHttpError(429, 'RESOURCE_EXHAUSTED'))).toContain('無料枠')
+    expect(describeAiError(new AiHttpError(503, 'overloaded'))).toContain('混雑')
+    expect(describeAiError(new AiHttpError(401, ''))).toContain('API キー')
+    expect(describeAiError(new TypeError('Failed to fetch'))).toContain('通信エラー')
   })
 })
