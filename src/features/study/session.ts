@@ -44,7 +44,7 @@ export async function getStudyStats(): Promise<StudyStats> {
   ])
   const limit = useSettings.getState().dailyNewLimit
   const { hidden } = await loadDictionary()
-  // 設定で隠している語（卑語・性的な語）のカードは数えない・出さない
+  // 設定で隠している語（センシティブな単語）のカードは数えない・出さない
   const active = cards.filter((c) => !c.suspended && !hidden.has(c.entryId))
   const newCards = active.filter((c) => c.state === 0).length
   return {

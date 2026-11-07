@@ -10,7 +10,7 @@ import type { Morpheme } from '../types'
 
 /** 単語・熟語へのリンク（アプリ内のどこからでも直接移動できるようにする共通部品） */
 export function EntryLink({ k, className, children }: { k: string; className?: string; children?: ReactNode }) {
-  // 設定で隠している語（卑語・性的な語）へのリンクは出さない
+  // 設定で隠している語（センシティブな単語）へのリンクは出さない
   if (useDictionary().hidden.has(k)) return null
   return (
     <Link to="/e/$key" params={{ key: k }} className={cn('text-accent hover:underline', className)}>

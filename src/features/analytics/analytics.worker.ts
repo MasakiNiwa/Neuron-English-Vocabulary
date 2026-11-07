@@ -20,7 +20,7 @@ async function run(base: string, desiredRetention: number, hideSensitive = true)
     db.cards.toArray(),
     db.reviews.toArray(),
   ])
-  // 設定で隠している語（卑語・性的な語）は分析にも出さない
+  // 設定で隠している語（センシティブな単語）は分析にも出さない
   const hidden = new Set(hideSensitive ? allIndex.filter((r) => r[10] === 1).map((r) => r[0]) : [])
   const keep = (k: string) => !hidden.has(k)
   const index = hidden.size ? allIndex.filter((r) => keep(r[0])) : allIndex

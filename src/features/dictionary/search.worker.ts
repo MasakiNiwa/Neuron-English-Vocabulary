@@ -42,7 +42,7 @@ function init(base: string, hideSensitive = true) {
       getJson<{ e: IndexRow[] }>(new URL('data/index.json', base)),
       getJson<Morpheme[]>(new URL('data/morphemes.json', base)),
     ])
-    // 設定で隠している語（卑語・性的な語）は検索にも出さない
+    // 設定で隠している語（センシティブな単語）は検索にも出さない
     rows = hideSensitive ? idx.e.filter((r) => r[10] !== 1) : idx.e
     morphs = ms
     mini = new MiniSearch<Doc>({ fields: ['head'], storeFields: [], idField: 'id' })
