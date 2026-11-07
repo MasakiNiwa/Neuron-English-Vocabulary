@@ -112,7 +112,11 @@ interface UsageStats {
   aiWeek: number | null
 }
 
-/** アプリ全体の利用状況（GoatCounter の公開カウンタ。数字は数時間おきに更新） */
+/**
+ * アプリ全体の利用状況（GoatCounter の公開カウンタ。数字は数時間おきに更新）
+ * - TOTAL は画面ごとの数の合計で、1 人が 3 画面開くと 3 になるため、アプリを開くと必ず通るホーム（/）の数を使う
+ * - GoatCounter の数は同じ人の短時間の重複を除いた「アクセス」の回数なので、単位は「回」にする
+ */
 function AppUsage() {
   const [stats, setStats] = useState<UsageStats | null>(null)
   useEffect(() => {
@@ -120,8 +124,8 @@ function AppUsage() {
     const d = new Date(Date.now() - 6 * 86400_000)
     const start = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
     Promise.all([
-      fetchVisitorCount('TOTAL'),
-      fetchVisitorCount('TOTAL', start),
+      fetchVisitorCount('/'),
+      fetchVisitorCount('/', start),
       Promise.all(AI_EVENTS.map((e) => fetchVisitorCount(e, start))),
     ]).then(([total, week, ai]) => {
       if (!alive) return
@@ -136,9 +140,9 @@ function AppUsage() {
   return (
     <div className="mt-2 border-t border-border pt-2">
       <div className="mb-1 text-xs text-muted">利用状況（みんなの合計）</div>
-      <InfoRow label="これまでの訪問者" value={fmt(stats?.total, '人')} />
-      <InfoRow label="最近 7 日の訪問者" value={fmt(stats?.week, '人')} />
-      <InfoRow label="最近 7 日の AI 機能の利用" value={fmt(stats?.aiWeek, '人（延べ）')} />
+      <InfoRow label="これまでのアクセス" value={fmt(stats?.total, '回')} />
+      <InfoRow label="最近 7 日のアクセス" value={fmt(stats?.week, '回')} />
+      <InfoRow label="最近 7 日の AI 機能の利用" value={fmt(stats?.aiWeek, '回')} />
       <p className="mt-1 text-[11px] text-muted">GoatCounter の集計。数時間おきに更新されます。オフラインのときは表示されません。</p>
     </div>
   )
