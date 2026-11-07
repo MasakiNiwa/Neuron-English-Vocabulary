@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { appInfo, assetUrl } from '@/lib/appInfo'
 import { AI_EVENTS, fetchVisitorCount } from '@/lib/goatcounter'
+import { useSettings } from '@/stores/settings'
 import { dataSources } from './credits'
 import { loadMeta } from '@/features/dictionary/data'
 import type { DataMeta } from '@/features/dictionary/types'
@@ -137,14 +138,21 @@ function AppUsage() {
     }
   }, [])
   const fmt = (n: number | null | undefined, unit: string) => (n == null ? (stats ? '—' : '…') : `${n.toLocaleString('ja-JP')} ${unit}`)
+  // 開いた・閉じた状態を覚えておく（既定は開く）
+  const open = useSettings((s) => s.helpUsageOpen)
+  const set = useSettings((s) => s.set)
   return (
-    <div className="mt-2 border-t border-border pt-2">
-      <div className="mb-1 text-xs text-muted">利用状況（みんなの合計）</div>
+    <details className="group mt-2 border-t border-border pt-2" open={open} onToggle={(e) => set('helpUsageOpen', e.currentTarget.open)}>
+      <summary className="flex cursor-pointer select-none items-center gap-2 py-1 text-xs text-muted">
+        <span className="flex-1">利用状況（みんなの合計）</span>
+        <span className="group-open:hidden">開く</span>
+        <span className="hidden group-open:inline">たたむ</span>
+      </summary>
       <InfoRow label="これまでのアクセス" value={fmt(stats?.total, '回')} />
       <InfoRow label="最近 7 日のアクセス" value={fmt(stats?.week, '回')} />
       <InfoRow label="最近 7 日の AI 機能の利用" value={fmt(stats?.aiWeek, '回')} />
       <p className="mt-1 text-[11px] text-muted">GoatCounter の集計。数時間おきに更新されます。オフラインのときは表示されません。</p>
-    </div>
+    </details>
   )
 }
 

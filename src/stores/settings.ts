@@ -27,6 +27,8 @@ export interface Settings {
   showSensitive: boolean
   /** アクセス数の計測（GoatCounter）に協力する。画面の種類と AI 機能を使った回数だけを送る */
   analytics: boolean
+  /** ヘルプの「利用状況」を開いておくか（次に開いたときも同じ状態。既定は開く） */
+  helpUsageOpen: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -44,6 +46,7 @@ export const defaultSettings: Settings = {
   studyFormatsOpen: true,
   showSensitive: false,
   analytics: true,
+  helpUsageOpen: true,
 }
 
 interface SettingsStore extends Settings {
