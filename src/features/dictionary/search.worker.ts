@@ -36,13 +36,14 @@ async function getJson<T>(url: URL): Promise<T> {
   return (await r.json()) as T
 }
 
-function init(base: string) {
+function init(base: string, hideSensitive = true) {
   ready ??= (async () => {
     const [idx, ms] = await Promise.all([
       getJson<{ e: IndexRow[] }>(new URL('data/index.json', base)),
       getJson<Morpheme[]>(new URL('data/morphemes.json', base)),
     ])
-    rows = idx.e
+    // 設定で隠している語（卑語・性的な語）は検索にも出さない
+    rows = hideSensitive ? idx.e.filter((r) => r[10] !== 1) : idx.e
     morphs = ms
     mini = new MiniSearch<Doc>({ fields: ['head'], storeFields: [], idField: 'id' })
     mini.addAll(rows.map((r, i) => ({ id: i, head: r[0].replace(/_/g, ' ') })))

@@ -814,3 +814,14 @@ waiver	Parents must sign a waiver before the trip.	保護者は旅行の前に�
 watershed	The invention was a watershed in human history.	その発明は人類の歴史の転機となった。
 canopy	The forest canopy blocks most of the sunlight.	森の木々の枝葉が日光のほとんどをさえぎっている。
 disable	You can disable notifications in the settings.	通知は設定で無効にできます。
+# 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
+pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
+rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
+stripper	Use paint stripper to remove the old paint.	古い塗料をはがすには剥離剤を使いなさい。
+pornography	The law protects children from pornography.	その法律は子どもをポルノから守るためのものだ。
+orgasm	The textbook explains the physical changes during orgasm.	その教科書はオーガズムの際の体の変化を説明している。
+bullshit	"That's bullshit," he said angrily, and everyone was shocked.	「そんなのでたらめだ」と彼が怒って言ったので、みんな驚いた。
+prostitution	Prostitution is illegal in many countries.	多くの国で売春は違法だ。
+asshole	Calling someone an asshole is extremely rude.	人を「嫌なやつ」とののしるのは、ひどく失礼なことだ。
+vagina	During birth, the baby passes through the vagina.	出産のとき、赤ちゃんは膣を通って生まれてくる。
+pimp	The pimp was arrested for human trafficking.	その売春仲介人は人身売買の罪で逮捕された。

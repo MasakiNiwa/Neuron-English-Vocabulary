@@ -3,7 +3,8 @@
 export type PosCode = 'noun' | 'verb' | 'adj' | 'adv' | 'prep' | 'conj' | 'pron' | 'det' | 'intj' | 'num' | 'phrase' | string
 
 /** index.json の1行: [key, type(0=単語,1=熟語), rank, 短い訳, 品詞[], shard, 形態素ID[], 解説あり(1/0)] */
-export type IndexRow = [string, 0 | 1, number, string, PosCode[], string, string[], (0 | 1)?, number?, (0 | 1)?]
+/** 索引の 1 行。11 番目は学習に向かない語（卑語・性的な語）の印 */
+export type IndexRow = [string, 0 | 1, number, string, PosCode[], string, string[], (0 | 1)?, number?, (0 | 1)?, (0 | 1)?]
 
 export interface IndexEntry {
   key: string
@@ -77,6 +78,8 @@ export interface Entry {
   manual?: boolean
   /** TOEIC のレベルの目安と、TOEIC で特に多い語か */
   toeic?: { lv: ToeicLevel; tsl?: boolean }
+  /** 学習に向かない語の分類（vulgar = 卑語・ののしり / sexual = 性的な語・性犯罪）。設定で表示しているときだけ見える */
+  sens?: 'vulgar' | 'sexual'
   /** 語源分解を手動で登録した */
   manualParts?: boolean
 }

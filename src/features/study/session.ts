@@ -43,13 +43,15 @@ export async function getStudyStats(): Promise<StudyStats> {
     db.reviews.where('reviewedAt').aboveOrEqual(startOfToday()).count(),
   ])
   const limit = useSettings.getState().dailyNewLimit
-  const active = cards.filter((c) => !c.suspended)
+  const { hidden } = await loadDictionary()
+  // 設定で隠している語（卑語・性的な語）のカードは数えない・出さない
+  const active = cards.filter((c) => !c.suspended && !hidden.has(c.entryId))
   const newCards = active.filter((c) => c.state === 0).length
   return {
     due: active.filter((c) => c.state !== 0 && c.due <= now).length,
     newAvailable: limit > 0 ? Math.min(newCards, Math.max(0, limit - newToday)) : newCards,
     newToday,
-    total: cards.length,
+    total: cards.filter((c) => !hidden.has(c.entryId)).length,
     reviewedToday,
   }
 }
@@ -57,7 +59,8 @@ export async function getStudyStats(): Promise<StudyStats> {
 /** 学習キュー: 期限切れの復習カード（期限順）→ 新規カード（追加順、1日の上限まで） */
 export async function buildQueue(): Promise<StudyCard[]> {
   const now = Date.now()
-  const cards = (await db.cards.toArray()).filter((c) => !c.suspended)
+  const { hidden } = await loadDictionary()
+  const cards = (await db.cards.toArray()).filter((c) => !c.suspended && !hidden.has(c.entryId))
   let due = cards.filter((c) => c.state !== 0 && c.due <= now).sort((a, b) => a.due - b.due)
   const limit = useSettings.getState().dailyNewLimit
   const remainingNew = limit > 0 ? Math.max(0, limit - (await newIntroducedToday())) : Infinity
@@ -122,7 +125,8 @@ export type PracticeMode = 'random' | 'weak' | 'recent'
 
 /** 復習日に関係なく、学習中のカードから自由に練習 */
 export async function buildPracticeQueue(mode: PracticeMode, n: number): Promise<StudyCard[]> {
-  const cards = (await db.cards.toArray()).filter((c) => !c.suspended)
+  const { hidden } = await loadDictionary()
+  const cards = (await db.cards.toArray()).filter((c) => !c.suspended && !hidden.has(c.entryId))
   if (mode === 'weak') {
     return shuffle(
       cards

@@ -1,0 +1,32 @@
+# 学習に向かない語（卑語・性的な語）。見出しキー ⇥ 分類（vulgar = 卑語・ののしり / sexual = 性的な語・性犯罪）
+# 設定「卑語・性的な語を表示する」がオフ（既定）のとき、一覧・検索・つながり・学習・リンクなどアプリのどこにも出さない。
+# 同性愛などの性的指向・性自認の語（gay, lesbian など）、医学・保健の語（breast, condom, sperm など）、
+# 軽い感嘆（damn, hell）は、学ぶ必要がある語として対象にしない。
+fuck	vulgar
+bitch	vulgar
+bullshit	vulgar
+piss	vulgar
+bastard	vulgar
+asshole	vulgar
+porn	sexual
+pornography	sexual
+pornographic	sexual
+intercourse	sexual
+masturbation	sexual
+masturbate	sexual
+orgasm	sexual
+erotic	sexual
+penis	sexual
+vagina	sexual
+vaginal	sexual
+semen	sexual
+prostitute	sexual
+prostitution	sexual
+brothel	sexual
+pimp	sexual
+stripper	sexual
+rape	sexual
+rapist	sexual
+incest	sexual
+pedophile	sexual
+make_love	sexual

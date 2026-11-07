@@ -14,6 +14,7 @@ function dict(entries: IndexEntry[], morphemes: Morpheme[]): Dictionary {
     byLower: new Map(),
     morphemes,
     morphById: new Map(morphemes.map((m) => [m.id, m])),
+    hidden: new Set(),
   }
 }
 

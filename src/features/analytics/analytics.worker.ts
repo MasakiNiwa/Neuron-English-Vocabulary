@@ -9,17 +9,25 @@ import { computeAnalytics } from './compute'
 const db = new NeuronDB()
 let indexCache: Promise<[IndexRow[], Morpheme[]]> | null = null
 
-async function run(base: string, desiredRetention: number) {
+async function run(base: string, desiredRetention: number, hideSensitive = true) {
   indexCache ??= Promise.all([
     fetch(new URL('data/index.json', base)).then((r) => r.json()).then((j: { e: IndexRow[] }) => j.e),
     fetch(new URL('data/morphemes.json', base)).then((r) => r.json() as Promise<Morpheme[]>),
   ])
-  const [[index, morphemes], views, cards, reviews] = await Promise.all([
+  const [[allIndex, allMorphemes], allViews, allCards, allReviews] = await Promise.all([
     indexCache,
     db.views.toArray(),
     db.cards.toArray(),
     db.reviews.toArray(),
   ])
+  // 設定で隠している語（卑語・性的な語）は分析にも出さない
+  const hidden = new Set(hideSensitive ? allIndex.filter((r) => r[10] === 1).map((r) => r[0]) : [])
+  const keep = (k: string) => !hidden.has(k)
+  const index = hidden.size ? allIndex.filter((r) => keep(r[0])) : allIndex
+  const morphemes = hidden.size ? allMorphemes.map((m) => ({ ...m, words: m.words.filter(keep) })) : allMorphemes
+  const views = allViews.filter((v) => keep(v.entryId))
+  const cards = allCards.filter((c) => keep(c.entryId))
+  const reviews = allReviews.filter((r) => keep(r.entryId))
   const f = fsrs({ request_retention: desiredRetention })
   const now = new Date()
   const retrievability: Record<string, number> = {}

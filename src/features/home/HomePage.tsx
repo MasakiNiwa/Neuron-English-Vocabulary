@@ -83,7 +83,7 @@ function Recent() {
       </div>
       {recent && recent.length === 0 && <p className="text-sm text-muted">{t('home.noHistory')}</p>}
       <div className="flex flex-wrap gap-x-3 gap-y-1">
-        {recent?.map((r) => (
+        {recent?.filter((r) => !dict.hidden.has(r.entryId)).map((r) => (
           <span key={r.entryId} className="text-sm">
             <EntryLink k={r.entryId} className="font-en" />
             <span className="ml-1 text-xs text-muted">{dict.byKey.get(r.entryId)?.gloss.split('、')[0]}</span>

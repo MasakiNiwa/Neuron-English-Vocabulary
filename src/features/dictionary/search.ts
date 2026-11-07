@@ -1,4 +1,5 @@
 import * as Comlink from 'comlink'
+import { useSettings } from '@/stores/settings'
 import type { SearchApi, SearchFilter, SearchHit } from './search.worker'
 
 export type { SearchFilter, SearchHit }
@@ -12,7 +13,7 @@ function getApi() {
     api = Comlink.wrap<SearchApi>(worker)
   }
   if (!initP) {
-    const p = api.init(document.baseURI)
+    const p = api.init(document.baseURI, !useSettings.getState().showSensitive)
     // 索引の取得に失敗したら忘れて、次の検索で初期化し直す（レビュー 2026-11-07 の 07）
     p.catch(() => {
       if (initP === p) initP = null

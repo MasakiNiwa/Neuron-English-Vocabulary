@@ -38,7 +38,7 @@ function useAnalytics() {
     if (version === undefined) return
     let alive = true
     void getApi()
-      .run(document.baseURI, retention)
+      .run(document.baseURI, retention, !useSettings.getState().showSensitive)
       .then((d) => alive && setData(d))
     return () => {
       alive = false

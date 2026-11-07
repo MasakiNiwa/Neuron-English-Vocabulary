@@ -1097,6 +1097,22 @@ if os.path.isdir(OUT):
 os.makedirs(os.path.join(OUT, 'entries'))
 
 shards = defaultdict(dict)
+# 学習に向かない語（data/sensitive_words.tsv）。索引の 11 番目に 1、詳細データに sens（分類）を付ける。
+# アプリは設定がオフ（既定）のとき、これらの語をどこにも出さない
+sensitive = {}
+with open(os.path.join(REPO, 'data', 'sensitive_words.tsv'), encoding='utf-8') as f:
+    for line in f:
+        if not line.strip() or line.startswith('#'):
+            continue
+        k, cat = line.rstrip('\n').split('\t')[:2]
+        if k not in entries:
+            print(f'  WARN sensitive_words: 見出しがない {k}')
+        elif cat not in ('vulgar', 'sexual'):
+            print(f'  WARN sensitive_words: 分類が不正 {k} {cat}')
+        else:
+            sensitive[k] = cat
+            entries[k]['sens'] = cat
+print(f'  sensitive words: {len(sensitive)}')
 index_rows = []
 for k, e in entries.items():
     shard = ('w' if e['t'] == 'w' else 'p') + str((e['r'] - 1) // SHARD)
@@ -1114,7 +1130,7 @@ for k, e in entries.items():
         shards[shard][k]['toeic'] = {'lv': lv, **({'tsl': True} if in_tsl else {})}
     index_rows.append([k, 0 if e['t'] == 'w' else 1, e['r'], short, [g['p'] for g in e['g']], shard,
                        [p['m'] for p in (e.get('parts') or []) if p['m'] and not p['m'].startswith('w:')] + (e.get('pie') or []),
-                       1 if e.get('note') else 0, lv, 1 if in_tsl else 0])
+                       1 if e.get('note') else 0, lv, 1 if in_tsl else 0] + ([1] if k in sensitive else []))
 index_rows.sort(key=lambda r: (r[1], r[2]))
 # データの版: 公開する内容（索引・形態素・詳細）のハッシュ。同じ内容なら同じ版、1 文字でも変われば別の版になる。
 # 各シャードにも版（_v）を書き込み、アプリは索引と食い違うシャードを見つけたら最新を取り直す（レビュー B03）
