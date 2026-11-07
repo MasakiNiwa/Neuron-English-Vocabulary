@@ -3185,6 +3185,21 @@ hilly	The town is very hilly, so cycling is hard work.	その町は坂が多い�
 Bosnian	She is a Bosnian writer living in Paris.	彼女はパリに住むボスニア出身の作家だ。
 repentance	He showed no sign of repentance for what he had done.	彼は自分のしたことを悔いる様子を少しも見せなかった。
 tangent	The teacher went off on a tangent and forgot the lesson.	先生は話が脱線して授業のことを忘れてしまった。
+ruse	The phone call was just a ruse to get him out of the house.	その電話は彼を家から連れ出すための策略にすぎなかった。
+buyout	The company was sold in a buyout last year.	その会社は昨年、買収によって売却された。
+circumvent	They found a way to circumvent the rules.	彼らは規則をうまくすり抜ける方法を見つけた。
+clique	She never joined any clique at school.	彼女は学校でどの仲良しグループにも入らなかった。
+hitherto	The study revealed hitherto unknown facts.	その研究はこれまで知られていなかった事実を明らかにした。
+lander	The lander touched down safely on Mars.	着陸船は火星に無事着陸した。
+sickle	The farmer cut the grass with a sickle.	農家の人は鎌で草を刈った。
+chastity	The nuns took a vow of chastity.	修道女たちは独身を守る誓いを立てた。
+denominator	In the fraction 3/4, the denominator is 4.	分数の4分の3では、分母は4だ。
+ravage	The storm ravaged the coastal towns.	嵐は沿岸の町々を荒廃させた。
+valet	A valet parked our car in front of the hotel.	係員がホテルの前で私たちの車を駐車してくれた。
+forsaken	The old house looked forsaken and empty.	その古い家は見捨てられたようにがらんとしていた。
+loyalist	He remained a loyalist to the king until the end.	彼は最後まで王に忠誠を尽くした。
+femininity	The designer's dresses celebrate femininity.	そのデザイナーのドレスは女性らしさを讃えている。
+forage	Bears forage for food before winter.	クマは冬の前に食べ物をあさり回る。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
