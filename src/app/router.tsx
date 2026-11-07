@@ -12,6 +12,7 @@ import { RootLayout } from './RootLayout'
 import { validateWordsSearch } from '@/features/words/search'
 import { validateNetworkSearch } from '@/features/network/search'
 import { validateAiSearch } from '@/features/ai/search'
+import { trackPage } from '@/lib/goatcounter'
 
 function NotFound() {
   const { t } = useTranslation()
@@ -72,6 +73,9 @@ export const router = createRouter({
   defaultViewTransition: true,
   defaultPreload: 'intent',
 })
+
+// アクセス数の計測: 画面が切り替わるたびに画面の種類だけを送る
+router.subscribe('onResolved', (e) => trackPage(e.toLocation.pathname))
 
 declare module '@tanstack/react-router' {
   interface Register {

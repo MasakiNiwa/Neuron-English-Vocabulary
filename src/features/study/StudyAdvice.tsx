@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { trackEvent } from '@/lib/goatcounter'
 import { Loader2, MessageCircle, Sparkles, Square } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
@@ -61,6 +62,7 @@ export default function StudyAdvice({ about, title, prompt }: { about: string; t
       setThreadId(t.id)
       if (!reuse) await db.chats.add({ thread: t.id, role: 'user', content, createdAt: Date.now() })
       answeredRef.current = false
+      trackEvent('ai-advice')
       const res = await runTask({
         messages: [{ role: 'user', content }],
         about,

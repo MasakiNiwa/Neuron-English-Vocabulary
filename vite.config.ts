@@ -24,9 +24,9 @@ function gitCommit(): string {
 
 /**
  * 本番ビルドの index.html に Content-Security-Policy を入れる（開発サーバーは独自のスクリプトを差し込むので対象外）。
- * - スクリプト: 自分のファイルと、index.html のテーマ用インラインスクリプト（ハッシュで許可）だけ
- * - 通信先: 自分と、AI 連携の 4 社の API だけ（AI の回答に外部 URL が混ざっても、そこへは送られない）
- * - 画像: 自分と data:/blob: だけ（外部の画像は読み込まない）
+ * - スクリプト: 自分のファイルと、index.html のテーマ用インラインスクリプト（ハッシュで許可）、アクセス数計測の GoatCounter（gc.zgo.at）だけ
+ * - 通信先: 自分と、AI 連携の 4 社の API と、GoatCounter の計測先だけ（AI の回答に外部 URL が混ざっても、そこへは送られない）
+ * - 画像: 自分と data:/blob: と、GoatCounter の計測先（送信に画像を使うことがある）だけ
  */
 function contentSecurityPolicy(): Plugin {
   return {
@@ -40,11 +40,11 @@ function contentSecurityPolicy(): Plugin {
           .join(' ')
         const csp = [
           "default-src 'self'",
-          `script-src 'self' ${hashes}`,
+          `script-src 'self' ${hashes} https://gc.zgo.at`,
           "style-src 'self' 'unsafe-inline'",
-          "img-src 'self' data: blob:",
+          "img-src 'self' data: blob: https://masaki28.goatcounter.com",
           "font-src 'self' data:",
-          "connect-src 'self' https://api.anthropic.com https://api.openai.com https://openrouter.ai https://generativelanguage.googleapis.com",
+          "connect-src 'self' https://api.anthropic.com https://api.openai.com https://openrouter.ai https://generativelanguage.googleapis.com https://masaki28.goatcounter.com",
           "worker-src 'self' blob:",
           "manifest-src 'self'",
           "object-src 'none'",

@@ -25,6 +25,8 @@ export interface Settings {
   studyFormatsOpen: boolean
   /** センシティブな単語（data/sensitive_words.tsv）を表示・学習の対象にする。既定はオフ（アプリのどこにも出さない） */
   showSensitive: boolean
+  /** アクセス数の計測（GoatCounter）に協力する。画面の種類と AI 機能を使った回数だけを送る */
+  analytics: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -41,6 +43,7 @@ export const defaultSettings: Settings = {
   studyAuto: true,
   studyFormatsOpen: true,
   showSensitive: false,
+  analytics: true,
 }
 
 interface SettingsStore extends Settings {

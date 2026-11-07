@@ -1,4 +1,5 @@
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
+import { trackEvent } from '@/lib/goatcounter'
 import { scrollBehavior } from '@/lib/motion'
 import { useLiveQuery } from 'dexie-react-hooks'
 import {
@@ -478,6 +479,7 @@ function ChatView() {
     const used: string[] = []
     let partial = ''
     try {
+      trackEvent('ai-chat')
       const res = await runTask({
         messages: history.slice(-20),
         about,
