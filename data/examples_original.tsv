@@ -2823,6 +2823,17 @@ removal	The city is in charge of snow removal.	除雪は市の担当だ。
 virgin	Use extra virgin olive oil for the salad.	サラダにはエクストラバージンオリーブオイルを使ってください。
 commissioner	The police commissioner spoke to reporters.	警察本部長が記者たちに話をした。
 Israeli	The Israeli team won the game.	イスラエルのチームがその試合に勝った。
+imperfection	She loved the old vase despite its imperfection.	その古い花びんには欠けたところがあったが、彼女は気に入っていた。
+mainstream	Electric cars are becoming mainstream.	電気自動車が主流になりつつある。
+conversion	The conversion of the old factory into apartments took two years.	古い工場をアパートに改装するのに２年かかった。
+furthermore	The hotel is cheap; furthermore, it is close to the station.	そのホテルは安いうえに、駅にも近い。
+graphic	She works as a graphic designer.	彼女はグラフィックデザイナーとして働いている。
+orthodox	The doctor prefers orthodox treatments.	その医師は伝統的な治療法を好む。
+leakage	The workers checked the pipe for gas leakage.	作業員たちはガス漏れがないか管を調べた。
+blacklist	The company put the spammer on a blacklist.	その会社は迷惑メールの送信者をブラックリストに載せた。
+virtual	We took a virtual tour of the museum online.	私たちはネットでその博物館の仮想見学をした。
+dialog	A dialog box appeared on the screen.	画面にダイアログボックスが表示された。
+trademark	The name is a registered trademark of the company.	その名前はその会社の登録商標だ。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
