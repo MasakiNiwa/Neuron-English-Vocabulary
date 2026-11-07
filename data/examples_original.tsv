@@ -2877,6 +2877,24 @@ warfare	The book is about the history of naval warfare.	その本は海戦の歴
 reproductive	The biology class studied the reproductive system of plants.	生物の授業で植物の生殖の仕組みを学んだ。
 obsessive	He is obsessive about keeping his room clean.	彼は部屋をきれいにしておくことに異常にこだわる。
 corona	During a solar eclipse, you can see the sun's corona.	日食のときには太陽のコロナが見える。
+spherical	The earth is not perfectly spherical.	地球は完全な球形ではない。
+dehydrated	Drink plenty of water so you don't get dehydrated.	脱水症状にならないよう、水をたくさん飲みなさい。
+pawn	He moved a pawn forward two squares.	彼はポーンを２マス前に進めた。
+stretcher	The injured player was carried off on a stretcher.	けがをした選手は担架で運び出された。
+Czech	Prague is the capital of the Czech Republic.	プラハはチェコ共和国の首都だ。
+rhetoric	The speech was full of empty rhetoric.	その演説は中身のない美辞麗句ばかりだった。
+nazi	Many people fled from the Nazi government.	多くの人々がナチス政府から逃れた。
+simulation	The pilots trained in a flight simulation.	パイロットたちは飛行シミュレーションで訓練した。
+conjunction	"And" and "but" are common conjunctions.	「and」や「but」はよく使われる接続詞だ。
+numerical	The files are arranged in numerical order.	ファイルは番号順に並べられている。
+exploitation	The law protects children from exploitation.	その法律は子どもを搾取から守っている。
+cocaine	Cocaine is an illegal drug in most countries.	コカインはほとんどの国で違法な薬物だ。
+armor	The knight wore heavy armor.	騎士は重いよろいを身に着けていた。
+randomly	The winners will be chosen randomly.	当選者は無作為に選ばれる。
+tactical	The team made a tactical change in the second half.	チームは後半に戦術を変えた。
+infantry	The infantry marched toward the city.	歩兵隊は都市に向かって行進した。
+reconstruction	The reconstruction of the bridge took two years.	橋の再建には２年かかった。
+leech	A leech attached itself to my leg in the river.	川でヒルが私の脚に吸いついた。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
