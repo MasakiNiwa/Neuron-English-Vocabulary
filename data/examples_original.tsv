@@ -2916,6 +2916,37 @@ fictional	Sherlock Holmes is a fictional detective.	シャーロック・ホー�
 fictional	The town in the novel is fictional, but it is based on a real place.	その小説の町は架空のものだが、実在の場所をもとにしている。
 symbolic	The dove is symbolic of peace.	ハトは平和の象徴だ。
 symbolic	The rent was only a symbolic amount.	家賃はほんの形だけの額だった。
+cardiac	The patient was rushed to hospital after a cardiac arrest.	その患者は心停止を起こして病院に運ばれた。
+cardiac	She works as a nurse in the cardiac unit.	彼女は心臓病棟で看護師として働いている。
+diagnostic	The doctor ordered some diagnostic tests.	医師はいくつかの診断のための検査を指示した。
+diagnostic	This tool runs a quick diagnostic check on your computer.	このツールはパソコンを手早く診断する。
+differential	There is a large differential between the wages of men and women in that industry.	その業界では男女の賃金に大きな差がある。
+freeman	In medieval England, a freeman was not bound to serve a lord.	中世のイングランドでは、自由民は領主に仕える義務を負わなかった。
+justification	There is no justification for treating people unfairly.	人を不公平に扱ってよい理由などない。
+justification	He tried to find some justification for his decision.	彼は自分の決定を正当化する理由を探そうとした。
+reactor	The nuclear reactor was shut down for safety checks.	その原子炉は安全点検のため停止された。
+telecommunication	She works for a large telecommunications company.	彼女は大手の通信会社で働いている。
+telecommunication	Satellites play an important role in telecommunications.	人工衛星は電気通信で重要な役割を果たしている。
+certainty	I can't say with certainty when he will arrive.	彼がいつ着くかは確かなことは言えない。
+certainty	Death and taxes are the only certainties in life.	人生で確かなのは死と税金だけだ。
+arcade	We spent the afternoon playing games at the arcade.	私たちはゲームセンターで午後を過ごした。
+arcade	There are many small shops in the shopping arcade.	その商店街には小さな店がたくさんある。
+decree	The king issued a decree banning the sale of alcohol.	王は酒の販売を禁じる布告を出した。
+geological	The museum has a large collection of geological samples.	その博物館には地質の標本がたくさんある。
+geological	These rocks were formed over a long geological period.	これらの岩は長い地質時代をかけてできた。
+methodology	The researchers explained the methodology of their study.	研究者たちは研究の方法論を説明した。
+modification	We made a few modifications to the plan.	私たちは計画に少し修正を加えた。
+modification	The car needed some modifications before the race.	その車はレースの前にいくつか改造が必要だった。
+replay	Let's watch the replay of the goal.	ゴールのリプレーを見よう。
+replay	The match was a draw, so there will be a replay next week.	試合は引き分けだったので、来週再試合がある。
+insulin	People with diabetes may need insulin injections.	糖尿病の人はインスリン注射が必要なことがある。
+respiratory	Smoking can cause serious respiratory diseases.	喫煙は深刻な呼吸器の病気を引き起こすことがある。
+respiratory	Colds are a common respiratory infection.	風邪はよくある呼吸器の感染症だ。
+combo	I'll have the burger combo, please.	ハンバーガーのセットをください。
+combo	Red and white is a classic color combo.	赤と白は定番の色の組み合わせだ。
+homicide	The police are treating his death as a homicide.	警察は彼の死を殺人事件として捜査している。
+providence	She believed it was providence that brought them together.	二人を引き合わせたのは神の導きだと彼女は信じていた。
+belle	She was the belle of the ball that night.	その夜、彼女は舞踏会でいちばんの美人だった。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
