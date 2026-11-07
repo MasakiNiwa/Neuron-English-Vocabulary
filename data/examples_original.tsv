@@ -2813,6 +2813,9 @@ neutralize	The medicine neutralizes stomach acid.	その薬は胃酸を中和す
 orally	The medicine is taken orally.	その薬は口から飲む。
 overrule	The judge overruled the objection.	裁判官は異議を却下した。
 pallet	The boxes were stacked on a wooden pallet.	箱は木製のパレットに積み上げられていた。
+murderous	The villain in the film has a murderous look in his eyes.	その映画の悪役は殺意に満ちた目つきをしている。
+tar	The road was covered with fresh tar.	道路には塗りたてのタールが敷かれていた。
+component	Trust is an important component of any team.	信頼はどんなチームにとっても大切な要素だ。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
