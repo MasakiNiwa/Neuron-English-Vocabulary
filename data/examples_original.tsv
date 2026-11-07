@@ -2895,6 +2895,27 @@ tactical	The team made a tactical change in the second half.	チームは後半�
 infantry	The infantry marched toward the city.	歩兵隊は都市に向かって行進した。
 reconstruction	The reconstruction of the bridge took two years.	橋の再建には２年かかった。
 leech	A leech attached itself to my leg in the river.	川でヒルが私の脚に吸いついた。
+ammunition	The soldiers were running low on ammunition.	兵士たちは弾薬が残り少なくなっていた。
+ammunition	Her careless remark gave her rivals fresh ammunition.	彼女の不用意な発言は、ライバルたちに新たな攻撃材料を与えた。
+massacre	The museum keeps records of the massacre so that it will never be forgotten.	その博物館は、虐殺を決して忘れないように記録を保存している。
+massacre	Our team suffered a 10-0 massacre in the final.	私たちのチームは決勝で 10 対 0 の大敗を喫した。
+yang	In Chinese philosophy, yin and yang are two opposite but connected forces.	中国思想では、陰と陽は相反しながらもつながり合う二つの力だ。
+dope	The cyclist was banned for two years for doping.	その自転車選手はドーピングで 2 年間の出場停止になった。
+mortality	Infant mortality has fallen sharply in the last fifty years.	乳児死亡率はこの 50 年で急激に下がった。
+mortality	Losing his father made him think about his own mortality.	父を亡くして、彼は自分もいつか死ぬのだということを考えるようになった。
+turmoil	The country was in political turmoil after the election.	選挙の後、その国は政治的な混乱に陥っていた。
+turmoil	Her mind was in turmoil as she waited for the results.	結果を待つ間、彼女の心は千々に乱れていた。
+bomber	Several bombers flew over the city during the war.	戦争中、何機もの爆撃機がその町の上空を飛んだ。
+villain	The villain in this movie is more popular than the hero.	この映画の悪役は、主人公よりも人気がある。
+villain	Don't make him the villain; it wasn't all his fault.	彼を悪者にしないで。全部が彼のせいではなかったのだから。
+saga	The book tells the saga of a family over four generations.	その本は、ある一家の四世代にわたる物語を描いている。
+saga	Getting my visa turned into a long saga.	ビザの取得は長い長い話になってしまった。
+coral	Rising sea temperatures are killing coral around the world.	海水温の上昇で、世界中のサンゴが死んでいる。
+coral	We went snorkeling over a beautiful coral reef.	私たちはきれいなサンゴ礁の上でシュノーケリングをした。
+fictional	Sherlock Holmes is a fictional detective.	シャーロック・ホームズは架空の探偵だ。
+fictional	The town in the novel is fictional, but it is based on a real place.	その小説の町は架空のものだが、実在の場所をもとにしている。
+symbolic	The dove is symbolic of peace.	ハトは平和の象徴だ。
+symbolic	The rent was only a symbolic amount.	家賃はほんの形だけの額だった。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
