@@ -165,7 +165,7 @@ export function SettingsPage() {
               ]}
             />
           </Row>
-          <Row label="卑語・性的な語を表示する">
+          <Row label="センシティブな単語を表示する">
             <Segmented
               value={s.showSensitive ? 'on' : 'off'}
               onChange={(v) => {
@@ -181,7 +181,7 @@ export function SettingsPage() {
             />
           </Row>
           <p className="-mt-1 text-xs text-muted">
-            「表示しない」（既定）では、卑語・性的な語を一覧・検索・つながり・学習・分析などアプリのどこにも出しません。切り替えるとアプリを読み込み直します。
+            「表示しない」（既定）では、センシティブな単語を一覧・検索・つながり・学習・分析などアプリのどこにも出しません。切り替えるとアプリを読み込み直します。
           </p>
         </AccordionSection>
 

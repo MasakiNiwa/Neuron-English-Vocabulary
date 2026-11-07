@@ -19,7 +19,7 @@ function HistoryList() {
   if (!views.length) return <p className="py-10 text-center text-muted">{t('home.noHistory')}</p>
   // 日付ごとにグループ化
   const groups = new Map<string, typeof views>()
-  // 設定で隠している語（卑語・性的な語）は履歴にも出さない
+  // 設定で隠している語（センシティブな単語）は履歴にも出さない
   for (const v of views.filter((x) => !dict.hidden.has(x.entryId))) {
     const d = new Date(v.viewedAt).toLocaleDateString('ja-JP')
     groups.set(d, [...(groups.get(d) ?? []), v])

@@ -23,7 +23,7 @@ export interface Settings {
   studyAuto: boolean
   /** 学習画面の出題形式の欄を開いておくか（次に開いたときも同じ状態） */
   studyFormatsOpen: boolean
-  /** 卑語・性的な語（data/sensitive_words.tsv）を表示・学習の対象にする。既定はオフ（アプリのどこにも出さない） */
+  /** センシティブな単語（data/sensitive_words.tsv）を表示・学習の対象にする。既定はオフ（アプリのどこにも出さない） */
   showSensitive: boolean
 }
 

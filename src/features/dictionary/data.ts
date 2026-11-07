@@ -15,11 +15,11 @@ export interface Dictionary {
   byLower: Map<string, string>
   morphemes: Morpheme[]
   morphById: Map<string, Morpheme>
-  /** 設定で隠している語（卑語・性的な語。表示する設定なら空） */
+  /** 設定で隠している語（センシティブな単語。表示する設定なら空） */
   hidden: Set<string>
 }
 
-/** 索引の行が、学習に向かない語（卑語・性的な語）の印を持つか */
+/** 索引の行が、学習に向かない語（センシティブな単語）の印を持つか */
 export const isSensitiveRow = (r: IndexRow) => r[10] === 1
 
 let dictPromise: Promise<Dictionary> | null = null
@@ -55,7 +55,7 @@ export function loadDictionary(): Promise<Dictionary> {
     const index = await fetchJson<{ v: string; e: IndexRow[] }>('data/index.json', { cache: 'no-cache' })
     dataVersion = index.v
     const allMorphemes = await fetchJson<Morpheme[]>(`data/morphemes.json?v=${index.v}`)
-    // 設定がオフ（既定）なら、卑語・性的な語を辞書から外す。一覧・検索・つながり・学習・リンクのどこにも出なくなる
+    // 設定がオフ（既定）なら、センシティブな単語を辞書から外す。一覧・検索・つながり・学習・リンクのどこにも出なくなる
     const hidden = new Set(useSettings.getState().showSensitive ? [] : index.e.filter(isSensitiveRow).map((r) => r[0]))
     const entries = index.e.filter((r) => !hidden.has(r[0])).map(rowToEntry)
     const morphemes = hidden.size ? allMorphemes.map((m) => ({ ...m, words: m.words.filter((w) => !hidden.has(w)) })) : allMorphemes
