@@ -5,6 +5,7 @@ import { Accordion, AccordionSection } from '@/components/ui/Accordion'
 import { Card } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { appInfo, assetUrl } from '@/lib/appInfo'
+import { AI_EVENTS, fetchVisitorCount } from '@/lib/goatcounter'
 import { dataSources } from './credits'
 import { loadMeta } from '@/features/dictionary/data'
 import type { DataMeta } from '@/features/dictionary/types'
@@ -105,6 +106,44 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   )
 }
 
+interface UsageStats {
+  total: number | null
+  week: number | null
+  aiWeek: number | null
+}
+
+/** アプリ全体の利用状況（GoatCounter の公開カウンタ。数字は数時間おきに更新） */
+function AppUsage() {
+  const [stats, setStats] = useState<UsageStats | null>(null)
+  useEffect(() => {
+    let alive = true
+    const d = new Date(Date.now() - 6 * 86400_000)
+    const start = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    Promise.all([
+      fetchVisitorCount('TOTAL'),
+      fetchVisitorCount('TOTAL', start),
+      Promise.all(AI_EVENTS.map((e) => fetchVisitorCount(e, start))),
+    ]).then(([total, week, ai]) => {
+      if (!alive) return
+      const aiWeek = ai.some((n) => n === null) ? null : ai.reduce<number>((a, n) => a + (n ?? 0), 0)
+      setStats({ total, week, aiWeek })
+    })
+    return () => {
+      alive = false
+    }
+  }, [])
+  const fmt = (n: number | null | undefined, unit: string) => (n == null ? (stats ? '—' : '…') : `${n.toLocaleString('ja-JP')} ${unit}`)
+  return (
+    <div className="mt-2 border-t border-border pt-2">
+      <div className="mb-1 text-xs text-muted">利用状況（みんなの合計）</div>
+      <InfoRow label="これまでの訪問者" value={fmt(stats?.total, '人')} />
+      <InfoRow label="最近 7 日の訪問者" value={fmt(stats?.week, '人')} />
+      <InfoRow label="最近 7 日の AI 機能の利用" value={fmt(stats?.aiWeek, '人（延べ）')} />
+      <p className="mt-1 text-[11px] text-muted">GoatCounter の集計。数時間おきに更新されます。オフラインのときは表示されません。</p>
+    </div>
+  )
+}
+
 export function HelpPage() {
   const { t } = useTranslation()
   return (
@@ -120,6 +159,7 @@ export function HelpPage() {
         <InfoRow label={t('help.version')} value={`v${appInfo.version}`} />
         <InfoRow label={t('help.buildDate')} value={new Date(appInfo.buildDate).toLocaleString('ja-JP')} />
         <InfoRow label={t('help.commit')} value={appInfo.commit} />
+        <AppUsage />
       </Card>
 
       <Accordion persistKey="help">
