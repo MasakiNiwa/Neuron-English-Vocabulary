@@ -3131,6 +3131,20 @@ infect	Her laughter infected everyone in the room.	彼女の笑いは部屋に�
 sensual	The dancer moved with sensual grace.	その踊り手は官能的な優雅さで動いた。
 collage	The children made a collage out of old magazines.	子どもたちは古い雑誌でコラージュを作った。
 giggle	The girls giggled at the funny picture.	女の子たちはその面白い絵を見てくすくす笑った。
+meek	He is meek and never argues with anyone.	彼はおとなしく、誰とも言い争わない。
+narration	The documentary has a calm, clear narration.	そのドキュメンタリーは落ち着いた分かりやすいナレーションがついている。
+primal	Fear of the dark is a primal instinct.	暗闇への恐怖は原始的な本能だ。
+labyrinth	The old town is a labyrinth of narrow streets.	その旧市街は狭い通りが迷路のように入り組んでいる。
+lousy	I had a lousy day at work.	今日は仕事でさんざんな一日だった。
+lousy	The food at that restaurant is lousy.	あのレストランの料理はひどい。
+perjury	He was charged with perjury for lying in court.	彼は法廷でうそをついたため偽証罪で起訴された。
+pious	My grandmother was a pious woman who went to church every week.	祖母は毎週教会に通う信心深い人だった。
+seamless	The new system allows a seamless transfer of data.	新しいシステムではデータを途切れなく移せる。
+unethical	It is unethical to lie to your customers.	客にうそをつくのは倫理に反する。
+hindsight	In hindsight, I should have taken the job.	今にして思えば、その仕事を引き受けるべきだった。
+farce	The trial was a complete farce.	その裁判はまったくの茶番だった。
+informant	The police received a tip from an informant.	警察は情報提供者から情報を得た。
+saviour	The goalkeeper was the saviour of the team.	ゴールキーパーがチームの救世主だった。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
