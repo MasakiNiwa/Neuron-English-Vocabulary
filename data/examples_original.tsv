@@ -3028,6 +3028,24 @@ proprietary	The company uses proprietary software that is not sold to the public
 rant	He went on a long rant about the traffic.	彼は渋滞について長々とわめき散らした。
 rant	She ranted about her boss for an hour.	彼女は上司について1時間も怒りをぶちまけた。
 homage	The film pays homage to the great directors of the past.	その映画は過去の名監督たちに敬意を表している。
+malfunction	The flight was delayed because of an engine malfunction.	エンジンの故障のため、その便は遅れた。
+theoretically	Theoretically, the plan should work, but we haven't tested it yet.	理論上はその計画はうまくいくはずだが、まだ試していない。
+transitional	The country is going through a transitional period.	その国は過渡期にある。
+aggressively	The company is aggressively expanding into Asia.	その会社はアジアへ積極的に事業を拡大している。
+aggressively	The dog barked aggressively at the stranger.	その犬は見知らぬ人に激しく吠えた。
+discontinued	This model has been discontinued, so you can't buy it anymore.	この型は製造中止になったので、もう買えない。
+disrespect	He meant no disrespect by his comment.	彼の発言に失礼な意図はなかった。
+disrespect	Don't disrespect your teachers.	先生をないがしろにしてはいけない。
+enhancement	The new software includes several enhancements.	新しいソフトにはいくつかの機能強化が含まれている。
+universally	Music is universally loved.	音楽は世界中で愛されている。
+colt	A young colt was running beside its mother.	若い雄の子馬が母馬のそばを走っていた。
+dissolution	The dissolution of the band shocked its fans.	そのバンドの解散はファンに衝撃を与えた。
+infringement	Copying this movie is an infringement of copyright.	この映画をコピーするのは著作権の侵害だ。
+physiology	She is studying human physiology at university.	彼女は大学で人体生理学を学んでいる。
+scholarly	He wrote a scholarly article on ancient Rome.	彼は古代ローマについての学術論文を書いた。
+browse	I like to browse in bookstores on weekends.	週末は本屋をぶらぶら見て回るのが好きだ。
+browse	You can browse the internet on this tablet.	このタブレットでインターネットを閲覧できる。
+geometric	The dress has a bold geometric pattern.	そのドレスは大胆な幾何学模様だ。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
