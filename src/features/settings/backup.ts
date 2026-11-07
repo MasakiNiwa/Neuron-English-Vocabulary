@@ -81,7 +81,9 @@ const CLEAN: Record<BackupTable, (r: Row) => Row | null> = {
       ? pick(r, ['id', 'entryId', 'rating', 'state', 'reviewedAt', 'durationMs', 'mode', 'stability', 'difficulty'])
       : null,
   threads: (r) =>
-    isStr(r.id) && typeof r.title === 'string' && isNum(r.createdAt) && isNum(r.updatedAt) && optStr(r.about) ? pick(r, ['id', 'title', 'about', 'createdAt', 'updatedAt']) : null,
+    isStr(r.id) && typeof r.title === 'string' && isNum(r.createdAt) && isNum(r.updatedAt) && optStr(r.about) && (r.pinned === undefined || typeof r.pinned === 'boolean')
+      ? pick(r, ['id', 'title', 'about', 'createdAt', 'updatedAt', 'pinned'])
+      : null,
   chats: (r) => {
     if (!isStr(r.thread) || (r.role !== 'user' && r.role !== 'assistant') || typeof r.content !== 'string' || !isNum(r.createdAt) || !optStr(r.model)) return null
     const out = pick(r, ['id', 'thread', 'role', 'content', 'createdAt', 'model'])

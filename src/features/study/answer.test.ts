@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Dictionary } from '@/features/dictionary/data'
 import type { Entry, Morpheme } from '@/features/dictionary/types'
-import { buildHints, checkTyped, diffMarks, letterHint, normalizeAnswer, partsHint } from './answer'
+import { buildHints, checkTyped, diffMarks, letterHint, matchMeanings, normalizeAnswer, partsHint } from './answer'
 
 describe('書いた答えの照合', () => {
   it('大文字・空白・ハイフン・アポストロフィの違いはそろえる', () => {
@@ -76,5 +76,18 @@ describe('穴埋めの形（レビュー 2026-11-07 の 06）', () => {
     expect(checkTyped('went', ['going'], forms)).toMatchObject({ verdict: 'form', target: 'going' })
     expect(checkTyped('goin', ['going'], forms).verdict).toBe('close')
     expect(checkTyped('take place', ['taken place'], ['take place', 'took place']).verdict).toBe('form')
+  })
+})
+
+describe('回答メモと訳語の答え合わせ', () => {
+  it('同じ訳語、または 2 文字以上で含むものを合っているとする', () => {
+    const ja = ['建設する', '組み立てる', '（理論を）構築する']
+    expect(matchMeanings('建設', ja)).toEqual(['建設する'])
+    expect(matchMeanings('組み立てる、作る', ja)).toEqual(['組み立てる'])
+    expect(matchMeanings('構築する', ja)).toEqual(['（理論を）構築する'])
+    expect(matchMeanings('壊す', ja)).toEqual([])
+    expect(matchMeanings('', ja)).toEqual([])
+    // 1 文字だけでは部分一致にしない
+    expect(matchMeanings('建', ja)).toEqual([])
   })
 })

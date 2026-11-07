@@ -77,6 +77,8 @@ export interface ChatThread {
   about?: string
   createdAt: number
   updatedAt: number
+  /** ピン留め（履歴の上限とは別枠で残す） */
+  pinned?: boolean
 }
 
 /** 外部 AI などで作成し取り込んだ追加解説（v3 まで。v4 で extras に移行） */

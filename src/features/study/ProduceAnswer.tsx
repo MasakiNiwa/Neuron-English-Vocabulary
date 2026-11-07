@@ -7,6 +7,7 @@ import { useDictionary } from '@/features/dictionary/hooks'
 import type { Entry } from '@/features/dictionary/types'
 import { buildHints, checkTyped, diffMarks, type TypedVerdict } from './answer'
 import { Rating, type Grade } from './cards'
+import type { Attempt } from './AnswerMemo'
 import { SpeakPrompt, suggestFromScore } from './SpeakPrompt'
 
 type Mode = 'write' | 'speak' | null
@@ -26,6 +27,7 @@ export function ProduceAnswer({
   onSuggest,
   initialMode = null,
   allowSpeak = true,
+  onAttempt,
 }: {
   entry: Entry
   /** 正解として表示する綴り（穴埋めなら例文中の形） */
@@ -40,6 +42,8 @@ export function ProduceAnswer({
   /** 最初から開いておく答え方（聞いて書くは「書く」） */
   initialMode?: Mode
   allowSpeak?: boolean
+  /** 書いた答え・話した答えを親に伝える（AI のアドバイスに使う） */
+  onAttempt?: (a: Partial<Attempt>) => void
 }) {
   const dict = useDictionary()
   const hints = useMemo(() => buildHints(answer, entry, dict), [answer, entry, dict])
@@ -54,12 +58,19 @@ export function ProduceAnswer({
     if (mode === 'write') inputRef.current?.focus()
   }, [mode])
 
+  // 使ったヒントの段数も伝える
+  useEffect(() => {
+    if (hintLevel) onAttempt?.({ hints: hintLevel })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hintLevel])
+
   // ヒントを使って正解したときは「難しい」を提案する
   const withHint = (g: Grade) => (hintLevel > 0 && g === Rating.Good ? Rating.Hard : g)
 
   const check = () => {
     const r = checkTyped(typed, targets, related)
     setResult({ ...r, input: typed })
+    onAttempt?.({ typed: { input: typed, verdict: r.verdict } })
     onSuggest(withHint(r.verdict === 'correct' ? Rating.Good : r.verdict === 'wrong' ? Rating.Again : Rating.Hard))
     navigator.vibrate?.(r.verdict === 'correct' ? 10 : [20, 40, 20])
     onReveal()
@@ -110,6 +121,7 @@ export function ProduceAnswer({
           target={answer}
           mode="ja2speak"
           onResult={(r) => {
+            onAttempt?.({ spoken: { heard: r.heard, score: r.score }, typed: undefined })
             const s = suggestFromScore(r.score)
             onSuggest(withHint(s === 'good' ? Rating.Good : s === 'hard' ? Rating.Hard : Rating.Again))
             navigator.vibrate?.(s === 'again' ? [20, 40, 20] : 10)

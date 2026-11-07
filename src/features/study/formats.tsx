@@ -102,7 +102,8 @@ export function ChoicePrompt({
 }: {
   entry: Entry
   answered: number | null
-  onAnswer: (index: number, correct: boolean) => void
+  /** text: 選んだ選択肢の文（AI のアドバイスに使う） */
+  onAnswer: (index: number, correct: boolean, text: string) => void
 }) {
   const dict = useDictionary()
   const options = useMemo(() => buildChoices(entry, dict.entries), [dict, entry])
@@ -115,7 +116,7 @@ export function ChoicePrompt({
       if (Number.isInteger(i) && i >= 0 && i < options.length) {
         e.preventDefault()
         e.stopImmediatePropagation()
-        onAnswer(i, options[i].correct)
+        onAnswer(i, options[i].correct, options[i].text)
       }
     }
     window.addEventListener('keydown', onKey, true)
@@ -130,7 +131,7 @@ export function ChoicePrompt({
             key={i}
             type="button"
             disabled={answered !== null}
-            onClick={() => onAnswer(i, o.correct)}
+            onClick={() => onAnswer(i, o.correct, o.text)}
             className={
               'flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-sm transition-colors ' +
               (state === 'correct'

@@ -10,7 +10,10 @@ import {
   Menu,
   Mic,
   Pencil,
+  Pin,
+  PinOff,
   RefreshCw,
+  Search,
   Settings,
   SquarePen,
   Square,
@@ -34,7 +37,7 @@ import { Markdown } from './Markdown'
 import { ModelSelect } from './ModelSelect'
 import { INCOMPLETE_LABEL } from './providers'
 import { personaById, splitBySpeaker, usePersonas } from './personas'
-import { createThread, deleteAllThreads, deleteMessagesFrom, deleteThread, MAX_THREADS, renameThread, touchThread, useChatUi } from './threads'
+import { createThread, deleteAllThreads, deleteMessagesFrom, deleteThread, MAX_THREADS, renameThread, searchThreads, setPinned, touchThread, useChatUi } from './threads'
 import type { AiSearch } from './search'
 import { AiNotReadyError, runTask } from './service'
 import { UnlockPanel } from './UnlockPanel'
@@ -251,7 +254,7 @@ function groupLabel(ts: number) {
   return 'それ以前'
 }
 
-function ThreadItem({ t, active, onPick }: { t: ChatThread; active: boolean; onPick: (id: string | null) => void }) {
+function ThreadItem({ t, active, onPick, snippet }: { t: ChatThread; active: boolean; onPick: (id: string | null) => void; snippet?: string | null }) {
   const [editing, setEditing] = useState(false)
   const [title, setTitle] = useState(t.title)
   if (editing)
@@ -278,17 +281,21 @@ function ThreadItem({ t, active, onPick }: { t: ChatThread; active: boolean; onP
     )
   return (
     <div className={cn('group flex items-center rounded-lg pr-1 hover:bg-surface-2', active && 'bg-surface-2')}>
-      <button type="button" className="min-w-0 flex-1 truncate px-2.5 py-2 text-left text-sm" onClick={() => onPick(t.id)} title={t.title}>
-        {t.title}
+      <button type="button" className="min-w-0 flex-1 px-2.5 py-2 text-left text-sm" onClick={() => onPick(t.id)} title={t.title}>
+        <span className="block truncate">{t.title}</span>
+        {snippet && <span className="mt-0.5 line-clamp-2 block text-[11px] text-muted">{snippet}</span>}
       </button>
       <div className={cn('flex shrink-0 gap-0.5 md:opacity-0 md:group-hover:opacity-100', active && 'md:opacity-100')}>
+        <ActionButton label={t.pinned ? 'ピン留めを外す' : 'ピン留め（履歴の上限と別に残す）'} onClick={() => void setPinned(t.id, !t.pinned)}>
+          {t.pinned ? <PinOff className="size-3.5" /> : <Pin className="size-3.5" />}
+        </ActionButton>
         <ActionButton label="名前を変更" onClick={() => (setTitle(t.title), setEditing(true))}>
           <Pencil className="size-3.5" />
         </ActionButton>
         <ActionButton
           label="削除"
           onClick={async () => {
-            if (!confirm(`「${t.title}」を削除しますか？`)) return
+            if (!confirm(`「${t.title}」を削除しますか？${t.pinned ? '（ピン留めしています）' : ''}`)) return
             await deleteThread(t.id)
             if (active) onPick(null)
           }}
@@ -300,18 +307,33 @@ function ThreadItem({ t, active, onPick }: { t: ChatThread; active: boolean; onP
   )
 }
 
-/** チャット履歴（PC は左サイドバー、スマホは引き出し） */
+/** チャット履歴（PC は左サイドバー、スマホは引き出し）。ピン留めは上に別枠で、検索はタイトルと会話の中身から */
 function ThreadList({ current, onPick, onNew }: { current: string | null; onPick: (id: string | null) => void; onNew: () => void }) {
   const threads = useLiveQuery(() => db.threads.orderBy('updatedAt').reverse().toArray(), [])
-  const groups: { label: string; items: ChatThread[] }[] = []
-  for (const t of threads ?? []) {
+  const [query, setQuery] = useState('')
+  const [hits, setHits] = useState<Map<string, string | null> | null>(null)
+  useEffect(() => {
+    if (!query.trim()) return setHits(null)
+    let alive = true
+    const timer = setTimeout(() => void searchThreads(query).then((h) => alive && setHits(h)), 200)
+    return () => {
+      alive = false
+      clearTimeout(timer)
+    }
+  }, [query, threads])
+  const shown = hits ? (threads ?? []).filter((t) => hits.has(t.id)) : (threads ?? [])
+  const pinned = shown.filter((t) => t.pinned)
+  const groups: { label: string; items: ChatThread[] }[] = pinned.length ? [{ label: 'ピン留め', items: pinned }] : []
+  for (const t of shown) {
+    if (t.pinned) continue
     const label = groupLabel(t.updatedAt)
     if (groups.at(-1)?.label !== label) groups.push({ label, items: [] })
     groups.at(-1)!.items.push(t)
   }
+  const pinnedCount = threads?.filter((t) => t.pinned).length ?? 0
   return (
     <div className="flex h-full flex-col">
-      <div className="p-2">
+      <div className="flex flex-col gap-1 p-2">
         <button
           type="button"
           onClick={onNew}
@@ -319,28 +341,45 @@ function ThreadList({ current, onPick, onNew }: { current: string | null; onPick
         >
           <SquarePen className="size-4" /> 新しいチャット
         </button>
+        {!!threads?.length && (
+          <label className="flex items-center gap-2 rounded-lg border border-border bg-surface px-2.5 focus-within:border-accent">
+            <Search className="size-3.5 shrink-0 text-muted" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="履歴を検索"
+              aria-label="チャット履歴を検索"
+              className="h-8 min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted"
+            />
+          </label>
+        )}
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
         {threads?.length === 0 && <p className="px-2.5 py-2 text-xs text-muted">まだ履歴はありません。</p>}
+        {hits && !shown.length && <p className="px-2.5 py-2 text-xs text-muted">「{query.trim()}」を含むチャットはありません。</p>}
         {groups.map((g) => (
           <div key={g.label} className="mb-3">
-            <div className="px-2.5 py-1 text-[11px] font-medium text-muted">{g.label}</div>
+            <div className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium text-muted">
+              {g.label === 'ピン留め' && <Pin className="size-3" />}
+              {g.label}
+            </div>
             {g.items.map((t) => (
-              <ThreadItem key={t.id} t={t} active={t.id === current} onPick={onPick} />
+              <ThreadItem key={t.id} t={t} active={t.id === current} onPick={onPick} snippet={hits?.get(t.id)} />
             ))}
           </div>
         ))}
       </div>
       {!!threads?.length && (
-        <div className="flex items-center justify-between border-t border-border px-4 py-2 text-[11px] text-muted">
+        <div className="flex items-center justify-between gap-2 border-t border-border px-4 py-2 text-[11px] text-muted">
           <span>
-            {threads.length} / {MAX_THREADS} 件を保存
+            {threads.length - pinnedCount} / {MAX_THREADS} 件を保存{pinnedCount ? `・ピン留め ${pinnedCount} 件（別枠）` : ''}
           </span>
           <button
             type="button"
-            className="hover:text-danger"
+            className="shrink-0 hover:text-danger"
             onClick={async () => {
-              if (!confirm('すべてのチャット履歴を削除しますか？')) return
+              if (!confirm(`すべてのチャット履歴を削除しますか？${pinnedCount ? `（ピン留めした ${pinnedCount} 件も削除されます）` : ''}`)) return
               await deleteAllThreads()
               onPick(null)
             }}
