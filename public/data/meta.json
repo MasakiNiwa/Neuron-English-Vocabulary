@@ -1,6 +1,6 @@
 {
- "version": "45b0fe8a05ce",
- "generatedAt": "2026-11-07T00:18:06.206045+00:00",
+ "version": "693617d8967a",
+ "generatedAt": "2026-11-07T00:42:36.856275+00:00",
  "sources": {
   "files": [
    {
@@ -54,7 +54,7 @@
   "phrases": 1331,
   "morphemes": 478,
   "withParts": 6778,
-  "withExamples": 10387,
+  "withExamples": 10621,
   "pieRoots": 92,
   "withNote": 12211,
   "manualParts": 3518,

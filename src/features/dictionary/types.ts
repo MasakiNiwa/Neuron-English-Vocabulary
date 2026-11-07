@@ -40,8 +40,10 @@ export interface Part {
 export interface Example {
   en: string
   ja: string
-  /** Tatoeba の文ID */
+  /** Tatoeba の文ID（オリジナル例文は負の数） */
   id: number
+  /** 1 = このアプリのオリジナル例文（Tatoeba に適切な例文がない語に追加） */
+  o?: 1
 }
 
 export interface Entry {
