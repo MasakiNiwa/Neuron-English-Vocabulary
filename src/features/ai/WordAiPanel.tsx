@@ -10,7 +10,7 @@ import { resolveRoute, useAiConfig } from './config'
 import { addExtra, extractJson, extraPrompt, moveExtra, removeExtra, sanitizeExtra } from './extras'
 import { ModelSelect } from './ModelSelect'
 import { markInternalAsk } from './internalAsk'
-import { INCOMPLETE_LABEL } from './providers'
+import { describeAiError, INCOMPLETE_LABEL } from './providers'
 import { AiNotReadyError, runTask } from './service'
 import { UnlockPanel } from './UnlockPanel'
 
@@ -173,7 +173,7 @@ export function WordAiPanel({ entryKey }: { entryKey: string }) {
     } catch (e) {
       if (ac.signal.aborted) return
       if (e instanceof AiNotReadyError && e.reason === 'locked') setNeedUnlock(true)
-      else setError(e instanceof SyntaxError ? '解説の形式を読み取れませんでした。もう一度お試しください' : e instanceof Error ? e.message : String(e))
+      else setError(e instanceof SyntaxError ? '解説の形式を読み取れませんでした。もう一度お試しください' : e instanceof AiNotReadyError ? e.message : describeAiError(e))
     } finally {
       if (abortRef.current === ac) abortRef.current = null
       setBusy(false)

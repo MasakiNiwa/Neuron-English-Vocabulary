@@ -118,8 +118,63 @@ async function* readSSE(res: Response): AsyncGenerator<Record<string, unknown>> 
   }
 }
 
+/** AI サービスが返したエラー（HTTP の状態コードつき） */
+export class AiHttpError extends Error {
+  constructor(
+    public status: number,
+    body: string,
+  ) {
+    super(`${status}: ${body.slice(0, 300)}`)
+  }
+}
+
 async function ensureOk(res: Response) {
-  if (!res.ok) throw new Error(`${res.status}: ${(await res.text()).slice(0, 300)}`)
+  if (!res.ok) throw new AiHttpError(res.status, await res.text())
+}
+
+/** 混雑・上限（429）やサーバーの一時的な不調（5xx）として、少し待てば通ることが多い状態コード */
+const RETRYABLE = new Set([429, 500, 502, 503, 504])
+const sleep = (ms: number, signal?: AbortSignal | null) =>
+  new Promise<void>((resolve, reject) => {
+    const t = setTimeout(resolve, ms)
+    signal?.addEventListener('abort', () => (clearTimeout(t), reject(new DOMException('Aborted', 'AbortError'))), { once: true })
+  })
+
+/**
+ * 応答が始まる前の一時的なエラー（混雑・回数制限・通信の瞬断）は、間を空けて 2 回まで自動でやり直す。
+ * 応答の途中で切れた場合はやり直さない（同じ文が二重に届くため）
+ */
+export async function fetchRetry(url: string, init: RequestInit, waits = [1500, 4000]): Promise<Response> {
+  for (let attempt = 0; ; attempt++) {
+    let res: Response | null = null
+    try {
+      res = await fetch(url, init)
+    } catch (e) {
+      // 中止は即座に終える。それ以外（オフライン・接続の失敗）はやり直す
+      if (init.signal?.aborted || attempt >= waits.length) throw e
+    }
+    if (res && (res.ok || !RETRYABLE.has(res.status) || attempt >= waits.length)) return res
+    // Retry-After（秒）があれば従う（長すぎる場合は待たずに諦める）
+    const after = Number(res?.headers.get('retry-after'))
+    const wait = after > 0 ? after * 1000 : waits[attempt]
+    if (wait > 10_000) return res!
+    await sleep(wait, init.signal)
+  }
+}
+
+/** エラーを、学習者が次に何をすればよいか分かる言葉にする */
+export function describeAiError(e: unknown): string {
+  const status = e instanceof AiHttpError ? e.status : typeof (e as { status?: unknown })?.status === 'number' ? (e as { status: number }).status : 0
+  const raw = e instanceof Error ? e.message : String(e)
+  if (status === 429)
+    return 'AI サービスの回数制限か混雑のため、受け付けられませんでした（無料枠では 1 分・1 日あたりの回数に上限があります）。少し待ってからもう一度試すか、別のモデルを選んでください。'
+  if (status === 503 || status === 529 || status === 502 || status === 504 || status === 500)
+    return `AI サービスが混雑しているか、一時的に不調です（${status}）。少し待ってからもう一度試すか、別のモデルを選んでください。`
+  if (status === 401 || status === 403) return `API キーが無効か、このモデルを使う権限がありません（${status}）。設定の「AI 連携（API）」でキーを確認してください。`
+  if (status === 400 || status === 404) return `モデル名か依頼の内容が受け付けられませんでした（${status}）。別のモデルを選んでください。詳細: ${raw.slice(0, 200)}`
+  if (e instanceof TypeError || /network|Failed to fetch|Load failed|connection/i.test(raw))
+    return '通信エラーで AI につながりませんでした。インターネット接続を確認して、もう一度試してください。'
+  return `エラー: ${raw}`
 }
 
 // ---------------------------------------------------------------- Claude（公式 SDK）
@@ -203,7 +258,7 @@ async function completeOpenAIResponses(p: CompleteParams) {
   let previous: string | undefined
   let all = ''
   for (let round = 0; round < MAX_ROUNDS; round++) {
-    const res = await fetch('https://api.openai.com/v1/responses', {
+    const res = await fetchRetry('https://api.openai.com/v1/responses', {
       method: 'POST',
       signal: p.signal,
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${p.apiKey}` },
@@ -268,7 +323,7 @@ async function completeOpenAICompat(p: CompleteParams, url: string, extraHeaders
   const tools = p.tools?.map((t) => ({ type: 'function', function: t }))
   let all = ''
   for (let round = 0; round < MAX_ROUNDS; round++) {
-    const res = await fetch(url, {
+    const res = await fetchRetry(url, {
       method: 'POST',
       signal: p.signal,
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${p.apiKey}`, ...extraHeaders },
@@ -337,7 +392,7 @@ async function completeGemini(p: CompleteParams) {
   const model = p.model.replace(/^models\//, '')
   let all = ''
   for (let round = 0; round < MAX_ROUNDS; round++) {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse`, {
+    const res = await fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse`, {
       method: 'POST',
       signal: p.signal,
       headers: { 'Content-Type': 'application/json', 'x-goog-api-key': p.apiKey },
