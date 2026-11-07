@@ -3145,6 +3145,15 @@ hindsight	In hindsight, I should have taken the job.	今にして思えば、そ
 farce	The trial was a complete farce.	その裁判はまったくの茶番だった。
 informant	The police received a tip from an informant.	警察は情報提供者から情報を得た。
 saviour	The goalkeeper was the saviour of the team.	ゴールキーパーがチームの救世主だった。
+crucified	According to the Bible, Jesus was crucified in Jerusalem.	聖書によれば、イエスはエルサレムで十字架にかけられた。
+crucified	The critics crucified his new movie.	批評家たちは彼の新作映画を酷評した。
+merciful	The judge was merciful and gave him a light sentence.	裁判官は情け深く、彼に軽い判決を言い渡した。
+exporter	Japan is a major exporter of cars.	日本は自動車の主要な輸出国だ。
+inaccessible	The village is inaccessible by car in winter.	その村は冬には車で行けなくなる。
+burrow	Rabbits live in burrows under the ground.	ウサギは地下の巣穴に住んでいる。
+motorist	Motorists are advised to drive carefully in the snow.	運転者は雪の中では慎重に運転するよう呼びかけられている。
+tempest	The ship was lost in a tempest.	その船は大嵐の中で行方不明になった。
+unsettling	There was something unsettling about the silence.	その静けさにはどこか不穏なものがあった。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
