@@ -3063,6 +3063,20 @@ porcelain	She collects antique porcelain from China.	彼女は中国の古い磁
 attendee	Each attendee will receive a free notebook.	参加者全員に無料のノートが配られる。
 deity	The ancient Greeks worshipped many deities.	古代ギリシャ人は多くの神々を崇拝していた。
 messiah	Many people saw the new coach as a messiah who would save the team.	多くの人が新しい監督をチームを救う救世主とみなした。
+dunk	He jumped high and dunked the ball.	彼は高く跳んでボールをダンクシュートした。
+dunk	She likes to dunk her cookies in milk.	彼女はクッキーを牛乳に浸して食べるのが好きだ。
+lax	Security at the airport was surprisingly lax.	空港の警備は驚くほど手ぬるかった。
+Arabian	The Arabian Peninsula is mostly desert.	アラビア半島の大部分は砂漠だ。
+celestial	The sun, moon, and stars are celestial bodies.	太陽、月、星は天体である。
+conversely	Some people like hot weather; conversely, others prefer the cold.	暑い気候が好きな人もいれば、逆に寒いほうが好きな人もいる。
+spooky	The old house looks spooky at night.	その古い家は夜になると不気味に見える。
+televised	The final match will be televised live.	決勝戦はテレビで生中継される。
+erection	The erection of the new bridge took two years.	新しい橋の建設には2年かかった。
+mediocre	The food at that restaurant is mediocre at best.	あのレストランの料理はせいぜい並みといったところだ。
+coastline	The country has a long, beautiful coastline.	その国には長く美しい海岸線がある。
+foe	He was a dangerous foe in the ring.	リングの上では彼は手ごわい敵だった。
+jaguar	The jaguar is the largest wild cat in South America.	ジャガーは南米で最も大きい野生のネコ科動物だ。
+symmetry	The building is famous for its perfect symmetry.	その建物は完璧な左右対称で有名だ。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
