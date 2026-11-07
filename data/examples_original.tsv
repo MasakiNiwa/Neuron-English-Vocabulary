@@ -2847,6 +2847,16 @@ lease	We signed a two-year lease on the apartment.	私たちはそのアパー�
 icon	Click the icon to open the app.	アイコンをクリックするとアプリが開きます。
 legislature	The state legislature passed a new law.	州議会は新しい法律を可決した。
 protocol	The hospital follows a strict safety protocol.	その病院は厳格な安全手順に従っている。
+circumcision	Circumcision is a religious custom in some cultures.	割礼は一部の文化で行われる宗教的な慣習だ。
+frenzy	The news caused a buying frenzy at the stores.	そのニュースで店では買いあさりが起きた。
+skull	The museum displays the skull of a dinosaur.	その博物館は恐竜の頭蓋骨を展示している。
+butler	The butler opened the door for the guests.	執事が客のためにドアを開けた。
+duo	The comedy duo performed on TV last night.	そのお笑いコンビは昨夜テレビに出演した。
+hub	The airport is a major hub for flights to Asia.	その空港はアジア行きの便の主要な拠点だ。
+permanently	The store has closed permanently.	その店は永久に閉店した。
+quantum	He studies quantum physics at university.	彼は大学で量子物理学を研究している。
+herpes	Herpes is a common skin infection caused by a virus.	ヘルペスはウイルスによって起こるよくある皮膚の感染症だ。
+archive	The newspaper keeps an archive of old articles.	その新聞社は古い記事を保管している。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
