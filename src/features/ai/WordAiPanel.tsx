@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { trackEvent } from '@/lib/goatcounter'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { ChevronLeft, ChevronRight, Loader2, Plus, Sparkles, Square, Trash2 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
@@ -157,6 +158,7 @@ export function WordAiPanel({ entryKey }: { entryKey: string }) {
     const ac = new AbortController()
     abortRef.current = ac
     try {
+      trackEvent('ai-word')
       const res = await runTask({
         messages: [{ role: 'user', content: extraPrompt(headword(entryKey)) }],
         about: entryKey,

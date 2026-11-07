@@ -183,6 +183,19 @@ export function SettingsPage() {
           <p className="-mt-1 text-xs text-muted">
             「表示しない」（既定）では、センシティブな単語を一覧・検索・つながり・学習・分析などアプリのどこにも出しません。切り替えるとアプリを読み込み直します。
           </p>
+          <Row label="アクセス数の計測に協力する">
+            <Segmented
+              value={s.analytics ? 'on' : 'off'}
+              onChange={(v) => s.set('analytics', v === 'on')}
+              options={[
+                { value: 'on', label: '協力する' },
+                { value: 'off', label: '協力しない' },
+              ]}
+            />
+          </Row>
+          <p className="-mt-1 text-xs text-muted">
+            アプリの改善のため、開いた画面の種類（単語・学習・AI など）と AI 機能を使った回数だけを GoatCounter に送ります。単語名・学習内容・個人を特定する情報は送りません。
+          </p>
         </AccordionSection>
 
         <AccordionSection value="speech" title={t('settings.speech')} icon={<Volume2 className="size-5" />}>
