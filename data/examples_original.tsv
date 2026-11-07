@@ -3077,6 +3077,18 @@ coastline	The country has a long, beautiful coastline.	その国には長く美�
 foe	He was a dangerous foe in the ring.	リングの上では彼は手ごわい敵だった。
 jaguar	The jaguar is the largest wild cat in South America.	ジャガーは南米で最も大きい野生のネコ科動物だ。
 symmetry	The building is famous for its perfect symmetry.	その建物は完璧な左右対称で有名だ。
+seductive	The smell of fresh bread was very seductive.	焼きたてのパンの匂いはとても魅惑的だった。
+ceremonial	The king wore a ceremonial robe.	王は儀式用の衣をまとっていた。
+galactic	The movie is about a galactic war between two empires.	その映画は二つの帝国の銀河規模の戦争を描いている。
+simulated	Pilots train in a simulated cockpit.	パイロットは模擬操縦室で訓練を受ける。
+ordained	He was ordained as a priest last year.	彼は昨年、司祭に任命された。
+espionage	He was arrested on charges of espionage.	彼はスパイ容疑で逮捕された。
+intrigued	I was intrigued by her story.	私は彼女の話に興味をそそられた。
+teaser	The studio released a short teaser for the new film.	映画会社は新作映画の短い予告映像を公開した。
+trivia	He knows a lot of trivia about baseball.	彼は野球の雑学にとても詳しい。
+apostle	He was an apostle of free trade.	彼は自由貿易の熱心な提唱者だった。
+disruptive	The disruptive student was sent out of the classroom.	授業を妨害した生徒は教室から出された。
+obscene	He earns an obscene amount of money.	彼はとんでもない額のお金を稼いでいる。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。
