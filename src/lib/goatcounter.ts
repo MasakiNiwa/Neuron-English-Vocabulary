@@ -88,3 +88,24 @@ export function trackEvent(name: string) {
   send({ path: name, event: true })
   flushWhenReady()
 }
+
+const COUNTER_BASE = 'https://masaki28.goatcounter.com/counter/'
+
+/** 公開されている訪問者数を取得する（GoatCounter の設定「Allow adding visitor counts」）。まだ記録がない画面・イベントは 0。取得できなければ null */
+export async function fetchVisitorCount(path: string, start?: string): Promise<number | null> {
+  const name = path === 'TOTAL' ? 'TOTAL' : encodeURIComponent(path)
+  const url = `${COUNTER_BASE}${name}.json${start ? `?start=${start}` : ''}`
+  try {
+    const res = await fetch(url)
+    if (res.status === 404) return 0
+    if (!res.ok) return null
+    const j = (await res.json()) as { count?: string }
+    const n = Number(String(j.count ?? '').replace(/[^\d]/g, ''))
+    return Number.isFinite(n) ? n : null
+  } catch {
+    return null
+  }
+}
+
+/** AI 機能のイベント名（trackEvent で送っているもの） */
+export const AI_EVENTS = ['ai-chat', 'ai-advice', 'ai-word'] as const
