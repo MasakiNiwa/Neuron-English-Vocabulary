@@ -346,6 +346,7 @@ function EntryView({ entryKey }: { entryKey: string }) {
                     <LinkedText text={ex.en} highlight={hl} />
                   </p>
                   <p className="mt-0.5 text-sm text-muted">{ex.ja}</p>
+                  {ex.o === 1 && <p className="mt-1 text-[10px] text-muted">アプリのオリジナル例文</p>}
                 </SpeakableRow>
               </Card>
             ))}
