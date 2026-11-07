@@ -134,3 +134,28 @@ export function buildHints(answer: string, entry: Entry, dict: Dictionary): { la
   if (letters >= 3) hints.push({ label: '前半の文字', text: letterHint(answer, 'half') })
   return hints
 }
+
+/** 日本語の意味をそろえる（括弧書き・〜・記号・空白を除く） */
+function normJa(s: string) {
+  return s
+    .replace(/[（(][^）)]*[）)]/g, '')
+    .replace(/[〜~～…・「」『』、。,.!?！？\s]/g, '')
+    .toLowerCase()
+}
+
+/**
+ * 回答メモ（日本語）と辞書の訳語の答え合わせ。メモを読点・空白などで区切り、
+ * 訳語と同じか、2 文字以上でどちらかがもう一方を含むものを「合っている訳語」として返す（評価は学習者が決める）
+ */
+export function matchMeanings(memo: string, meanings: string[]): string[] {
+  const parts = memo
+    .split(/[、,，・/／\s]+/)
+    .map(normJa)
+    .filter((p) => p.length >= 1)
+  if (!parts.length) return []
+  return meanings.filter((m) => {
+    const n = normJa(m)
+    if (!n) return false
+    return parts.some((p) => p === n || (Math.min(p.length, n.length) >= 2 && (n.includes(p) || p.includes(n))))
+  })
+}

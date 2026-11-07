@@ -2,7 +2,7 @@ import { Eye, ListChecks } from 'lucide-react'
 import { SpeakPrompt, suggestFromScore } from './SpeakPrompt'
 import { SpeakCheck } from '@/features/speech/SpeakCheck'
 import { reduceMotion } from '@/lib/motion'
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { PageSpinner } from '@/components/ui/Spinner'
@@ -15,6 +15,11 @@ import { formatInterval, previewIntervals, Rating, review, type Grade } from './
 import { ChoicePrompt, ClozePrompt, findCloze, JaPrompt, pickFormat, type ConcreteFormat } from './formats'
 import { ListenPrompt } from './ListenPrompt'
 import { ProduceAnswer } from './ProduceAnswer'
+import { MemoField, MemoResult, type Attempt } from './AnswerMemo'
+import { buildAdvicePrompt } from './advice'
+
+// AI のアドバイス（AI の部品は大きいので、答えを見たときに読み込む）
+const StudyAdvice = lazy(() => import('./StudyAdvice'))
 
 /** 表面に見出し語が出る（最初に読み上げても答えにならない）形式 */
 const SPEAK_FIRST = new Set<ConcreteFormat>(['en2ja', 'choice'])
@@ -338,6 +343,9 @@ function CardFace({
   const fmt = useMemo(() => pickFormat(formats, auto, entry, card), [entry])
   useEffect(() => onFormat(fmt), [fmt, onFormat])
   const [answered, setAnswered] = useState<number | null>(null)
+  // 自分の答え（メモ・書いた答え・話した答え・選んだ答え）
+  const [attempt, setAttempt] = useState<Attempt>({ memo: '' })
+  const addAttempt = useCallback((a: Partial<Attempt>) => setAttempt((x) => ({ ...x, ...a })), [])
   // 聞いて意味: 答えを見る か 4 択で答える
   const [listenChoice, setListenChoice] = useState(false)
   const head = entryKey.replace(/_/g, ' ')
@@ -365,6 +373,7 @@ function CardFace({
           target={head}
           mode="speak"
           onResult={(r) => {
+            addAttempt({ spoken: { heard: r.heard, score: r.score } })
             const s = suggestFromScore(r.score)
             onSuggest(s === 'good' ? Rating.Good : s === 'hard' ? Rating.Hard : Rating.Again)
             navigator.vibrate?.(s === 'again' ? [20, 40, 20] : 10)
@@ -385,18 +394,30 @@ function CardFace({
           onSuggest={onSuggest}
           initialMode={fmt === 'dictation' ? 'write' : null}
           allowSpeak={fmt !== 'dictation'}
+          onAttempt={addAttempt}
         />
       )}
       {entry && (fmt === 'choice' || (fmt === 'listen' && listenChoice)) && (
         <ChoicePrompt
           entry={entry}
           answered={answered}
-          onAnswer={(i, correct) => {
+          onAnswer={(i, correct, text) => {
             setAnswered(i)
+            addAttempt({ choice: { text, correct } })
             onSuggest(correct ? Rating.Good : Rating.Again)
             navigator.vibrate?.(correct ? 10 : [20, 40, 20])
             onReveal()
           }}
+        />
+      )}
+      {!shown && (
+        // 回答メモ。意味を答える形式（英→日・聞いて意味）では最初から出し、Enter で答えを確認する
+        <MemoField
+          key={`${entryKey}-${fmt}`}
+          value={attempt.memo}
+          onChange={(memo) => addAttempt({ memo })}
+          primary={fmt === 'en2ja' || (fmt === 'listen' && !listenChoice)}
+          onSubmit={fmt === 'en2ja' || (fmt === 'listen' && !listenChoice) ? onReveal : undefined}
         />
       )}
       {!shown && fmt === 'speak' && (
@@ -412,7 +433,7 @@ function CardFace({
       {!shown && fmt === 'listen' && !listenChoice && (
         <div className="flex w-full max-w-xs flex-col gap-2">
           <Button variant="primary" size="lg" onClick={onReveal}>
-            <Eye className="size-5" /> 答えを見る
+            <Eye className="size-5" /> {attempt.memo.trim() ? '答えを確認' : '答えを見る'}
           </Button>
           <Button onClick={() => setListenChoice(true)}>
             <ListChecks className="size-4" /> 4択で答える
@@ -423,7 +444,7 @@ function CardFace({
       {!shown && fmt === 'en2ja' && (
         <>
           <Button variant="primary" size="lg" className="mt-2 w-full max-w-xs" onClick={onReveal}>
-            <Eye className="size-5" /> 答えを見る
+            <Eye className="size-5" /> {attempt.memo.trim() ? '答えを確認' : '答えを見る'}
           </Button>
           <span className="hidden text-[11px] text-muted md:block">Space</span>
         </>
@@ -434,7 +455,19 @@ function CardFace({
             // 発音で答える形式以外でも、答えを見たあとに発音を試せる
             <PracticeSpeak target={head} />
           )}
+          {entry && <MemoResult memo={attempt.memo} entry={entry} format={fmt} />}
           <CardBack entryKey={entryKey} />
+          {entry && (
+            <div className="mt-3">
+              <Suspense fallback={null}>
+                <StudyAdvice
+                  about={entryKey}
+                  title={`${head} の答え合わせ`}
+                  prompt={() => buildAdvicePrompt({ head, format: fmt, entry, attempt, answer, sentence: cloze?.ex.en })}
+                />
+              </Suspense>
+            </div>
+          )}
         </div>
       )}
     </>
