@@ -44,7 +44,6 @@ function expand(root: HTMLElement): Saved[] {
     return {
       el,
       clipped: el.scrollHeight > el.clientHeight + 1 && cs.overflowY !== 'visible',
-      fixedHeight: el.scrollHeight > el.clientHeight + 1 && cs.display !== 'inline',
       pinned: cs.position === 'sticky' || cs.position === 'fixed',
       hidden: cs.display === 'none' || cs.visibility === 'hidden',
       skip: el.hasAttribute('data-screenshot-skip'),
@@ -80,7 +79,7 @@ function expand(root: HTMLElement): Saved[] {
       continue
     }
     if (p.hidden || p.keep) continue
-    if (p.clipped || p.fixedHeight) {
+    if (p.clipped) {
       loosen(p.el)
       p.el.style.overflow = 'visible'
     }
@@ -155,31 +154,76 @@ function stamp(): string {
   return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}`
 }
 
+/** 固定の秒数ではなく、フォントと展開後のレイアウトを待つ。無限には待たない。 */
+async function waitForLayout(root: HTMLElement): Promise<void> {
+  await new Promise<void>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('Screenshot fonts are still loading')), 5000)
+    Promise.resolve(document.fonts?.ready).then(() => {
+      clearTimeout(timer)
+      resolve()
+    }, (error: unknown) => {
+      clearTimeout(timer)
+      reject(error)
+    })
+  })
+  await new Promise<void>((resolve, reject) => {
+    let frame = 0
+    let previous = ''
+    let stable = 0
+    const timer = setTimeout(() => {
+      cancelAnimationFrame(frame)
+      reject(new Error('Screenshot layout did not settle'))
+    }, 3000)
+    const check = () => {
+      // 全体の高さが同じでも語群内だけで折り返しが変わる場合を含める。
+      const sizes = [root, ...root.querySelectorAll<HTMLElement>('[data-screenshot-word-pair]')]
+        .map((el) => {
+          const rect = el.getBoundingClientRect()
+          return `${rect.x},${rect.y},${rect.width},${rect.height},${el.scrollWidth},${el.scrollHeight}`
+        }).join(';')
+      stable = sizes === previous ? stable + 1 : 0
+      previous = sizes
+      if (stable >= 3) {
+        clearTimeout(timer)
+        resolve()
+      } else frame = requestAnimationFrame(check)
+    }
+    frame = requestAnimationFrame(check)
+  })
+}
+
+let capturing = false
+
 /** 画像を作る（保存はしない）。テスト・確認用にも使う */
 export async function capturePage(format: ScreenshotFormat = useSettings.getState().screenshotFormat): Promise<Blob> {
-  const main = document.querySelector<HTMLElement>('main')
-  const shell = document.getElementById('app-shell')
-  const root = useSettings.getState().screenshotChrome && shell ? shell : main
-  if (!root || !main) throw new Error('page not found')
-  const { domToBlob } = await import('modern-screenshot')
+  // 同時実行で別の撮影の途中に style を戻さない。
+  if (capturing) throw new Error('Screenshot already in progress')
+  capturing = true
+  const saved: Saved[] = []
   const scrollY = window.scrollY
-  const unfreeze = await freezeCanvases(root)
-  document.documentElement.classList.add('nev-capturing')
-  const saved = expand(root)
-  // 下のナビゲーションバーのための余白は要らない
-  saved.push({ el: main, style: main.getAttribute('style') })
-  main.style.paddingBottom = '16px'
-  // 画面の高さに合わせた最小の高さは要らない（短いページの下が空かないように）
-  if (root !== main) {
-    saved.push({ el: root, style: root.getAttribute('style') })
-    root.style.minHeight = '0'
-  }
+  let unfreeze = () => {}
   try {
-    // 広げたあとの大きさで撮る
+    const main = document.querySelector<HTMLElement>('main')
+    const shell = document.getElementById('app-shell')
+    const root = useSettings.getState().screenshotChrome && shell ? shell : main
+    if (!root || !main) throw new Error('page not found')
+    const { domToBlob } = await import('modern-screenshot')
+    document.documentElement.classList.add('nev-capturing')
+    // 展開に関係のない inline 文字の高さには触らず、スクロール領域を広げる。
+    saved.push(...expand(root))
+    saved.push({ el: main, style: main.getAttribute('style') })
+    main.style.paddingBottom = '16px'
+    if (root !== main) {
+      saved.push({ el: root, style: root.getAttribute('style') })
+      root.style.minHeight = '0'
+    }
+    await waitForLayout(root)
+    unfreeze = await freezeCanvases(root)
     const width = root.scrollWidth
     const height = root.scrollHeight
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
-    const scale = Math.max(0.5, Math.min(dpr, Math.sqrt(MAX_AREA / (width * height)), MAX_SIDE / height, MAX_SIDE / width))
+    // 下限で画素数・辺長の上限を破らない（非常に長いページも含む）。
+    const scale = Math.min(dpr, Math.sqrt(MAX_AREA / (width * height)), MAX_SIDE / height, MAX_SIDE / width)
     const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#ffffff'
     return await domToBlob(root, {
       type: MIME[format],
@@ -188,13 +232,21 @@ export async function capturePage(format: ScreenshotFormat = useSettings.getStat
       width,
       height,
       backgroundColor: bg,
-      // 読み込みに時間のかかる外部の画像などで止まらないように
+      // コピーされた小数幅で再折り返しせず、単語と訳の内容から幅を計算する。
+      onCloneEachNode(node) {
+        if (!(node instanceof HTMLElement) || !node.hasAttribute('data-screenshot-word-pair')) return
+        node.style.width = 'auto'
+        for (const child of node.children) {
+          if (child instanceof HTMLElement) child.style.width = 'auto'
+        }
+      },
       timeout: 15000,
     })
   } finally {
-    restore(saved)
     unfreeze()
+    restore(saved)
     document.documentElement.classList.remove('nev-capturing')
+    capturing = false
     window.scrollTo({ top: scrollY })
   }
 }

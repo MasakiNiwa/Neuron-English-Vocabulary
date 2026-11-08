@@ -142,7 +142,7 @@ function SameRoot({ entry }: { entry: Entry }) {
                 .filter((w) => w !== entry.k)
                 .slice(0, 14)
                 .map((w) => (
-                  <span key={w} className="text-sm">
+                  <span key={w} className="text-sm" data-screenshot-word-pair>
                     <EntryLink k={w} className="font-en" />
                     <span className="ml-1 text-xs text-muted">{dict.byKey.get(w)?.gloss.split('、')[0]}</span>
                   </span>

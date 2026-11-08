@@ -191,3 +191,27 @@ body {
   background: transparent !important;
   color: var(--muted) !important;
 }
+
+/* 撮影中だけ動きを止め、単語と訳を一まとまりにする。通常の表示には影響させない。 */
+.nev-capturing *,
+.nev-capturing *::before,
+.nev-capturing *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+.nev-capturing [data-screenshot-word-pair] {
+  display: inline-flex;
+  align-items: baseline;
+  flex-shrink: 0;
+  max-width: 100%;
+  gap: 0.25rem;
+}
+.nev-capturing [data-screenshot-word-pair] > a {
+  flex-shrink: 0;
+}
+.nev-capturing [data-screenshot-word-pair] > span {
+  margin-left: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
