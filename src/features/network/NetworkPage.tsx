@@ -1,7 +1,7 @@
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { ArrowLeftRight, Compass, Dices, Download, ExternalLink, Map as MapIcon, Maximize2, Route, SlidersHorizontal, Target, X } from 'lucide-react'
-import { Suspense, use, useEffect, useMemo, useState } from 'react'
+import { ArrowLeftRight, ChevronDown, Compass, Dices, ExternalLink, Maximize2, SlidersHorizontal, Target, X } from 'lucide-react'
+import { Suspense, use, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Segmented } from '@/components/ui/Form'
 import { SearchField } from '@/components/ui/SearchField'
@@ -15,11 +15,10 @@ import { db } from '@/lib/db'
 import { usePersistentState } from '@/lib/persist'
 import { useResolvedTheme } from '@/lib/theme'
 import { buildEntryGraph, buildMorphGraph, buildMorphemeMap, buildPathGraph, DENSITY_SCALE, EDGE_LABEL, readPalette, type Density, type EdgeKind, type NetGraph, type NodeAttrs } from './graph'
-import { saveGraphImage } from './exportImage'
 import { findPath } from './path'
 import { markVisited, useVisitedMorphs } from './visited'
 import { FocusPicker, randomFocus } from './FocusPicker'
-import { SigmaGraph, type SigmaRenderer } from './SigmaGraph'
+import { SigmaGraph } from './SigmaGraph'
 import type { NetworkSearch } from './search'
 
 const KIND_LABEL: Record<string, string> = {
@@ -112,20 +111,18 @@ function EgoGraph({
   off,
   density,
   onSelect,
-  onReady,
 }: {
   focus: string
   off: ReadonlySet<EdgeKind>
   density: Density
   onSelect: (id: string, a: NodeAttrs) => void
-  onReady: (r: SigmaRenderer | null) => void
 }) {
   const dict = useDictionary()
   const theme = useResolvedTheme()
   const graph = use(egoGraphPromise(dict, theme, focus, density))
   const hidden = useMemo(() => (graph && graph.hasNode(focus) ? egoHidden(graph, focus, off) : null), [graph, focus, off])
   if (!graph) return null
-  return <SigmaGraph graph={graph} onNodeClick={onSelect} labelThreshold={0} hiddenNodes={hidden?.nodes} hiddenEdges={hidden?.edges} onReady={onReady} />
+  return <SigmaGraph graph={graph} onNodeClick={onSelect} labelThreshold={0} hiddenNodes={hidden?.nodes} hiddenEdges={hidden?.edges} />
 }
 
 /** 線の種類ごとの表示のオン・オフ（この中心のグラフにある種類だけ出す） */
@@ -140,7 +137,7 @@ function KindToggles({ focus, off, density, onToggle }: { focus: string; off: Re
   if (kinds.length < 2) return null
   const nothing = graph.hasNode(focus) && egoHidden(graph, focus, off).nodes.size >= graph.order - 1
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-1" aria-label="表示する線の種類">
+    <div className="flex flex-wrap items-center gap-1" aria-label="表示する線の種類">
       <span className="mr-0.5 text-[11px] text-muted">表示：</span>
       {kinds.map((k) => (
         <button
@@ -182,9 +179,9 @@ function ConnectionList({ focus, off, density, onPick }: { focus: string; off: R
   const total = [...groups.values()].reduce((n, l) => n + l.length, 0)
   if (!total) return null
   return (
-    <details className="mt-2 border-t border-border pt-2 text-sm">
+    <details className="border-t border-border pt-2 text-sm">
       <summary className="cursor-pointer select-none text-xs text-muted">つながり一覧（{total}）</summary>
-      <div className="mt-2 flex max-h-56 flex-col gap-2 overflow-y-auto">
+      <div className="mt-2 flex max-h-40 flex-col gap-2 overflow-y-auto md:max-h-56">
         {[...groups].map(([kind, list]) => (
           <section key={kind}>
             <h3 className="mb-1 text-[11px] font-medium text-muted">{EDGE_LABEL[kind]}</h3>
@@ -328,28 +325,77 @@ function MapFilterPanel({
   )
 }
 
-/** いま表示している図を画像で保存するボタン */
-function SaveImageButton({ renderer, name }: { renderer: SigmaRenderer | null; name: string }) {
-  const [busy, setBusy] = useState(false)
+/**
+ * つながりページの枠: 上に道具の行、真ん中に図、下にパネル。
+ * スマホではパネルを図の下に置いて図と重ねない（折りたためる）。広い画面では図の右下に浮かべる
+ */
+function Frame({ toolbar, below, overlay, panel, children }: { toolbar: ReactNode; below?: ReactNode; overlay?: ReactNode; panel?: ReactNode; children: ReactNode }) {
   return (
-    <button
-      type="button"
-      disabled={!renderer || busy}
-      onClick={async () => {
-        if (!renderer) return
-        setBusy(true)
-        try {
-          await saveGraphImage(renderer, name)
-        } finally {
-          setBusy(false)
-        }
-      }}
-      aria-label="図を画像で保存"
-      title="図を画像で保存"
-      className="inline-flex h-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface/95 px-2.5 text-sm disabled:opacity-50"
-    >
-      <Download className="size-4" />
-    </button>
+    <div data-screenshot-keep className="flex h-[calc(100dvh-3.5rem-3.5rem-env(safe-area-inset-bottom))] flex-col md:h-[calc(100dvh-3.5rem)]">
+      <div className="flex items-center gap-2 border-b border-border px-3 py-2 md:px-5">{toolbar}</div>
+      {below}
+      <div className="relative flex min-h-0 flex-1 flex-col">
+        <div className="relative min-h-0 flex-1 overflow-hidden">
+          <Suspense fallback={<PageSpinner />}>{children}</Suspense>
+          {overlay}
+        </div>
+        {panel && (
+          <div className="shrink-0 border-t border-border bg-surface px-3 py-2 md:absolute md:bottom-4 md:right-4 md:w-96 md:rounded-2xl md:border md:bg-surface/95 md:p-3 md:shadow-lg md:backdrop-blur">
+            {panel}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+/** 折りたためるパネル: いつも見える 1 行（summary）と、開いたときだけの中身。開け閉めは覚えておく */
+function Collapsible({ storageKey, summary, children }: { storageKey: string; summary: ReactNode; children?: ReactNode }) {
+  const [open, setOpen] = usePersistentState(storageKey, true)
+  return (
+    <div>
+      <div className="flex items-center gap-2">
+        <div className="min-w-0 flex-1">{summary}</div>
+        {children && (
+          <button
+            type="button"
+            onClick={() => setOpen(!open)}
+            aria-expanded={open}
+            aria-label={open ? 'パネルをたたむ' : 'パネルを開く'}
+            title={open ? 'たたむ' : '開く'}
+            className="-mr-1 shrink-0 rounded-lg p-1.5 text-muted hover:bg-surface-2 hover:text-fg"
+          >
+            <ChevronDown className={cn('size-5 transition-transform', open ? '' : 'rotate-180')} />
+          </button>
+        )}
+      </div>
+      {children && open && <div className="mt-2 flex flex-col gap-2">{children}</div>}
+    </div>
+  )
+}
+
+type NetworkMode = 'ego' | 'map' | 'path'
+
+/** 表示の切り替え（探索・語根マップ・道をつなぐ）。スマホでは短い名前 */
+function ModeSwitch({ mode, onChange }: { mode: NetworkMode; onChange: (m: NetworkMode) => void }) {
+  const both = (short: string, long: string) => (
+    <>
+      <span className="md:hidden">{short}</span>
+      <span className="hidden md:inline">{long}</span>
+    </>
+  )
+  return (
+    <div className="shrink-0 [&_button]:px-2.5 md:[&_button]:px-3">
+      <Segmented<NetworkMode>
+        value={mode}
+        onChange={onChange}
+        options={[
+          { value: 'ego', label: '探索' },
+          { value: 'map', label: both('マップ', '語根マップ') },
+          { value: 'path', label: both('道', '道をつなぐ') },
+        ]}
+      />
+    </div>
   )
 }
 
@@ -375,7 +421,7 @@ function MapSelection({ id, onExplore, onClose }: { id: string; onExplore: () =>
         </div>
       </div>
       <div className="flex shrink-0 flex-col gap-1.5">
-        <button type="button" onClick={onExplore} className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-accent px-3 text-sm text-accent-fg">
+        <button type="button" onClick={onExplore} className="inline-flex h-8 items-center gap-1.5 rounded-xl bg-accent px-3 text-sm text-accent-fg">
           <Compass className="size-4" /> 探索
         </button>
         <Link to="/m/$id" params={{ id: m.id }} className="inline-flex h-8 items-center justify-center gap-1 rounded-xl border border-border px-3 text-xs">
@@ -389,7 +435,7 @@ function MapSelection({ id, onExplore, onClose }: { id: string; onExplore: () =>
   )
 }
 
-function MapView({ onExplore }: { onExplore: (id: string) => void }) {
+function MapView({ modeSwitch, onExplore }: { modeSwitch: ReactNode; onExplore: (id: string) => void }) {
   const dict = useDictionary()
   const theme = useResolvedTheme()
   const graph = useMemo(() => buildMorphemeMap(dict, readPalette()), [dict, theme])
@@ -397,7 +443,6 @@ function MapView({ onExplore }: { onExplore: (id: string) => void }) {
   // 前の版で保存した絞り込みに、新しい項目の既定を足す
   const filter = useMemo(() => ({ ...DEFAULT_FILTER, ...stored }), [stored])
   const visited = useVisitedMorphs()
-  const [renderer, setRenderer] = useState<SigmaRenderer | null>(null)
   const [panelOpen, setPanelOpen] = usePersistentState('network:mapFilterOpen', false)
   const [q, setQ] = useState('')
   const [selected, setSelected] = useState<string | null>(null)
@@ -458,7 +503,54 @@ function MapView({ onExplore }: { onExplore: (id: string) => void }) {
   const selectedVisible = selected && !hiddenNodes.has(selected) ? selected : null
 
   return (
-    <>
+    <Frame
+      toolbar={
+        <>
+          {modeSwitch}
+          <div className="min-w-0 flex-1">
+            <SearchField value={q} onValueChange={setQ} placeholder="検索" className="[&_input]:h-9" />
+          </div>
+          <button
+            type="button"
+            onClick={() => setPanelOpen(!panelOpen)}
+            aria-expanded={panelOpen}
+            aria-label="絞り込み"
+            title="絞り込み"
+            className={cn(
+              'inline-flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-2.5 text-sm',
+              panelOpen ? 'border-accent bg-accent text-accent-fg' : 'border-border bg-surface',
+            )}
+          >
+            <SlidersHorizontal className="size-4" />
+            <span className="hidden sm:inline">絞り込み</span>
+          </button>
+        </>
+      }
+      below={
+        panelOpen && (
+          <div className="max-h-[45dvh] shrink-0 overflow-y-auto border-b border-border bg-surface px-3 py-2.5 md:px-5">
+            <div className="md:max-w-xl">
+              <MapFilterPanel filter={filter} setFilter={setFilter} shown={shown} total={graph.order} visitedCount={visitedCount} rootTotal={rootTotal} />
+            </div>
+          </div>
+        )
+      }
+      overlay={
+        <>
+          {matched && (
+            <div className="pointer-events-none absolute left-3 top-3 rounded-lg bg-surface/95 px-2 py-1 text-[11px] text-muted shadow">
+              {matched.size ? `「${q.trim()}」に当てはまる ${matched.size} 個` : `「${q.trim()}」に当てはまる語根はありません`}
+            </div>
+          )}
+          {!selectedVisible && (
+            <div className="pointer-events-none absolute bottom-2 left-3 flex items-center gap-1.5 rounded-md bg-bg/70 px-1.5 py-0.5 text-[11px] text-muted">
+              <Maximize2 className="size-3.5" /> 語根をタップで選ぶ・ピンチで拡大
+            </div>
+          )}
+        </>
+      }
+      panel={selectedVisible && <MapSelection id={selectedVisible} onExplore={() => onExplore(selectedVisible)} onClose={() => setSelected(null)} />}
+    >
       <SigmaGraph
         graph={graph}
         onNodeClick={(id) => setSelected(id)}
@@ -470,95 +562,51 @@ function MapView({ onExplore }: { onExplore: (id: string) => void }) {
         matched={matched}
         selected={selectedVisible}
         dimmed={dimmed}
-        onReady={setRenderer}
       />
-      <div className="absolute inset-x-3 top-3 flex flex-col gap-2 md:right-auto md:w-96">
-        <div className="flex gap-2">
-          <div className="flex-1">
-            <SearchField value={q} onValueChange={setQ} placeholder="意味で探す（例: 運ぶ・見る）" className="[&_input]:h-9 [&_input]:bg-surface/95" />
-          </div>
-          <button
-            type="button"
-            onClick={() => setPanelOpen(!panelOpen)}
-            aria-expanded={panelOpen}
-            className={cn(
-              'inline-flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-sm',
-              panelOpen ? 'border-accent bg-accent text-accent-fg' : 'border-border bg-surface/95',
-            )}
-          >
-            <SlidersHorizontal className="size-4" /> 絞り込み
-          </button>
-          <SaveImageButton renderer={renderer} name="root-map" />
-        </div>
-        {matched && (
-          <div className="self-start rounded-lg bg-surface/95 px-2 py-1 text-[11px] text-muted shadow">
-            {matched.size ? `「${q.trim()}」に当てはまる ${matched.size} 個` : `「${q.trim()}」に当てはまる語根はありません`}
-          </div>
-        )}
-        {panelOpen && (
-          <div className="rounded-2xl border border-border bg-surface/95 p-3 shadow-lg backdrop-blur">
-            <MapFilterPanel filter={filter} setFilter={setFilter} shown={shown} total={graph.order} visitedCount={visitedCount} rootTotal={rootTotal} />
-          </div>
-        )}
-      </div>
-      {selectedVisible ? (
-        <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-border bg-surface/95 p-3 shadow-lg backdrop-blur md:inset-x-auto md:right-4 md:w-96">
-          <MapSelection id={selectedVisible} onExplore={() => onExplore(selectedVisible)} onClose={() => setSelected(null)} />
-        </div>
-      ) : (
-        <div className="pointer-events-none absolute bottom-3 left-3 flex items-center gap-1.5 text-[11px] text-muted">
-          <Maximize2 className="size-3.5" /> タップで選ぶ・ピンチ・ホイールで拡大
-        </div>
-      )}
-    </>
+    </Frame>
   )
 }
 
+/** 中心の語・語根を 1 行で（種類・見出し・意味・詳細へ） */
 function FocusPanel({ focus }: { focus: string }) {
   const dict = useDictionary()
   const { t } = useTranslation()
+  const linkClass = 'inline-flex h-8 shrink-0 items-center gap-1 rounded-xl bg-accent px-2.5 text-sm text-accent-fg'
+  let kind: string, title: string, sub: string, link: ReactNode
   if (focus.startsWith('m:')) {
     const m = dict.morphById.get(focus.slice(2))
     if (!m) return null
-    return (
-      <div className="flex items-center gap-3">
-        <div className="min-w-0 flex-1">
-          <div className="text-[11px] text-muted">{KIND_LABEL[m.type]}</div>
-          <div className="truncate">
-            <span className="font-en text-lg font-semibold">{morphLabel(m)}</span>
-            <span className="ml-2 text-sm">{m.meaning.ja}</span>
-          </div>
-          <div className="text-xs text-muted">
-            {m.origin} ・ {t('common.count', { count: m.words.length })}
-          </div>
-        </div>
-        <Link
-          to="/m/$id"
-          params={{ id: m.id }}
-          className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-xl bg-accent px-3 text-sm text-accent-fg"
-        >
-          <ExternalLink className="size-4" /> 詳細
-        </Link>
-      </div>
+    kind = `${KIND_LABEL[m.type]} ・ ${m.origin} ・ ${t('common.count', { count: m.words.length })}`
+    title = morphLabel(m)
+    sub = m.meaning.ja
+    link = (
+      <Link to="/m/$id" params={{ id: m.id }} className={linkClass}>
+        <ExternalLink className="size-3.5" /> 詳細
+      </Link>
+    )
+  } else {
+    const key = focus.slice(2)
+    const ie = dict.byKey.get(key)
+    if (!ie) return null
+    kind = ie.type === 'p' ? '熟語' : '単語'
+    title = headword(key)
+    sub = ie.gloss
+    link = (
+      <Link to="/e/$key" params={{ key }} className={linkClass}>
+        <ExternalLink className="size-3.5" /> 詳細
+      </Link>
     )
   }
-  const key = focus.slice(2)
-  const ie = dict.byKey.get(key)
-  if (!ie) return null
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2.5">
       <div className="min-w-0 flex-1">
-        <div className="text-[11px] text-muted">{ie.type === 'p' ? '熟語' : '単語'}</div>
-        <div className="font-en truncate text-lg font-semibold">{headword(key)}</div>
-        <div className="truncate text-sm text-muted">{ie.gloss}</div>
+        <div className="truncate text-[11px] leading-tight text-muted">{kind}</div>
+        <div className="truncate leading-snug">
+          <span className="font-en text-base font-semibold md:text-lg">{title}</span>
+          <span className="ml-2 text-sm text-muted">{sub}</span>
+        </div>
       </div>
-      <Link
-        to="/e/$key"
-        params={{ key }}
-        className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-xl bg-accent px-3 text-sm text-accent-fg"
-      >
-        <ExternalLink className="size-4" /> 詳細
-      </Link>
+      {link}
     </div>
   )
 }
@@ -580,9 +628,9 @@ function FocusSearch({ onPick, placeholder = '単語・語根を探す' }: { onP
   }, [q])
   return (
     <div className="relative">
-      <SearchField value={q} onValueChange={setQ} placeholder={placeholder} className="[&_input]:h-10" />
+      <SearchField value={q} onValueChange={setQ} placeholder={placeholder} className="[&_input]:h-9" />
       {hits.length > 0 && (
-        <ul className="absolute inset-x-0 top-11 z-20 overflow-hidden rounded-xl border border-border bg-surface shadow-lg">
+        <ul className="absolute inset-x-0 top-10 z-30 overflow-hidden rounded-xl border border-border bg-surface shadow-lg">
           {hits.map((h) => {
             const label =
               h.kind === 'morpheme'
@@ -655,7 +703,13 @@ function Trail({ trail, focus, onPick, onClear }: { trail: string[]; focus: stri
     </button>
   )
   return (
-    <nav aria-label="たどった道のり" className={cn('flex items-center gap-1 px-3 py-1.5 text-xs md:px-5', open ? 'flex-wrap' : 'overflow-hidden')}>
+    <nav
+      aria-label="たどった道のり"
+      className={cn(
+        'absolute left-2 top-2 z-10 flex max-w-[calc(100%-1rem)] items-center gap-1 rounded-2xl border border-border bg-surface/90 px-1.5 py-1 text-xs shadow-sm backdrop-blur md:max-w-[60%]',
+        open ? 'flex-wrap' : 'overflow-hidden',
+      )}
+    >
       {hiddenCount > 0 && (
         <button type="button" onClick={() => setOpen(true)} className="shrink-0 rounded-full border border-border px-2 py-0.5 text-muted hover:border-accent" aria-label={`前の ${hiddenCount} 件も表示`}>
           … {hiddenCount}
@@ -731,7 +785,7 @@ function PathEnd({ id, placeholder, onPick, onClear }: { id: string | null; plac
   if (!id) return <FocusSearch onPick={onPick} placeholder={placeholder} />
   const sub = id.startsWith('m:') ? dict.morphById.get(id.slice(2))?.meaning.ja : dict.byKey.get(id.slice(2))?.gloss
   return (
-    <div className="flex h-10 items-center gap-2 rounded-xl border border-border bg-surface px-3">
+    <div className="flex h-9 items-center gap-2 rounded-xl border border-border bg-surface px-3">
       <span className="font-en shrink-0 font-medium">{label(id)}</span>
       <span className="min-w-0 flex-1 truncate text-xs text-muted">{sub}</span>
       <button type="button" onClick={onClear} className="rounded p-0.5 text-muted hover:bg-surface-2" aria-label="選び直す">
@@ -768,53 +822,73 @@ function PathSteps({ path, onPick }: { path: string[]; onPick: (id: string) => v
   )
 }
 
-function PathView({ onExplore }: { onExplore: (id: string) => void }) {
+const narrowQuery = typeof window !== 'undefined' ? window.matchMedia('(max-width: 767px)') : null
+
+/** スマホ幅かどうか */
+function useNarrow() {
+  return useSyncExternalStore(
+    (l) => {
+      narrowQuery?.addEventListener('change', l)
+      return () => narrowQuery?.removeEventListener('change', l)
+    },
+    () => !!narrowQuery?.matches,
+  )
+}
+
+function PathView({ modeSwitch, onExplore }: { modeSwitch: ReactNode; onExplore: (id: string) => void }) {
   const dict = useDictionary()
   const theme = useResolvedTheme()
   const [ends, setEnds] = usePersistentState<[string | null, string | null]>('network:pathEnds', [null, null])
   const [from, to] = ends
   const path = useMemo(() => (from && to ? findPath(dict, from, to) : null), [dict, from, to])
-  const graph = useMemo(() => (path ? buildPathGraph(dict, path, readPalette()) : null), [dict, path, theme])
-  const [renderer, setRenderer] = useState<SigmaRenderer | null>(null)
-  const label = useNodeLabel()
+  const narrow = useNarrow()
+  const graph = useMemo(() => (path ? buildPathGraph(dict, path, readPalette(), narrow) : null), [dict, path, theme, narrow])
+  const iconBtn = 'inline-flex size-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface disabled:opacity-50'
   return (
-    <>
-      {graph && <SigmaGraph graph={graph} onNodeClick={(id) => onExplore(id)} labelThreshold={0} allLabels fitRatio={1.35} onReady={setRenderer} />}
-      <div className="absolute inset-x-3 top-3 flex flex-col gap-2 md:right-auto md:w-[28rem]">
-        <PathEnd id={from} placeholder="はじめの単語・語根" onPick={(id) => setEnds([id, to])} onClear={() => setEnds([null, to])} />
-        <PathEnd id={to} placeholder="つなげたい単語・語根" onPick={(id) => setEnds([from, id])} onClear={() => setEnds([from, null])} />
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => setEnds([to, from])}
-            disabled={!from && !to}
-            className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-border bg-surface/95 px-3 text-sm disabled:opacity-50"
-          >
-            <ArrowLeftRight className="size-4" /> 入れ替え
+    <Frame
+      toolbar={
+        <>
+          {modeSwitch}
+          <div className="flex-1" />
+          <button type="button" onClick={() => setEnds(randomPair(dict))} className={cn(iconBtn, 'w-auto gap-1.5 px-2.5 text-sm')} title="おまかせの 2 語">
+            <Dices className="size-4" /> おまかせ
           </button>
-          <button type="button" onClick={() => setEnds(randomPair(dict))} className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-border bg-surface/95 px-3 text-sm">
-            <Dices className="size-4" /> おまかせの 2 語
-          </button>
-          {graph && <SaveImageButton renderer={renderer} name={`${label(from!) ?? ''}-${label(to!) ?? ''}`} />}
-        </div>
-      </div>
-      <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-border bg-surface/95 p-3 shadow-lg backdrop-blur md:inset-x-auto md:right-4 md:w-[28rem]">
-        {!from || !to ? (
-          <p className="text-sm text-muted">
-            2 つの単語（または語根）を選ぶと、語源のつながりをたどってつなぐ道を探します。例：transport と portable、prediction と dictionary
-          </p>
-        ) : path ? (
-          <>
-            <div className="mb-1.5 text-[11px] text-muted">
-              {path.length <= 1 ? '同じ語です' : `${Math.floor(path.length / 2)} 歩でつながりました（語をタップで探索）`}
+        </>
+      }
+      below={
+        <div className="flex shrink-0 items-center gap-1.5 border-b border-border px-3 py-2 md:px-5">
+          <div className="flex min-w-0 flex-1 flex-col gap-1.5 md:flex-row">
+            <div className="min-w-0 flex-1">
+              <PathEnd id={from} placeholder="はじめの単語・語根" onPick={(id) => setEnds([id, to])} onClear={() => setEnds([null, to])} />
             </div>
-            <PathSteps path={path} onPick={onExplore} />
-          </>
+            <div className="min-w-0 flex-1">
+              <PathEnd id={to} placeholder="つなげたい単語・語根" onPick={(id) => setEnds([from, id])} onClear={() => setEnds([from, null])} />
+            </div>
+          </div>
+          <button type="button" onClick={() => setEnds([to, from])} disabled={!from && !to} className={iconBtn} aria-label="入れ替え" title="入れ替え">
+            <ArrowLeftRight className="size-4 rotate-90 md:rotate-0" />
+          </button>
+        </div>
+      }
+      panel={
+        !from || !to ? (
+          <p className="text-sm text-muted">2 つの単語（または語根）を選ぶと、語源のつながりをたどって道を探します。例：transport と portable</p>
+        ) : path ? (
+          <Collapsible
+            storageKey="network:pathPanelOpen"
+            summary={<div className="text-xs text-muted">{path.length <= 1 ? '同じ語です' : `${Math.floor(path.length / 2)} 歩でつながりました（語をタップで探索）`}</div>}
+          >
+            <div className="max-h-32 overflow-y-auto md:max-h-none">
+              <PathSteps path={path} onPick={onExplore} />
+            </div>
+          </Collapsible>
         ) : (
           <p className="text-sm text-muted">語源のつながりでは、この 2 つをつなぐ道が見つかりませんでした。別の語で試してみてください。</p>
-        )}
-      </div>
-    </>
+        )
+      }
+    >
+      {graph && <SigmaGraph graph={graph} onNodeClick={(id) => onExplore(id)} labelThreshold={0} allLabels fitRatio={narrow ? 1.15 : 1.6} />}
+    </Frame>
   )
 }
 
@@ -834,8 +908,6 @@ function NetworkInner() {
   const [offList, setOffList] = usePersistentState<EdgeKind[]>('network:offKinds', [])
   const off = useMemo(() => new Set(offList), [offList])
   const [density, setDensity] = usePersistentState<Density>('network:density', 'normal')
-  const [renderer, setRenderer] = useState<SigmaRenderer | null>(null)
-  const label = useNodeLabel()
 
   // 中心を覚えて、道のりに足す（道のりにある中心へ戻ったときは、道のりをそのまま残す）。語根なら「語根めぐり」に記録
   useEffect(() => {
@@ -859,81 +931,50 @@ function NetworkInner() {
     setFocus(id)
   }
 
+  const modeSwitch = <ModeSwitch mode={mode} onChange={(m) => void navigate({ to: '/network', search: { focus: search.focus, mode: m === 'ego' ? undefined : m } })} />
+  if (mode === 'map') return <MapView modeSwitch={modeSwitch} onExplore={setFocus} />
+  if (mode === 'path') return <PathView modeSwitch={modeSwitch} onExplore={setFocus} />
+
   return (
-    <div className="flex h-[calc(100dvh-3.5rem-3.5rem-env(safe-area-inset-bottom))] flex-col md:h-[calc(100dvh-3.5rem)]">
-      <div className="flex flex-wrap items-center gap-2 border-b border-border px-3 py-2 md:px-5">
-        <Segmented<'ego' | 'map' | 'path'>
-          value={mode}
-          onChange={(m) => void navigate({ to: '/network', search: { focus: search.focus, mode: m === 'ego' ? undefined : m } })}
-          options={[
-            { value: 'ego', label: '探索' },
-            { value: 'map', label: '語根マップ' },
-            { value: 'path', label: '道をつなぐ' },
-          ]}
-        />
-        {mode !== 'path' && (
-          <div className="flex min-w-48 flex-1 gap-2">
-            <div className="min-w-0 flex-1">
-              <FocusSearch onPick={setFocus} />
-            </div>
-            <FocusPicker onPick={setFocus} />
+    <Frame
+      toolbar={
+        <>
+          {modeSwitch}
+          <div className="min-w-0 flex-1">
+            <FocusSearch onPick={setFocus} placeholder="検索" />
           </div>
-        )}
-      </div>
-      {mode === 'ego' && <Trail trail={trail} focus={focus} onPick={setFocus} onClear={() => setTrail([focus])} />}
-      <div className="relative flex-1 overflow-hidden">
-        <Suspense fallback={<PageSpinner />}>
-          {mode === 'map' ? (
-            <MapView onExplore={setFocus} />
-          ) : mode === 'path' ? (
-            <PathView onExplore={setFocus} />
-          ) : (
-            <EgoGraph focus={focus} off={off} density={density} onSelect={onSelect} onReady={setRenderer} />
-          )}
-        </Suspense>
-        {mode === 'ego' && (
-          <>
-            <div className="pointer-events-none absolute left-3 top-3 hidden items-center gap-1.5 text-[11px] text-muted md:flex">
-              <Target className="size-3.5" />
-              タップで中心を移動・中心をもう一度タップで詳細
-            </div>
-            <div className="pointer-events-none absolute left-3 top-3 md:left-auto md:right-3">
-              <Legend />
-            </div>
-            <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-border bg-surface/95 p-3 shadow-lg backdrop-blur md:inset-x-auto md:right-4 md:w-96">
-              <FocusPanel focus={focus} />
-              <Suspense fallback={null}>
-                <KindToggles
-                  focus={focus}
-                  off={off}
-                  density={density}
-                  onToggle={(k) => setOffList(off.has(k) ? offList.filter((x) => x !== k) : [...offList, k])}
-                />
-                <div className="mt-1.5 flex items-center justify-between gap-2">
-                  <DensityPicker value={density} onChange={setDensity} />
-                  <SaveImageButton renderer={renderer} name={label(focus) ?? 'network'} />
-                </div>
-                <ConnectionList focus={focus} off={off} density={density} onPick={setFocus} />
-              </Suspense>
-            </div>
-          </>
-        )}
-        {mode === 'map' && (
-          <div className="pointer-events-none absolute right-3 top-14 hidden md:block">
-            <span className="inline-flex items-center gap-1.5 text-[11px] text-muted">
-              <MapIcon className="size-3.5" /> 語根を選んで「探索」でつながりへ
-            </span>
-          </div>
-        )}
-        {mode === 'path' && (
+          <FocusPicker onPick={setFocus} />
+        </>
+      }
+      overlay={
+        <>
+          <Trail trail={trail} focus={focus} onPick={setFocus} onClear={() => setTrail([focus])} />
           <div className="pointer-events-none absolute right-3 top-3 hidden md:block">
-            <span className="inline-flex items-center gap-1.5 text-[11px] text-muted">
-              <Route className="size-3.5" /> 語源でつながる道
-            </span>
+            <Legend />
           </div>
-        )}
-      </div>
-    </div>
+          <div className="pointer-events-none absolute bottom-2 left-3 flex items-center gap-1.5 rounded-md bg-bg/70 px-1.5 py-0.5 text-[11px] text-muted">
+            <Target className="size-3.5" />
+            タップで中心を移動・中心をもう一度で詳細
+          </div>
+        </>
+      }
+      panel={
+        <Collapsible storageKey="network:egoPanelOpen" summary={<FocusPanel focus={focus} />}>
+          <Suspense fallback={null}>
+            <KindToggles
+              focus={focus}
+              off={off}
+              density={density}
+              onToggle={(k) => setOffList(off.has(k) ? offList.filter((x) => x !== k) : [...offList, k])}
+            />
+            <DensityPicker value={density} onChange={setDensity} />
+            <ConnectionList focus={focus} off={off} density={density} onPick={setFocus} />
+          </Suspense>
+        </Collapsible>
+      }
+    >
+      <EgoGraph focus={focus} off={off} density={density} onSelect={onSelect} />
+    </Frame>
   )
 }
 

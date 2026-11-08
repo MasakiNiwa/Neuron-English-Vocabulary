@@ -3,7 +3,7 @@ import { onDataOutdated } from '@/features/dictionary/data'
 import { scrollBehavior, useApplyMotion } from '@/lib/motion'
 import { useEffect, useState } from 'react'
 import { warmupSearch } from '@/features/dictionary/search'
-import { CircleHelp, Moon, Sun } from 'lucide-react'
+import { Camera, CircleHelp, LoaderCircle, Moon, Sun } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { IconButton } from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
@@ -28,6 +28,42 @@ function useTabClick(pathname: string) {
   }
 }
 
+/** ヘッダーの「このページを画像で保存」: 今のページ全体を 1 枚の縦長の画像にする */
+function ScreenshotButton() {
+  const { t } = useTranslation()
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState(false)
+  const onClick = async () => {
+    if (busy) return
+    setBusy(true)
+    setError(false)
+    try {
+      const { savePageScreenshot } = await import('@/lib/screenshot')
+      await savePageScreenshot()
+    } catch (e) {
+      console.error(e)
+      setError(true)
+      setTimeout(() => setError(false), 4000)
+    } finally {
+      setBusy(false)
+    }
+  }
+  return (
+    <>
+      <IconButton label={t('header.screenshot')} onClick={() => void onClick()} disabled={busy} aria-busy={busy}>
+        {busy ? <LoaderCircle className="size-5 animate-spin" /> : <Camera className="size-5" />}
+      </IconButton>
+      {(busy || error) && (
+        <div role="status" className="fixed inset-x-0 top-16 z-50 flex justify-center px-4" data-screenshot-skip>
+          <span className="rounded-full border border-border bg-surface px-4 py-2 text-sm shadow-lg">
+            {busy ? '画像を作っています…' : '画像を作れませんでした。もう一度お試しください'}
+          </span>
+        </div>
+      )}
+    </>
+  )
+}
+
 function Header() {
   const { t } = useTranslation()
   const theme = useResolvedTheme()
@@ -38,6 +74,7 @@ function Header() {
         <span>{t('app.name')}</span>
       </Link>
       <div className="flex-1" />
+      <ScreenshotButton />
       <IconButton label={t('header.toggleTheme')} onClick={() => toggleTheme(theme)}>
         {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
       </IconButton>

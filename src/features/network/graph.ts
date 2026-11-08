@@ -253,7 +253,8 @@ export function buildMorphemeMap(dict: Dictionary, pal: Palette, minShared = 1):
 }
 
 /** 2 つの語をつなぐ道（findPath の結果）を、左から右へ並べたグラフ */
-export function buildPathGraph(dict: Dictionary, path: string[], pal: Palette): NetGraph {
+/** vertical: 縦長の画面（スマホ）では、上から下へジグザグに並べる */
+export function buildPathGraph(dict: Dictionary, path: string[], pal: Palette, vertical = false): NetGraph {
   const g: NetGraph = new Graph({ type: 'undirected' })
   let prev: string | null = null
   path.forEach((id, i) => {
@@ -262,7 +263,8 @@ export function buildPathGraph(dict: Dictionary, path: string[], pal: Palette): 
     const n = id.startsWith('m:') ? addMorphNode(g, dict, id.slice(2), pal, size) : addEntryNode(g, dict, id.slice(2), pal, size)
     if (!n) return
     // 横一列だと長い道で文字が重なるので、上下に少しずらす
-    g.mergeNodeAttributes(n, { x: i * 10, y: i % 2 ? -4 : 4, ...(end ? { focus: true } : {}) })
+    const pos = vertical ? { x: i % 2 ? 5 : -5, y: -i * 6 } : { x: i * 10, y: i % 2 ? -4 : 4 }
+    g.mergeNodeAttributes(n, { ...pos, ...(end ? { focus: true } : {}) })
     link(g, prev, n, 'morph', pal, 1)
     prev = n
   })
