@@ -27,8 +27,9 @@ const SECTIONS: [string, string][] = [
 ]
 const AI_LABEL: Record<(typeof AI_EVENTS)[number], string> = {
   'ai-chat': 'AI チャット',
+  'ai-word-ask': '単語について聞く',
   'ai-advice': '学習のアドバイス',
-  'ai-word': '単語ページで聞く',
+  'ai-word': '追加の解説を作成',
 }
 
 interface Usage {
@@ -150,7 +151,7 @@ export function UsagePage() {
           center: ['50%', '44%'],
           itemStyle: { borderColor: c.surface, borderWidth: 3, borderRadius: 6 },
           label: { color: c.fg, formatter: '{c}', fontSize: 11 },
-          data: data?.ai.filter((a) => a.total > 0).map((a, i) => ({ name: a.label, value: a.total, itemStyle: { color: [c.accent, c.root, c.success][i] } })) ?? [],
+          data: data?.ai.filter((a) => a.total > 0).map((a, i) => ({ name: a.label, value: a.total, itemStyle: { color: [c.accent, c.root, c.success, c.warn][i] } })) ?? [],
         },
       ],
     }),
@@ -183,10 +184,8 @@ export function UsagePage() {
               <CalendarDays className="size-4" /> 最近 30 日の推移
             </h2>
             {data ? <EChart option={dailyOpt} height={220} /> : <div className="h-[220px]" />}
-            <p className="mt-1 rounded-lg bg-surface-2 px-2.5 py-2 text-[11px] leading-relaxed text-muted">
-              ⏰ 時差についての注意：集計サービス（GoatCounter）は世界標準時で日付を区切るため、このグラフの 1 日は<strong className="text-fg">日本時間の朝 9 時から翌朝 9 時まで</strong>です。たとえば 11/8 の朝 8 時のアクセスは、11/7 の点に入ります。
-              <br />
-              📊 数え方についての注意：数はセッション単位で、同じ人が数時間のうちに何度開いても 1 と数えます。正確な人数や回数ではないので、だいたいの傾向として大まかに見てください。
+            <p className="mt-1 text-[11px] leading-relaxed text-muted">
+              時差とセッションの数え方の関係で、それぞれの日の数字はぴったり正確ではないので、だいたいの傾向として大まかに見てください。
             </p>
           </Card>
 
@@ -208,7 +207,7 @@ export function UsagePage() {
 
             {aiTotal > 0 ? <EChart option={aiOpt} height={220} /> : <p className="text-sm text-muted">{data ? 'まだ記録がありません。' : '…'}</p>}
             {data && (
-              <ul className="mt-2 grid grid-cols-3 gap-2 text-center text-xs">
+              <ul className="mt-2 grid grid-cols-2 gap-2 text-center text-xs sm:grid-cols-4">
                 {data.ai.map((a) => (
                   <li key={a.label} className="rounded-xl bg-surface-2 px-2 py-2">
                     <div className="text-base font-semibold tabular-nums">{a.week}</div>
