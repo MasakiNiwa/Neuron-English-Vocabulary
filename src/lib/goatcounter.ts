@@ -117,19 +117,31 @@ function writeCache(url: string, n: number) {
   }
 }
 
-/** 最近 days 日の日ごとの数（古い順）。取れなかった日は null */
+/** UTC の日付（YYYY-MM-DD）。GoatCounter の集計は UTC の 1 時間ごとなので、日の区切りは UTC の 0 時（日本時間の朝 9 時） */
+export function utcDay(t: number): string {
+  return new Date(t).toISOString().slice(0, 10)
+}
+
+/**
+ * 最近 days 日の日ごとの数（古い順）。取れなかった日は null。
+ * 公開カウンタは日付でしか区切れず、end の日の 0 時台も含む（start〜end の 0 時までの 1 時間ごとの合計）。
+ * 「その日以降の合計」の差で 1 日分を出す（境目の 1 時間を 2 日に重ねて数えないように）。
+ * 日の区切りは UTC の 0 時 = 日本時間の朝 9 時。表示の日付は日本時間のその日の朝 9 時からの 24 時間
+ */
 export async function fetchDaily(path: string, days: number): Promise<{ date: string; count: number | null }[]> {
-  const list = Array.from({ length: days }, (_, i) => {
-    const d = new Date(Date.now() - (days - 1 - i) * 86_400_000)
-    return { date: ymd(d), next: ymd(new Date(d.getTime() + 86_400_000)) }
-  })
-  const out: { date: string; count: number | null }[] = list.map((x) => ({ date: x.date, count: null }))
+  const DAY = 86_400_000
+  const dates = Array.from({ length: days + 1 }, (_, i) => utcDay(Date.now() - (days - 1 - i) * DAY))
+  const far = utcDay(Date.now() + 2 * DAY)
+  const since: (number | null)[] = []
   // 一度にたくさん送らないよう、5 件ずつ
-  for (let i = 0; i < list.length; i += 5) {
-    const part = await Promise.all(list.slice(i, i + 5).map((x) => fetchVisitorCount(path, x.date, x.next)))
-    part.forEach((n, j) => (out[i + j].count = n))
+  for (let i = 0; i < dates.length; i += 5) {
+    since.push(...(await Promise.all(dates.slice(i, i + 5).map((d) => fetchVisitorCount(path, d, far)))))
   }
-  return out
+  return dates.slice(0, days).map((date, i) => {
+    const a = since[i]
+    const b = since[i + 1]
+    return { date, count: a === null || b === null ? null : Math.max(0, a - b) }
+  })
 }
 
 const COUNTER_BASE = 'https://masaki28.goatcounter.com/counter/'
