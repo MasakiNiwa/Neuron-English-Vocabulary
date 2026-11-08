@@ -72,7 +72,7 @@ const ja = {
     dailyNew: '1日の新規カード上限（0 で無制限）',
     retention: '目標記憶保持率',
     ai: 'AI 連携（API）',
-    externalAi: '外部 AI サービス連携',
+    externalAi: '追加解説の一括作成（お使いの AI）',
     data: 'データ管理',
     clearHistory: '閲覧履歴をクリア',
     clearStudy: '学習データをクリア',
