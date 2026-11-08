@@ -90,3 +90,26 @@ describe('学びにつながる集計', () => {
     expect(res.rootNext[0]).toMatchObject({ id: 'r:spec', recalled: 2, candidates: ['respect'] })
   })
 })
+
+describe('振り返り', () => {
+  const now = new Date('2026-11-10T12:00:00').getTime()
+  const D = 86400000
+  it('同じ日・別の日・形式・見込みと実際を分けて数える', () => {
+    const rv = (rating: number, t: number, mode: string, recall?: number, state = 2): ReviewRecord => ({ entryId: 'inspect', rating, state, reviewedAt: t, mode, recall })
+    const res = computeAnalytics({
+      views: [],
+      cards: [],
+      reviews: [rv(3, now - 3 * D, 'learn:en2ja', undefined, 0), rv(1, now - 3 * D + 60000, 'learn:ja2en', 0.95), rv(3, now - D, 'review:en2ja', 0.6), rv(4, now, 'review:bogus', 0.9)],
+      index,
+      morphemes,
+      retrievability: {},
+      now,
+    })
+    expect(res.reflect.spacing.map((s) => [s.kind, s.total, s.recalled])).toEqual([['first', 1, 1], ['same', 1, 0], ['other', 2, 2]])
+    expect(res.reflect.formats.find((f) => f.id === 'en2ja')!.counts).toEqual([0, 0, 2, 0])
+    expect(res.reflect.formats.find((f) => f.id === 'bogus')!.label).toBe('不明')
+    expect(res.reflect.calibrationN).toBe(3)
+    const high = res.reflect.calibration.find((b) => b.label === '95%〜')!
+    expect([high.n, high.actual]).toEqual([1, 0])
+  })
+})
