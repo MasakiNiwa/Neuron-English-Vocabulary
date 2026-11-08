@@ -32,6 +32,8 @@ export interface Settings {
   helpUsageOpen: boolean
   /** ヘッダーの「このページを画像で保存」の形式（既定は WebP） */
   screenshotFormat: ScreenshotFormat
+  /** 画像にヘッダー・ナビゲーションバーも写す */
+  screenshotChrome: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -51,6 +53,7 @@ export const defaultSettings: Settings = {
   analytics: true,
   helpUsageOpen: false,
   screenshotFormat: 'webp',
+  screenshotChrome: true,
 }
 
 interface SettingsStore extends Settings {

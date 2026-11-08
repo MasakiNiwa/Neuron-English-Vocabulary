@@ -185,3 +185,9 @@ body {
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom);
 }
+
+/* ページを画像で保存しているあいだ: 押したボタンの背景（ホバー）を写さない */
+.nev-capturing [data-screenshot-plain] {
+  background: transparent !important;
+  color: var(--muted) !important;
+}

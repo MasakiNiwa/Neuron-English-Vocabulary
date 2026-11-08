@@ -2,11 +2,12 @@ import { useSettings } from '@/stores/settings'
 
 /**
  * 今開いているページの内容を、1 枚の縦長の画像（ロングスクリーンショット）にして保存する。
- * - 撮るのはページ本体（<main>）だけ。ヘッダー・ナビゲーションバーは入れない
+ * - 設定でヘッダー・ナビゲーションバーも写す（既定）か、ページ本体（<main>）だけかを選べる
+ * - data-screenshot-skip を付けた要素（「一番下へ」ボタンなど）は写さない
  * - 中で別にスクロールしている所（AI チャットの会話など）も全部広げて、隠れている所まで写す。
  *   画面に貼り付いた入力欄などは流れの中に戻し、内容と重ならないようにする。撮り終えたら元に戻す
  * - 形式は設定（既定は WebP）。WebP を書き出せないブラウザ（Safari など）では PNG になる
- * - スマホでは共有シート、PC ではダウンロード
+ * - スマホでも PC でも、ファイルとしてダウンロードする
  */
 
 export type ScreenshotFormat = 'webp' | 'png' | 'jpeg'
@@ -46,6 +47,8 @@ function expand(root: HTMLElement): Saved[] {
       fixedHeight: el.scrollHeight > el.clientHeight + 1 && cs.display !== 'inline',
       pinned: cs.position === 'sticky' || cs.position === 'fixed',
       hidden: cs.display === 'none' || cs.visibility === 'hidden',
+      skip: el.hasAttribute('data-screenshot-skip'),
+      show: el.getAttribute('data-screenshot-show'),
       keep: el.hasAttribute('data-screenshot-keep'),
     }
   })
@@ -66,6 +69,16 @@ function expand(root: HTMLElement): Saved[] {
     }
   }
   for (const p of plan) {
+    if (p.skip) {
+      touch(p.el)
+      p.el.style.display = 'none'
+      continue
+    }
+    if (p.show) {
+      touch(p.el)
+      p.el.style.display = p.show
+      continue
+    }
     if (p.hidden || p.keep) continue
     if (p.clipped || p.fixedHeight) {
       loosen(p.el)
@@ -144,15 +157,23 @@ function stamp(): string {
 
 /** 画像を作る（保存はしない）。テスト・確認用にも使う */
 export async function capturePage(format: ScreenshotFormat = useSettings.getState().screenshotFormat): Promise<Blob> {
-  const root = document.querySelector<HTMLElement>('main')
-  if (!root) throw new Error('page not found')
+  const main = document.querySelector<HTMLElement>('main')
+  const shell = document.getElementById('app-shell')
+  const root = useSettings.getState().screenshotChrome && shell ? shell : main
+  if (!root || !main) throw new Error('page not found')
   const { domToBlob } = await import('modern-screenshot')
   const scrollY = window.scrollY
   const unfreeze = await freezeCanvases(root)
+  document.documentElement.classList.add('nev-capturing')
   const saved = expand(root)
   // 下のナビゲーションバーのための余白は要らない
-  saved.push({ el: root, style: root.getAttribute('style') })
-  root.style.paddingBottom = '16px'
+  saved.push({ el: main, style: main.getAttribute('style') })
+  main.style.paddingBottom = '16px'
+  // 画面の高さに合わせた最小の高さは要らない（短いページの下が空かないように）
+  if (root !== main) {
+    saved.push({ el: root, style: root.getAttribute('style') })
+    root.style.minHeight = '0'
+  }
   try {
     // 広げたあとの大きさで撮る
     const width = root.scrollWidth
@@ -173,30 +194,19 @@ export async function capturePage(format: ScreenshotFormat = useSettings.getStat
   } finally {
     restore(saved)
     unfreeze()
+    document.documentElement.classList.remove('nev-capturing')
     window.scrollTo({ top: scrollY })
   }
 }
 
-/** 今開いているページを画像にして、共有（スマホ）またはダウンロード（PC）する */
+/** 今開いているページを画像にして、ファイルとしてダウンロードする */
 export async function savePageScreenshot(): Promise<void> {
   const blob = await capturePage()
   const ext = EXT[blob.type] ?? 'png'
-  const file = new File([blob], `neuron-${pageName()}-${stamp()}.${ext}`, { type: blob.type || 'image/png' })
-  const nav = navigator as Navigator & { canShare?: (d: { files: File[] }) => boolean }
-  const touch = window.matchMedia?.('(pointer: coarse)').matches
-  if (touch && nav.canShare?.({ files: [file] })) {
-    try {
-      await nav.share({ files: [file], title: 'ニューロン英単語' })
-      return
-    } catch (e) {
-      // 共有をやめたときは何もしない（ダウンロードに切り替えない）
-      if ((e as Error).name === 'AbortError') return
-    }
-  }
-  const url = URL.createObjectURL(file)
+  const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = file.name
+  a.download = `neuron-${pageName()}-${stamp()}.${ext}`
   document.body.appendChild(a)
   a.click()
   a.remove()

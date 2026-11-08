@@ -3,7 +3,7 @@ import { onDataOutdated } from '@/features/dictionary/data'
 import { scrollBehavior, useApplyMotion } from '@/lib/motion'
 import { useEffect, useState } from 'react'
 import { warmupSearch } from '@/features/dictionary/search'
-import { Camera, CircleHelp, LoaderCircle, Moon, Sun } from 'lucide-react'
+import { CircleHelp, ImageDown, LoaderCircle, Moon, Sun } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { IconButton } from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
@@ -50,8 +50,10 @@ function ScreenshotButton() {
   }
   return (
     <>
-      <IconButton label={t('header.screenshot')} onClick={() => void onClick()} disabled={busy} aria-busy={busy}>
-        {busy ? <LoaderCircle className="size-5 animate-spin" /> : <Camera className="size-5" />}
+      <IconButton data-screenshot-plain label={t('header.screenshot')} onClick={() => void onClick()} disabled={busy} aria-busy={busy}>
+        {/* 画像の中では、くるくるではなくふだんのアイコンを写す */}
+        <ImageDown className={cn('size-5', busy && 'hidden')} data-screenshot-show="block" />
+        {busy && <LoaderCircle className="size-5 animate-spin" data-screenshot-skip />}
       </IconButton>
       {(busy || error) && (
         <div role="status" className="fixed inset-x-0 top-16 z-50 flex justify-center px-4" data-screenshot-skip>
@@ -202,7 +204,7 @@ export function RootLayout() {
   const href = useRouterState({ select: (s) => s.location.href })
   useEffect(() => rememberLocation(pathname, href), [pathname, href])
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div id="app-shell" className="flex min-h-dvh flex-col">
       <ScrollRestorer />
       <Header />
       <DataUpdatedBar />
