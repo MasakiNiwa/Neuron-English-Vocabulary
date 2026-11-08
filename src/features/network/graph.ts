@@ -22,6 +22,10 @@ export interface NodeAttrs {
   size: number
   color: string
   focus?: boolean
+  /** 語根マップ用: 由来の言語（ラテン語 / ギリシャ語 / その他） */
+  lang?: 'latin' | 'greek' | 'other'
+  /** 語根マップ用: 含む単語の数 */
+  count?: number
 }
 /** 線（つながり）の種類の名前。ホバー時のラベルと、つながり一覧の見出しに使う（ROADMAP U06） */
 export const EDGE_LABEL: Record<EdgeKind, string> = {
@@ -189,10 +193,17 @@ export function buildMorphGraph(dict: Dictionary, mid: string, pal: Palette, lim
   return g
 }
 
-/** 全体図: 語根・接頭辞を、共有する単語数で結んだマップ */
+/** 由来の言語（語根マップの絞り込み用） */
+export function langOf(origin: string): 'latin' | 'greek' | 'other' {
+  if (origin.startsWith('ラテン語')) return 'latin'
+  if (origin.startsWith('ギリシャ語')) return 'greek'
+  return 'other'
+}
+
+/** 全体図: 語根・接頭辞・祖語を、共有する単語数で結んだマップ（どれを見せるかは表示側で絞り込む） */
 export function buildMorphemeMap(dict: Dictionary, pal: Palette, minShared = 1): NetGraph {
   const g: NetGraph = new Graph({ type: 'undirected' })
-  const ms = dict.morphemes.filter((m) => (m.type === 'root' || m.type === 'prefix') && m.words.length >= 2)
+  const ms = dict.morphemes.filter((m) => (m.type === 'root' || m.type === 'prefix' || m.type === 'pie') && m.words.length >= 2)
   const allowed = new Set(ms.map((m) => m.id))
   ms.forEach((m, i) => {
     const a = (i / ms.length) * Math.PI * 2
@@ -205,6 +216,8 @@ export function buildMorphemeMap(dict: Dictionary, pal: Palette, minShared = 1):
       y: Math.sin(a) * 100,
       size: 2 + Math.sqrt(m.words.length) * 1.1,
       color: pal[m.type],
+      lang: langOf(m.origin),
+      count: m.words.length,
     })
   })
   const pairCount = new Map<string, number>()
