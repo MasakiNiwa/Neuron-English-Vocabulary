@@ -1,4 +1,4 @@
-import { Database, GraduationCap, Palette, Volume2 } from 'lucide-react'
+import { Database, GraduationCap, ImageDown, Palette, Volume2 } from 'lucide-react'
 import { countCachedShards, prefetchAllShards } from '@/features/dictionary/data'
 import { Suspense, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -183,6 +183,22 @@ export function SettingsPage() {
           <p className="-mt-1 text-xs text-muted">
             「表示しない」（既定）では、センシティブな単語を一覧・検索・つながり・学習・分析などアプリのどこにも出しません。切り替えるとアプリを読み込み直します。
           </p>
+          <Row label="アクセス数の計測に協力する">
+            <Segmented
+              value={s.analytics ? 'on' : 'off'}
+              onChange={(v) => s.set('analytics', v === 'on')}
+              options={[
+                { value: 'on', label: '協力する' },
+                { value: 'off', label: '協力しない' },
+              ]}
+            />
+          </Row>
+          <p className="-mt-1 text-xs text-muted">
+            アプリの改善のため、開いた画面の種類（単語・学習・AI など）と AI 機能を使った回数だけを GoatCounter に送ります。単語名・学習内容・個人を特定する情報は送りません。
+          </p>
+        </AccordionSection>
+
+        <AccordionSection value="screenshot" title="ページの画像保存" icon={<ImageDown className="size-5" />}>
           <Row label="ページの画像の形式">
             <Segmented
               value={s.screenshotFormat}
@@ -205,20 +221,7 @@ export function SettingsPage() {
             />
           </Row>
           <p className="-mt-1 text-xs text-muted">
-            ヘッダーの「このページを画像で保存」で使う設定です。WebP（既定）は小さく、PNG はくっきり、JPEG はどこでも開けます。WebP を書き出せないブラウザ（Safari など）では PNG で保存します。
-          </p>
-          <Row label="アクセス数の計測に協力する">
-            <Segmented
-              value={s.analytics ? 'on' : 'off'}
-              onChange={(v) => s.set('analytics', v === 'on')}
-              options={[
-                { value: 'on', label: '協力する' },
-                { value: 'off', label: '協力しない' },
-              ]}
-            />
-          </Row>
-          <p className="-mt-1 text-xs text-muted">
-            アプリの改善のため、開いた画面の種類（単語・学習・AI など）と AI 機能を使った回数だけを GoatCounter に送ります。単語名・学習内容・個人を特定する情報は送りません。
+            ヘッダーの「このページを画像で保存」（画像のダウンロードのアイコン）で、今開いているページ全体を 1 枚の縦長の画像にして保存します。WebP（既定）は小さく、PNG はくっきり、JPEG はどこでも開けます。WebP を書き出せないブラウザ（Safari など）では PNG で保存します。
           </p>
         </AccordionSection>
 

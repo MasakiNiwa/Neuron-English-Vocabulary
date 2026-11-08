@@ -39,7 +39,7 @@ export function ExternalAi({ defaultWords = '' }: { defaultWords?: string }) {
   return (
     <div className="flex flex-col gap-3 text-sm">
       <p className="text-xs leading-relaxed text-muted">
-        アプリ内の AI では重い処理を、外部の AI サービスに任せる機能です。① プロンプトをコピーして外部 AI に貼り付け、② 返ってきた JSON を下に貼り付けて取り込むと、単語ページの「追加の解説」にタブとして追加されます。API キーは不要です。
+        ふだんお使いの AI（ChatGPT・Gemini・Claude など）で、指定した単語にまとめて解説を付けられる機能です。① 単語を入力してプロンプトをコピーし、お使いの AI に貼り付けます。② 返ってきた JSON を下に貼り付けて取り込むと、単語ページの「追加の解説」にタブとして追加されます。API キーは不要です。
       </p>
       <label className="flex flex-col gap-1">
         <span className="text-xs text-muted">対象の単語（カンマ・改行区切り、最大30語）</span>
@@ -69,7 +69,7 @@ export function ExternalAi({ defaultWords = '' }: { defaultWords?: string }) {
         </Button>
       </div>
       <label className="flex flex-col gap-1">
-        <span className="text-xs text-muted">② 外部 AI の出力（JSON）を貼り付け</span>
+        <span className="text-xs text-muted">② AI の出力（JSON）を貼り付け</span>
         <textarea className="min-h-24 rounded-xl border border-border bg-surface p-2 font-mono text-xs outline-none focus:border-accent" value={json} onChange={(e) => setJson(e.target.value)} />
       </label>
       <div className="flex items-center gap-2">
