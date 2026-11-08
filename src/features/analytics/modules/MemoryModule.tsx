@@ -34,7 +34,7 @@ export function MemoryModule({ data, onDrill }: ModuleProps) {
       tooltip: { trigger: 'axis' },
       grid: { left: 36, right: 8, top: 16, bottom: 28 },
       xAxis: { type: 'category', data: data.retention.map((r) => r.label), axisLabel: { color: c.muted, fontSize: 10 }, axisLine: { lineStyle: { color: c.border } } },
-      yAxis: { type: 'value', axisLabel: { color: c.muted }, splitLine: { lineStyle: { color: c.border } } },
+      yAxis: { type: 'value', minInterval: 1, axisLabel: { color: c.muted }, splitLine: { lineStyle: { color: c.border } } },
       series: [
         {
           type: 'bar',

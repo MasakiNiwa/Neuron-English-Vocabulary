@@ -11,7 +11,7 @@ import { speak } from '@/lib/speech'
 import { useSettings } from '@/stores/settings'
 import { EntryLink, LinkedText, SpeakButton } from '@/features/dictionary/components/links'
 import { useDictionary, useEntry, recordView } from '@/features/dictionary/hooks'
-import { formatInterval, previewIntervals, Rating, review, type Grade } from './cards'
+import { formatInterval, previewIntervals, Rating, retrievability, review, type Grade } from './cards'
 import { ChoicePrompt, ClozePrompt, findCloze, JaPrompt, pickFormat, type ConcreteFormat } from './formats'
 import { strengthDays } from './srs'
 import { ListenPrompt } from './ListenPrompt'
@@ -291,6 +291,11 @@ export function ReviewSession({
             </button>
           ))}
         </div>
+      )}
+      {shown && card.state !== 0 && card.last_review != null && (
+        <p className="text-center text-[11px] text-muted" title="FSRS による、答える直前の推定。前回の回答からの時間で下がっていきます">
+          答える前の、思い出せる見込み（推定） {Math.round(retrievability(card) * 100)}% ・ 前回の回答から {formatInterval(new Date(2 * Date.now() - card.last_review))}
+        </p>
       )}
       {shown && <GradeHelp />}
       <p className="text-center text-xs text-muted">回答 {count}</p>

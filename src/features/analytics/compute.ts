@@ -1,5 +1,6 @@
 import type { ReviewRecord, StudyCard, ViewRecord } from '@/lib/db'
 import type { IndexRow, Morpheme } from '@/features/dictionary/types'
+import { FORMAT_LABEL, type ConcreteFormat } from '@/features/study/formatDefs'
 
 /**
  * 分析データの集計（純粋関数。Web Worker からもテストからも呼べる）
@@ -85,7 +86,19 @@ export interface Insight {
   morph?: string
 }
 
+/** 振り返り（これまでの全回答） */
+export interface Reflection {
+  /** 出題形式ごとの評価の数（もう一度・難しい・正解・簡単） */
+  formats: { id: string; label: string; counts: [number, number, number, number]; total: number }[]
+  /** 初めての回答・同じ日の繰り返し・別の日の復習 */
+  spacing: { kind: 'first' | 'same' | 'other'; label: string; total: number; recalled: number }[]
+  /** 回答直前の見込み（v2.0 から記録）と、実際に思い出せた割合 */
+  calibration: { label: string; n: number; predicted: number; actual: number }[]
+  calibrationN: number
+}
+
 export interface AnalyticsResult {
+  reflect: Reflection
   /** 最近 7 日・28 日 */
   recent: Record<7 | 28, PeriodStats>
   stumbles: Record<7 | 28, Stumble[]>
@@ -399,7 +412,55 @@ export function computeAnalytics(input: {
   const dueSoon = cards.filter((c) => c.state !== 0 && c.due <= now + 86400000).length
   if (dueSoon) insights.push({ kind: 'review', text: `24 時間以内に復習期限を迎えるカードが ${dueSoon} 枚あります。` })
 
+  // ---- 振り返り
+  const fmtCounts = new Map<string, [number, number, number, number]>()
+  const spacingAcc = { first: [0, 0], same: [0, 0], other: [0, 0] } as Record<'first' | 'same' | 'other', [number, number]>
+  const calBuckets = [
+    { label: '〜50%', min: 0, max: 0.5 },
+    { label: '50〜70%', min: 0.5, max: 0.7 },
+    { label: '70〜85%', min: 0.7, max: 0.85 },
+    { label: '85〜95%', min: 0.85, max: 0.95 },
+    { label: '95%〜', min: 0.95, max: 1.01 },
+  ].map((b) => ({ ...b, n: 0, sumP: 0, ok: 0 }))
+  let calibrationN = 0
+  for (const list of byKey.values()) {
+    list.forEach((r, i) => {
+      if (r.rating < 1 || r.rating > 4) return
+      const fmt = (r.mode ?? '').split(':')[1] || 'unknown'
+      const c = fmtCounts.get(fmt) ?? [0, 0, 0, 0]
+      c[r.rating - 1]++
+      fmtCounts.set(fmt, c)
+      const kind = i === 0 ? 'first' : dayKey(list[i - 1].reviewedAt) === dayKey(r.reviewedAt) ? 'same' : 'other'
+      spacingAcc[kind][0]++
+      if (r.rating >= 2) spacingAcc[kind][1]++
+      if (typeof r.recall === 'number' && r.state !== 0) {
+        const b = calBuckets.find((x) => r.recall! >= x.min && r.recall! < x.max)
+        if (b) {
+          b.n++
+          b.sumP += r.recall
+          if (r.rating >= 2) b.ok++
+          calibrationN++
+        }
+      }
+    })
+  }
+  const reflect: Reflection = {
+    formats: [...fmtCounts]
+      .map(([id, counts]) => ({ id, label: FORMAT_LABEL[id as ConcreteFormat] ?? '不明', counts, total: counts.reduce((a, b) => a + b, 0) }))
+      .sort((a, b) => b.total - a.total),
+    spacing: (
+      [
+        ['first', '初めての回答'],
+        ['same', '同じ日の繰り返し'],
+        ['other', '別の日の復習'],
+      ] as const
+    ).map(([kind, label]) => ({ kind, label, total: spacingAcc[kind][0], recalled: spacingAcc[kind][1] })),
+    calibration: calBuckets.map((b) => ({ label: b.label, n: b.n, predicted: b.n ? b.sumP / b.n : 0, actual: b.n ? b.ok / b.n : 0 })),
+    calibrationN,
+  }
+
   return {
+    reflect,
     recent: { 7: period(7), 28: period(28) },
     stumbles: { 7: stumblesIn(7), 28: stumblesIn(28) },
     recovered,

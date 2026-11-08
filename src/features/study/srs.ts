@@ -9,7 +9,7 @@ import {
   schedulerStatsMiddleware,
 } from 'ts-fsrs/middlewares'
 import { FSRS6_DEFAULT_WEIGHTS, FSRS6Model } from 'ts-fsrs/models/fsrs-6'
-import { FSRS7_DEFAULT_WEIGHTS, FSRS7Model } from 'ts-fsrs/models/fsrs-7'
+import { curve as fsrs7Curve, FSRS7_DEFAULT_WEIGHTS, FSRS7Model } from 'ts-fsrs/models/fsrs-7'
 import { Reschedule } from 'ts-fsrs/reschedule'
 import type { StudyCard } from '@/lib/db'
 
@@ -192,6 +192,46 @@ export function strengthDays(c: StudyCard): number {
   if (c.state === 0) return 0
   if (modelOf(c) === 7) return get7(0.9, false).model.nextInterval(toCard7(c), 0.9)
   return c.stability
+}
+
+// ---------------------------------------------------------------- 忘却曲線
+
+export interface CurvePoint {
+  /** 今からの日数 */
+  days: number
+  /** 思い出せる見込み（0〜1） */
+  r: number
+  /** FSRS-7 のみ: すぐ薄れる成分・長く残る成分（それぞれの見込み。足し合わせたものではない） */
+  fast?: number
+  slow?: number
+}
+
+export interface RecallCurve {
+  points: CurvePoint[]
+  /** FSRS-7 のみ: 見込みを作るときの、長く残る成分の重み（0〜1） */
+  slowShare?: number
+}
+
+/**
+ * 今から horizonDays 日後までの、思い出せる見込みの曲線（復習しなかった場合）。
+ * 推定であって、学習の効果を測ったものではない
+ */
+export function recallCurve(c: StudyCard, now: Date, horizonDays: number, steps = 60): RecallCurve | null {
+  if (c.state === 0 || c.last_review == null) return null
+  const base = Math.max(0, (now.getTime() - c.last_review) / 86_400_000)
+  const xs = Array.from({ length: steps + 1 }, (_, i) => (horizonDays * i) / steps)
+  if (modelOf(c) === 7) {
+    const state = { stability: c.stability, stabilityFast: c.stabilityFast ?? 0, difficulty: c.difficulty }
+    let slowShare: number | undefined
+    const points = xs.map((days) => {
+      const k = fsrs7Curve(FSRS7_DEFAULT_WEIGHTS, base + days, state)
+      slowShare ??= k.slowWeight / k.total
+      return { days, r: k.retrievability, fast: k.fast, slow: k.slow }
+    })
+    return { points, slowShare }
+  }
+  const s = get6(0.9)
+  return { points: xs.map((days) => ({ days, r: s.model.forgettingCurve(toCard6(c), base + days) })) }
 }
 
 // ---------------------------------------------------------------- 移行（FSRS-6 → FSRS-7）

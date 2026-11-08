@@ -1,6 +1,6 @@
 import { Link, useParams } from '@tanstack/react-router'
-import { ArrowRight, BookmarkPlus, Check, History, Mic } from 'lucide-react'
-import { Suspense, useEffect, useState, type ReactNode } from 'react'
+import { ArrowRight, BookmarkPlus, Brain, Check, History, Mic } from 'lucide-react'
+import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
 import { Card, SectionTitle } from '@/components/ui/Card'
@@ -151,6 +151,30 @@ function SameRoot({ entry }: { entry: Entry }) {
           </Card>
         ))}
       </div>
+    </Section>
+  )
+}
+
+// グラフの部品は大きいので、学習中の語を開いたときだけ読み込む
+const MemoryPanel = lazy(() => import('@/features/study/MemoryPanel'))
+
+/** 学習中の語の「記憶の見通し」（忘却曲線と回答の記録） */
+function MemorySection({ entryKey }: { entryKey: string }) {
+  const card = useStudyCard(entryKey)
+  if (!card || card.state === 0 || card.last_review == null) return null
+  return (
+    <Section
+      title={
+        <span className="inline-flex items-center gap-1.5">
+          <Brain className="size-4" /> 記憶の見通し
+        </span>
+      }
+    >
+      <Card className="p-3">
+        <Suspense fallback={<div className="h-48" />}>
+          <MemoryPanel card={card} />
+        </Suspense>
+      </Card>
     </Section>
   )
 }
@@ -415,6 +439,8 @@ function EntryView({ entryKey }: { entryKey: string }) {
       )}
 
       <WordAiPanel entryKey={entry.k} />
+
+      <MemorySection entryKey={entry.k} />
 
       <ViewHistory entryKey={entry.k} />
     </>
