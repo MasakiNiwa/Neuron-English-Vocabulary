@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useNextRoot } from '@/features/lesson/RootsPage'
 
-import { BookOpenCheck, Check, CircleCheck, Mic, Play, RotateCcw, Shuffle, Sparkles, Volume2 } from 'lucide-react'
+import { BookOpenCheck, Check, CircleCheck, Mic, Play, RotateCcw, Shuffle, Sparkles, Target, Volume2 } from 'lucide-react'
 import { Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
@@ -21,7 +21,8 @@ import { formatInterval, removeFromStudy, retrievability } from './cards'
 import { ReviewSession } from './ReviewSession'
 import { useStudySession } from './sessionStore'
 import { ALL_FORMATS, FORMAT_LABEL, formatSupported, type ConcreteFormat } from './formats'
-import { buildPracticeQueue, buildQueue, getStudyStats, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
+import { buildFocusQueue, buildPracticeQueue, buildQueue, getStudyStats, pickFocusWords, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
+import { loadDictionary } from '@/features/dictionary/data'
 
 const STATE_LABEL = ['新規', '学習中', '復習', '再学習']
 
@@ -247,6 +248,7 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => 
   const total = useLiveQuery(() => db.cards.count(), [])
   const [mode, setMode] = usePersistentState<PracticeMode>('study:practiceMode', 'random')
   const [count, setCount] = usePersistentState('study:practiceCount', 10)
+  const [ahead, setAhead] = usePersistentState('study:practiceAhead', 0)
   return (
     <Card>
       <SectionTitle className="flex items-center gap-1.5">
@@ -254,15 +256,38 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => 
       </SectionTitle>
       <p className="mb-3 text-xs text-muted">復習の時期に関係なく、学習中のカード（{total ?? 0} 枚）から好きなだけ練習できます。答えた評価は記録され、次の復習日にも反映されます。</p>
       <div className="flex flex-col gap-3">
-        <Segmented<PracticeMode>
-          value={mode}
-          onChange={setMode}
-          options={[
-            { value: 'random', label: 'ランダム' },
-            { value: 'weak', label: '苦手な順' },
-            { value: 'recent', label: '最近追加' },
-          ]}
-        />
+        <div className="[&_button]:whitespace-nowrap [&_button]:px-2 sm:[&_button]:px-3">
+          <Segmented<PracticeMode>
+            value={mode}
+            onChange={setMode}
+            options={[
+              { value: 'random', label: 'ランダム' },
+              { value: 'weak', label: '苦手順' },
+              { value: 'recent', label: '最近追加' },
+              { value: 'low', label: '見込み低' },
+            ]}
+          />
+        </div>
+        {mode === 'low' && (
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-muted">いつの</span>
+              <Segmented
+                value={String(ahead)}
+                onChange={(v) => setAhead(Number(v))}
+                options={[
+                  { value: '0', label: '今' },
+                  { value: '3', label: '3日後' },
+                  { value: '7', label: '7日後' },
+                  { value: '30', label: '30日後' },
+                ]}
+              />
+            </div>
+            <p className="text-xs text-muted">
+              {ahead === 0 ? '今' : `${ahead} 日後`}に思い出せる見込み（復習しなかった場合の推定）が低い語から出します。先の日を選ぶと、早く薄れていく語を前もって練習できます。
+            </p>
+          </div>
+        )}
         <div className="flex items-center gap-2 text-sm">
           <span className="text-muted">枚数</span>
           <Segmented
@@ -274,13 +299,45 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => 
         <Button
           disabled={!total}
           onClick={async () => {
-            const q = await buildPracticeQueue(mode, count)
+            const q = await buildPracticeQueue(mode, count, ahead)
             if (q.length) onStart(q, 'practice')
           }}
         >
           <Play className="size-4" /> 練習する
         </Button>
       </div>
+    </Card>
+  )
+}
+
+/** 苦手な語の特訓: 何度も忘れる語・最近つまずいた語を、成り立ちと例文をじっくり見ながら練習する */
+function FocusCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
+  const words = useLiveQuery(async () => {
+    const { hidden } = await loadDictionary()
+    const cards = (await db.cards.toArray()).filter((c) => !c.suspended && !hidden.has(c.entryId))
+    return pickFocusWords(cards, await db.reviews.toArray())
+  }, [])
+  if (!words?.length) return null
+  const n = Math.min(10, words.length)
+  return (
+    <Card>
+      <SectionTitle className="flex items-center gap-1.5">
+        <Target className="size-4" /> 苦手な語の特訓
+      </SectionTitle>
+      <p className="mb-2 text-xs text-muted">
+        何度も忘れる語や、最近つまずいてまだ別の日に思い出せていない語です（{words.length} 語）。答えを見ると、解説が開いた状態で、成り立ちと例文を多めに出します。
+      </p>
+      <ul className="mb-3 flex flex-wrap gap-1.5">
+        {words.slice(0, 8).map((w) => (
+          <li key={w.card.entryId} className="rounded-full bg-surface-2 px-2 py-0.5 text-xs">
+            <span className="font-en">{w.card.entryId.replace(/_/g, ' ')}</span>
+            <span className="ml-1 text-muted">{w.reason}</span>
+          </li>
+        ))}
+      </ul>
+      <Button className="w-full" onClick={async () => onStart(await buildFocusQueue(n), 'focus')}>
+        <Play className="size-4" /> 特訓する（{n} 語）
+      </Button>
     </Card>
   )
 }
@@ -513,6 +570,7 @@ function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
         {/* 自由練習は学習中のカードがあるときだけ */}
         {!first && <PracticeCard onStart={onStart} />}
       </div>
+      {!first && <FocusCard onStart={onStart} />}
       {today === 0 && <ReviewCard onStart={onStart} />}
       <div className="grid grid-cols-3 gap-2">
         <Stat label="学習中のカード" value={stats?.total ?? '–'} />
