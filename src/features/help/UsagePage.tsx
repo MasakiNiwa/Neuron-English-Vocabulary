@@ -185,6 +185,8 @@ export function UsagePage() {
             {data ? <EChart option={dailyOpt} height={220} /> : <div className="h-[220px]" />}
             <p className="mt-1 rounded-lg bg-surface-2 px-2.5 py-2 text-[11px] leading-relaxed text-muted">
               ⏰ 時差についての注意：集計サービス（GoatCounter）は世界標準時で日付を区切るため、このグラフの 1 日は<strong className="text-fg">日本時間の朝 9 時から翌朝 9 時まで</strong>です。たとえば 11/8 の朝 8 時のアクセスは、11/7 の点に入ります。
+              <br />
+              📊 数え方についての注意：数はセッション単位で、同じ人が数時間のうちに何度開いても 1 と数えます。正確な人数や回数ではないので、だいたいの傾向として大まかに見てください。
             </p>
           </Card>
 
