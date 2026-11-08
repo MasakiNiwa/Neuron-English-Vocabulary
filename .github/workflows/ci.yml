@@ -21,3 +21,11 @@ jobs:
       - run: npm test
       - run: npx vite build
       - run: python3 scripts/data/06_lint.py
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/tests/screenshot.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshot-regression
+          path: test-results/screenshots
+          retention-days: 7
