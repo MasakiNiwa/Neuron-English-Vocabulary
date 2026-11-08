@@ -109,7 +109,7 @@ function InfoRow({ label, value }: { label: string; value: string }) {
 
 /**
  * アプリ全体の利用状況（GoatCounter の公開カウンタ。数字は数時間おきに更新）。ここでは累計だけを出し、詳しくは利用状況のページへ
- * - アプリを開くと必ず通るホーム（/）の数を使う。GoatCounter の数は「アクセス」の回数なので、単位は「回」
+ * - アプリを開くと必ず通るホーム（/）の数を使う。GoatCounter の数はセッション単位（しばらくの間の重複は 1）なので、単位は「セッション」
  */
 function AppUsage() {
   const [total, setTotal] = useState<number | null | undefined>(undefined)
@@ -122,7 +122,7 @@ function AppUsage() {
   }, [])
   return (
     <div className="mt-2 border-t border-border pt-2">
-      <InfoRow label="これまでのアクセス（みんなの合計）" value={total === undefined ? '…' : total === null ? '—' : `${total.toLocaleString('ja-JP')} 回`} />
+      <InfoRow label="これまでのアクセス（みんなの合計）" value={total === undefined ? '…' : total === null ? '—' : `${total.toLocaleString('ja-JP')} セッション`} />
       <Link to="/usage" className="mt-1 inline-flex items-center gap-1 text-xs text-accent">
         利用状況をくわしく見る（推移・よく使われている画面・AI 機能） <ArrowRight className="size-3.5" />
       </Link>

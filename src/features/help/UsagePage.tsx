@@ -84,7 +84,7 @@ function Big({ icon, label, value, accent }: { icon: React.ReactNode; label: str
       </div>
       <div className="mt-1 text-3xl font-semibold tabular-nums">
         {value == null ? '…' : value.toLocaleString('ja-JP')}
-        <span className="ml-1 text-sm font-normal">回</span>
+        <span className="ml-1 text-sm font-normal">セッション</span>
       </div>
     </div>
   )
@@ -140,7 +140,7 @@ export function UsagePage() {
   )
   const aiOpt = useCallback(
     (c: ReturnType<typeof chartColors>) => ({
-      tooltip: { trigger: 'item', formatter: '{b}: {c} 回（{d}%）' },
+      tooltip: { trigger: 'item', formatter: '{b}: {c} セッション（{d}%）' },
       legend: { bottom: 0, textStyle: { color: c.muted, fontSize: 11 } },
       series: [
         {
@@ -148,7 +148,7 @@ export function UsagePage() {
           radius: ['48%', '74%'],
           center: ['50%', '44%'],
           itemStyle: { borderColor: c.surface, borderWidth: 3, borderRadius: 6 },
-          label: { color: c.fg, formatter: '{c} 回', fontSize: 11 },
+          label: { color: c.fg, formatter: '{c}', fontSize: 11 },
           data: data?.ai.filter((a) => a.total > 0).map((a, i) => ({ name: a.label, value: a.total, itemStyle: { color: [c.accent, c.root, c.success][i] } })) ?? [],
         },
       ],
@@ -163,7 +163,7 @@ export function UsagePage() {
       <Link to="/help" className="-mt-2 mb-3 inline-flex items-center gap-1 text-sm text-accent">
         <ArrowLeft className="size-4" /> ヘルプ
       </Link>
-      <p className="mb-4 text-sm text-muted">ニューロン英単語を使っているみんなの合計です。アプリを開いた回数（ホームの表示）を数えています。</p>
+      <p className="mb-4 text-sm text-muted">ニューロン英単語を使っているみんなの合計です。数はセッション単位です（同じ人がしばらくの間に何度開いたり使ったりしても 1 と数えます）。アクセスは、ホームを表示したセッションの数です。</p>
       {failed ? (
         <Card>
           <p className="text-sm text-muted">利用状況を読み込めませんでした。オフラインのときは表示されません。</p>
@@ -187,7 +187,7 @@ export function UsagePage() {
 
           <Card>
             <h2 className="mb-1 flex items-center gap-1.5 text-sm font-semibold text-muted">
-              <BarChart3 className="size-4" /> よく使われている画面（これまで）
+              <BarChart3 className="size-4" /> よく使われている画面（これまで・セッション）
             </h2>
             {data && data.sections.length > 0 ? (
               <EChart option={sectionOpt} height={Math.max(120, data.sections.length * 26 + 16)} />
@@ -201,7 +201,7 @@ export function UsagePage() {
               <Bot className="size-4" /> AI 機能の利用
             </h2>
             <p className="mb-2 text-xs text-muted">
-              これまで {aiTotal.toLocaleString('ja-JP')} 回・最近 7 日 {aiWeek.toLocaleString('ja-JP')} 回（AI に話しかけた回数。1 回のアクセスで何度も使うことがあります）
+              AI 機能を使ったセッション：これまで {aiTotal.toLocaleString('ja-JP')}・最近 7 日 {aiWeek.toLocaleString('ja-JP')}（1 つのセッションで何度話しかけても 1。機能ごとに数えるので、合計はアクセスより多くなることがあります）
             </p>
             {aiTotal > 0 ? <EChart option={aiOpt} height={220} /> : <p className="text-sm text-muted">{data ? 'まだ記録がありません。' : '…'}</p>}
             {data && (
@@ -217,7 +217,7 @@ export function UsagePage() {
           </Card>
 
           <p className="text-[11px] leading-relaxed text-muted">
-            GoatCounter の集計で、数時間おきに更新されます（今日の分はまだ入っていないことがあります）。送っているのは開いた画面の種類と AI 機能を使った回数だけで、単語名・学習内容・個人を特定する情報は送っていません。設定の「アクセス数の計測に協力する」で止められます。
+            GoatCounter の集計で、数時間おきに更新されます（今日の分はまだ入っていないことがあります）。送っているのは開いた画面の種類と AI 機能を使ったことだけで、単語名・学習内容・個人を特定する情報は送っていません。設定の「アクセス数の計測に協力する」で止められます。
           </p>
         </div>
       )}
