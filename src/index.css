@@ -110,6 +110,24 @@ body {
 .vt-headword {
   view-transition-name: headword;
 }
+/* ヘッダー・ナビゲーションバーは別の層にして、切り替え中もページ本体（main-content）より手前に描く。
+   本体だけが別の層だと、切り替えの間だけ本体がナビゲーションバーの上に一瞬出てしまう。バー自体は動かさない */
+.vt-header {
+  view-transition-name: site-header;
+}
+.vt-nav {
+  view-transition-name: bottom-nav;
+}
+::view-transition-group(site-header),
+::view-transition-group(bottom-nav) {
+  z-index: 10;
+}
+::view-transition-old(site-header),
+::view-transition-new(site-header),
+::view-transition-old(bottom-nav),
+::view-transition-new(bottom-nav) {
+  animation: none;
+}
 @keyframes vt-fade-out {
   to {
     opacity: 0;

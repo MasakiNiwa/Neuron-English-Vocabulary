@@ -14,7 +14,9 @@ const FONT = 'Inter, "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif'
  * - matched: 意味で探したときに当てはまる（光らせる）
  * - selected: 選んでいる点（語根マップで選んだ語根）
  */
-type NodeState = { isNeighbor: boolean; filteredOut: boolean; matched: boolean; selected: boolean }
+type NodeState = { isNeighbor: boolean; filteredOut: boolean; matched: boolean; selected: boolean; dimmed: boolean }
+
+export type SigmaRenderer = Sigma<NodeAttrs, EdgeAttrs, Record<string, unknown>, NodeState, EdgeState, GraphState>
 type EdgeState = { filteredOut: boolean }
 /** focusing: 点に合わせている / searching: 意味で探している（当てはまらない点を薄くする） */
 type GraphState = { focusing: boolean; searching: boolean }
@@ -34,6 +36,16 @@ export interface SigmaGraphProps {
   matched?: ReadonlySet<string> | null
   /** 選んでいる点。変わるとカメラがその点へ寄る */
   selected?: string | null
+  /** 表示したときに、少し引いた所から寄る演出をする（探索用。語根マップは点が多く重く見えるのでしない） */
+  intro?: boolean
+  /** 薄く描く点（語根めぐりで、まだ訪れていない語根など） */
+  dimmed?: ReadonlySet<string> | null
+  /** ラベルを重なっても全部出す（道をつなぐ: 点が少なく、どれも読めてほしい） */
+  allLabels?: boolean
+  /** 表示したときのカメラの引き具合（1 = ちょうど全体。大きいほど引いて余白を取る） */
+  fitRatio?: number
+  /** 描画の準備ができた・終わったとき（画像の保存に使う） */
+  onReady?: (r: SigmaRenderer | null) => void
 }
 
 /**
@@ -52,9 +64,16 @@ export function SigmaGraph({
   hiddenEdges,
   matched = null,
   selected = null,
+  intro = true,
+  dimmed = null,
+  allLabels = false,
+  fitRatio = 1,
+  onReady,
 }: SigmaGraphProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const rendererRef = useRef<Sigma<NodeAttrs, EdgeAttrs, Record<string, unknown>, NodeState, EdgeState, GraphState> | null>(null)
+  const rendererRef = useRef<SigmaRenderer | null>(null)
+  const readyRef = useRef(onReady)
+  readyRef.current = onReady
   const clickRef = useRef(onNodeClick)
   clickRef.current = onNodeClick
   const stageRef = useRef(onStageClick)
@@ -94,7 +113,7 @@ export function SigmaGraph({
         labelPickingPadding: 6,
         nodeLabelEvents: 'extend',
       },
-      customNodeState: { isNeighbor: false, filteredOut: false, matched: false, selected: false },
+      customNodeState: { isNeighbor: false, filteredOut: false, matched: false, selected: false, dimmed: false },
       customEdgeState: { filteredOut: false },
       customGraphState: { focusing: false, searching: false },
       styles: {
@@ -113,10 +132,13 @@ export function SigmaGraph({
             // 合わせた点には日本語の意味も添える
             label: (a, s) => (s.isHovered && a.sub ? `${a.label}  ${a.sub}` : a.label),
           },
+          ...(allLabels ? [{ labelVisibility: 'visible' as const }] : []),
           // 中心の語はいつもラベルを出し、上に描く
           { when: (a) => !!a.focus, then: { labelVisibility: 'visible', zIndex: 2 } },
           // 合わせた点と関係のない点は薄くし、ラベルを隠す
           { when: dimNode, then: { color: surface2, labelVisibility: 'hidden', zIndex: 0 } },
+          // まだ訪れていない語根などは薄く
+          { whenState: 'dimmed', then: { color: surface2, labelVisibility: 'hidden' } },
           // 隣の点・探して当てはまった点はラベルを出す
           { whenState: 'isNeighbor', then: { labelVisibility: 'visible', zIndex: 1 } },
           { whenState: 'matched', then: { labelVisibility: 'visible', zIndex: 1 } },
@@ -156,6 +178,7 @@ export function SigmaGraph({
       },
     })
     rendererRef.current = renderer
+    readyRef.current?.(renderer)
 
     const focus = (node: string | null) => {
       // いったん全部戻してから、合わせた点の隣と線に印を付ける
@@ -181,11 +204,11 @@ export function SigmaGraph({
     renderer.on('clickStage', () => stageRef.current?.())
 
     // 新しいグラフに切り替わったときは、少し引いた所から寄って、どこが中心かを分かりやすく
-    if (!liveLayout && !reduceMotion()) {
-      const cam = renderer.getCamera()
-      cam.setState({ ratio: 1.6 })
-      void cam.animate({ ratio: 1 }, { duration: 450, easing: 'cubicOut' })
-    }
+    const cam = renderer.getCamera()
+    if (intro && !liveLayout && !reduceMotion()) {
+      cam.setState({ ratio: fitRatio * 1.6 })
+      void cam.animate({ ratio: fitRatio }, { duration: 450, easing: 'cubicOut' })
+    } else if (fitRatio !== 1) cam.setState({ ratio: fitRatio })
 
     let layout: FA2Layout | null = null
     let timer: number | undefined
@@ -199,10 +222,11 @@ export function SigmaGraph({
     return () => {
       window.clearTimeout(timer)
       layout?.kill()
+      readyRef.current?.(null)
       renderer.kill()
       rendererRef.current = null
     }
-  }, [graph, liveLayout, labelThreshold, theme])
+  }, [graph, liveLayout, labelThreshold, theme, intro, allLabels, fitRatio])
 
   // 絞り込み（点・線を隠す）
   useEffect(() => {
@@ -232,6 +256,16 @@ export function SigmaGraph({
     if (list.length) fitTo(r, list)
   }, [graph, matched, theme])
 
+  // 薄く描く点
+  useEffect(() => {
+    const r = rendererRef.current
+    if (!r) return
+    r.setNodesState(graph.nodes(), { dimmed: false })
+    const list = dimmed ? [...dimmed].filter((n) => graph.hasNode(n)) : []
+    if (list.length) r.setNodesState(list, { dimmed: true })
+    r.refresh({ skipIndexation: true })
+  }, [graph, dimmed, theme])
+
   // 選んでいる点へカメラを寄せる
   useEffect(() => {
     const r = rendererRef.current
@@ -252,7 +286,7 @@ export function SigmaGraph({
 }
 
 /** いくつかの点が入るようにカメラを動かす */
-function fitTo(r: Sigma<NodeAttrs, EdgeAttrs, Record<string, unknown>, NodeState, EdgeState, GraphState>, nodes: string[]) {
+function fitTo(r: SigmaRenderer, nodes: string[]) {
   let minX = Infinity
   let minY = Infinity
   let maxX = -Infinity
