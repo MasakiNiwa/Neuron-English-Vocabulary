@@ -32,7 +32,7 @@ function Header() {
   const { t } = useTranslation()
   const theme = useResolvedTheme()
   return (
-    <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b border-border bg-bg/85 px-3 backdrop-blur md:px-5">
+    <header className="vt-header sticky top-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b border-border bg-bg/85 px-3 backdrop-blur md:px-5">
       <Link to="/" className="flex items-center gap-2 font-semibold">
         <img src="./icon.svg" alt="" className="size-7 rounded-lg" />
         <span>{t('app.name')}</span>
@@ -87,7 +87,7 @@ function BottomNav({ pathname }: { pathname: string }) {
   const { t } = useTranslation()
   const onTab = useTabClick(pathname)
   return (
-    <nav className="pb-safe fixed inset-x-0 bottom-0 z-30 border-t border-border bg-bg/95 backdrop-blur md:hidden">
+    <nav className="vt-nav pb-safe fixed inset-x-0 bottom-0 z-30 border-t border-border bg-bg/95 backdrop-blur md:hidden">
       <ul className="flex">
         {navItems.map(({ to, labelKey, icon: Icon }) => {
           const active = isActive(pathname, to)

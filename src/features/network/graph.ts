@@ -130,8 +130,14 @@ function link(g: NetGraph, a: string | null, b: string | null, kind: EdgeKind, p
   })
 }
 
+/** 表示する単語の数（すっきり・ふつう・たくさん）。近傍グラフの件数に掛ける */
+export type Density = 'few' | 'normal' | 'many'
+export const DENSITY_SCALE: Record<Density, number> = { few: 0.5, normal: 1, many: 2 }
+
 /** 単語を中心にした近傍グラフ */
-export function buildEntryGraph(dict: Dictionary, entry: Entry, pal: Palette, perMorph = 10): NetGraph {
+export function buildEntryGraph(dict: Dictionary, entry: Entry, pal: Palette, scale = 1): NetGraph {
+  const perMorph = Math.round(10 * scale)
+  const sc = (n: number) => Math.max(1, Math.round(n * scale))
   const g: NetGraph = new Graph({ type: 'undirected' })
   const center = addEntryNode(g, dict, entry.k, pal, 18)!
   g.mergeNodeAttributes(center, { focus: true })
@@ -141,7 +147,7 @@ export function buildEntryGraph(dict: Dictionary, entry: Entry, pal: Palette, pe
     const m = dict.morphById.get(mid)
     if (!m) continue
     // 接尾辞は語数が多くノイズになりやすいので少なめに
-    const n = m.type === 'suffix' ? 4 : m.type === 'prefix' || m.type === 'pie' || m.type === 'particle' ? 6 : perMorph
+    const n = m.type === 'suffix' ? sc(4) : m.type === 'prefix' || m.type === 'pie' || m.type === 'particle' ? sc(6) : perMorph
     const mn = addMorphNode(g, dict, mid, pal, 12)
     link(g, center, mn, 'morph', pal, 3)
     for (const w of m.words.filter((x) => x !== entry.k).slice(0, n)) {
@@ -160,14 +166,15 @@ export function buildEntryGraph(dict: Dictionary, entry: Entry, pal: Palette, pe
     [entry.rel, 'rel', 5],
   ]
   for (const [keys, kind, n] of rel) {
-    for (const k of (keys ?? []).slice(0, n)) link(g, center, addEntryNode(g, dict, k, pal, 8), kind, pal, 1)
+    for (const k of (keys ?? []).slice(0, sc(n))) link(g, center, addEntryNode(g, dict, k, pal, 8), kind, pal, 1)
   }
   layout(g)
   return g
 }
 
 /** 語根・接辞を中心にした近傍グラフ */
-export function buildMorphGraph(dict: Dictionary, mid: string, pal: Palette, limit = 40): NetGraph {
+export function buildMorphGraph(dict: Dictionary, mid: string, pal: Palette, scale = 1): NetGraph {
+  const limit = Math.round(40 * scale)
   const g: NetGraph = new Graph({ type: 'undirected' })
   const center = addMorphNode(g, dict, mid, pal, 18)
   if (!center) return g
@@ -237,10 +244,27 @@ export function buildMorphemeMap(dict: Dictionary, pal: Palette, minShared = 1):
   g.forEachNode((id) => {
     if (g.degree(id) === 0) g.dropNode(id)
   })
-  // 初期レイアウトはここで同期計算し、表示後に Web Worker で微調整する
+  // レイアウトはここで計算を終えてから表示する（表示後に点が動き回ると、密集していて重苦しく見えるため）
   forceAtlas2.assign(g, {
-    iterations: 400,
+    iterations: 700,
     settings: { ...forceAtlas2.inferSettings(g), scalingRatio: 30, gravity: 0.5, barnesHutOptimize: true, linLogMode: true },
+  })
+  return g
+}
+
+/** 2 つの語をつなぐ道（findPath の結果）を、左から右へ並べたグラフ */
+export function buildPathGraph(dict: Dictionary, path: string[], pal: Palette): NetGraph {
+  const g: NetGraph = new Graph({ type: 'undirected' })
+  let prev: string | null = null
+  path.forEach((id, i) => {
+    const end = i === 0 || i === path.length - 1
+    const size = end ? 16 : 11
+    const n = id.startsWith('m:') ? addMorphNode(g, dict, id.slice(2), pal, size) : addEntryNode(g, dict, id.slice(2), pal, size)
+    if (!n) return
+    // 横一列だと長い道で文字が重なるので、上下に少しずらす
+    g.mergeNodeAttributes(n, { x: i * 10, y: i % 2 ? -4 : 4, ...(end ? { focus: true } : {}) })
+    link(g, prev, n, 'morph', pal, 1)
+    prev = n
   })
   return g
 }

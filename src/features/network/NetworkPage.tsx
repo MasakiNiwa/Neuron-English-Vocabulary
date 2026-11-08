@@ -1,6 +1,6 @@
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Compass, ExternalLink, Map as MapIcon, Maximize2, SlidersHorizontal, Target, X } from 'lucide-react'
+import { ArrowLeftRight, Compass, Dices, Download, ExternalLink, Map as MapIcon, Maximize2, Route, SlidersHorizontal, Target, X } from 'lucide-react'
 import { Suspense, use, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Segmented } from '@/components/ui/Form'
@@ -14,9 +14,12 @@ import { cn } from '@/lib/cn'
 import { db } from '@/lib/db'
 import { usePersistentState } from '@/lib/persist'
 import { useResolvedTheme } from '@/lib/theme'
-import { buildEntryGraph, buildMorphGraph, buildMorphemeMap, EDGE_LABEL, readPalette, type EdgeKind, type NetGraph, type NodeAttrs } from './graph'
+import { buildEntryGraph, buildMorphGraph, buildMorphemeMap, buildPathGraph, DENSITY_SCALE, EDGE_LABEL, readPalette, type Density, type EdgeKind, type NetGraph, type NodeAttrs } from './graph'
+import { saveGraphImage } from './exportImage'
+import { findPath } from './path'
+import { markVisited, useVisitedMorphs } from './visited'
 import { FocusPicker, randomFocus } from './FocusPicker'
-import { SigmaGraph } from './SigmaGraph'
+import { SigmaGraph, type SigmaRenderer } from './SigmaGraph'
 import type { NetworkSearch } from './search'
 
 const KIND_LABEL: Record<string, string> = {
@@ -52,15 +55,16 @@ function Legend() {
 const entryGraphCache = new Map<string, Promise<NetGraph | null>>()
 
 /** 探索モードのグラフ（中心の語・語根ごとにキャッシュ。グラフ表示とつながり一覧で共有する） */
-function egoGraphPromise(dict: ReturnType<typeof useDictionary>, theme: string, focus: string) {
-  const cacheKey = `${theme}|${focus}`
+function egoGraphPromise(dict: ReturnType<typeof useDictionary>, theme: string, focus: string, density: Density) {
+  const cacheKey = `${theme}|${density}|${focus}`
   let p = entryGraphCache.get(cacheKey)
   if (!p) {
     p = (async () => {
       const pal = readPalette()
-      if (focus.startsWith('m:')) return buildMorphGraph(dict, focus.slice(2), pal)
+      const scale = DENSITY_SCALE[density]
+      if (focus.startsWith('m:')) return buildMorphGraph(dict, focus.slice(2), pal, scale)
       const entry = await getEntry(focus.slice(2))
-      return entry ? buildEntryGraph(dict, entry, pal) : null
+      return entry ? buildEntryGraph(dict, entry, pal, scale) : null
     })()
     entryGraphCache.set(cacheKey, p)
     if (entryGraphCache.size > 30) entryGraphCache.delete(entryGraphCache.keys().next().value!)
@@ -103,20 +107,32 @@ function egoHidden(graph: NetGraph, focus: string, off: ReadonlySet<EdgeKind>) {
   return { nodes, edges }
 }
 
-function EgoGraph({ focus, off, onSelect }: { focus: string; off: ReadonlySet<EdgeKind>; onSelect: (id: string, a: NodeAttrs) => void }) {
+function EgoGraph({
+  focus,
+  off,
+  density,
+  onSelect,
+  onReady,
+}: {
+  focus: string
+  off: ReadonlySet<EdgeKind>
+  density: Density
+  onSelect: (id: string, a: NodeAttrs) => void
+  onReady: (r: SigmaRenderer | null) => void
+}) {
   const dict = useDictionary()
   const theme = useResolvedTheme()
-  const graph = use(egoGraphPromise(dict, theme, focus))
+  const graph = use(egoGraphPromise(dict, theme, focus, density))
   const hidden = useMemo(() => (graph && graph.hasNode(focus) ? egoHidden(graph, focus, off) : null), [graph, focus, off])
   if (!graph) return null
-  return <SigmaGraph graph={graph} onNodeClick={onSelect} labelThreshold={0} hiddenNodes={hidden?.nodes} hiddenEdges={hidden?.edges} />
+  return <SigmaGraph graph={graph} onNodeClick={onSelect} labelThreshold={0} hiddenNodes={hidden?.nodes} hiddenEdges={hidden?.edges} onReady={onReady} />
 }
 
 /** 線の種類ごとの表示のオン・オフ（この中心のグラフにある種類だけ出す） */
-function KindToggles({ focus, off, onToggle }: { focus: string; off: ReadonlySet<EdgeKind>; onToggle: (k: EdgeKind) => void }) {
+function KindToggles({ focus, off, density, onToggle }: { focus: string; off: ReadonlySet<EdgeKind>; density: Density; onToggle: (k: EdgeKind) => void }) {
   const dict = useDictionary()
   const theme = useResolvedTheme()
-  const graph = use(egoGraphPromise(dict, theme, focus))
+  const graph = use(egoGraphPromise(dict, theme, focus, density))
   if (!graph) return null
   const present = new Set<EdgeKind>()
   graph.forEachEdge((_e, a) => present.add(a.kind))
@@ -149,10 +165,10 @@ function KindToggles({ focus, off, onToggle }: { focus: string; off: ReadonlySet
  * 中心の語・語根のつながりを、種類ごとの一覧で示す（U06）。
  * タップできない・ホバーできない環境や、キーボード・読み上げでもネットワークを辿れるようにする
  */
-function ConnectionList({ focus, off, onPick }: { focus: string; off: ReadonlySet<EdgeKind>; onPick: (id: string) => void }) {
+function ConnectionList({ focus, off, density, onPick }: { focus: string; off: ReadonlySet<EdgeKind>; density: Density; onPick: (id: string) => void }) {
   const dict = useDictionary()
   const theme = useResolvedTheme()
-  const graph = use(egoGraphPromise(dict, theme, focus))
+  const graph = use(egoGraphPromise(dict, theme, focus, density))
   if (!graph || !graph.hasNode(focus)) return null
   const groups = new Map<EdgeKind, { id: string; label: string; sub: string }[]>()
   graph.forEachEdge(focus, (_e, attrs, s, t) => {
@@ -208,9 +224,11 @@ interface MapFilter {
   /** 共通の語がこの数より少ない線を隠す */
   minShared: number
   mine: Mine
+  /** 語根めぐり: 訪れた語根だけに色を付ける */
+  visited: boolean
 }
 
-const DEFAULT_FILTER: MapFilter = { kinds: ['root', 'prefix'], langs: ['latin', 'greek', 'other'], minWords: 2, minShared: 1, mine: 'all' }
+const DEFAULT_FILTER: MapFilter = { kinds: ['root', 'prefix'], langs: ['latin', 'greek', 'other'], minWords: 2, minShared: 1, mine: 'all', visited: false }
 
 function toggle<T>(list: T[], v: T): T[] {
   return list.includes(v) ? list.filter((x) => x !== v) : [...list, v]
@@ -229,10 +247,33 @@ function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; chi
   )
 }
 
-function MapFilterPanel({ filter, setFilter, shown, total }: { filter: MapFilter; setFilter: (f: MapFilter) => void; shown: number; total: number }) {
+function MapFilterPanel({
+  filter,
+  setFilter,
+  shown,
+  total,
+  visitedCount,
+  rootTotal,
+}: {
+  filter: MapFilter
+  setFilter: (f: MapFilter) => void
+  shown: number
+  total: number
+  visitedCount: number
+  rootTotal: number
+}) {
   const set = (p: Partial<MapFilter>) => setFilter({ ...filter, ...p })
   return (
     <div className="flex flex-col gap-2.5 text-xs">
+      <div className="flex flex-wrap items-center gap-1.5">
+        <span className="w-14 shrink-0 text-muted">めぐり</span>
+        <Chip on={filter.visited} onClick={() => set({ visited: !filter.visited })}>
+          訪れた所に色
+        </Chip>
+        <span className="text-muted">
+          訪れた語根 {visitedCount} / {rootTotal}
+        </span>
+      </div>
       <div className="flex flex-wrap items-center gap-1.5">
         <span className="w-14 shrink-0 text-muted">種類</span>
         <Chip on={filter.kinds.includes('root')} onClick={() => set({ kinds: toggle(filter.kinds, 'root') })}>語根</Chip>
@@ -279,11 +320,36 @@ function MapFilterPanel({ filter, setFilter, shown, total }: { filter: MapFilter
         <span>
           {shown} / {total} 個を表示
         </span>
-        <button type="button" className="text-accent underline" onClick={() => setFilter(DEFAULT_FILTER)}>
+        <button type="button" className="text-accent underline" onClick={() => setFilter({ ...DEFAULT_FILTER, visited: filter.visited })}>
           元に戻す
         </button>
       </div>
     </div>
+  )
+}
+
+/** いま表示している図を画像で保存するボタン */
+function SaveImageButton({ renderer, name }: { renderer: SigmaRenderer | null; name: string }) {
+  const [busy, setBusy] = useState(false)
+  return (
+    <button
+      type="button"
+      disabled={!renderer || busy}
+      onClick={async () => {
+        if (!renderer) return
+        setBusy(true)
+        try {
+          await saveGraphImage(renderer, name)
+        } finally {
+          setBusy(false)
+        }
+      }}
+      aria-label="図を画像で保存"
+      title="図を画像で保存"
+      className="inline-flex h-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface/95 px-2.5 text-sm disabled:opacity-50"
+    >
+      <Download className="size-4" />
+    </button>
   )
 }
 
@@ -327,7 +393,11 @@ function MapView({ onExplore }: { onExplore: (id: string) => void }) {
   const dict = useDictionary()
   const theme = useResolvedTheme()
   const graph = useMemo(() => buildMorphemeMap(dict, readPalette()), [dict, theme])
-  const [filter, setFilter] = usePersistentState<MapFilter>('network:mapFilter', DEFAULT_FILTER)
+  const [stored, setFilter] = usePersistentState<MapFilter>('network:mapFilter', DEFAULT_FILTER)
+  // 前の版で保存した絞り込みに、新しい項目の既定を足す
+  const filter = useMemo(() => ({ ...DEFAULT_FILTER, ...stored }), [stored])
+  const visited = useVisitedMorphs()
+  const [renderer, setRenderer] = useState<SigmaRenderer | null>(null)
   const [panelOpen, setPanelOpen] = usePersistentState('network:mapFilterOpen', false)
   const [q, setQ] = useState('')
   const [selected, setSelected] = useState<string | null>(null)
@@ -372,6 +442,18 @@ function MapView({ onExplore }: { onExplore: (id: string) => void }) {
     return out
   }, [graph, q, hiddenNodes])
 
+  // 語根めぐり: 訪れていない語根を薄く
+  const dimmed = useMemo(() => {
+    if (!filter.visited) return null
+    const s = new Set<string>()
+    graph.forEachNode((id) => {
+      if (!visited.has(id.slice(2))) s.add(id)
+    })
+    return s
+  }, [graph, filter.visited, visited])
+  const visitedCount = useMemo(() => dict.morphemes.filter((m) => m.type === 'root' && visited.has(m.id)).length, [dict, visited])
+  const rootTotal = useMemo(() => dict.morphemes.filter((m) => m.type === 'root').length, [dict])
+
   const shown = graph.order - hiddenNodes.size
   const selectedVisible = selected && !hiddenNodes.has(selected) ? selected : null
 
@@ -381,12 +463,14 @@ function MapView({ onExplore }: { onExplore: (id: string) => void }) {
         graph={graph}
         onNodeClick={(id) => setSelected(id)}
         onStageClick={() => setSelected(null)}
-        liveLayout
+        intro={false}
         labelThreshold={7}
         hiddenNodes={hiddenNodes}
         hiddenEdges={hiddenEdges}
         matched={matched}
         selected={selectedVisible}
+        dimmed={dimmed}
+        onReady={setRenderer}
       />
       <div className="absolute inset-x-3 top-3 flex flex-col gap-2 md:right-auto md:w-96">
         <div className="flex gap-2">
@@ -404,6 +488,7 @@ function MapView({ onExplore }: { onExplore: (id: string) => void }) {
           >
             <SlidersHorizontal className="size-4" /> 絞り込み
           </button>
+          <SaveImageButton renderer={renderer} name="root-map" />
         </div>
         {matched && (
           <div className="self-start rounded-lg bg-surface/95 px-2 py-1 text-[11px] text-muted shadow">
@@ -412,7 +497,7 @@ function MapView({ onExplore }: { onExplore: (id: string) => void }) {
         )}
         {panelOpen && (
           <div className="rounded-2xl border border-border bg-surface/95 p-3 shadow-lg backdrop-blur">
-            <MapFilterPanel filter={filter} setFilter={setFilter} shown={shown} total={graph.order} />
+            <MapFilterPanel filter={filter} setFilter={setFilter} shown={shown} total={graph.order} visitedCount={visitedCount} rootTotal={rootTotal} />
           </div>
         )}
       </div>
@@ -478,7 +563,7 @@ function FocusPanel({ focus }: { focus: string }) {
   )
 }
 
-function FocusSearch({ onPick }: { onPick: (focus: string) => void }) {
+function FocusSearch({ onPick, placeholder = '単語・語根を探す' }: { onPick: (focus: string) => void; placeholder?: string }) {
   const [q, setQ] = useState('')
   const [hits, setHits] = useState<SearchHit[]>([])
   const dict = useDictionary()
@@ -495,7 +580,7 @@ function FocusSearch({ onPick }: { onPick: (focus: string) => void }) {
   }, [q])
   return (
     <div className="relative">
-      <SearchField value={q} onValueChange={setQ} placeholder="単語・語根を探す" className="[&_input]:h-10" />
+      <SearchField value={q} onValueChange={setQ} placeholder={placeholder} className="[&_input]:h-10" />
       {hits.length > 0 && (
         <ul className="absolute inset-x-0 top-11 z-20 overflow-hidden rounded-xl border border-border bg-surface shadow-lg">
           {hits.map((h) => {
@@ -537,35 +622,199 @@ function readLastFocus(): string | null {
   }
 }
 
-/** たどった道のり（最近の中心）。タップで戻れる */
-function Trail({ trail, focus, onPick }: { trail: string[]; focus: string; onPick: (id: string) => void }) {
+function useNodeLabel() {
   const dict = useDictionary()
-  const items = trail
-    .map((id) => {
-      if (id.startsWith('m:')) {
-        const m = dict.morphById.get(id.slice(2))
-        return m ? { id, label: morphLabel(m) } : null
-      }
-      return dict.byKey.get(id.slice(2)) ? { id, label: headword(id.slice(2)) } : null
-    })
-    .filter((x): x is { id: string; label: string } => !!x)
+  return (id: string): string | null => {
+    if (id.startsWith('m:')) {
+      const m = dict.morphById.get(id.slice(2))
+      return m ? morphLabel(m) : null
+    }
+    return dict.byKey.get(id.slice(2)) ? headword(id.slice(2)) : null
+  }
+}
+
+/** 道のりに並べる数。これより多いときは前を「…」にまとめ、タップで全部を折り返して見せる */
+const TRAIL_SHOWN = 4
+
+/** たどった道のり（最近の中心）。タップで戻れる */
+function Trail({ trail, focus, onPick, onClear }: { trail: string[]; focus: string; onPick: (id: string) => void; onClear: () => void }) {
+  const label = useNodeLabel()
+  const [open, setOpen] = useState(false)
+  const items = trail.map((id) => ({ id, label: label(id) })).filter((x): x is { id: string; label: string } => !!x.label)
   if (items.length < 2) return null
+  const hiddenCount = open ? 0 : Math.max(0, items.length - TRAIL_SHOWN)
+  const shown = items.slice(hiddenCount)
+  const chip = (x: { id: string; label: string }) => (
+    <button
+      type="button"
+      onClick={() => onPick(x.id)}
+      aria-current={x.id === focus ? 'true' : undefined}
+      className={cn('font-en max-w-40 truncate rounded-full px-2 py-0.5', x.id === focus ? 'bg-accent text-accent-fg' : 'text-muted hover:bg-surface-2 hover:text-fg')}
+    >
+      {x.label}
+    </button>
+  )
   return (
-    <nav aria-label="たどった道のり" className="flex items-center gap-1 overflow-x-auto px-3 py-1.5 text-xs md:px-5">
-      {items.map((x, i) => (
-        <span key={x.id} className="flex shrink-0 items-center gap-1">
-          {i > 0 && <span className="text-muted">›</span>}
-          <button
-            type="button"
-            onClick={() => onPick(x.id)}
-            aria-current={x.id === focus ? 'true' : undefined}
-            className={cn('font-en rounded-full px-2 py-0.5', x.id === focus ? 'bg-accent text-accent-fg' : 'text-muted hover:bg-surface-2 hover:text-fg')}
-          >
-            {x.label}
-          </button>
+    <nav aria-label="たどった道のり" className={cn('flex items-center gap-1 px-3 py-1.5 text-xs md:px-5', open ? 'flex-wrap' : 'overflow-hidden')}>
+      {hiddenCount > 0 && (
+        <button type="button" onClick={() => setOpen(true)} className="shrink-0 rounded-full border border-border px-2 py-0.5 text-muted hover:border-accent" aria-label={`前の ${hiddenCount} 件も表示`}>
+          … {hiddenCount}
+        </button>
+      )}
+      {shown.map((x, i) => (
+        <span key={x.id} className="flex min-w-0 shrink items-center gap-1">
+          {(i > 0 || hiddenCount > 0) && <span className="text-muted">›</span>}
+          {chip(x)}
         </span>
       ))}
+      {open && (
+        <span className="ml-auto flex shrink-0 gap-2">
+          <button type="button" onClick={() => setOpen(false)} className="text-muted underline">
+            たたむ
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              onClear()
+              setOpen(false)
+            }}
+            className="text-muted underline"
+          >
+            消す
+          </button>
+        </span>
+      )}
     </nav>
+  )
+}
+
+const DENSITY_OPTIONS: { value: Density; label: string }[] = [
+  { value: 'few', label: 'すっきり' },
+  { value: 'normal', label: 'ふつう' },
+  { value: 'many', label: 'たくさん' },
+]
+
+/** 表示する単語の数 */
+function DensityPicker({ value, onChange }: { value: Density; onChange: (d: Density) => void }) {
+  return (
+    <div className="flex items-center gap-1" role="radiogroup" aria-label="表示する数">
+      {DENSITY_OPTIONS.map((o) => (
+        <button
+          key={o.value}
+          type="button"
+          role="radio"
+          aria-checked={value === o.value}
+          onClick={() => onChange(o.value)}
+          className={cn('rounded-full px-2 py-0.5 text-[11px]', value === o.value ? 'bg-surface-2 text-fg' : 'text-muted hover:text-fg')}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------- 道をつなぐ
+
+/** よく使う語から、語源でつながる 2 語をおまかせで選ぶ */
+function randomPair(dict: ReturnType<typeof useDictionary>): [string, string] {
+  const ws = dict.entries.filter((e) => e.type === 'w' && e.rank <= 4000 && e.morphs.some((m) => dict.morphById.get(m)?.type === 'root'))
+  const a = ws[Math.floor(Math.random() * ws.length)]
+  let b = ws[Math.floor(Math.random() * ws.length)]
+  for (let i = 0; i < 20 && b.morphs.some((m) => a.morphs.includes(m)); i++) b = ws[Math.floor(Math.random() * ws.length)]
+  return ['e:' + a.key, 'e:' + b.key]
+}
+
+function PathEnd({ id, placeholder, onPick, onClear }: { id: string | null; placeholder: string; onPick: (id: string) => void; onClear: () => void }) {
+  const label = useNodeLabel()
+  const dict = useDictionary()
+  if (!id) return <FocusSearch onPick={onPick} placeholder={placeholder} />
+  const sub = id.startsWith('m:') ? dict.morphById.get(id.slice(2))?.meaning.ja : dict.byKey.get(id.slice(2))?.gloss
+  return (
+    <div className="flex h-10 items-center gap-2 rounded-xl border border-border bg-surface px-3">
+      <span className="font-en shrink-0 font-medium">{label(id)}</span>
+      <span className="min-w-0 flex-1 truncate text-xs text-muted">{sub}</span>
+      <button type="button" onClick={onClear} className="rounded p-0.5 text-muted hover:bg-surface-2" aria-label="選び直す">
+        <X className="size-4" />
+      </button>
+    </div>
+  )
+}
+
+/** 道の説明: 「transport —(port: 運ぶ)— portable」のように、語根を挟んで並べる */
+function PathSteps({ path, onPick }: { path: string[]; onPick: (id: string) => void }) {
+  const dict = useDictionary()
+  const label = useNodeLabel()
+  return (
+    <ol className="flex flex-wrap items-center gap-1 text-sm">
+      {path.map((id, i) => {
+        const m = id.startsWith('m:') ? dict.morphById.get(id.slice(2)) : null
+        return (
+          <li key={id} className="flex items-center gap-1">
+            {i > 0 && <span className="text-muted">→</span>}
+            <button
+              type="button"
+              onClick={() => onPick(id)}
+              className={cn('rounded-full border px-2 py-0.5', m ? 'border-[var(--node-root)]/50' : 'border-border', 'hover:border-accent')}
+              title="ここを中心に探索"
+            >
+              <span className="font-en">{label(id)}</span>
+              {m && <span className="ml-1 text-xs text-muted">{m.meaning.ja}</span>}
+            </button>
+          </li>
+        )
+      })}
+    </ol>
+  )
+}
+
+function PathView({ onExplore }: { onExplore: (id: string) => void }) {
+  const dict = useDictionary()
+  const theme = useResolvedTheme()
+  const [ends, setEnds] = usePersistentState<[string | null, string | null]>('network:pathEnds', [null, null])
+  const [from, to] = ends
+  const path = useMemo(() => (from && to ? findPath(dict, from, to) : null), [dict, from, to])
+  const graph = useMemo(() => (path ? buildPathGraph(dict, path, readPalette()) : null), [dict, path, theme])
+  const [renderer, setRenderer] = useState<SigmaRenderer | null>(null)
+  const label = useNodeLabel()
+  return (
+    <>
+      {graph && <SigmaGraph graph={graph} onNodeClick={(id) => onExplore(id)} labelThreshold={0} allLabels fitRatio={1.35} onReady={setRenderer} />}
+      <div className="absolute inset-x-3 top-3 flex flex-col gap-2 md:right-auto md:w-[28rem]">
+        <PathEnd id={from} placeholder="はじめの単語・語根" onPick={(id) => setEnds([id, to])} onClear={() => setEnds([null, to])} />
+        <PathEnd id={to} placeholder="つなげたい単語・語根" onPick={(id) => setEnds([from, id])} onClear={() => setEnds([from, null])} />
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => setEnds([to, from])}
+            disabled={!from && !to}
+            className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-border bg-surface/95 px-3 text-sm disabled:opacity-50"
+          >
+            <ArrowLeftRight className="size-4" /> 入れ替え
+          </button>
+          <button type="button" onClick={() => setEnds(randomPair(dict))} className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-border bg-surface/95 px-3 text-sm">
+            <Dices className="size-4" /> おまかせの 2 語
+          </button>
+          {graph && <SaveImageButton renderer={renderer} name={`${label(from!) ?? ''}-${label(to!) ?? ''}`} />}
+        </div>
+      </div>
+      <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-border bg-surface/95 p-3 shadow-lg backdrop-blur md:inset-x-auto md:right-4 md:w-[28rem]">
+        {!from || !to ? (
+          <p className="text-sm text-muted">
+            2 つの単語（または語根）を選ぶと、語源のつながりをたどってつなぐ道を探します。例：transport と portable、prediction と dictionary
+          </p>
+        ) : path ? (
+          <>
+            <div className="mb-1.5 text-[11px] text-muted">
+              {path.length <= 1 ? '同じ語です' : `${Math.floor(path.length / 2)} 歩でつながりました（語をタップで探索）`}
+            </div>
+            <PathSteps path={path} onPick={onExplore} />
+          </>
+        ) : (
+          <p className="text-sm text-muted">語源のつながりでは、この 2 つをつなぐ道が見つかりませんでした。別の語で試してみてください。</p>
+        )}
+      </div>
+    </>
   )
 }
 
@@ -584,20 +833,21 @@ function NetworkInner() {
   const [trail, setTrail] = usePersistentState<string[]>('network:trail', [])
   const [offList, setOffList] = usePersistentState<EdgeKind[]>('network:offKinds', [])
   const off = useMemo(() => new Set(offList), [offList])
+  const [density, setDensity] = usePersistentState<Density>('network:density', 'normal')
+  const [renderer, setRenderer] = useState<SigmaRenderer | null>(null)
+  const label = useNodeLabel()
 
-  // 中心を覚えて、道のりに足す（道のりにある中心へ戻ったときは、道のりをそのまま残す）
+  // 中心を覚えて、道のりに足す（道のりにある中心へ戻ったときは、道のりをそのまま残す）。語根なら「語根めぐり」に記録
   useEffect(() => {
+    if (mode !== 'ego') return
     try {
       localStorage.setItem(LAST_FOCUS_KEY, focus)
     } catch {
       /* 覚えられなくても表示はできる */
     }
-    setTrail((prev) => {
-      const i = prev.indexOf(focus)
-      if (i >= 0) return prev
-      return [...prev, focus].slice(-12)
-    })
-  }, [focus, setTrail])
+    if (focus.startsWith('m:')) markVisited(focus.slice(2))
+    setTrail((prev) => (prev.includes(focus) ? prev : [...prev, focus].slice(-30)))
+  }, [focus, mode, setTrail])
 
   const setFocus = (f: string) => void navigate({ to: '/network', search: { focus: f } })
   const onSelect = (id: string) => {
@@ -612,25 +862,34 @@ function NetworkInner() {
   return (
     <div className="flex h-[calc(100dvh-3.5rem-3.5rem-env(safe-area-inset-bottom))] flex-col md:h-[calc(100dvh-3.5rem)]">
       <div className="flex flex-wrap items-center gap-2 border-b border-border px-3 py-2 md:px-5">
-        <Segmented<'ego' | 'map'>
+        <Segmented<'ego' | 'map' | 'path'>
           value={mode}
-          onChange={(m) => void navigate({ to: '/network', search: { focus: search.focus, mode: m === 'map' ? 'map' : undefined } })}
+          onChange={(m) => void navigate({ to: '/network', search: { focus: search.focus, mode: m === 'ego' ? undefined : m } })}
           options={[
             { value: 'ego', label: '探索' },
             { value: 'map', label: '語根マップ' },
+            { value: 'path', label: '道をつなぐ' },
           ]}
         />
-        <div className="flex min-w-48 flex-1 gap-2">
-          <div className="min-w-0 flex-1">
-            <FocusSearch onPick={setFocus} />
+        {mode !== 'path' && (
+          <div className="flex min-w-48 flex-1 gap-2">
+            <div className="min-w-0 flex-1">
+              <FocusSearch onPick={setFocus} />
+            </div>
+            <FocusPicker onPick={setFocus} />
           </div>
-          <FocusPicker onPick={setFocus} />
-        </div>
+        )}
       </div>
-      {mode === 'ego' && <Trail trail={trail} focus={focus} onPick={setFocus} />}
+      {mode === 'ego' && <Trail trail={trail} focus={focus} onPick={setFocus} onClear={() => setTrail([focus])} />}
       <div className="relative flex-1 overflow-hidden">
         <Suspense fallback={<PageSpinner />}>
-          {mode === 'map' ? <MapView onExplore={setFocus} /> : <EgoGraph focus={focus} off={off} onSelect={onSelect} />}
+          {mode === 'map' ? (
+            <MapView onExplore={setFocus} />
+          ) : mode === 'path' ? (
+            <PathView onExplore={setFocus} />
+          ) : (
+            <EgoGraph focus={focus} off={off} density={density} onSelect={onSelect} onReady={setRenderer} />
+          )}
         </Suspense>
         {mode === 'ego' && (
           <>
@@ -644,8 +903,17 @@ function NetworkInner() {
             <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-border bg-surface/95 p-3 shadow-lg backdrop-blur md:inset-x-auto md:right-4 md:w-96">
               <FocusPanel focus={focus} />
               <Suspense fallback={null}>
-                <KindToggles focus={focus} off={off} onToggle={(k) => setOffList(off.has(k) ? offList.filter((x) => x !== k) : [...offList, k])} />
-                <ConnectionList focus={focus} off={off} onPick={setFocus} />
+                <KindToggles
+                  focus={focus}
+                  off={off}
+                  density={density}
+                  onToggle={(k) => setOffList(off.has(k) ? offList.filter((x) => x !== k) : [...offList, k])}
+                />
+                <div className="mt-1.5 flex items-center justify-between gap-2">
+                  <DensityPicker value={density} onChange={setDensity} />
+                  <SaveImageButton renderer={renderer} name={label(focus) ?? 'network'} />
+                </div>
+                <ConnectionList focus={focus} off={off} density={density} onPick={setFocus} />
               </Suspense>
             </div>
           </>
@@ -654,6 +922,13 @@ function NetworkInner() {
           <div className="pointer-events-none absolute right-3 top-14 hidden md:block">
             <span className="inline-flex items-center gap-1.5 text-[11px] text-muted">
               <MapIcon className="size-3.5" /> 語根を選んで「探索」でつながりへ
+            </span>
+          </div>
+        )}
+        {mode === 'path' && (
+          <div className="pointer-events-none absolute right-3 top-3 hidden md:block">
+            <span className="inline-flex items-center gap-1.5 text-[11px] text-muted">
+              <Route className="size-3.5" /> 語源でつながる道
             </span>
           </div>
         )}

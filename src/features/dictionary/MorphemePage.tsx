@@ -1,6 +1,6 @@
 import { Link, useParams } from '@tanstack/react-router'
 import { BookOpen, GitBranch, Network, Sparkles } from 'lucide-react'
-import { Suspense, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/Button'
 import { Card, SectionTitle } from '@/components/ui/Card'
@@ -10,6 +10,7 @@ import { addManyToStudy } from '@/features/study/cards'
 import { MORPH_TYPE_LABEL, MorphemeLink, morphLabel } from './components/links'
 import { EntryRow } from './components/EntryRow'
 import { useDictionary } from './hooks'
+import { markVisited } from '@/features/network/visited'
 import type { Morpheme } from './types'
 import { usePersistentState } from '@/lib/persist'
 
@@ -147,6 +148,8 @@ function MorphemeView({ id }: { id: string }) {
 
 export function MorphemePage() {
   const { id } = useParams({ from: '/m/$id' })
+  // 語根めぐり: 語根のページを開いたら訪れたことにする
+  useEffect(() => markVisited(id), [id])
   return (
     <Page>
       <Suspense fallback={<PageSpinner />}>
