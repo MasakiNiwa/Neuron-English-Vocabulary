@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { LanguageCode } from '@/lib/i18n'
+import type { ScreenshotFormat } from '@/lib/screenshot'
 import { migrateFormat, type ConcreteFormat } from '@/features/study/formatDefs'
 
 export type ThemeMode = 'system' | 'light' | 'dark'
@@ -29,6 +30,8 @@ export interface Settings {
   analytics: boolean
   /** ヘルプの「利用状況」を開いておくか（次に開いたときも同じ状態。既定は閉じる） */
   helpUsageOpen: boolean
+  /** ヘッダーの「このページを画像で保存」の形式（既定は WebP） */
+  screenshotFormat: ScreenshotFormat
 }
 
 export const defaultSettings: Settings = {
@@ -47,6 +50,7 @@ export const defaultSettings: Settings = {
   showSensitive: false,
   analytics: true,
   helpUsageOpen: false,
+  screenshotFormat: 'webp',
 }
 
 interface SettingsStore extends Settings {

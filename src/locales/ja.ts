@@ -19,6 +19,7 @@ const ja = {
   },
   header: {
     toggleTheme: 'ダークモード切り替え',
+    screenshot: 'このページを画像で保存',
     help: 'ヘルプ',
     back: '戻る',
   },

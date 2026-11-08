@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import Sigma, { DEFAULT_STYLES } from 'sigma'
 import { reduceMotion } from '@/lib/motion'
 import { useResolvedTheme } from '@/lib/theme'
+import { registerCanvasHost } from '@/lib/screenshot'
 import type { EdgeAttrs, NetGraph, NodeAttrs } from './graph'
 
 const FONT = 'Inter, "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif'
@@ -210,6 +211,12 @@ export function SigmaGraph({
       void cam.animate({ ratio: fitRatio }, { duration: 450, easing: 'cubicOut' })
     } else if (fitRatio !== 1) cam.setState({ ratio: fitRatio })
 
+    // パネルの開け閉めなどで枠の大きさが変わったら描き直す（sigma は窓の大きさの変化しか見ない）
+    const ro = new ResizeObserver(() => renderer.resize().refresh())
+    ro.observe(el)
+    // ヘッダーの「このページを画像で保存」で図も写せるように
+    const unregister = registerCanvasHost(el, () => renderer.refresh())
+
     let layout: FA2Layout | null = null
     let timer: number | undefined
     if (liveLayout) {
@@ -220,6 +227,8 @@ export function SigmaGraph({
       timer = window.setTimeout(() => layout?.stop(), 3000)
     }
     return () => {
+      ro.disconnect()
+      unregister()
       window.clearTimeout(timer)
       layout?.kill()
       readyRef.current?.(null)

@@ -183,6 +183,20 @@ export function SettingsPage() {
           <p className="-mt-1 text-xs text-muted">
             「表示しない」（既定）では、センシティブな単語を一覧・検索・つながり・学習・分析などアプリのどこにも出しません。切り替えるとアプリを読み込み直します。
           </p>
+          <Row label="ページの画像の形式">
+            <Segmented
+              value={s.screenshotFormat}
+              onChange={(v) => s.set('screenshotFormat', v)}
+              options={[
+                { value: 'webp', label: 'WebP' },
+                { value: 'png', label: 'PNG' },
+                { value: 'jpeg', label: 'JPEG' },
+              ]}
+            />
+          </Row>
+          <p className="-mt-1 text-xs text-muted">
+            ヘッダーの「このページを画像で保存」で使う形式です。WebP（既定）は小さく、PNG はくっきり、JPEG はどこでも開けます。WebP を書き出せないブラウザ（Safari など）では PNG で保存します。
+          </p>
           <Row label="アクセス数の計測に協力する">
             <Segmented
               value={s.analytics ? 'on' : 'off'}
