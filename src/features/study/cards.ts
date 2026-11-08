@@ -1,61 +1,23 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { createEmptyCard, fsrs, generatorParameters, Rating, type Card, type Grade } from 'ts-fsrs'
+import { Rating, type Grade } from 'ts-fsrs'
 import { db, type StudyCard } from '@/lib/db'
 import { useSettings } from '@/stores/settings'
+import { modelOf, newCard, previewDue, recallProbability, reviewCard } from './srs'
 
 export { Rating }
 export type { Grade }
 
-/** FSRS スケジューラ（目標記憶保持率は設定から） */
-export function scheduler() {
-  const { desiredRetention } = useSettings.getState()
-  return fsrs(generatorParameters({ request_retention: desiredRetention, enable_fuzz: true, enable_short_term: true }))
-}
-
-export function toCard(c: StudyCard): Card {
-  return {
-    due: new Date(c.due),
-    stability: c.stability,
-    difficulty: c.difficulty,
-    elapsed_days: c.elapsed_days,
-    scheduled_days: c.scheduled_days,
-    learning_steps: c.learning_steps,
-    reps: c.reps,
-    lapses: c.lapses,
-    state: c.state,
-    last_review: c.last_review ? new Date(c.last_review) : undefined,
-  }
-}
-
-export function fromCard(entryId: string, card: Card, addedAt: number): StudyCard {
-  return {
-    entryId,
-    due: card.due.getTime(),
-    stability: card.stability,
-    difficulty: card.difficulty,
-    elapsed_days: card.elapsed_days,
-    scheduled_days: card.scheduled_days,
-    learning_steps: card.learning_steps,
-    reps: card.reps,
-    lapses: card.lapses,
-    state: card.state,
-    last_review: card.last_review ? card.last_review.getTime() : null,
-    addedAt,
-  }
-}
-
+/** 単語を学習に追加する（新しいカードは FSRS-7） */
 export async function addToStudy(entryId: string) {
   if (await db.cards.get(entryId)) return
-  const now = Date.now()
-  await db.cards.put(fromCard(entryId, createEmptyCard(new Date(now)), now))
+  await db.cards.put(newCard(entryId, Date.now()))
 }
 
 export async function addManyToStudy(entryIds: string[]) {
   const existing = new Set(await db.cards.where('entryId').anyOf(entryIds).primaryKeys())
   const now = Date.now()
-  const rows = entryIds
-    .filter((id) => !existing.has(id))
-    .map((id, i) => fromCard(id, createEmptyCard(new Date(now)), now + i))
+  // addedAt は追加した順に並べるために 1 ミリ秒ずつずらす（カードを作った時刻は now）
+  const rows = entryIds.filter((id) => !existing.has(id)).map((id, i) => newCard(id, now, now + i))
   await db.cards.bulkPut(rows)
   return rows.length
 }
@@ -72,36 +34,34 @@ export async function review(entryId: string, rating: Grade, opts: { durationMs?
     const c = await db.cards.get(entryId)
     if (!c) return
     const now = new Date()
-    const { card, log } = scheduler().next(toCard(c), now, rating)
-    await db.cards.put({ ...fromCard(entryId, card, c.addedAt), suspended: c.suspended })
+    const next = reviewCard(c, rating, now, useSettings.getState().desiredRetention)
+    await db.cards.put(next)
     await db.reviews.add({
       entryId,
       rating,
-      state: log.state,
+      // 回答する前の状態（0 = 初めての回答）
+      state: c.state,
       reviewedAt: now.getTime(),
       durationMs: opts.durationMs,
       mode: opts.mode,
-      stability: card.stability,
-      difficulty: card.difficulty,
+      stability: next.stability,
+      difficulty: next.difficulty,
+      model: modelOf(c),
+      recall: c.state === 0 ? undefined : recallProbability(c, now),
+      run: c.run,
+      uid: crypto.randomUUID(),
     })
   })
 }
 
-/** 各評価を選んだ場合の次回間隔（ボタンに表示） */
+/** 各評価を選んだ場合の次回の期限（ボタンに表示） */
 export function previewIntervals(c: StudyCard): Record<Grade, Date> {
-  const rec = scheduler().repeat(toCard(c), new Date())
-  return {
-    [Rating.Again]: rec[Rating.Again].card.due,
-    [Rating.Hard]: rec[Rating.Hard].card.due,
-    [Rating.Good]: rec[Rating.Good].card.due,
-    [Rating.Easy]: rec[Rating.Easy].card.due,
-  } as Record<Grade, Date>
+  return previewDue(c, new Date(), useSettings.getState().desiredRetention)
 }
 
 /** 現在の想起確率 (0..1) */
 export function retrievability(c: StudyCard, now = new Date()): number {
-  if (!c.last_review) return 0
-  return scheduler().get_retrievability(toCard(c), now, false) as number
+  return recallProbability(c, now)
 }
 
 /** null=未登録, undefined=読み込み中 */

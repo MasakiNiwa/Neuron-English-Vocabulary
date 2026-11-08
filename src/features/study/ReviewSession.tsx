@@ -13,6 +13,7 @@ import { EntryLink, LinkedText, SpeakButton } from '@/features/dictionary/compon
 import { useDictionary, useEntry, recordView } from '@/features/dictionary/hooks'
 import { formatInterval, previewIntervals, Rating, review, type Grade } from './cards'
 import { ChoicePrompt, ClozePrompt, findCloze, JaPrompt, pickFormat, type ConcreteFormat } from './formats'
+import { strengthDays } from './srs'
 import { ListenPrompt } from './ListenPrompt'
 import { ProduceAnswer } from './ProduceAnswer'
 import { MemoField, MemoResult, type Attempt } from './AnswerMemo'
@@ -340,7 +341,7 @@ function CardFace({
   const entry = useEntry(entryKey)
   // カードごとに 1 回だけ選ぶ（描画のたびに変わらないように）
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fmt = useMemo(() => pickFormat(formats, auto, entry, card), [entry])
+  const fmt = useMemo(() => pickFormat(formats, auto, entry, card && { state: card.state, strength: strengthDays(card) }), [entry])
   useEffect(() => onFormat(fmt), [fmt, onFormat])
   const [answered, setAnswered] = useState<number | null>(null)
   // 自分の答え（メモ・書いた答え・話した答え・選んだ答え）

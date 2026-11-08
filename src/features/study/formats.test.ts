@@ -31,7 +31,7 @@ describe('出題形式の選び方', () => {
     expect(pickFormat(['cloze'], false, noEx, null)).toBe('en2ja')
   })
   it('おまかせ: 新しい語は意味を答える形式、覚えてきた語は英語を答える形式を中心に出す', () => {
-    const count = (card: { state: number; stability: number }) => {
+    const count = (card: { state: number; strength: number }) => {
       let rec = 0
       let r = 0.137
       const rnd = () => (r = (r * 9301 + 49297) % 233280 / 233280)
@@ -41,11 +41,11 @@ describe('出題形式の選び方', () => {
       }
       return rec
     }
-    expect(count({ state: 0, stability: 0 })).toBeGreaterThan(count({ state: 2, stability: 30 }))
+    expect(count({ state: 0, strength: 0 })).toBeGreaterThan(count({ state: 2, strength: 30 }))
   })
   it('おまかせでなければ選んだ形式から選ぶ', () => {
     const seen = new Set<string>()
-    for (let i = 0; i < 50; i++) seen.add(pickFormat(['en2ja', 'ja2en'], false, e, { state: 0, stability: 0 }))
+    for (let i = 0; i < 50; i++) seen.add(pickFormat(['en2ja', 'ja2en'], false, e, { state: 0, strength: 0 }))
     expect([...seen].sort()).toEqual(['en2ja', 'ja2en'])
   })
 })

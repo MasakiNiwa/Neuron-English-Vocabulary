@@ -125,3 +125,28 @@ describe('復元の安全性（レビュー 2026-11-07 の 02・03）', () => {
     expect(useSettings.getState().theme).toBe('dark')
   })
 })
+
+describe('FSRS-7 のカード（バックアップ schema 3）', () => {
+  const c7 = { ...card, model: 7, stabilityFast: 12.5, scheduled_days: 3.27, run: 'r1', migratedAt: 5 }
+  it('記憶モデルと速い記憶の成分をいっしょに取り込む', () => {
+    const b = parseBackup({ app: BACKUP_APP, schemaVersion: 3, data: { cards: [c7] } })
+    expect(b.rows.cards[0]).toMatchObject({ model: 7, stabilityFast: 12.5, scheduled_days: 3.27, run: 'r1' })
+  })
+  it('成分が欠けた FSRS-7 のカード・知らないモデル・小数の日数の FSRS-6 カードは取り込まない', () => {
+    const { stabilityFast: _s, ...noFast } = c7
+    const b = parseBackup({ app: BACKUP_APP, data: { cards: [noFast, { ...c7, model: 8 }, { ...card, scheduled_days: 1.5 }] } })
+    expect(b.rows.cards).toHaveLength(0)
+  })
+  it('回答の記録の新しい項目（model・recall・run・uid）を取り込み、同じ回答は ID で見分ける', async () => {
+    const { db } = await import('@/lib/db')
+    const { restoreBackup } = await import('./backup')
+    await db.reviews.clear()
+    const r = { entryId: 'run', rating: 3, state: 2, reviewedAt: 10, model: 7, recall: 0.8, run: 'r1', uid: 'u1' }
+    const b = parseBackup({ app: BACKUP_APP, data: { reviews: [r, { ...r, uid: 'u2' }, { ...r, recall: 2 }] } })
+    expect(b.rows.reviews).toHaveLength(2)
+    await restoreBackup(b, 'merge')
+    await restoreBackup(b, 'merge')
+    // 同じ時刻でも ID の違う 2 つの回答は両方残り、同じものは 2 回入らない
+    expect(await db.reviews.count()).toBe(2)
+  })
+})

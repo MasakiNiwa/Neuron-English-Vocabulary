@@ -13,7 +13,8 @@ import { ALL_FORMATS, migrateFormat, type ConcreteFormat } from '@/features/stud
  */
 
 export const BACKUP_APP = 'neuron-english-vocabulary'
-export const BACKUP_SCHEMA = 2
+/** 3: カードに記憶モデル（FSRS-7）・回答の記録に model / recall / run / uid（v2.0） */
+export const BACKUP_SCHEMA = 3
 
 /** バックアップに含める表（この順で復元する） */
 export const BACKUP_TABLES = ['views', 'cards', 'reviews', 'threads', 'chats', 'extras', 'rootLessons'] as const
@@ -70,15 +71,24 @@ const CLEAN: Record<BackupTable, (r: Row) => Row | null> = {
     const nums = ['due', 'stability', 'difficulty', 'elapsed_days', 'scheduled_days', 'learning_steps', 'reps', 'lapses', 'addedAt']
     if (!isStr(r.entryId) || !nums.every((k) => isNum(r[k])) || !isNumOrNull(r.last_review ?? null)) return null
     if (![0, 1, 2, 3].includes(r.state as number)) return null
-    if (!['reps', 'lapses', 'learning_steps', 'elapsed_days', 'scheduled_days'].every((k) => isCount(r[k]))) return null
+    if (!['reps', 'lapses', 'learning_steps', 'elapsed_days'].every((k) => isCount(r[k]))) return null
+    // FSRS-7 は日数に小数を使う
+    if ((r.scheduled_days as number) < 0 || (r.scheduled_days as number) > 1e6 || (r.model !== 7 && !isCount(r.scheduled_days))) return null
     if (!isTime(r.due) || !isTime(r.addedAt) || (r.last_review != null && !isTime(r.last_review))) return null
     if ((r.stability as number) < 0 || (r.stability as number) > 1e6 || (r.difficulty as number) < 0 || (r.difficulty as number) > 10) return null
     if (r.suspended !== undefined && r.suspended !== 0 && r.suspended !== 1) return null
-    return pick(r, ['entryId', ...nums, 'state', 'last_review', 'suspended'])
+    // FSRS-7 のカードは速い記憶の成分も揃っていること（揃っていなければ取り込まない。FSRS-6 と取り違えないように）
+    if (r.model !== undefined && r.model !== 7) return null
+    if (r.model === 7 && !(isNum(r.stabilityFast) && (r.stabilityFast as number) >= 0 && (r.stabilityFast as number) <= 1e6)) return null
+    if (!optStr(r.run) || (r.migration !== undefined && r.migration !== 'kept') || !(r.migratedAt === undefined || isTime(r.migratedAt))) return null
+    const out = pick(r, ['entryId', ...nums, 'state', 'last_review', 'suspended', 'run', 'migration', 'migratedAt'])
+    if (r.model === 7) Object.assign(out, { model: 7, stabilityFast: r.stabilityFast })
+    return out
   },
   reviews: (r) =>
-    isStr(r.entryId) && isNum(r.rating) && r.rating >= 1 && r.rating <= 4 && isNum(r.state) && isNum(r.reviewedAt) && optNum(r.durationMs) && optStr(r.mode) && optNum(r.stability) && optNum(r.difficulty)
-      ? pick(r, ['id', 'entryId', 'rating', 'state', 'reviewedAt', 'durationMs', 'mode', 'stability', 'difficulty'])
+    isStr(r.entryId) && isNum(r.rating) && r.rating >= 1 && r.rating <= 4 && isNum(r.state) && isNum(r.reviewedAt) && optNum(r.durationMs) && optStr(r.mode) && optNum(r.stability) && optNum(r.difficulty) &&
+    (r.model === undefined || r.model === 6 || r.model === 7) && (r.recall === undefined || (isNum(r.recall) && r.recall >= 0 && r.recall <= 1)) && optStr(r.run) && optStr(r.uid)
+      ? pick(r, ['id', 'entryId', 'rating', 'state', 'reviewedAt', 'durationMs', 'mode', 'stability', 'difficulty', 'model', 'recall', 'run', 'uid'])
       : null,
   threads: (r) =>
     isStr(r.id) && typeof r.title === 'string' && isNum(r.createdAt) && isNum(r.updatedAt) && optStr(r.about) && (r.pinned === undefined || typeof r.pinned === 'boolean')
@@ -201,7 +211,8 @@ export async function buildBackup(): Promise<BackupFile> {
 
 const dedupeKey: Partial<Record<BackupTable, (r: Row) => string>> = {
   views: (r) => `${r.entryId}|${r.viewedAt}`,
-  reviews: (r) => `${r.entryId}|${r.reviewedAt}`,
+  // v2.0 からの回答には ID（uid）がある。同じ時刻の別の回答を取り違えないように、あればそれで見分ける
+  reviews: (r) => (typeof r.uid === 'string' ? `u:${r.uid}` : `${r.entryId}|${r.reviewedAt}`),
   chats: (r) => `${r.thread}|${r.role}|${r.createdAt}`,
 }
 

@@ -37,13 +37,13 @@ export function formatSupported(f: ConcreteFormat): boolean {
 
 /**
  * 1 枚のカードの出題形式を選ぶ。選んだ形式のうち、その語で出せるもの（穴埋めは例文があるとき）から選ぶ。
- * おまかせ（auto）では、新しい・覚えかけの語（安定度 7 日未満）は意味を答える形式を、覚えてきた語は英語を答える形式を 8 割で選ぶ
+ * おまかせ（auto）では、新しい・覚えかけの語（覚えの強さ 7 日未満。srs.ts の strengthDays）は意味を答える形式を、覚えてきた語は英語を答える形式を 8 割で選ぶ
  */
 export function pickFormat(
   selected: ConcreteFormat[],
   auto: boolean,
   entry: Entry | null,
-  card: { state: number; stability: number } | null,
+  card: { state: number; strength: number } | null,
   random: () => number = Math.random,
 ): ConcreteFormat {
   if (!entry) return 'en2ja'
@@ -51,7 +51,7 @@ export function pickFormat(
   if (!ok.length) return 'en2ja'
   let pool = ok
   if (auto && ok.length > 1 && card) {
-    const learning = card.state !== 2 || card.stability < 7
+    const learning = card.state !== 2 || card.strength < 7
     const prefer = (random() < 0.8) === learning ? RECOGNITION : PRODUCTION
     const p = ok.filter((f) => prefer.includes(f))
     if (p.length) pool = p
