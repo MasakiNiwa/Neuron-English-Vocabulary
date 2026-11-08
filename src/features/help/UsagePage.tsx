@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { EChart, type chartColors } from '@/features/analytics/EChart'
-import { AI_EVENTS, fetchDaily, fetchVisitorCount, ymd } from '@/lib/goatcounter'
+import { AI_EVENTS, fetchDaily, fetchVisitorCount, utcDay } from '@/lib/goatcounter'
 
 /**
  * アプリ全体の利用状況（みんなの合計）。ヘルプのリンクから開く。
@@ -45,7 +45,8 @@ function useUsage() {
   const [failed, setFailed] = useState(false)
   useEffect(() => {
     let alive = true
-    const since = (days: number) => ymd(new Date(Date.now() - (days - 1) * 86_400_000))
+    // 日の区切りは推移のグラフと同じ（日本時間の朝 9 時）
+    const since = (days: number) => utcDay(Date.now() - (days - 1) * 86_400_000)
     ;(async () => {
       const [total, week, month] = await Promise.all([fetchVisitorCount('/'), fetchVisitorCount('/', since(7)), fetchVisitorCount('/', since(30))])
       if (!alive) return
@@ -157,7 +158,6 @@ export function UsagePage() {
   )
 
   const aiTotal = data?.ai.reduce((n, a) => n + a.total, 0) ?? 0
-  const aiWeek = data?.ai.reduce((n, a) => n + a.week, 0) ?? 0
   return (
     <Page title="利用状況">
       <Link to="/help" className="-mt-2 mb-3 inline-flex items-center gap-1 text-sm text-accent">
@@ -182,6 +182,7 @@ export function UsagePage() {
             <h2 className="mb-1 flex items-center gap-1.5 text-sm font-semibold text-muted">
               <CalendarDays className="size-4" /> 最近 30 日の推移
             </h2>
+            <p className="text-[11px] text-muted">集計の都合で、1 日は日本時間の朝 9 時から翌朝 9 時までです。</p>
             {data ? <EChart option={dailyOpt} height={220} /> : <div className="h-[220px]" />}
           </Card>
 
@@ -200,9 +201,7 @@ export function UsagePage() {
             <h2 className="mb-1 flex items-center gap-1.5 text-sm font-semibold text-muted">
               <Bot className="size-4" /> AI 機能の利用
             </h2>
-            <p className="mb-2 text-xs text-muted">
-              AI 機能を使ったセッション：これまで {aiTotal.toLocaleString('ja-JP')}・最近 7 日 {aiWeek.toLocaleString('ja-JP')}（1 つのセッションで何度話しかけても 1。機能ごとに数えるので、合計はアクセスより多くなることがあります）
-            </p>
+
             {aiTotal > 0 ? <EChart option={aiOpt} height={220} /> : <p className="text-sm text-muted">{data ? 'まだ記録がありません。' : '…'}</p>}
             {data && (
               <ul className="mt-2 grid grid-cols-3 gap-2 text-center text-xs">

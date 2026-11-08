@@ -1,4 +1,5 @@
-import { Database, GraduationCap, ImageDown, Palette, Volume2 } from 'lucide-react'
+import { ArrowRight, Database, GraduationCap, ImageDown, Palette, Volume2 } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
 import { countCachedShards, prefetchAllShards } from '@/features/dictionary/data'
 import { Suspense, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -196,6 +197,9 @@ export function SettingsPage() {
           <p className="-mt-1 text-xs text-muted">
             アプリの改善のため、開いた画面の種類（単語・学習・AI など）と AI 機能を使った回数だけを GoatCounter に送ります。単語名・学習内容・個人を特定する情報は送りません。
           </p>
+          <Link to="/usage" className="-mt-1 inline-flex items-center gap-1 text-xs text-accent">
+            みんなの利用状況を見る <ArrowRight className="size-3.5" />
+          </Link>
         </AccordionSection>
 
         <AccordionSection value="screenshot" title="ページの画像保存" icon={<ImageDown className="size-5" />}>
