@@ -1,12 +1,12 @@
-import { BookText, Database, ExternalLink, Info, Keyboard, Package, Scale, Shield, Sparkles } from 'lucide-react'
+import { ArrowRight, BookText, Database, ExternalLink, Info, Keyboard, Package, Scale, Shield, Sparkles } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
 import { Card } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { appInfo, assetUrl } from '@/lib/appInfo'
-import { AI_EVENTS, fetchVisitorCount } from '@/lib/goatcounter'
-import { useSettings } from '@/stores/settings'
+import { fetchVisitorCount } from '@/lib/goatcounter'
 import { dataSources } from './credits'
 import { loadMeta } from '@/features/dictionary/data'
 import type { DataMeta } from '@/features/dictionary/types'
@@ -107,52 +107,26 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   )
 }
 
-interface UsageStats {
-  total: number | null
-  week: number | null
-  aiWeek: number | null
-}
-
 /**
- * アプリ全体の利用状況（GoatCounter の公開カウンタ。数字は数時間おきに更新）
- * - TOTAL は画面ごとの数の合計で、1 人が 3 画面開くと 3 になるため、アプリを開くと必ず通るホーム（/）の数を使う
- * - GoatCounter の数は同じ人の短時間の重複を除いた「アクセス」の回数なので、単位は「回」にする
+ * アプリ全体の利用状況（GoatCounter の公開カウンタ。数字は数時間おきに更新）。ここでは累計だけを出し、詳しくは利用状況のページへ
+ * - アプリを開くと必ず通るホーム（/）の数を使う。GoatCounter の数はセッション単位（しばらくの間の重複は 1）なので、単位は「セッション」
  */
 function AppUsage() {
-  const [stats, setStats] = useState<UsageStats | null>(null)
+  const [total, setTotal] = useState<number | null | undefined>(undefined)
   useEffect(() => {
     let alive = true
-    const d = new Date(Date.now() - 6 * 86400_000)
-    const start = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
-    Promise.all([
-      fetchVisitorCount('/'),
-      fetchVisitorCount('/', start),
-      Promise.all(AI_EVENTS.map((e) => fetchVisitorCount(e, start))),
-    ]).then(([total, week, ai]) => {
-      if (!alive) return
-      const aiWeek = ai.some((n) => n === null) ? null : ai.reduce<number>((a, n) => a + (n ?? 0), 0)
-      setStats({ total, week, aiWeek })
-    })
+    void fetchVisitorCount('/').then((n) => alive && setTotal(n))
     return () => {
       alive = false
     }
   }, [])
-  const fmt = (n: number | null | undefined, unit: string) => (n == null ? (stats ? '—' : '…') : `${n.toLocaleString('ja-JP')} ${unit}`)
-  // 開いた・閉じた状態を覚えておく（既定は閉じる）
-  const open = useSettings((s) => s.helpUsageOpen)
-  const set = useSettings((s) => s.set)
   return (
-    <details className="group mt-2 border-t border-border pt-2" open={open} onToggle={(e) => set('helpUsageOpen', e.currentTarget.open)}>
-      <summary className="flex cursor-pointer select-none items-center gap-2 py-1 text-xs text-muted">
-        <span className="flex-1">利用状況（みんなの合計）</span>
-        <span className="group-open:hidden">開く</span>
-        <span className="hidden group-open:inline">たたむ</span>
-      </summary>
-      <InfoRow label="これまでのアクセス" value={fmt(stats?.total, '回')} />
-      <InfoRow label="最近 7 日のアクセス" value={fmt(stats?.week, '回')} />
-      <InfoRow label="最近 7 日の AI 機能の利用" value={fmt(stats?.aiWeek, '回')} />
-      <p className="mt-1 text-[11px] text-muted">GoatCounter の集計。数時間おきに更新されます。オフラインのときは表示されません。</p>
-    </details>
+    <div className="mt-2 border-t border-border pt-2">
+      <InfoRow label="これまでのアクセス（みんなの合計）" value={total === undefined ? '…' : total === null ? '—' : `${total.toLocaleString('ja-JP')} セッション`} />
+      <Link to="/usage" className="mt-1 inline-flex items-center gap-1 text-xs text-accent">
+        利用状況をくわしく見る（推移・よく使われている画面・AI 機能） <ArrowRight className="size-3.5" />
+      </Link>
+    </div>
   )
 }
 
