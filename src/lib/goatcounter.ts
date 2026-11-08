@@ -169,4 +169,4 @@ export async function fetchVisitorCount(path: string, start?: string, endDate?: 
 }
 
 /** AI 機能のイベント名（trackEvent で送っているもの） */
-export const AI_EVENTS = ['ai-chat', 'ai-advice', 'ai-word'] as const
+export const AI_EVENTS = ['ai-chat', 'ai-word-ask', 'ai-advice', 'ai-word'] as const

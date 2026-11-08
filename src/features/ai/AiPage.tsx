@@ -479,7 +479,8 @@ function ChatView() {
     const used: string[] = []
     let partial = ''
     try {
-      trackEvent('ai-chat')
+      // 単語について話しているチャット（単語ページの「AI に聞く」から始めたもの）は分けて数える
+      trackEvent(about ? 'ai-word-ask' : 'ai-chat')
       const res = await runTask({
         messages: history.slice(-20),
         about,
