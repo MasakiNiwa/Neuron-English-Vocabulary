@@ -9,7 +9,10 @@ export interface ViewRecord {
   source?: string
 }
 
-/** FSRS カード（ts-fsrs の Card をシリアライズしたもの） */
+/**
+ * FSRS カード（1 語に 1 枚）。項目の名前は v1.4 まで（ts-fsrs 5）の Card のまま。
+ * model が 7 のカードは FSRS-7（stabilityFast も持つ）、それ以外は FSRS-6 で計算する（features/study/srs.ts）
+ */
 export interface StudyCard {
   entryId: string
   due: number
@@ -24,6 +27,16 @@ export interface StudyCard {
   last_review: number | null
   addedAt: number
   suspended?: 0 | 1
+  /** 記憶モデル。7 = FSRS-7。無いときは FSRS-6（v1.4 までに作ったカード） */
+  model?: 7
+  /** FSRS-7 の速い記憶の成分 */
+  stabilityFast?: number
+  /** 学習の回（追加するたびに新しい ID。削除して追加し直した語の、前の回の記録と区別する） */
+  run?: string
+  /** FSRS-7 へ移せるか確かめた結果。'kept' = 履歴が確かめられないので FSRS-6 のまま */
+  migration?: 'kept'
+  /** FSRS-7 へ移した時刻 */
+  migratedAt?: number
 }
 
 /** 復習ログ */
@@ -36,8 +49,17 @@ export interface ReviewRecord {
   /** 回答に要した時間 (ms) */
   durationMs?: number
   mode?: string
+  /** 回答した後の安定度・難しさ（v1.4 まで） */
   stability?: number
   difficulty?: number
+  /** 回答のときに使った記憶モデル（v2.0 から。無いときは FSRS-6） */
+  model?: 6 | 7
+  /** 回答する直前の、思い出せる見込み（0〜1。v2.0 から。初めての回答は無し） */
+  recall?: number
+  /** 学習の回（カードの run と同じ） */
+  run?: string
+  /** 回答ごとの ID（バックアップを重ねて取り込むときに、同じ回答を 2 回入れないため） */
+  uid?: string
 }
 
 /** 汎用キーバリュー */

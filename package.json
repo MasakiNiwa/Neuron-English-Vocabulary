@@ -1,7 +1,7 @@
 {
   "name": "neuron-english-vocabulary",
   "private": true,
-  "version": "1.4.2",
+  "version": "2.0.0",
   "type": "module",
   "description": "ニューロン英単語 — 語源や意味のつながりで辿る英単語アプリ",
   "license": "MIT",
@@ -35,7 +35,7 @@
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "sigma": "^4.0.4",
-    "ts-fsrs": "^5.4.2",
+    "ts-fsrs": "^6.0.0",
     "zustand": "^5.0.16"
   },
   "devDependencies": {
