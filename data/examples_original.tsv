@@ -3200,6 +3200,25 @@ forsaken	The old house looked forsaken and empty.	その古い家は見捨てら
 loyalist	He remained a loyalist to the king until the end.	彼は最後まで王に忠誠を尽くした。
 femininity	The designer's dresses celebrate femininity.	そのデザイナーのドレスは女性らしさを讃えている。
 forage	Bears forage for food before winter.	クマは冬の前に食べ物をあさり回る。
+terminator	A terminator is a device that ends a line or circuit.	ターミネーターとは、回線や回路の終端につける装置のことだ。
+sakura	Many tourists come to Japan to see the sakura in spring.	春には多くの観光客が桜を見に日本へやって来る。
+lynch	In the past, angry mobs would sometimes lynch suspects without a trial.	昔は怒った群衆が裁判もせずに容疑者を私刑にすることがあった。
+newton	The newton is the unit of force.	ニュートンは力の単位だ。
+win_over	She managed to win over her parents to the plan.	彼女はなんとか両親を説得してその計画に賛成してもらった。
+dynamics	The book explains the dynamics of family life.	その本は家族生活の力関係を説明している。
+android	In the movie, an android works as a nurse.	その映画では、アンドロイドが看護師として働いている。
+martin	A martin built its nest under the roof.	イワツバメが屋根の下に巣を作った。
+pip	Be careful not to swallow the pips.	種を飲み込まないように気をつけて。
+drake	A drake has brighter feathers than a female duck.	雄のカモは雌より鮮やかな羽を持っている。
+ridge	We walked along the ridge to the top of the mountain.	私たちは尾根を歩いて山頂まで行った。
+potter	The potter shaped the clay into a bowl.	陶工は粘土をこねて鉢の形にした。
+emerald	She wore a ring with a large emerald.	彼女は大きなエメラルドのついた指輪をしていた。
+chamberlain	The chamberlain managed the affairs of the royal household.	侍従は王室の家事を取り仕切っていた。
+diner	We had breakfast at a small diner by the highway.	私たちは幹線道路沿いの小さな食堂で朝食をとった。
+smith	The smith made horseshoes in his workshop.	鍛冶屋は仕事場で蹄鉄を作った。
+tom	Our tom cat goes out every night.	うちの雄猫は毎晩出かけていく。
+fisher	The fisher went out to sea early in the morning.	漁師は朝早く海へ出た。
+anchorage	The ships waited in the anchorage until the storm passed.	船は嵐が過ぎるまで停泊地で待った。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。

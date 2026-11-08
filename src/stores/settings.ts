@@ -27,7 +27,7 @@ export interface Settings {
   showSensitive: boolean
   /** アクセス数の計測（GoatCounter）に協力する。画面の種類と AI 機能を使った回数だけを送る */
   analytics: boolean
-  /** ヘルプの「利用状況」を開いておくか（次に開いたときも同じ状態。既定は開く） */
+  /** ヘルプの「利用状況」を開いておくか（次に開いたときも同じ状態。既定は閉じる） */
   helpUsageOpen: boolean
 }
 
@@ -46,7 +46,7 @@ export const defaultSettings: Settings = {
   studyFormatsOpen: true,
   showSensitive: false,
   analytics: true,
-  helpUsageOpen: true,
+  helpUsageOpen: false,
 }
 
 interface SettingsStore extends Settings {
@@ -64,7 +64,7 @@ export const useSettings = create<SettingsStore>()(
     }),
     {
       name: 'nev-settings',
-      version: 6,
+      version: 7,
       migrate: (state, version) => {
         const s = state as Partial<Settings>
         // v2: 1日の新規カード上限の既定を「無制限 (0)」に変更
@@ -78,6 +78,8 @@ export const useSettings = create<SettingsStore>()(
           s.studyAuto = true
           delete (s as { studyFormat?: unknown }).studyFormat
         }
+        // v7: ヘルプの「利用状況」の既定を「閉じる」に（v1.0.0 で一度「開く」を既定にしていた）
+        if (version < 7) s.helpUsageOpen = false
         return s as never
       },
     },

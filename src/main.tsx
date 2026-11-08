@@ -4,6 +4,9 @@ import { RouterProvider } from '@tanstack/react-router'
 import '@/lib/i18n'
 import './index.css'
 import { router } from './app/router'
+import { warmUpSpeech } from '@/lib/speech'
+
+warmUpSpeech()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

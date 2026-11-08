@@ -1,7 +1,7 @@
 import { Snail, Volume2 } from 'lucide-react'
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
-import { speak } from '@/lib/speech'
+import { speak, stopSpeaking } from '@/lib/speech'
 
 /**
  * 聞いて答える出題（聞いて意味・聞いて書く）の問題文。文字は見せず、発音だけを流す。
@@ -11,7 +11,11 @@ export function ListenPrompt({ text, hint }: { text: string; hint: string }) {
   useEffect(() => {
     // 前のカードの読み上げや画面の切り替えと重ならないよう、少し待ってから流す
     const t = setTimeout(() => speak(text), 300)
-    return () => clearTimeout(t)
+    return () => {
+      clearTimeout(t)
+      // 次の問題に進んだら、前の問題の読み上げはすぐに止める
+      stopSpeaking()
+    }
   }, [text])
   return (
     <div className="flex flex-col items-center gap-3">

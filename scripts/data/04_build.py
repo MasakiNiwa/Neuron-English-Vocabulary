@@ -635,10 +635,28 @@ def ex_score(i):
     return hard * 3 + abs(len(toks) - 8)
 
 
-def pick_examples(forms: set[str], seq: list[str] | None = None, k=3):
+# 人名・地名・商品名として使われやすい語（data/name_like_words.txt）。
+# これらの語では、見出し語が大文字で始まる形（Tom・Mr Smith・Mars など）でしか出てこない例文を使わない
+name_like = set()
+with open(os.path.join(REPO, 'data', 'name_like_words.txt'), encoding='utf-8') as f:
+    for line in f:
+        w = line.split('#')[0].strip()
+        if w:
+            name_like.add(w)
+
+
+def used_only_as_name(en: str, forms: set[str]) -> bool:
+    """例文の中で、見出し語（とその活用形）がすべて大文字で始まる形で出てくるか"""
+    hits = [m.group(0) for m in re.finditer(r"[A-Za-z]+(?:'[A-Za-z]+)?", en) if m.group(0).lower() in forms]
+    return bool(hits) and all(h[:1].isupper() for h in hits)
+
+
+def pick_examples(forms: set[str], seq: list[str] | None = None, k=3, no_names=False):
     ids = set()
     for fm in forms:
         ids.update(post.get(fm, ()))
+    if no_names:
+        ids = {i for i in ids if not used_only_as_name(pairs[i][0], forms)}
     if seq:
         ok = []
         for i in ids:
@@ -813,7 +831,7 @@ for rank, (L, v) in enumerate(lemma_list, 1):
         'forms': forms[:8],
         '_syn': collect_rel(es, 'synonyms'), '_ant': collect_rel(es, 'antonyms'),
         '_der': collect_rel(es, 'derived'), '_rel': collect_rel(es, 'related'),
-        'ex': pick_examples(fset),
+        'ex': pick_examples(fset, no_names=L in name_like),
         'ngsl': L in ngsl_rank,
         'z': round(zipf_frequency(L, 'en'), 2),
         'pie': pie_of(es),
