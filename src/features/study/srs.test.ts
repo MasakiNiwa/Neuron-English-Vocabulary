@@ -121,3 +121,25 @@ describe('FSRS-7 への移行', () => {
     expect(convertCard(newCard('x', T0), [], T0)).toBeNull()
   })
 })
+
+describe('苦手な語・見込みの低い語', async () => {
+  const { pickFocusWords, lowRecall } = await import('./session')
+  const now = T0 + 60 * DAY
+  const base = (entryId: string, extra: Partial<StudyCard> = {}): StudyCard => ({ ...legacyCard(entryId), state: 2, reps: 5, last_review: now - DAY, stability: 10, difficulty: 5, ...extra })
+  it('何度も忘れた語・最近つまずいた語を選び、そのあと別の日に思い出せた語は下げる', () => {
+    const cards = [base('lapse', { lapses: 3 }), base('recent'), base('ok'), base('back', { lapses: 2 })]
+    const reviews = [
+      { entryId: 'recent', rating: 1, reviewedAt: now - 2 * DAY },
+      { entryId: 'back', rating: 1, reviewedAt: now - 10 * DAY },
+      { entryId: 'back', rating: 3, reviewedAt: now - 3 * DAY },
+    ]
+    const keys = pickFocusWords(cards, reviews, now).map((w) => w.card.entryId)
+    expect(keys).toEqual(['lapse', 'recent'])
+  })
+  it('n 日後の見込みが低い順に並べ、まだ回答していないカードは入れない', () => {
+    const weak = base('weak', { stability: 1, last_review: now - 3 * DAY })
+    const strong = base('strong', { stability: 100, last_review: now - DAY })
+    const fresh = legacyCard('fresh')
+    expect(lowRecall([strong, fresh, weak], 7, now).map((c) => c.entryId)).toEqual(['weak', 'strong'])
+  })
+})

@@ -2,6 +2,7 @@ import { db, type StudyCard } from '@/lib/db'
 import { useSettings } from '@/stores/settings'
 import { loadDictionary } from '@/features/dictionary/data'
 import { addManyToStudy } from './cards'
+import { recallProbability } from './srs'
 
 /** 並びをランダムにする（毎回同じ順で出題しないように）。元の配列は変えない */
 export function shuffle<T>(xs: T[], random: () => number = Math.random): T[] {
@@ -121,12 +122,13 @@ export async function startLearning(keys: string[]): Promise<StudyCard[]> {
   return shuffle(cards.filter((c): c is StudyCard => !!c))
 }
 
-export type PracticeMode = 'random' | 'weak' | 'recent'
+export type PracticeMode = 'random' | 'weak' | 'recent' | 'low'
 
-/** 復習日に関係なく、学習中のカードから自由に練習 */
-export async function buildPracticeQueue(mode: PracticeMode, n: number): Promise<StudyCard[]> {
+/** 復習日に関係なく、学習中のカードから自由に練習。low は aheadDays 日後に思い出せる見込みの低い順 */
+export async function buildPracticeQueue(mode: PracticeMode, n: number, aheadDays = 0): Promise<StudyCard[]> {
   const { hidden } = await loadDictionary()
   const cards = (await db.cards.toArray()).filter((c) => !c.suspended && !hidden.has(c.entryId))
+  if (mode === 'low') return shuffle(lowRecall(cards, aheadDays).slice(0, n))
   if (mode === 'weak') {
     return shuffle(
       cards
@@ -137,4 +139,56 @@ export async function buildPracticeQueue(mode: PracticeMode, n: number): Promise
   }
   if (mode === 'recent') return shuffle(cards.sort((a, b) => b.addedAt - a.addedAt).slice(0, n))
   return shuffle(cards).slice(0, n)
+}
+
+/** 回答したことのあるカードを、aheadDays 日後に思い出せる見込みの低い順に（復習しなかった場合の推定） */
+export function lowRecall(cards: StudyCard[], aheadDays: number, now = Date.now()): StudyCard[] {
+  const at = new Date(now + aheadDays * 86_400_000)
+  return cards
+    .filter((c) => c.state !== 0 && c.last_review != null)
+    .map((c) => ({ c, r: recallProbability(c, at) }))
+    .sort((a, b) => a.r - b.r)
+    .map((x) => x.c)
+}
+
+// ---------------------------------------------------------------- 苦手な語の特訓
+
+export interface FocusWord {
+  card: StudyCard
+  /** 選んだ理由 */
+  reason: string
+  score: number
+}
+
+/**
+ * 苦手な語（何度も忘れる語・最近つまずいて、まだ別の日に思い出せていない語）を選ぶ。
+ * 昔の失敗だけで選び続けないよう、最後の「もう一度」のあとに別の日に思い出せた語は点を下げる
+ */
+export function pickFocusWords(cards: StudyCard[], reviews: { entryId: string; rating: number; reviewedAt: number }[], now = Date.now()): FocusWord[] {
+  const day = (t: number) => new Date(t).toDateString()
+  const byKey = new Map<string, { rating: number; reviewedAt: number }[]>()
+  for (const r of [...reviews].sort((a, b) => a.reviewedAt - b.reviewedAt)) byKey.set(r.entryId, [...(byKey.get(r.entryId) ?? []), r])
+  const out: FocusWord[] = []
+  for (const c of cards) {
+    if (c.state === 0) continue
+    const list = byKey.get(c.entryId) ?? []
+    let lastAgain = -1
+    list.forEach((r, i) => r.rating === 1 && (lastAgain = i))
+    const recentAgain = list.filter((r) => r.rating === 1 && r.reviewedAt >= now - 28 * 86_400_000).length
+    const recovered = lastAgain >= 0 && list.slice(lastAgain + 1).some((r) => r.rating >= 2 && day(r.reviewedAt) !== day(list[lastAgain].reviewedAt))
+    let score = c.lapses * 2 + recentAgain * 3 + Math.max(0, c.difficulty - 6)
+    if (recovered) score /= 3
+    if (score < 3) continue
+    const reason =
+      c.lapses >= 2 ? `${c.lapses} 回忘れた` : recentAgain ? `最近 ${recentAgain} 回「もう一度」` : '難しい語'
+    out.push({ card: c, reason, score })
+  }
+  return out.sort((a, b) => b.score - a.score)
+}
+
+export async function buildFocusQueue(n: number): Promise<StudyCard[]> {
+  const { hidden } = await loadDictionary()
+  const cards = (await db.cards.toArray()).filter((c) => !c.suspended && !hidden.has(c.entryId))
+  const reviews = await db.reviews.toArray()
+  return shuffle(pickFocusWords(cards, reviews).slice(0, n).map((x) => x.card))
 }

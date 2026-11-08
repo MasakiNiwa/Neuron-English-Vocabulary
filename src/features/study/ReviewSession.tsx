@@ -51,12 +51,16 @@ function GradeHelp() {
   )
 }
 
-function CardBack({ entryKey }: { entryKey: string }) {
+/** focus: 苦手な語の特訓。解説を開いておき、成り立ちと例文を多めに出す */
+function CardBack({ entryKey, focus = false }: { entryKey: string; focus?: boolean }) {
   const entry = useEntry(entryKey)
   const dict = useDictionary()
   if (!entry) return null
   return (
     <div className="flex flex-col gap-3 text-left">
+      {focus && (
+        <p className="rounded-lg bg-warn/10 px-2.5 py-1.5 text-xs text-warn">苦手な語の特訓：語の成り立ちと例文で、意味のつながりを確かめましょう</p>
+      )}
       <div className="flex flex-col gap-1">
         {entry.g.map((g, i) => (
           <div key={i} className="text-base">
@@ -80,24 +84,24 @@ function CardBack({ entryKey }: { entryKey: string }) {
       )}
       {entry.note?.ja && (
         // 書き下ろしの解説（語源と意味のつながり）。カードが長くなりすぎないよう開閉式に（U02）
-        <details className="rounded-xl border border-border p-2.5 text-sm">
+        <details className="rounded-xl border border-border p-2.5 text-sm" open={focus || undefined}>
           <summary className="cursor-pointer select-none text-xs font-medium text-accent">解説を読む</summary>
           <p className="mt-1.5 leading-relaxed">
             <LinkedText text={entry.note.ja} />
           </p>
         </details>
       )}
-      {entry.ex?.[0] && (
-        <div className="rounded-xl bg-surface-2 p-2.5 text-sm">
+      {(entry.ex ?? []).slice(0, focus ? 3 : 1).map((ex, i) => (
+        <div key={i} className="rounded-xl bg-surface-2 p-2.5 text-sm">
           <div className="flex items-start gap-1">
             <p className="font-en flex-1">
-              <LinkedText text={entry.ex[0].en} />
+              <LinkedText text={ex.en} />
             </p>
-            <SpeakButton text={entry.ex[0].en} size="sm" />
+            <SpeakButton text={ex.en} size="sm" />
           </div>
-          <p className="text-muted">{entry.ex[0].ja}</p>
+          <p className="text-muted">{ex.ja}</p>
         </div>
-      )}
+      ))}
       <EntryLink k={entry.k} className="text-sm">
         単語ページで詳しく見る →
       </EntryLink>
@@ -271,6 +275,7 @@ export function ReviewSession({
               onReveal={reveal}
               onSuggest={setSuggested}
               backRef={backRef}
+              focus={mode === 'focus'}
             />
           </Suspense>
         </Card>
@@ -332,6 +337,7 @@ function CardFace({
   onReveal,
   onSuggest,
   backRef,
+  focus = false,
 }: {
   entryKey: string
   card: StudyCard
@@ -342,6 +348,7 @@ function CardFace({
   onReveal: () => void
   onSuggest: (g: Grade | null) => void
   backRef: React.RefObject<HTMLDivElement | null>
+  focus?: boolean
 }) {
   const entry = useEntry(entryKey)
   // カードごとに 1 回だけ選ぶ（描画のたびに変わらないように）
@@ -462,7 +469,7 @@ function CardFace({
             <PracticeSpeak target={head} />
           )}
           {entry && <MemoResult memo={attempt.memo} entry={entry} format={fmt} />}
-          <CardBack entryKey={entryKey} />
+          <CardBack entryKey={entryKey} focus={focus} />
           {entry && (
             <div className="mt-3">
               <Suspense fallback={null}>
