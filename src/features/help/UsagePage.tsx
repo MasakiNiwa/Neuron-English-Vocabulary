@@ -182,8 +182,10 @@ export function UsagePage() {
             <h2 className="mb-1 flex items-center gap-1.5 text-sm font-semibold text-muted">
               <CalendarDays className="size-4" /> 最近 30 日の推移
             </h2>
-            <p className="text-[11px] text-muted">集計の都合で、1 日は日本時間の朝 9 時から翌朝 9 時までです。</p>
             {data ? <EChart option={dailyOpt} height={220} /> : <div className="h-[220px]" />}
+            <p className="mt-1 rounded-lg bg-surface-2 px-2.5 py-2 text-[11px] leading-relaxed text-muted">
+              ⏰ 時差についての注意：集計サービス（GoatCounter）は世界標準時で日付を区切るため、このグラフの 1 日は<strong className="text-fg">日本時間の朝 9 時から翌朝 9 時まで</strong>です。たとえば 11/8 の朝 8 時のアクセスは、11/7 の点に入ります。
+            </p>
           </Card>
 
           <Card>
