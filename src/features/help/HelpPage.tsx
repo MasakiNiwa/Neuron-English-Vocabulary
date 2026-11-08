@@ -138,7 +138,7 @@ function AppUsage() {
     }
   }, [])
   const fmt = (n: number | null | undefined, unit: string) => (n == null ? (stats ? '—' : '…') : `${n.toLocaleString('ja-JP')} ${unit}`)
-  // 開いた・閉じた状態を覚えておく（既定は開く）
+  // 開いた・閉じた状態を覚えておく（既定は閉じる）
   const open = useSettings((s) => s.helpUsageOpen)
   const set = useSettings((s) => s.set)
   return (

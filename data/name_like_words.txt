@@ -1,0 +1,45 @@
+# 人名・地名・商品名・作品名として使われやすい語。
+# ここに書いた語では、見出し語が大文字で始まる形でしか出てこない例文（Tom・Mr Smith・Mars・Harry Potter など）を例文に使わない。
+# 1 行 1 語（小文字）。# 以降はコメント
+anchorage
+android
+avatar
+baker
+bloody
+brown
+chamberlain
+cub
+diner
+drake
+dynamics
+emerald
+fisher
+giant
+grace
+grand
+gray
+hawk
+hood
+horn
+hunt
+kitty
+lee
+lynch
+mar     # Mars（火星）
+martin
+newton
+nightingale
+papa
+patty
+pip
+plaza
+potter
+ram     # RAM（メモリ）
+recruit
+ridge
+sakura
+smith
+spike
+sue
+terminator
+tom
