@@ -21,26 +21,27 @@ export function HabitModule({ data, onDrill }: ModuleProps) {
         <EChart option={option} height={200} />
       </div>
       <div>
-        <p className="mb-1 text-xs text-muted">苦手な単語（「もう一度」・忘却の回数）</p>
-        {data.weak.length ? (
-          <button
-            type="button"
-            className="w-full text-left"
-            onClick={() => onDrill({ title: '苦手な単語', keys: data.weak.map((w) => w.key) })}
-          >
+        <p className="mb-1 text-xs text-muted">最近 28 日でつまずいた語（そのあと別の日に思い出せた語は除く）</p>
+        {data.stumbles[28].length ? (
+          <button type="button" className="w-full text-left" onClick={() => onDrill({ title: '最近 28 日でつまずいた語', keys: data.stumbles[28].map((w) => w.key) })}>
             <ul className="flex flex-col gap-1">
-              {data.weak.slice(0, 8).map((w) => (
+              {data.stumbles[28].slice(0, 8).map((w) => (
                 <li key={w.key} className="flex justify-between rounded-lg px-2 py-1 text-sm hover:bg-surface-2">
                   <span className="font-en">{w.key.replace(/_/g, ' ')}</span>
                   <span className="font-mono text-xs text-muted">
-                    ×{w.again} / 忘却{w.lapses}
+                    もう一度 {w.again} / 回答 {w.answers}
                   </span>
                 </li>
               ))}
             </ul>
           </button>
         ) : (
-          <p className="text-sm text-muted">まだありません。</p>
+          <p className="text-sm text-muted">ありません。{data.recovered.length > 0 && `前に間違えた ${data.recovered.length} 語も、別の日に思い出せています。`}</p>
+        )}
+        {data.weak.length > 0 && (
+          <button type="button" onClick={() => onDrill({ title: 'これまでに忘れた回数の多い語', keys: data.weak.map((w) => w.key) })} className="mt-2 text-xs text-accent">
+            これまでの累計で見る →
+          </button>
         )}
       </div>
     </div>
