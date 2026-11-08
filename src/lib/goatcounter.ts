@@ -89,12 +89,19 @@ export function trackEvent(name: string) {
   flushWhenReady()
 }
 
+/** 日付を YYYY-MM-DD に */
+export function ymd(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
 const COUNTER_BASE = 'https://masaki28.goatcounter.com/counter/'
 
 /** 公開されている訪問者数を取得する（GoatCounter の設定「Allow adding visitor counts」）。まだ記録がない画面・イベントは 0。取得できなければ null */
 export async function fetchVisitorCount(path: string, start?: string): Promise<number | null> {
   const name = path === 'TOTAL' ? 'TOTAL' : encodeURIComponent(path)
-  const url = `${COUNTER_BASE}${name}.json${start ? `?start=${start}` : ''}`
+  // start だけだと終わりが「今日の始まり」になり今日の分が入らないので、終わりを明後日にする（時差の分も含める）
+  const end = start ? ymd(new Date(Date.now() + 2 * 86_400_000)) : ''
+  const url = `${COUNTER_BASE}${name}.json${start ? `?start=${start}&end=${end}` : ''}`
   try {
     const res = await fetch(url)
     if (res.status === 404) return 0

@@ -1,7 +1,7 @@
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { ArrowLeftRight, ChevronDown, Compass, Dices, ExternalLink, Maximize2, SlidersHorizontal, Target, X } from 'lucide-react'
-import { Suspense, use, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from 'react'
+import { ArrowLeftRight, ChevronDown, Compass, Dices, ExternalLink, LoaderCircle, Maximize2, SlidersHorizontal, Target, X } from 'lucide-react'
+import { Suspense, use, useDeferredValue, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Segmented } from '@/components/ui/Form'
 import { SearchField } from '@/components/ui/SearchField'
@@ -904,6 +904,9 @@ function NetworkInner() {
     return ok ? last! : randomFocus(dict)
   }, [dict])
   const focus = search.focus ?? defaultFocus
+  // 新しい中心の図ができるまでは前の図を出しておく（読み込み中に図が消えて画面がちらつかないように）
+  const shown = useDeferredValue(focus)
+  const loading = shown !== focus
   const [trail, setTrail] = usePersistentState<string[]>('network:trail', [])
   const [offList, setOffList] = usePersistentState<EdgeKind[]>('network:offKinds', [])
   const off = useMemo(() => new Set(offList), [offList])
@@ -923,7 +926,7 @@ function NetworkInner() {
 
   const setFocus = (f: string) => void navigate({ to: '/network', search: { focus: f } })
   const onSelect = (id: string) => {
-    if (id === focus && mode === 'ego') {
+    if (id === shown && mode === 'ego') {
       if (id.startsWith('e:')) void navigate({ to: '/e/$key', params: { key: id.slice(2) } })
       else void navigate({ to: '/m/$id', params: { id: id.slice(2) } })
       return
@@ -952,6 +955,11 @@ function NetworkInner() {
           <div className="pointer-events-none absolute right-3 top-3 hidden md:block">
             <Legend />
           </div>
+          {loading && (
+            <div className="pointer-events-none absolute right-3 top-3 z-10 md:top-9">
+              <LoaderCircle className="size-5 animate-spin text-accent" />
+            </div>
+          )}
           <div className="pointer-events-none absolute bottom-2 left-3 flex items-center gap-1.5 rounded-md bg-bg/70 px-1.5 py-0.5 text-[11px] text-muted">
             <Target className="size-3.5" />
             タップで中心を移動・中心をもう一度で詳細
@@ -959,21 +967,21 @@ function NetworkInner() {
         </>
       }
       panel={
-        <Collapsible storageKey="network:egoPanelOpen" summary={<FocusPanel focus={focus} />}>
+        <Collapsible storageKey="network:egoPanelOpen" summary={<FocusPanel focus={shown} />}>
           <Suspense fallback={null}>
             <KindToggles
-              focus={focus}
+              focus={shown}
               off={off}
               density={density}
               onToggle={(k) => setOffList(off.has(k) ? offList.filter((x) => x !== k) : [...offList, k])}
             />
             <DensityPicker value={density} onChange={setDensity} />
-            <ConnectionList focus={focus} off={off} density={density} onPick={setFocus} />
+            <ConnectionList focus={shown} off={off} density={density} onPick={setFocus} />
           </Suspense>
         </Collapsible>
       }
     >
-      <EgoGraph focus={focus} off={off} density={density} onSelect={onSelect} />
+      <EgoGraph focus={shown} off={off} density={density} onSelect={onSelect} />
     </Frame>
   )
 }

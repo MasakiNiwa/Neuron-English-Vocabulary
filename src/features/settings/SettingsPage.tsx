@@ -194,8 +194,18 @@ export function SettingsPage() {
               ]}
             />
           </Row>
+          <Row label="ヘッダー・ナビゲーションバーも写す">
+            <Segmented
+              value={s.screenshotChrome ? 'on' : 'off'}
+              onChange={(v) => s.set('screenshotChrome', v === 'on')}
+              options={[
+                { value: 'on', label: '写す' },
+                { value: 'off', label: 'ページだけ' },
+              ]}
+            />
+          </Row>
           <p className="-mt-1 text-xs text-muted">
-            ヘッダーの「このページを画像で保存」で使う形式です。WebP（既定）は小さく、PNG はくっきり、JPEG はどこでも開けます。WebP を書き出せないブラウザ（Safari など）では PNG で保存します。
+            ヘッダーの「このページを画像で保存」で使う設定です。WebP（既定）は小さく、PNG はくっきり、JPEG はどこでも開けます。WebP を書き出せないブラウザ（Safari など）では PNG で保存します。
           </p>
           <Row label="アクセス数の計測に協力する">
             <Segmented

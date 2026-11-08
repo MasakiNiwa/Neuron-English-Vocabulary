@@ -212,7 +212,14 @@ export function SigmaGraph({
     } else if (fitRatio !== 1) cam.setState({ ratio: fitRatio })
 
     // パネルの開け閉めなどで枠の大きさが変わったら描き直す（sigma は窓の大きさの変化しか見ない）
-    const ro = new ResizeObserver(() => renderer.resize().refresh())
+    // 描き直しは次の描画の時だけ（大きさが本当に変わったときに限る。作り直しはしない）
+    let size = `${el.clientWidth}x${el.clientHeight}`
+    const ro = new ResizeObserver(() => {
+      const next = `${el.clientWidth}x${el.clientHeight}`
+      if (next === size) return
+      size = next
+      renderer.scheduleRender()
+    })
     ro.observe(el)
     // ヘッダーの「このページを画像で保存」で図も写せるように
     const unregister = registerCanvasHost(el, () => renderer.refresh())

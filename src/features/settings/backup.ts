@@ -138,6 +138,7 @@ export function cleanSettings(x: unknown): Partial<Settings> {
   if (typeof x.analytics === 'boolean') out.analytics = x.analytics
   if (typeof x.helpUsageOpen === 'boolean') out.helpUsageOpen = x.helpUsageOpen
   if (x.screenshotFormat === 'webp' || x.screenshotFormat === 'png' || x.screenshotFormat === 'jpeg') out.screenshotFormat = x.screenshotFormat
+  if (typeof x.screenshotChrome === 'boolean') out.screenshotChrome = x.screenshotChrome
   return out
 }
 

@@ -789,6 +789,7 @@ function ChatView() {
                 type="button"
                 onClick={() => scrollToBottom()}
                 aria-label="一番下へ"
+                data-screenshot-skip
                 className="absolute bottom-32 left-1/2 inline-flex size-9 -translate-x-1/2 items-center justify-center rounded-full border border-border bg-surface shadow-lg hover:bg-surface-2"
               >
                 <ArrowDown className="size-4" />
