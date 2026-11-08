@@ -39,6 +39,7 @@ export function sectionOf(pathname: string): string {
     case 'ai':
     case 'settings':
     case 'help':
+    case 'usage':
       return `/${seg}`
     default:
       return '/other'
@@ -94,21 +95,62 @@ export function ymd(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
+/** 同じ数を何度も取りに行かないよう、30 分だけ覚えておく（GoatCounter の数も数時間おきにしか変わらない） */
+const CACHE_KEY = 'nev-gc-cache'
+const CACHE_MS = 30 * 60_000
+function readCache(url: string): number | undefined {
+  try {
+    const c = JSON.parse(sessionStorage.getItem(CACHE_KEY) ?? '{}') as Record<string, [number, number]>
+    const hit = c[url]
+    return hit && Date.now() - hit[1] < CACHE_MS ? hit[0] : undefined
+  } catch {
+    return undefined
+  }
+}
+function writeCache(url: string, n: number) {
+  try {
+    const c = JSON.parse(sessionStorage.getItem(CACHE_KEY) ?? '{}') as Record<string, [number, number]>
+    c[url] = [n, Date.now()]
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify(c))
+  } catch {
+    /* 覚えられなくても数は出せる */
+  }
+}
+
+/** 最近 days 日の日ごとの数（古い順）。取れなかった日は null */
+export async function fetchDaily(path: string, days: number): Promise<{ date: string; count: number | null }[]> {
+  const list = Array.from({ length: days }, (_, i) => {
+    const d = new Date(Date.now() - (days - 1 - i) * 86_400_000)
+    return { date: ymd(d), next: ymd(new Date(d.getTime() + 86_400_000)) }
+  })
+  const out: { date: string; count: number | null }[] = list.map((x) => ({ date: x.date, count: null }))
+  // 一度にたくさん送らないよう、5 件ずつ
+  for (let i = 0; i < list.length; i += 5) {
+    const part = await Promise.all(list.slice(i, i + 5).map((x) => fetchVisitorCount(path, x.date, x.next)))
+    part.forEach((n, j) => (out[i + j].count = n))
+  }
+  return out
+}
+
 const COUNTER_BASE = 'https://masaki28.goatcounter.com/counter/'
 
 /** 公開されている訪問者数を取得する（GoatCounter の設定「Allow adding visitor counts」）。まだ記録がない画面・イベントは 0。取得できなければ null */
-export async function fetchVisitorCount(path: string, start?: string): Promise<number | null> {
+export async function fetchVisitorCount(path: string, start?: string, endDate?: string): Promise<number | null> {
   const name = path === 'TOTAL' ? 'TOTAL' : encodeURIComponent(path)
-  // start だけだと終わりが「今日の始まり」になり今日の分が入らないので、終わりを明後日にする（時差の分も含める）
-  const end = start ? ymd(new Date(Date.now() + 2 * 86_400_000)) : ''
+  // 終わりの日は含まれない。start だけだと今日の分が入らないので、終わりを明後日にする（時差の分も含める）
+  const end = start ? (endDate ?? ymd(new Date(Date.now() + 2 * 86_400_000))) : ''
   const url = `${COUNTER_BASE}${name}.json${start ? `?start=${start}&end=${end}` : ''}`
+  const cached = readCache(url)
+  if (cached !== undefined) return cached
   try {
     const res = await fetch(url)
     if (res.status === 404) return 0
     if (!res.ok) return null
     const j = (await res.json()) as { count?: string }
     const n = Number(String(j.count ?? '').replace(/[^\d]/g, ''))
-    return Number.isFinite(n) ? n : null
+    if (!Number.isFinite(n)) return null
+    writeCache(url, n)
+    return n
   } catch {
     return null
   }

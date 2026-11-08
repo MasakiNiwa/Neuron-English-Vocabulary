@@ -65,6 +65,7 @@ const routeTree = rootRoute.addChildren([
   }),
   page('/settings', () => import('@/features/settings/SettingsPage'), 'SettingsPage'),
   page('/help', () => import('@/features/help/HelpPage'), 'HelpPage'),
+  page('/usage', () => import('@/features/help/UsagePage'), 'UsagePage'),
 ])
 
 export const router = createRouter({
