@@ -150,3 +150,11 @@ describe('FSRS-7 のカード（バックアップ schema 3）', () => {
     expect(await db.reviews.count()).toBe(2)
   })
 })
+
+describe('AI の学習アドバイス（analysisNotes）', () => {
+  it('形の正しいものだけを取り込む', () => {
+    const ok = { id: 'n1', title: '全体の振り返り', kind: 'overview', content: '### よい点', model: 'k / m', thread: 't1', createdAt: 5 }
+    const b = parseBackup({ app: BACKUP_APP, data: { analysisNotes: [ok, { ...ok, id: 'n2', content: 5 }, { ...ok, id: 'n3', createdAt: 'x' }] } })
+    expect(b.rows.analysisNotes).toEqual([ok])
+  })
+})

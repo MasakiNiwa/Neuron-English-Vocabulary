@@ -17,7 +17,7 @@ export const BACKUP_APP = 'neuron-english-vocabulary'
 export const BACKUP_SCHEMA = 3
 
 /** バックアップに含める表（この順で復元する） */
-export const BACKUP_TABLES = ['views', 'cards', 'reviews', 'threads', 'chats', 'extras', 'rootLessons'] as const
+export const BACKUP_TABLES = ['views', 'cards', 'reviews', 'threads', 'chats', 'extras', 'rootLessons', 'analysisNotes'] as const
 export type BackupTable = (typeof BACKUP_TABLES)[number]
 
 export const TABLE_LABEL: Record<BackupTable, string> = {
@@ -28,6 +28,7 @@ export const TABLE_LABEL: Record<BackupTable, string> = {
   chats: 'チャットのメッセージ',
   extras: '追加の解説',
   rootLessons: '語根レッスン',
+  analysisNotes: 'AI の学習アドバイス',
 }
 
 export interface BackupFile {
@@ -106,6 +107,10 @@ const CLEAN: Record<BackupTable, (r: Row) => Row | null> = {
   rootLessons: (r) =>
     isStr(r.id) && r.id.length <= 64 && isTime(r.completedAt) && isCount(r.correct) && isCount(r.total) && isCount(r.best) && isCount(r.plays) && (r.correct as number) <= (r.total as number)
       ? pick(r, ['id', 'completedAt', 'correct', 'total', 'best', 'plays'])
+      : null,
+  analysisNotes: (r) =>
+    isStr(r.id) && r.id.length <= 64 && typeof r.title === 'string' && r.title.length <= 100 && typeof r.kind === 'string' && r.kind.length <= 40 && typeof r.content === 'string' && r.content.length <= 50_000 && optStr(r.model) && optStr(r.thread) && isTime(r.createdAt)
+      ? pick(r, ['id', 'title', 'kind', 'content', 'model', 'thread', 'createdAt'])
       : null,
   extras: (r) => {
     if (!isStr(r.id) || !isStr(r.entryId) || typeof r.title !== 'string' || (r.source !== 'api' && r.source !== 'external') || !isNum(r.order) || !isNum(r.createdAt) || !optStr(r.model)) return null
@@ -262,7 +267,7 @@ export async function restoreBackup(b: ParsedBackup, mode: 'replace' | 'merge') 
       } else if (t === 'threads') {
         const cur = new Map((await table.toArray()).map((c: Row) => [c.id, c]))
         rows = rows.filter((r) => !cur.has(r.id) || (r.updatedAt as number) > (cur.get(r.id)!.updatedAt as number))
-      } else if (t === 'extras') {
+      } else if (t === 'extras' || t === 'analysisNotes') {
         const cur = new Set((await table.toArray()).map((c: Row) => c.id))
         rows = rows.filter((r) => !cur.has(r.id))
       }
