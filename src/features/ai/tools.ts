@@ -5,6 +5,9 @@ import { addManyToStudy } from '@/features/study/cards'
 import { getStudyStats } from '@/features/study/session'
 import type { ToolDef } from './providers'
 import { useAiConfig } from './config'
+import { runAnalytics } from '@/features/analytics/api'
+import { buildLearningSummary } from '@/features/analytics/aiSummary'
+import { useSettings } from '@/stores/settings'
 
 /**
  * LLM に渡すアプリの「道具」。判断の根拠となるデータはアプリのアルゴリズム（辞書・FSRS・集計）から取り、
@@ -30,6 +33,12 @@ export const appTools: ToolDef[] = [
   {
     name: 'get_learning_status',
     description: 'ユーザーの学習状況（復習予定数、最近見た単語、苦手な単語）を取得する。',
+    parameters: { type: 'object', properties: {} },
+  },
+  {
+    name: 'get_learning_analysis',
+    description:
+      'ユーザーの学習の詳しい分析を取得する。最近 7 日・28 日の回答数と思い出せた割合、FSRS が推定する今と 7 日後の想起確率（低い語の一覧）、今後 7 日の復習予定、最近つまずいた語、同じ日と別の日の復習の比較、出題形式ごとの評価、学んだ語根と次に学べる語、頻度帯のカバー率。学習の振り返り・アドバイス・学習計画を求められたら、まずこれで確かめる。',
     parameters: { type: 'object', properties: {} },
   },
   {
@@ -103,6 +112,9 @@ export async function runAppTool(name: string, args: Record<string, unknown>): P
     case 'get_learning_status':
       if (!useAiConfig.getState().shareLearning) return { error: 'ユーザーは学習状況を AI に共有しない設定にしています' }
       return learningSnapshot()
+    case 'get_learning_analysis':
+      if (!useAiConfig.getState().shareLearning) return { error: 'ユーザーは学習状況を AI に共有しない設定にしています' }
+      return learningAnalysis()
     case 'add_to_study': {
       const words = Array.isArray(args.words) ? (args.words as unknown[]).filter((w): w is string => typeof w === 'string').slice(0, 20) : []
       const keys = [...new Set((await Promise.all(words.map(keyOf))).filter((k): k is string => !!k))]
@@ -132,6 +144,13 @@ export async function learningSnapshot() {
     recentlyViewed: [...new Set(recent.map((v) => headword(v.entryId)))].slice(0, 12),
     weakWords: weak.sort((a, b) => b.lapses - a.lapses).map((c) => headword(c.entryId)),
   }
+}
+
+/** 学習の詳しい分析（分析ページと同じ集計 + FSRS の推定）。設定で隠している語は含めない */
+export async function learningAnalysis() {
+  const [data, cards, { hidden }] = await Promise.all([runAnalytics(), db.cards.toArray(), loadDictionary()])
+  const { desiredRetention, dailyNewLimit } = useSettings.getState()
+  return buildLearningSummary(data, cards.filter((c) => !hidden.has(c.entryId)), { desiredRetention, dailyNewLimit })
 }
 
 /** 会話の文脈として渡すアプリの状態（構造化 JSON） */

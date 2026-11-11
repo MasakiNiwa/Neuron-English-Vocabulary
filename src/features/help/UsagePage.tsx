@@ -30,6 +30,7 @@ const AI_LABEL: Record<(typeof AI_EVENTS)[number], string> = {
   'ai-word-ask': '単語について聞く',
   'ai-advice': '学習のアドバイス',
   'ai-word': '追加の解説を作成',
+  'ai-analysis': '学習の分析',
 }
 
 interface Usage {
@@ -151,7 +152,7 @@ export function UsagePage() {
           center: ['50%', '44%'],
           itemStyle: { borderColor: c.surface, borderWidth: 3, borderRadius: 6 },
           label: { color: c.fg, formatter: '{c}', fontSize: 11 },
-          data: data?.ai.filter((a) => a.total > 0).map((a, i) => ({ name: a.label, value: a.total, itemStyle: { color: [c.accent, c.root, c.success, c.warn][i] } })) ?? [],
+          data: data?.ai.filter((a) => a.total > 0).map((a, i) => ({ name: a.label, value: a.total, itemStyle: { color: [c.accent, c.root, c.success, c.warn, c.danger][i] } })) ?? [],
         },
       ],
     }),
@@ -207,7 +208,7 @@ export function UsagePage() {
 
             {aiTotal > 0 ? <EChart option={aiOpt} height={220} /> : <p className="text-sm text-muted">{data ? 'まだ記録がありません。' : '…'}</p>}
             {data && (
-              <ul className="mt-2 grid grid-cols-2 gap-2 text-center text-xs sm:grid-cols-4">
+              <ul className="mt-2 grid grid-cols-2 gap-2 text-center text-xs sm:grid-cols-5">
                 {data.ai.map((a) => (
                   <li key={a.label} className="rounded-xl bg-surface-2 px-2 py-2">
                     <div className="text-base font-semibold tabular-nums">{a.week}</div>

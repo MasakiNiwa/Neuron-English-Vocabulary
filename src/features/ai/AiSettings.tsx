@@ -150,6 +150,7 @@ function SharedInfo() {
         <li>入力したメッセージと、そのチャットのこれまでのやりとり</li>
         <li>話題にしている単語の辞書の内容、AI が辞書を調べたときの結果</li>
         <li>下の設定がオンのとき: 学習状況（復習予定数・今日の回答数・最近見た単語・苦手な単語）</li>
+        <li>下の設定がオンで、学習の振り返りやアドバイスを頼んだとき（分析ページの「AI のアドバイス」など）: 学習の分析（回答数と思い出せた割合・復習予定・思い出せる見込みの推定・つまずいた語・語根や頻度帯の進み具合）</li>
       </ul>
       <label className="flex items-center gap-2">
         <input type="checkbox" className="size-4 accent-[var(--accent)]" checked={share} onChange={(e) => setShare(e.target.checked)} />

@@ -62,6 +62,22 @@ export interface ReviewRecord {
   uid?: string
 }
 
+/** 分析ページで AI に作ってもらった、学習の分析・アドバイス */
+export interface AnalysisNote {
+  id: string
+  /** タブに出す名前（例: 全体の振り返り） */
+  title: string
+  /** どのボタンで作ったか */
+  kind: string
+  /** 本文（Markdown） */
+  content: string
+  /** 使ったモデル */
+  model?: string
+  /** 続きを聞くための AI チャットのスレッド */
+  thread?: string
+  createdAt: number
+}
+
 /** 汎用キーバリュー */
 export interface KeyValue {
   key: string
@@ -158,6 +174,7 @@ export class NeuronDB extends Dexie {
   threads!: EntityTable<ChatThread, 'id'>
   extras!: EntityTable<ExtraNote, 'id'>
   rootLessons!: EntityTable<RootLesson, 'id'>
+  analysisNotes!: EntityTable<AnalysisNote, 'id'>
 
   constructor(name = 'neuron-english-vocabulary') {
     super(name)
@@ -206,6 +223,8 @@ export class NeuronDB extends Dexie {
       })
     // v5: 語根レッスンの記録
     this.version(5).stores({ rootLessons: 'id, completedAt' })
+    // v6: 分析ページの AI のアドバイス
+    this.version(6).stores({ analysisNotes: 'id, createdAt' })
   }
 }
 

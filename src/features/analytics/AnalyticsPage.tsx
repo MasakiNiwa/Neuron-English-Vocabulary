@@ -1,6 +1,5 @@
 import { Link, useNavigate } from '@tanstack/react-router'
 import { scrollBehavior } from '@/lib/motion'
-import * as Comlink from 'comlink'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Dumbbell, Lightbulb, ListTodo, TrendingUp, X } from 'lucide-react'
 import { Suspense, useEffect, useState } from 'react'
@@ -21,16 +20,11 @@ import { useStudySession } from '@/features/study/sessionStore'
 import { loadDictionary } from '@/features/dictionary/data'
 import { Segmented } from '@/components/ui/Form'
 import { useMinuteTick } from '@/lib/clock'
-import type { AnalyticsApi } from './analytics.worker'
+import { runAnalytics } from './api'
+import { AnalysisAdvice } from './AnalysisAdvice'
 import type { AnalyticsResult, PeriodStats } from './compute'
 import { analyticsModules } from './modules'
 import type { Drill } from './modules/types'
-
-let api: Comlink.Remote<AnalyticsApi> | null = null
-function getApi() {
-  api ??= Comlink.wrap<AnalyticsApi>(new Worker(new URL('./analytics.worker.ts', import.meta.url), { type: 'module' }))
-  return api
-}
 
 /** DB の変化を検知して再集計する */
 function useAnalytics() {
@@ -45,9 +39,7 @@ function useAnalytics() {
   useEffect(() => {
     if (version === undefined) return
     let alive = true
-    void getApi()
-      .run(document.baseURI, retention, !useSettings.getState().showSensitive)
-      .then((d) => alive && setData(d))
+    void runAnalytics().then((d) => alive && setData(d))
     return () => {
       alive = false
     }
@@ -289,6 +281,7 @@ function AnalyticsInner() {
     <div className="flex flex-col gap-4">
       <NextActions data={data} onDrill={setDrill} />
       <RecentChanges data={data} onDrill={setDrill} />
+      <AnalysisAdvice data={data} />
       <h2 className="-mb-2 text-xs font-semibold text-muted">これまでの合計</h2>
       <div className="grid grid-cols-3 gap-2 md:grid-cols-6">
         <Tile label="閲覧した語" value={t.uniqueViewed} />
