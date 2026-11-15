@@ -44,8 +44,10 @@ export interface Question {
   choices: DrillChoice[]
   /** 似た意味の問題で比べる語源 */
   compare?: string[]
-  /** 同じ祖先の問題での祖先 */
+  /** 同じ祖先の問題での祖先（答えたあとに見せる） */
   ancestor?: string
+  /** 似た意味の問題で、候補に共通する意味（答えたあとに見せる） */
+  token?: string
 }
 
 /** ドリルにする語源の種類 */
@@ -181,7 +183,8 @@ function e2m(dict: Dictionary, m: Morpheme, rand: Rand): Question | null {
     prompt: `この${typeName(m)}の意味は？`,
     head: labelOf(m),
     headEn: true,
-    sub: m.forms.length > 1 ? `${m.origin}・${m.forms.slice(0, 5).join(', ')}` : m.origin,
+    // 由来（ラテン語の元の語など）は答えのヒントになるので出さない。いろいろな形だけ
+    sub: m.forms.length > 1 ? `形: ${m.forms.slice(0, 5).join(', ')}` : undefined,
     choices: shuffle([{ text: m.meaning.ja, morph: m.id, correct: true }, ...ds.map((x) => ({ text: x.meaning.ja, morph: x.id, correct: false }))], rand),
   }
 }
@@ -235,18 +238,20 @@ function similar(dict: Dictionary, m: Morpheme, rand: Rand, used: ReadonlySet<st
     const pick = ws.find((w) => !used.has(w.key)) ?? ws[0]
     if (!pick) continue
     const xs = others.map((id) => dict.morphById.get(id)!).filter(Boolean)
-    // 候補が 2 つだけのときは、意味の違う語源を 1 つ足す
-    const extra = xs.length < 2 ? distractors(dict, m, 1, rand, (x) => !!morphsOf.get(pick.key)?.has(x.id)) : []
+    // 似た意味の語源だけだと意味で絞れてしまうので、意味の違う語源も足して 4 つにする
+    const extra = distractors(dict, m, 3 - xs.length, rand, (x) => !!morphsOf.get(pick.key)?.has(x.id) || others.includes(x.id))
     return {
       kind: 'similar',
       target: m.id,
-      prompt: `「${g.token}」を表す語源はいくつもあります。この単語に入っているのは？`,
+      // 共通の意味は問題文に出さない（答えたあとに見せる）
+      prompt: 'この単語に入っている語源は？',
       head: pick.key.replace(/_/g, ' '),
       headEn: true,
       sub: pick.gloss.split('、').slice(0, 2).join('、'),
       word: pick.key,
       choices: shuffle([morphChoice(m, true), ...xs.map((x) => morphChoice(x, false)), ...extra.map((x) => morphChoice(x, false))], rand),
       compare: [m.id, ...others],
+      token: g.token,
     }
   }
   return null
@@ -267,7 +272,7 @@ function family(dict: Dictionary, m: Morpheme, rand: Rand): Question | null {
     prompt: `${labelOf(m)}（${m.meaning.ja}）と同じ祖先から生まれた語源は？`,
     head: labelOf(m),
     headEn: true,
-    sub: `祖先: 印欧祖語 ${g.ancestor.label}（${g.ancestor.meaning.ja}）`,
+    sub: '祖先は答えたあとに',
     choices: shuffle([morphChoice(right, true), ...ds.map((x) => morphChoice(x, false))], rand),
     ancestor: g.ancestor.id,
   }
@@ -296,59 +301,63 @@ export function makeQuestion(dict: Dictionary, m: Morpheme, kind: QuestionKind, 
   }
 }
 
-export type DrillItemRole = 'new' | 'review' | 'practice' | 'retry'
+export type DrillItemRole = 'random' | 'review' | 'practice' | 'retry'
 
 export interface DrillItem {
   q: Question
   role: DrillItemRole
-  /** はじめて学ぶ語源の最初の問題の前に、紹介を出す */
-  intro?: boolean
+}
+
+const KINDS: QuestionKind[] = ['e2m', 'm2e', 'word', 'similar', 'family']
+
+/**
+ * すべての語源からランダムに n 問。種類を先に均等に選び、その種類を作れる語源から選ぶ
+ * （似た意味・同じ祖先の問題も同じくらい出るように）。同じ語源は 1 回に 1 問まで
+ */
+export function buildRandom(dict: Dictionary, n: number, rand: Rand = Math.random, only?: ReadonlySet<string>): DrillItem[] {
+  const pool = drillData(dict).pool.filter((m) => !only || only.has(m.id))
+  const items: DrillItem[] = []
+  const usedM = new Set<string>()
+  const usedW = new Set<string>()
+  for (let tries = 0; items.length < n && tries < n * 30; tries++) {
+    const kind = KINDS[Math.floor(rand() * KINDS.length)]
+    const m = pool[Math.floor(rand() * pool.length)]
+    if (!m || usedM.has(m.id)) continue
+    const q = makeQuestion(dict, m, kind, rand, usedW)
+    if (!q) continue
+    usedM.add(m.id)
+    if (q.word) usedW.add(q.word)
+    items.push({ q, role: 'random' })
+  }
+  return items
 }
 
 /**
- * 1 回分の問題を作る。
- * - 新しい語源: 紹介 → 語源→意味 → 単語の中の語源
- * - 復習の語源: 1 問ずつ（できれば似た意味の見分け・同じ祖先の問題を混ぜ、毎回違う種類に）
- * - 練習（1 つの語源）: 作れる種類をすべて
+ * 復習（期限の来た語源を 1 問ずつ。前回と違う種類を優先し、似た意味・同じ祖先の問題を選ばれやすく）、
+ * または練習（1 つの語源を、作れる種類すべてで）
  */
-export function buildDrill(dict: Dictionary, plan: { fresh?: string[]; review?: string[]; practice?: string }, rand: Rand = Math.random, lastKind: ReadonlyMap<string, string> = new Map()): DrillItem[] {
+export function buildDrill(dict: Dictionary, plan: { review?: string[]; practice?: string }, rand: Rand = Math.random, lastKind: ReadonlyMap<string, string> = new Map()): DrillItem[] {
   const items: DrillItem[] = []
   const used = new Set<string>()
-  const push = (q: Question | null, role: DrillItemRole, intro = false) => {
+  const push = (q: Question | null, role: DrillItemRole) => {
     if (!q) return false
     if (q.word) used.add(q.word)
-    items.push({ q, role, intro })
+    items.push({ q, role })
     return true
   }
-  const get = (id: string) => dict.morphById.get(id)
   if (plan.practice) {
-    const m = get(plan.practice)
-    if (m) kindsFor(dict, m).forEach((k, i) => push(makeQuestion(dict, m, k, rand, used), 'practice', i === 0))
+    const m = dict.morphById.get(plan.practice)
+    if (m) shuffle(kindsFor(dict, m), rand).forEach((k) => push(makeQuestion(dict, m, k, rand, used), 'practice'))
     return items
   }
   for (const id of plan.review ?? []) {
-    const m = get(id)
+    const m = dict.morphById.get(id)
     if (!m) continue
-    // 前回と違う種類を優先し、似た意味・同じ祖先の問題があれば選ばれやすくする
     const kinds = kindsFor(dict, m).filter((k) => k !== lastKind.get(id))
     const weighted = kinds.flatMap((k) => (k === 'similar' || k === 'family' ? [k, k] : [k]))
     for (const k of shuffle(weighted, rand)) if (push(makeQuestion(dict, m, k, rand, used), 'review')) break
   }
-  const review = shuffle(items.splice(0), rand)
-  const fresh: DrillItem[][] = []
-  for (const id of plan.fresh ?? []) {
-    const m = get(id)
-    if (!m) continue
-    const block: DrillItem[] = []
-    const a = makeQuestion(dict, m, 'e2m', rand, used)
-    const b = makeQuestion(dict, m, 'word', rand, used)
-    if (b?.word) used.add(b.word)
-    if (a) block.push({ q: a, role: 'new', intro: true })
-    if (b) block.push({ q: b, role: 'new', intro: !a })
-    if (block.length) fresh.push(block)
-  }
-  // 復習を先に、新しい語源はそのあと（新しい語源の 2 問目は少しあとに出して、すぐ答えをなぞるだけにならないように）
-  return [...review, ...fresh.map((b) => b[0]), ...fresh.flatMap((b) => b.slice(1))]
+  return shuffle(items, rand)
 }
 
 /** 間違えた語源をもう一度（違う種類の問題で） */
