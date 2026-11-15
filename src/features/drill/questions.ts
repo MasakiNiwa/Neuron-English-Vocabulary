@@ -374,3 +374,122 @@ export function retryItem(dict: Dictionary, q: Question, rand: Rand = Math.rando
   }
   return null
 }
+
+// ---------------------------------------------------------------- ヒントとメモの答え合わせ
+
+export interface Hint {
+  label: string
+  text: string
+}
+
+const firstLetters = (label: string) => `${label[0]} ${'_ '.repeat(Math.max(0, label.length - 1)).trim()}（${label.length} 文字）`
+
+/** 押したときだけ 1 段ずつ出すヒント（答えに近いものほどあと） */
+export function drillHints(dict: Dictionary, q: Question): Hint[] {
+  const m = dict.morphById.get(q.target)
+  if (!m) return []
+  const right = dict.morphById.get(q.choices.find((c) => c.correct)?.morph ?? '') ?? m
+  // 語源と同じ綴りの単語（part・port など）は答えそのものになるので、ヒントの単語にしない
+  const spell = new Set([m.label, ...m.forms].map(normLabel))
+  const ws = morphWords(dict, m).filter((w) => w.key !== q.word && !spell.has(normLabel(w.key)))
+  const lang = m.origin.split(/\s/)[0]
+  switch (q.kind) {
+    case 'e2m':
+      return [
+        { label: 'この語源を含む単語', text: ws.slice(0, 3).map((w) => headword(w.key)).join(', ') },
+        { label: '由来', text: m.origin },
+        { label: '意味の最初の文字', text: `${[...m.meaning.ja][0]}…` },
+      ]
+    case 'm2e':
+      return [
+        { label: '種類と由来', text: `${typeName(m)}・${lang}から` },
+        { label: 'この語源を含む単語の意味', text: ws.slice(0, 3).map((w) => w.gloss.split('、')[0]).join('・') },
+        { label: '最初の文字', text: firstLetters(m.label) },
+      ]
+    case 'word':
+    case 'similar':
+      return [
+        { label: '同じ語源を含むほかの単語', text: ws.slice(0, 2).map((w) => `${headword(w.key)}（${w.gloss.split('、')[0]}）`).join('、') },
+        { label: '語源の意味', text: `「${m.meaning.ja}」を表す${typeName(m)}` },
+        { label: '最初の文字', text: firstLetters(m.label) },
+      ]
+    case 'family': {
+      const a = q.ancestor ? dict.morphById.get(q.ancestor) : null
+      return [
+        ...(a ? [{ label: '共通の祖先', text: `印欧祖語 ${a.label}（${a.meaning.ja}）` }] : []),
+        { label: '答えの一つの意味', text: `「${right.meaning.ja}」を表す${typeName(right)}` },
+        { label: 'その最初の文字', text: firstLetters(right.label) },
+      ]
+    }
+  }
+}
+
+const headword = (k: string) => k.replace(/_/g, ' ')
+
+/** 語源の綴りとしての比較用（大文字・ハイフン・* ・空白を除く） */
+const normLabel = (s: string) => s.normalize('NFKC').toLowerCase().replace(/[-*\s‐ー]/g, '')
+
+/** メモが指している語源（ラベル・いろいろな形のどれかと一致） */
+function morphsNamed(dict: Dictionary, memo: string, candidates: Iterable<string>): string[] {
+  const parts = memo.split(/[、,，・/／\s]+/).map(normLabel).filter(Boolean)
+  if (!parts.length) return []
+  const out: string[] = []
+  for (const id of candidates) {
+    const m = dict.morphById.get(id)
+    if (m && [m.label, ...m.forms].map(normLabel).some((f) => f && parts.includes(f))) out.push(id)
+  }
+  return out
+}
+
+export type MemoVerdict =
+  /** 想定した答えと合っている */
+  | { kind: 'right'; note?: string }
+  /** 想定とは違うが、条件には合う別の語源（同じ意味の別の語源・その単語に入っている別の語源） */
+  | { kind: 'other'; note: string }
+  | { kind: 'wrong' }
+
+/**
+ * メモの答え合わせ。意味を答える問題は辞書の意味と、語源を答える問題は綴り（いろいろな形を含む）と照らす。
+ * メモが空なら null（評価は自分で選ぶ）
+ */
+export function checkMemo(dict: Dictionary, q: Question, memo: string): MemoVerdict | null {
+  if (!memo.trim()) return null
+  const m = dict.morphById.get(q.target)
+  if (!m) return null
+  if (q.kind === 'e2m') {
+    const toks = meaningTokens(m)
+    const parts = memo.split(/[、,，・/／\s]+/).map((p) => p.trim().replace(/^〜/, '')).filter(Boolean)
+    const hit = toks.filter((t) => parts.some((p) => p === t || (Math.min(p.length, t.length) >= 2 && (t.includes(p) || p.includes(t)))))
+    return hit.length ? { kind: 'right', note: `「${hit.join('・')}」が合っています` } : { kind: 'wrong' }
+  }
+  const { pool, morphsOf } = drillData(dict)
+  const all = dict.morphemes.map((x) => x.id)
+  if (q.kind === 'family') {
+    const a = q.ancestor ? dict.morphById.get(q.ancestor) : null
+    const kin = new Set((a?.members ?? []).filter((id) => id !== m.id))
+    const named = morphsNamed(dict, memo, all)
+    const hit = named.find((id) => kin.has(id))
+    return hit ? { kind: 'right', note: `${labelOf(dict.morphById.get(hit)!)} も同じ祖先です` } : { kind: 'wrong' }
+  }
+  const named = morphsNamed(dict, memo, all)
+  if (named.includes(m.id)) return { kind: 'right' }
+  if (q.kind === 'm2e') {
+    const toks = new Set(meaningTokens(m))
+    const same = named.map((id) => dict.morphById.get(id)!).find((x) => pool.includes(x) && meaningTokens(x).some((t) => toks.has(t)))
+    if (same) return { kind: 'other', note: `${labelOf(same)}（${same.meaning.ja}）も近い意味の語源です。ここで想定していた答えは ${labelOf(m)}` }
+    return { kind: 'wrong' }
+  }
+  // 単語の中の語源: その単語に入っている別の語源（接尾辞など）を書いたとき
+  const inside = q.word ? morphsOf.get(q.word) : null
+  const other = named.find((id) => inside?.has(id))
+  if (other) {
+    const x = dict.morphById.get(other)!
+    return { kind: 'other', note: `${labelOf(x)} もこの単語に入っていますが、ここで聞いていたのは ${labelOf(m)}（${m.meaning.ja}）です` }
+  }
+  return { kind: 'wrong' }
+}
+
+/** この問題の答えを書くメモの案内 */
+export function memoPlaceholder(q: Question): string {
+  return q.kind === 'e2m' ? '思い浮かんだ意味をメモ（任意）' : '思い浮かんだ語源をメモ（任意・英字で）'
+}

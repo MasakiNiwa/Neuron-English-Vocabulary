@@ -1,6 +1,6 @@
 import { Link, useParams } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { ArrowRight, BookOpenCheck, Brain, Check, GitBranch, Layers, RotateCcw, Shuffle, Sparkles, X } from 'lucide-react'
+import { BookOpenCheck, Brain, Check, Eye, GitBranch, Layers, Lightbulb, ListChecks, NotebookPen, RotateCcw, Shuffle, Sparkles, X } from 'lucide-react'
 import { Suspense, useEffect, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -14,8 +14,9 @@ import { EntryLink, MORPH_TYPE_LABEL, SpeakButton } from '@/features/dictionary/
 import { useDictionary } from '@/features/dictionary/hooks'
 import type { Morpheme } from '@/features/dictionary/types'
 import { useSettings } from '@/stores/settings'
-import { dueEtyCards, lastKinds, REVIEW_LIMIT, saveDrill, type Answer } from './drill'
-import { buildDrill, buildRandom, drillData, drillLabel, KIND_LABEL, morphWords, retryItem, type DrillItem } from './questions'
+import type { Grade } from 'ts-fsrs'
+import { dueEtyCards, lastKinds, recalled, REVIEW_LIMIT, saveDrill, type Answer } from './drill'
+import { buildDrill, buildRandom, checkMemo, drillData, drillHints, drillLabel, KIND_LABEL, memoPlaceholder, morphWords, retryItem, type DrillItem, type MemoVerdict } from './questions'
 
 /**
  * 語源ドリル（#/drill）。単語の「今日の学習」とは別枠で、語源そのものを覚える。
@@ -53,12 +54,11 @@ function MorphCard({ m, compact }: { m: Morpheme; compact?: boolean }) {
 }
 
 /** 答えたあとの解説 */
-function Explain({ item, picked }: { item: DrillItem; picked: number }) {
+function Explain({ item, ok }: { item: DrillItem; ok: boolean }) {
   const dict = useDictionary()
   const q = item.q
   const target = dict.morphById.get(q.target)!
   const right = q.choices.find((c) => c.correct)!
-  const ok = q.choices[picked].correct
   // 選択肢の語源（意味を並べて、どう違うかを見せる）
   const others = q.choices
     .filter((c) => c.morph && c.morph !== q.target && c.morph !== right.morph)
@@ -66,9 +66,9 @@ function Explain({ item, picked }: { item: DrillItem; picked: number }) {
     .filter((m): m is Morpheme => !!m)
   const rightM = right.morph && right.morph !== q.target ? dict.morphById.get(right.morph) : null
   const ancestor = q.ancestor ? dict.morphById.get(q.ancestor) : null
+  const kin = ancestor ? (ancestor.members ?? []).filter((id) => id !== q.target).map((id) => dict.morphById.get(id)).filter((m): m is Morpheme => !!m) : []
   return (
     <div className="flex w-full flex-col gap-2 text-left">
-      <p className={cn('text-center text-sm font-medium', ok ? 'text-success' : 'text-danger')}>{ok ? '正解！' : `正解は「${right.text}」`}</p>
       {q.word && (
         <p className="text-center text-xs text-muted">
           <EntryLink k={q.word} className="text-xs">
@@ -78,12 +78,13 @@ function Explain({ item, picked }: { item: DrillItem; picked: number }) {
       )}
       {q.token && (
         <p className="rounded-xl bg-accent-soft p-3 text-sm leading-relaxed">
-          選択肢の <span className="font-en font-semibold">{q.compare?.map((id) => dict.morphById.get(id)).filter(Boolean).map((m) => drillLabel(m!)).join('・')}</span> は、どれも「{q.token}」を表す語源です。
+          <span className="font-en font-semibold">{q.compare?.map((id) => dict.morphById.get(id)).filter(Boolean).map((m) => drillLabel(m!)).join('・')}</span> は、どれも「{q.token}」を表す語源です。
         </p>
       )}
       {ancestor && (
         <p className="rounded-xl bg-accent-soft p-3 text-sm leading-relaxed">
-          どちらも印欧祖語 <span className="font-en font-semibold">{ancestor.label}</span>（{ancestor.meaning.ja}）から生まれた語源です。
+          印欧祖語 <span className="font-en font-semibold">{ancestor.label}</span>（{ancestor.meaning.ja}）から生まれた語源:{' '}
+          <span className="font-en">{kin.map((m) => drillLabel(m)).join('・')}</span>
           {ancestor.story?.ja && <span className="mt-1 block text-xs text-muted">{ancestor.story.ja}</span>}
         </p>
       )}
@@ -103,12 +104,223 @@ function Explain({ item, picked }: { item: DrillItem; picked: number }) {
   )
 }
 
+const GRADES: { g: Grade; label: string; key: string; cls: string }[] = [
+  { g: 1, label: 'もう一度', key: '1', cls: 'border-danger/40 text-danger' },
+  { g: 2, label: '難しい', key: '2', cls: 'border-warn/40 text-warn' },
+  { g: 3, label: '正解', key: '3', cls: 'border-success/40 text-success' },
+  { g: 4, label: '簡単', key: '4', cls: 'border-accent/40 text-accent' },
+]
+
+/**
+ * 1 問。単語の学習と同じ流れ: メモを書いて答え合わせ（または答えを見る）。
+ * 4 択は最初は隠してあり、押すと選んで答えられる。ヒントは押したときだけ 1 段ずつ。
+ * 答えたあとに自分で評価を選ぶ（メモ・4 択の結果から評価を提案する）
+ */
+function QuestionCard({ item, onGrade }: { item: DrillItem; onGrade: (g: Grade) => void }) {
+  const dict = useDictionary()
+  const q = item.q
+  const hints = useMemo(() => drillHints(dict, q), [dict, q])
+  const [memo, setMemo] = useState('')
+  const [hintLevel, setHintLevel] = useState(0)
+  const [showChoices, setShowChoices] = useState(false)
+  const [picked, setPicked] = useState<number | null>(null)
+  const [shown, setShown] = useState(false)
+  const [verdict, setVerdict] = useState<MemoVerdict | null>(null)
+  const [suggest, setSuggest] = useState<Grade | null>(null)
+  const right = q.choices.find((c) => c.correct)!
+  const rightM = right.morph ? dict.morphById.get(right.morph) : null
+  // ヒントを使って正解したときは「難しい」を提案する
+  const withHint = (g: Grade): Grade => (hintLevel > 0 && g === 3 ? 2 : g)
+
+  const reveal = () => {
+    if (shown) return
+    const v = checkMemo(dict, q, memo)
+    setVerdict(v)
+    if (v) {
+      setSuggest(v.kind === 'right' ? withHint(3) : v.kind === 'other' ? 2 : 1)
+      navigator.vibrate?.(v.kind === 'wrong' ? [20, 40, 20] : 10)
+    }
+    setShown(true)
+  }
+  const pick = (k: number) => {
+    if (shown) return
+    const ok = q.choices[k].correct
+    setPicked(k)
+    setSuggest(ok ? withHint(3) : 1)
+    navigator.vibrate?.(ok ? 10 : [20, 40, 20])
+    setShown(true)
+  }
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement
+      if (e.repeat || e.metaKey || e.ctrlKey || e.altKey || el.closest('input, textarea, select, [contenteditable="true"]')) return
+      if ((e.key === 'Enter' || e.key === ' ') && el.closest('button:not(:disabled), a, summary')) return
+      const k = Number(e.key) - 1
+      if (!shown) {
+        if (showChoices && k >= 0 && k < q.choices.length) pick(k)
+        else if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          reveal()
+        }
+      } else if (k >= 0 && k < 4) onGrade(GRADES[k].g)
+      else if ((e.key === 'Enter' || e.key === ' ') && suggest) {
+        e.preventDefault()
+        onGrade(suggest)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  })
+
+  const ok = picked !== null ? q.choices[picked].correct : verdict ? verdict.kind !== 'wrong' : (suggest ?? 3) >= 2
+  return (
+    <Card className="flex flex-col items-center gap-4 p-5 text-center">
+      <span className="rounded-full bg-surface-2 px-2.5 py-0.5 text-xs text-muted">
+        {KIND_LABEL[q.kind]}
+        {item.role === 'retry' && '・もう一度'}
+      </span>
+      <div className="flex flex-col items-center gap-1">
+        <div className="flex items-center gap-1">
+          <h2 className={cn('font-semibold tracking-tight', q.headEn ? 'font-en text-4xl' : 'text-3xl')}>{q.head}</h2>
+          {q.word && <SpeakButton text={q.head} />}
+        </div>
+        {q.sub && !(shown && q.kind === 'family') && <p className="text-sm text-muted">{q.sub}</p>}
+      </div>
+      <p className="text-sm">{q.prompt}</p>
+
+      {!shown && hintLevel > 0 && (
+        <ul className="w-full max-w-sm space-y-1 rounded-xl bg-surface-2 p-2.5 text-left text-sm">
+          {hints.slice(0, hintLevel).map((h) => (
+            <li key={h.label} className="flex gap-2">
+              <span className="w-28 shrink-0 text-[11px] text-muted">{h.label}</span>
+              <span>{h.text}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {(showChoices || picked !== null) && (
+        <div className="grid w-full gap-2">
+          {q.choices.map((c, k) => {
+            const state = !shown ? 'idle' : c.correct ? 'correct' : picked === k ? 'wrong' : 'idle'
+            return (
+              <button
+                key={k}
+                type="button"
+                disabled={shown}
+                onClick={() => pick(k)}
+                className={cn(
+                  'flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-sm transition-colors',
+                  state === 'correct' ? 'border-success bg-success/15' : state === 'wrong' ? 'border-danger bg-danger/10' : 'border-border bg-surface hover:border-accent',
+                )}
+              >
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-2 text-xs">{k + 1}</span>
+                <span className={cn('flex-1', c.morph && q.kind !== 'e2m' && 'font-en text-base')}>{c.text}</span>
+                {shown && c.morph && q.kind !== 'e2m' && <span className="text-xs text-muted">{dict.morphById.get(c.morph)?.meaning.ja}</span>}
+                {state === 'correct' && <Check className="size-4 text-success" />}
+                {state === 'wrong' && <X className="size-4 text-danger" />}
+              </button>
+            )
+          })}
+        </div>
+      )}
+
+      {!shown && (
+        <>
+          <form
+            className="w-full max-w-sm"
+            onSubmit={(e) => {
+              e.preventDefault()
+              reveal()
+            }}
+          >
+            <label className="flex items-center gap-2 rounded-xl border border-dashed border-border bg-surface-2/60 px-3 focus-within:border-muted">
+              <NotebookPen className="size-4 shrink-0 text-muted" />
+              <input
+                value={memo}
+                onChange={(e) => setMemo(e.target.value)}
+                aria-label="回答メモ"
+                placeholder={memoPlaceholder(q)}
+                autoComplete="off"
+                autoCapitalize="none"
+                spellCheck={false}
+                enterKeyHint="done"
+                className={cn('h-10 min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted', q.kind !== 'e2m' && 'font-en')}
+              />
+            </label>
+          </form>
+          <div className="flex w-full max-w-sm gap-2 [&>button]:flex-1 [&>button]:whitespace-nowrap [&>button]:px-2">
+            {!showChoices && (
+              <Button onClick={() => setShowChoices(true)} className="h-11">
+                <ListChecks className="size-4" /> 4 択で答える
+              </Button>
+            )}
+            <Button variant="primary" onClick={reveal} className="h-11">
+              {memo.trim() ? <Check className="size-4" /> : <Eye className="size-4" />} {memo.trim() ? '答え合わせ' : '答えを見る'}
+            </Button>
+          </div>
+          <div className="flex items-center gap-3">
+            {hintLevel < hints.length && (
+              <button type="button" onClick={() => setHintLevel((n) => n + 1)} className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs text-accent hover:bg-accent-soft">
+                <Lightbulb className="size-3.5" /> {hintLevel === 0 ? 'ヒント' : 'もう少しヒント'}（{hintLevel + 1}/{hints.length}）
+              </button>
+            )}
+            <span className="hidden text-[11px] text-muted md:block">Enter で答え合わせ{showChoices ? '・1〜4 で選ぶ' : ''}</span>
+          </div>
+        </>
+      )}
+
+      {shown && (
+        <>
+          <div className="flex w-full flex-col items-center gap-1">
+            {picked !== null && <p className={cn('text-sm font-medium', ok ? 'text-success' : 'text-danger')}>{ok ? '正解！' : '不正解'}</p>}
+            <p className="text-sm">
+              <span className="text-muted">答え: </span>
+              <span className={cn('font-semibold', right.morph && q.kind !== 'e2m' && 'font-en text-lg')}>{right.text}</span>
+              {rightM && q.kind !== 'e2m' && <span className="ml-1 text-muted">（{rightM.meaning.ja}）</span>}
+            </p>
+          </div>
+          {memo.trim() && (
+            <div className="w-full rounded-xl border border-border p-2.5 text-left text-sm">
+              <div className="flex gap-2">
+                <span className="shrink-0 text-[11px] leading-5 text-muted">あなたのメモ</span>
+                <span className="min-w-0 break-words">{memo}</span>
+              </div>
+              {verdict && picked === null && (
+                <p className={cn('mt-1 flex items-start gap-1 text-xs', verdict.kind === 'right' ? 'text-success' : verdict.kind === 'other' ? 'text-warn' : 'text-muted')}>
+                  {verdict.kind === 'right' && <Check className="mt-0.5 size-3.5 shrink-0" />}
+                  {verdict.kind === 'right' ? `合っています${verdict.note ? `：${verdict.note}` : ''}` : verdict.kind === 'other' ? verdict.note : '答えとは違うようです（言い換えなら正解のこともあります）'}
+                </p>
+              )}
+            </div>
+          )}
+          <Explain item={item} ok={ok} />
+          <div className="grid w-full grid-cols-4 gap-1.5">
+            {GRADES.map((x) => (
+              <button
+                key={x.g}
+                type="button"
+                onClick={() => onGrade(x.g)}
+                className={cn('flex flex-col items-center rounded-xl border bg-surface px-1 py-2 text-sm font-medium transition-colors hover:bg-surface-2', x.cls, suggest === x.g && 'ring-2 ring-current')}
+              >
+                {x.label}
+                <span className="hidden text-[10px] font-normal text-muted md:block">{x.key}</span>
+              </button>
+            ))}
+          </div>
+          <p className="text-[11px] text-muted">{suggest ? '枠の付いた評価がおすすめです（Enter）。思い出せた度合いで選んでください' : '思い出せた度合いで評価を選んでください'}</p>
+        </>
+      )}
+    </Card>
+  )
+}
+
 function Session({ plan, onDone }: { plan: Plan; onDone: () => void }) {
   const dict = useDictionary()
   const retention = useSettings((s) => s.desiredRetention)
   const [items, setItems] = useState<DrillItem[] | null>(null)
   const [i, setI] = useState(0)
-  const [picked, setPicked] = useState<number | null>(null)
   const [answers, setAnswers] = useState<Answer[]>([])
   const [saved, setSaved] = useState(false)
   useEffect(() => {
@@ -128,42 +340,17 @@ function Session({ plan, onDone }: { plan: Plan; onDone: () => void }) {
     }
   }, [done, saved, answers, retention])
 
-  const item = items?.[i]
-  const answer = (k: number) => {
-    if (!item || picked !== null) return
-    const ok = item.q.choices[k].correct
-    navigator.vibrate?.(ok ? 10 : [20, 40, 20])
-    setPicked(k)
-    setAnswers((a) => [...a, { q: item.q, correct: ok, at: Date.now() }])
-    // 間違えた語源は、最後にもう一度（違う種類の問題で。1 回だけ）
-    if (!ok && item.role !== 'retry' && items) {
+  const grade = (g: Grade) => {
+    if (!items) return
+    const item = items[i]
+    setAnswers((a) => [...a, { q: item.q, rating: g, at: Date.now() }])
+    // もう一度にした語源は、最後にもう一度（違う種類の問題で。1 回だけ）
+    if (g === 1 && item.role !== 'retry') {
       const again = retryItem(dict, item.q)
       if (again) setItems([...items, again])
     }
-  }
-  const next = () => {
-    setPicked(null)
     setI((n) => n + 1)
   }
-
-  // キーボード: 1〜4 で選ぶ、Enter で次へ
-  useEffect(() => {
-    if (!item) return
-    const onKey = (e: KeyboardEvent) => {
-      const el = e.target as HTMLElement
-      if (e.repeat || el.closest('input, textarea, select, [contenteditable="true"]')) return
-      if ((e.key === 'Enter' || e.key === ' ') && el.closest('button:not(:disabled), a, summary')) return
-      if (picked === null) {
-        const k = Number(e.key) - 1
-        if (k >= 0 && k < item.q.choices.length) answer(k)
-      } else if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault()
-        next()
-      }
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  })
 
   if (!items) return <PageSpinner />
   if (!items.length)
@@ -176,8 +363,6 @@ function Session({ plan, onDone }: { plan: Plan; onDone: () => void }) {
       </Card>
     )
   if (done) return <Summary answers={answers} onDone={onDone} />
-
-  const q = item!.q
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-1" aria-label={`${i + 1} / ${items.length} 問目`}>
@@ -186,79 +371,35 @@ function Session({ plan, onDone }: { plan: Plan; onDone: () => void }) {
             key={k}
             className={cn(
               'h-1.5 flex-1 rounded-full',
-              k < answers.length ? (answers[k].correct ? 'bg-success' : 'bg-danger') : k === i ? 'bg-accent' : 'bg-surface-2',
+              k < answers.length ? (answers[k].rating >= 3 ? 'bg-success' : answers[k].rating === 2 ? 'bg-warn' : 'bg-danger') : k === i ? 'bg-accent' : 'bg-surface-2',
             )}
           />
         ))}
       </div>
-      <Card className="flex flex-col items-center gap-4 p-5 text-center">
-        <span className="rounded-full bg-surface-2 px-2.5 py-0.5 text-xs text-muted">
-          {KIND_LABEL[q.kind]}
-          {item!.role === 'retry' && '・もう一度'}
-        </span>
-        <div className="flex flex-col items-center gap-1">
-          <div className="flex items-center gap-1">
-            <h2 className={cn('font-semibold tracking-tight', q.headEn ? 'font-en text-4xl' : 'text-3xl')}>{q.head}</h2>
-            {q.word && <SpeakButton text={q.head} />}
-          </div>
-          {q.sub && <p className="text-sm text-muted">{picked !== null && q.kind === 'family' ? '' : q.sub}</p>}
-        </div>
-        <p className="text-sm">{q.prompt}</p>
-        <div className="grid w-full gap-2">
-          {q.choices.map((c, k) => {
-            const state = picked === null ? 'idle' : c.correct ? 'correct' : picked === k ? 'wrong' : 'idle'
-            return (
-              <button
-                key={k}
-                type="button"
-                disabled={picked !== null}
-                onClick={() => answer(k)}
-                className={cn(
-                  'flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-sm transition-colors',
-                  state === 'correct' ? 'border-success bg-success/15' : state === 'wrong' ? 'border-danger bg-danger/10' : 'border-border bg-surface hover:border-accent',
-                )}
-              >
-                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-2 text-xs">{k + 1}</span>
-                <span className={cn('flex-1', c.morph && q.kind !== 'e2m' && 'font-en text-base')}>{c.text}</span>
-                {picked !== null && c.morph && q.kind !== 'e2m' && <span className="text-xs text-muted">{dict.morphById.get(c.morph)?.meaning.ja}</span>}
-                {state === 'correct' && <Check className="size-4 text-success" />}
-                {state === 'wrong' && <X className="size-4 text-danger" />}
-              </button>
-            )
-          })}
-        </div>
-        {picked !== null && (
-          <>
-            <Explain item={item!} picked={picked} />
-            <Button variant="primary" className="self-end" onClick={next}>
-              {i + 1 < items.length ? '次へ' : '結果を見る'} <ArrowRight className="size-4" />
-            </Button>
-          </>
-        )}
-      </Card>
+      <QuestionCard key={i} item={items[i]} onGrade={grade} />
     </div>
   )
 }
 
 function Summary({ answers, onDone }: { answers: Answer[]; onDone: () => void }) {
   const dict = useDictionary()
-  const by = new Map<string, boolean>()
-  for (const a of answers) by.set(a.q.target, (by.get(a.q.target) ?? true) && a.correct)
-  const correct = answers.filter((a) => a.correct).length
+  const by = new Map<string, Grade>()
+  for (const a of answers) by.set(a.q.target, Math.min(by.get(a.q.target) ?? 4, a.rating) as Grade)
+  const got = answers.filter(recalled).length
   return (
     <Card className="flex flex-col items-center gap-4 p-6 text-center">
       <Sparkles className="size-8 text-accent" />
       <h2 className="text-2xl font-semibold">
-        {correct} / {answers.length} 問正解
+        {got} / {answers.length} 問 思い出せた
       </h2>
-      <p className="max-w-sm text-sm text-muted">語源ごとに次の復習日を決めました。全問できた語源は間をあけて、間違えた語源はすぐにまた出します。</p>
+      <p className="max-w-sm text-sm text-muted">語源ごとに次の復習日を決めました（そのドリルでいちばん低い評価で）。思い出せた語源は間をあけて、「もう一度」の語源はすぐにまた出します。</p>
       <ul className="flex w-full max-w-md flex-col gap-1.5 text-left text-sm">
-        {[...by].map(([id, ok]) => {
+        {[...by].map(([id, g]) => {
           const m = dict.morphById.get(id)
           if (!m) return null
           return (
             <li key={id} className="flex items-center gap-2 rounded-xl bg-surface-2 px-3 py-2">
-              {ok ? <Check className="size-4 text-success" /> : <X className="size-4 text-danger" />}
+              {g >= 3 ? <Check className="size-4 text-success" /> : g === 2 ? <Check className="size-4 text-warn" /> : <X className="size-4 text-danger" />}
               <Link to="/m/$id" params={{ id }} className="font-en font-semibold text-accent hover:underline">
                 {drillLabel(m)}
               </Link>
@@ -296,7 +437,7 @@ function Hub({ onStart }: { onStart: (p: Plan) => void }) {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-sm leading-relaxed text-muted">
-        語源（語根・接頭辞・接尾辞）そのものの知識を問うドリルです。すべての語源から、意味・単語の中の語源・似た意味の見分け・同じ祖先などをランダムに出題します。間違えた語源は復習に回ります（単語の「今日の学習」とは別枠）。
+        語源（語根・接頭辞・接尾辞）そのものの知識を問うドリルです。すべての語源から、意味・単語の中の語源・似た意味の見分け・同じ祖先などをランダムに出題します。単語の学習と同じく、メモを書いて答え合わせ（4 択・ヒントは必要なときだけ）。評価から語源ごとに復習日を決めます（単語の「今日の学習」とは別枠）。
       </p>
       <div className="grid grid-cols-2 gap-3">
         <div className="rounded-2xl bg-surface-2 p-4">

@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { rowToEntry, type Dictionary } from '@/features/dictionary/data'
 import type { Morpheme } from '@/features/dictionary/types'
-import { buildDrill, buildRandom, drillData, kindsFor, makeQuestion, meaningTokens, retryItem, similarMorphs, type QuestionKind } from './questions'
+import { buildDrill, buildRandom, checkMemo, drillData, drillHints, kindsFor, makeQuestion, meaningTokens, retryItem, similarMorphs, type QuestionKind } from './questions'
 
 /** 実際の辞書データで確かめる（問題の作り方がデータに合っているか） */
 function realDict(): Dictionary {
@@ -123,5 +123,50 @@ describe('語源ドリルの問題', () => {
     const again = retryItem(dict, items[0].q, lcg(9))!
     expect(again.q.target).toBe(items[0].q.target)
     expect(again.q.kind).not.toBe(items[0].q.kind)
+  })
+
+  it('メモの答え合わせ: 意味は辞書の意味の言葉と、語源は綴り（いろいろな形を含む）と照らす', () => {
+    const fac = dict.morphById.get('r:fac')!
+    const e2m = makeQuestion(dict, fac, 'e2m', lcg(1))!
+    expect(checkMemo(dict, e2m, '作る')?.kind).toBe('right')
+    expect(checkMemo(dict, e2m, '見る')?.kind).toBe('wrong')
+    expect(checkMemo(dict, e2m, '  ')).toBeNull()
+    const m2e = makeQuestion(dict, fac, 'm2e', lcg(1))!
+    expect(checkMemo(dict, m2e, 'fac')?.kind).toBe('right')
+    expect(checkMemo(dict, m2e, 'FECT')?.kind).toBe('right')
+    expect(checkMemo(dict, m2e, 'spec')?.kind).toBe('wrong')
+    // 「見る」を聞かれて、同じ意味の別の語源を書いたとき
+    const see = makeQuestion(dict, dict.morphById.get('r:spec')!, 'm2e', lcg(1))!
+    expect(checkMemo(dict, see, 'vid')?.kind).toBe('other')
+    // 接頭辞はハイフンがあってもなくても
+    const ex = makeQuestion(dict, dict.morphById.get('pre:ex')!, 'm2e', lcg(1))!
+    expect(checkMemo(dict, ex, 'ex-')?.kind).toBe('right')
+  })
+
+  it('同じ祖先の問題のメモは、選択肢の正解でなくても同じ祖先の語源なら合っている', () => {
+    for (const m of pool) {
+      const q = makeQuestion(dict, m, 'family', lcg(3))
+      if (!q) continue
+      const kin = dict.morphById.get(q.ancestor!)!.members!.filter((id) => id !== m.id)
+      for (const id of kin) expect(checkMemo(dict, q, dict.morphById.get(id)!.label)?.kind).toBe('right')
+      expect(checkMemo(dict, q, m.label)?.kind).toBe('wrong')
+      break
+    }
+  })
+
+  it('ヒントは 3 段まで。最初の段に答えそのものは出さない', () => {
+    const rand = lcg(8)
+    for (const m of pool.slice(0, 80)) {
+      for (const kind of kindsFor(dict, m)) {
+        const q = makeQuestion(dict, m, kind, rand)
+        if (!q) continue
+        const hs = drillHints(dict, q)
+        expect(hs.length).toBeGreaterThan(0)
+        expect(hs.length).toBeLessThanOrEqual(3)
+        const right = q.choices.find((c) => c.correct)!.text
+        if (kind !== 'e2m') expect(hs[0].text.split(/[\s,、・（）()]+/)).not.toContain(right.replace(/^-|-$/g, ''))
+        else expect(hs[0].text).not.toContain(m.meaning.ja)
+      }
+    }
   })
 })

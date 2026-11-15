@@ -1,4 +1,5 @@
 import { db } from '@/lib/db'
+import { morphIdOf } from './about'
 import { getEntry, headword, loadDictionary } from '@/features/dictionary/data'
 import { searchDictionary } from '@/features/dictionary/search'
 import { addManyToStudy } from '@/features/study/cards'
@@ -55,6 +56,34 @@ export const appTools: ToolDef[] = [
 async function keyOf(word: string) {
   const dict = await loadDictionary()
   return dict.byLower.get(word.toLowerCase().replace(/_/g, ' ').trim()) ?? null
+}
+
+/** 話題の語源（語根・接頭辞・接尾辞・祖語）の辞書データ。各単語の詳しい語源は get_word で確かめてもらう */
+async function morphSummary(id: string) {
+  const dict = await loadDictionary()
+  const m = dict.morphById.get(id)
+  if (!m) return null
+  const rel = (ids?: string[]) => (ids ?? []).map((x) => dict.morphById.get(x)).filter((x) => !!x).map((x) => ({ id: x!.id, type: x!.type, label: x!.label, meaning: x!.meaning.ja }))
+  return {
+    id: m.id,
+    type: m.type,
+    label: m.label,
+    meaning: m.meaning.ja,
+    origin: m.origin,
+    spellings: m.forms,
+    story: m.story?.ja,
+    image: m.desc?.ja,
+    words: m.words
+      .map((w) => dict.byKey.get(w))
+      .filter((e) => !!e)
+      .sort((a, b) => a!.rank - b!.rank)
+      .slice(0, 30)
+      .map((e) => ({ word: headword(e!.key), ja: e!.gloss })),
+    ancestors: rel(m.family),
+    descendants: rel(m.members),
+    partOf: rel(m.partOf),
+    parts: rel(m.parts),
+  }
 }
 
 async function wordSummary(key: string) {
@@ -161,6 +190,8 @@ export async function buildContext(about?: string) {
   }
   // 学習状況の共有を切っている場合は送らない（B07）
   if (useAiConfig.getState().shareLearning) ctx.learning = await learningSnapshot()
-  if (about) ctx.currentWord = await wordSummary(about)
+  const morph = morphIdOf(about)
+  if (morph !== null) ctx.currentEtymology = await morphSummary(morph)
+  else if (about) ctx.currentWord = await wordSummary(about)
   return ctx
 }
