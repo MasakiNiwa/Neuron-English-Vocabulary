@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { rowToEntry, type Dictionary } from '@/features/dictionary/data'
 import type { Morpheme } from '@/features/dictionary/types'
-import { buildDrill, drillData, kindsFor, makeQuestion, meaningTokens, retryItem, similarMorphs, type QuestionKind } from './questions'
+import { buildDrill, buildRandom, drillData, kindsFor, makeQuestion, meaningTokens, retryItem, similarMorphs, type QuestionKind } from './questions'
 
 /** 実際の辞書データで確かめる（問題の作り方がデータに合っているか） */
 function realDict(): Dictionary {
@@ -97,12 +97,27 @@ describe('語源ドリルの問題', () => {
     }
   })
 
-  it('1 回分: 復習を先に、新しい語源は紹介つきの 2 問。練習はその語源の問題を全種類', () => {
-    const items = buildDrill(dict, { review: ['r:fac', 'r:sta'], fresh: ['r:vid', 'r:port'] }, lcg(2))
-    expect(items.slice(0, 2).every((x) => x.role === 'review')).toBe(true)
-    const fresh = items.filter((x) => x.role === 'new')
-    expect(fresh).toHaveLength(4)
-    expect(fresh.filter((x) => x.intro).map((x) => x.q.target)).toEqual(['r:vid', 'r:port'])
+  it('ランダム: すべての語源から、種類を混ぜて n 問（同じ語源は 1 回に 1 問）。範囲を絞ることもできる', () => {
+    const items = buildRandom(dict, 30, lcg(4))
+    expect(items).toHaveLength(30)
+    expect(new Set(items.map((x) => x.q.target)).size).toBe(30)
+    expect(new Set(items.map((x) => x.q.kind)).size).toBe(5)
+    const only = new Set(['r:fac', 'r:spec', 'r:vid', 'r:port', 'r:sta', 'r:duc', 'pre:re', 'pre:ex'])
+    expect(buildRandom(dict, 5, lcg(4), only).every((x) => only.has(x.q.target))).toBe(true)
+  })
+
+  it('ヒントを先に出さない: 語源 → 意味に由来を出さず、似た意味・同じ祖先は答えたあとに', () => {
+    const fac = dict.morphById.get('r:fac')!
+    expect(makeQuestion(dict, fac, 'e2m', lcg(1))!.sub).not.toContain('facere')
+    const q = makeQuestion(dict, dict.morphById.get('r:spec')!, 'similar', lcg(1))!
+    expect(q.prompt).not.toContain('見る')
+    expect(q.choices).toHaveLength(4)
+    expect(makeQuestion(dict, fac, 'family', lcg(1))?.sub ?? '').not.toContain('*')
+  })
+
+  it('復習は 1 語源 1 問、練習はその語源の問題を全種類。間違えたら違う種類でもう一度', () => {
+    const items = buildDrill(dict, { review: ['r:fac', 'r:sta', 'r:vid'] }, lcg(2))
+    expect(items.map((x) => x.q.target).sort()).toEqual(['r:fac', 'r:sta', 'r:vid'])
     const p = buildDrill(dict, { practice: 'r:spec' }, lcg(2))
     expect(new Set(p.map((x) => x.q.kind))).toEqual(new Set(kindsFor(dict, dict.morphById.get('r:spec')!)))
     const again = retryItem(dict, items[0].q, lcg(9))!

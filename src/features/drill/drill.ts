@@ -1,7 +1,6 @@
-import type { Dictionary } from '@/features/dictionary/data'
 import { newCard, reviewCard } from '@/features/study/srs'
 import { db, type StudyCard } from '@/lib/db'
-import { drillData, type Question } from './questions'
+import type { Question } from './questions'
 
 /**
  * 語源ドリルの復習（単語の「今日の学習」とは別枠）。
@@ -11,20 +10,10 @@ import { drillData, type Question } from './questions'
 
 /** 1 回で復習する語源の数の上限 */
 export const REVIEW_LIMIT = 15
-/** 1 回で新しく学ぶ語源の数 */
-export const NEW_PER_SESSION = 3
 
 /** 期限が来た語源（期限が早い順） */
 export async function dueEtyCards(now = Date.now()): Promise<StudyCard[]> {
   return db.etyCards.where('due').belowOrEqual(now).sortBy('due')
-}
-
-/** まだ学んでいない語源（よく使う単語を含む順） */
-export function freshMorphs(dict: Dictionary, have: ReadonlySet<string>, n = NEW_PER_SESSION): string[] {
-  return drillData(dict)
-    .pool.filter((m) => !have.has(m.id))
-    .slice(0, n)
-    .map((m) => m.id)
 }
 
 /** 語源ごとの前回の問題の種類（同じ種類ばかりにならないように） */
