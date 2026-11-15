@@ -1,8 +1,9 @@
-import { db, type StudyCard } from '@/lib/db'
+import { db, type ReviewRecord, type StudyCard } from '@/lib/db'
 import { useSettings } from '@/stores/settings'
 import { loadDictionary } from '@/features/dictionary/data'
 import { addManyToStudy } from './cards'
 import { recallProbability } from './srs'
+import { allSkillRecall, type Skill } from './skills'
 
 /** 並びをランダムにする（毎回同じ順で出題しないように）。元の配列は変えない */
 export function shuffle<T>(xs: T[], random: () => number = Math.random): T[] {
@@ -124,10 +125,14 @@ export async function startLearning(keys: string[]): Promise<StudyCard[]> {
 
 export type PracticeMode = 'random' | 'weak' | 'recent' | 'low'
 
-/** 復習日に関係なく、学習中のカードから自由に練習。low は aheadDays 日後に思い出せる見込みの低い順 */
-export async function buildPracticeQueue(mode: PracticeMode, n: number, aheadDays = 0): Promise<StudyCard[]> {
+/**
+ * 復習日に関係なく、学習中のカードから自由に練習。low は aheadDays 日後に思い出せる見込みの低い順。
+ * skill を選ぶと、そのスキルの見込みで並べる（そのスキルでまだ答えていない語は、見込みの低い語のあとに続ける）
+ */
+export async function buildPracticeQueue(mode: PracticeMode, n: number, aheadDays = 0, skill: Skill | null = null): Promise<StudyCard[]> {
   const { hidden } = await loadDictionary()
   const cards = (await db.cards.toArray()).filter((c) => !c.suspended && !hidden.has(c.entryId))
+  if (mode === 'low' && skill) return shuffle(lowSkillRecall(cards, await db.reviews.toArray(), skill, aheadDays).slice(0, n))
   if (mode === 'low') return shuffle(lowRecall(cards, aheadDays).slice(0, n))
   if (mode === 'weak') {
     return shuffle(
@@ -149,6 +154,16 @@ export function lowRecall(cards: StudyCard[], aheadDays: number, now = Date.now(
     .map((c) => ({ c, r: recallProbability(c, at) }))
     .sort((a, b) => a.r - b.r)
     .map((x) => x.c)
+}
+
+/** 回答したことのあるカードを、スキル別の見込みの低い順に。そのスキルでまだ答えていない語は最後（全体の見込みの低い順） */
+export function lowSkillRecall(cards: StudyCard[], reviews: ReviewRecord[], skill: Skill, aheadDays: number, now = Date.now()): StudyCard[] {
+  const at = new Date(now + aheadDays * 86_400_000)
+  const map = allSkillRecall(cards, reviews, at)
+  const learned = cards.filter((c) => c.state !== 0 && c.last_review != null)
+  const tested = learned.filter((c) => map.get(c.entryId)?.[skill] != null).sort((a, b) => map.get(a.entryId)![skill]! - map.get(b.entryId)![skill]!)
+  const untested = lowRecall(learned.filter((c) => map.get(c.entryId)?.[skill] == null), aheadDays, now)
+  return [...tested, ...untested]
 }
 
 // ---------------------------------------------------------------- 苦手な語の特訓

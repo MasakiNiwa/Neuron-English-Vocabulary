@@ -7,6 +7,7 @@ import { buildChoices } from './choices'
 import { getSpeechRecognition, ttsSupported } from '@/lib/speech'
 
 export * from './formatDefs'
+import { SKILL_OF, SKILLS, type Skill } from './skills'
 import { PRODUCTION, RECOGNITION, type ConcreteFormat } from './formatDefs'
 
 /** 例文中で見出し語（またはその活用形）が出てくる位置 */
@@ -37,13 +38,16 @@ export function formatSupported(f: ConcreteFormat): boolean {
 
 /**
  * 1 枚のカードの出題形式を選ぶ。選んだ形式のうち、その語で出せるもの（穴埋めは例文があるとき）から選ぶ。
- * おまかせ（auto）では、新しい・覚えかけの語（覚えの強さ 7 日未満。srs.ts の strengthDays）は意味を答える形式を、覚えてきた語は英語を答える形式を 8 割で選ぶ
+ * おまかせ（auto）では、
+ * - 新しい・覚えかけの語（覚えの強さ 7 日未満。srs.ts の strengthDays）は、意味を答える形式を 8 割で選ぶ
+ * - 覚えてきた語は、スキル別の見込み（skills.ts）が分かれば、いちばん弱いスキル（まだ試していないスキルを先に）の形式を 7 割で選ぶ。
+ *   分からなければ、英語を答える形式を 8 割で選ぶ
  */
 export function pickFormat(
   selected: ConcreteFormat[],
   auto: boolean,
   entry: Entry | null,
-  card: { state: number; strength: number } | null,
+  card: { state: number; strength: number; skills?: Record<Skill, number | null> } | null,
   random: () => number = Math.random,
 ): ConcreteFormat {
   if (!entry) return 'en2ja'
@@ -52,9 +56,21 @@ export function pickFormat(
   let pool = ok
   if (auto && ok.length > 1 && card) {
     const learning = card.state !== 2 || card.strength < 7
-    const prefer = (random() < 0.8) === learning ? RECOGNITION : PRODUCTION
-    const p = ok.filter((f) => prefer.includes(f))
-    if (p.length) pool = p
+    if (!learning && card.skills) {
+      if (random() < 0.7) {
+        // 選べる形式のあるスキルのうち、見込みがいちばん低いもの（まだ試していないスキルは -1 として先に）
+        const usable = SKILLS.filter((s) => ok.some((f) => SKILL_OF[f] === s))
+        const score = (s: Skill) => card.skills![s] ?? -1
+        const min = Math.min(...usable.map(score))
+        const weakest = usable.filter((s) => score(s) === min)
+        const skill = weakest[Math.floor(random() * weakest.length)]
+        pool = ok.filter((f) => SKILL_OF[f] === skill)
+      }
+    } else {
+      const prefer = (random() < 0.8) === learning ? RECOGNITION : PRODUCTION
+      const p = ok.filter((f) => prefer.includes(f))
+      if (p.length) pool = p
+    }
   }
   return pool[Math.floor(random() * pool.length)]
 }

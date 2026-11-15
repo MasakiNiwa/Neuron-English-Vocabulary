@@ -63,6 +63,16 @@ export function buildLearningSummary(
       lowestRecallIn7Days: weekR.slice(0, 10).map((x) => ({ word: headword(x.c.entryId), percent: Math.round(x.r * 100) })),
       dueForecastNext7Days: data.forecast.map((d) => ({ day: d.label, cards: d.keys.length })),
     },
+    skills: {
+      note: 'スキル別の見込みは、そのスキルの出題形式で答えた回答だけから出した目安（読む=英→日・4択、聞く=聞いて意味・聞いて書く、書く=日→英・穴埋め、話す=発音）。他の形式での練習の効果は入らないので、回答の少ないスキルは低めに出る',
+      bySkill: data.skills.map((s) => ({
+        skill: s.label,
+        wordsAnswered: s.tested,
+        wordsNotYetTried: s.untestedKeys.length,
+        averageRecallNowPercent: s.average === null ? null : Math.round(s.average * 100),
+        lowestWords: words(s.lowKeys, 6),
+      })),
+    },
     stumbles: {
       last28days: data.stumbles[28].slice(0, 15).map((s) => ({ word: headword(s.key), again: s.again, answers: s.answers })),
       recoveredAfterEarlierMistake: data.recovered.length,

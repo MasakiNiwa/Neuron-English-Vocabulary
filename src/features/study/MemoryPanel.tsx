@@ -1,15 +1,18 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { EChart, type chartColors } from '@/features/analytics/EChart'
 import { useMinuteTick } from '@/lib/clock'
 import { db, type ReviewRecord, type StudyCard } from '@/lib/db'
 import { useSettings } from '@/stores/settings'
 import { FORMAT_LABEL, type ConcreteFormat } from './formatDefs'
-import { modelOf, recallCurve } from './srs'
+import { cn } from '@/lib/cn'
+import { SKILL_HINT, SKILL_LABEL, SKILLS, skillOfLog, skillStates, type Skill } from './skills'
+import { modelOf, recallCurve, recallProbability } from './srs'
 
 /**
  * 単語ページの「記憶の見通し」: 復習しなかった場合の思い出せる見込み（忘却曲線）と、回答の記録。
- * FSRS-7 のカードは「詳しい計算」を開くと、すぐ薄れる成分・長く残る成分を別々に見られる
+ * FSRS-7 のカードは「詳しい計算」を開くと、すぐ薄れる成分・長く残る成分を別々に見られる。
+ * タブでスキル別（読む・聞く・書く・話す）の見込みに切り替えられる（そのスキルの形式で答えた回答だけから出した目安。skills.ts）
  */
 
 const RATING = ['', 'もう一度', '難しい', '正解', '簡単']
@@ -42,12 +45,21 @@ function formatOf(l: ReviewRecord): string {
 export default function MemoryPanel({ card }: { card: StudyCard }) {
   const tick = useMinuteTick()
   const target = useSettings((s) => s.desiredRetention)
-  const history = useHistory(card)
+  const allHistory = useHistory(card)
+  const [tab, setTab] = useState<'all' | Skill>('all')
   const now = useMemo(() => new Date(), [tick, card.reps]) // eslint-disable-line react-hooks/exhaustive-deps
-  const dueIn = (card.due - now.getTime()) / DAY
-  const horizon = Math.min(365, Math.max(14, Math.ceil(Math.max(dueIn, 1) * 2)))
-  const curve = useMemo(() => recallCurve(card, now, horizon), [card, now, horizon])
-  const fsrs7 = modelOf(card) === 7
+  // スキル別の状態（回答の記録から計算。古い順に渡す）
+  const skills = useMemo(() => (allHistory ? skillStates(card, [...allHistory].reverse()) : null), [card, allHistory])
+  const whole = tab === 'all'
+  // 表示するカード: 全体はカードそのもの、スキルはそのスキルの回答だけで作った仮のカード
+  const view = whole ? card : (skills?.[tab].card ?? null)
+  const history = whole ? allHistory : allHistory?.filter((l) => skillOfLog(l) === tab)
+  const dueInAll = (card.due - now.getTime()) / DAY
+  // 次の復習日は単語ごとに 1 つなので、スキルのタブでは線を出さない（横の幅は全体と同じにして比べやすく）
+  const dueIn = whole ? dueInAll : -1
+  const horizon = Math.min(365, Math.max(14, Math.ceil(Math.max(dueInAll, 1) * 2)))
+  const curve = useMemo(() => (view ? recallCurve(view, now, horizon) : null), [view, now, horizon])
+  const fsrs7 = !!view && modelOf(view) === 7
   const yMin = curve ? Math.max(0, Math.floor((Math.min(target, ...curve.points.map((p) => p.r)) - 0.05) * 10) / 10) : 0
 
   const mainOpt = useCallback(
@@ -105,30 +117,83 @@ export default function MemoryPanel({ card }: { card: StudyCard }) {
     [curve, horizon, now],
   )
 
-  if (!curve) return null
+  const tabs = (
+    <div role="tablist" aria-label="見込みの種類" className="-mx-1 flex gap-1 overflow-x-auto px-1">
+      {(['all', ...SKILLS] as const).map((k) => {
+        const sc = k === 'all' ? card : skills?.[k].card
+        const r = sc ? recallProbability(sc, now) : null
+        return (
+          <button
+            key={k}
+            type="button"
+            role="tab"
+            aria-selected={tab === k}
+            onClick={() => setTab(k)}
+            title={k === 'all' ? 'すべての回答から（復習の予定はこれで決まります）' : SKILL_HINT[k]}
+            className={cn('flex shrink-0 flex-col items-center rounded-lg px-2.5 py-1 text-xs', tab === k ? 'bg-accent text-accent-fg' : 'bg-surface-2 text-muted hover:text-fg')}
+          >
+            <span>{k === 'all' ? '全体' : SKILL_LABEL[k]}</span>
+            <span className="font-mono text-[11px] opacity-80">{r === null ? '—' : pct(r)}</span>
+          </button>
+        )
+      })}
+    </div>
+  )
+  if (!curve || !view)
+    return (
+      <div className="flex flex-col gap-3">
+        {tabs}
+        <p className="rounded-xl bg-surface-2 px-3 py-4 text-center text-sm text-muted">
+          {whole ? '回答すると表示されます。' : `「${SKILL_LABEL[tab as Skill]}」（${SKILL_HINT[tab as Skill]}）では、まだ答えていません。学習の出題形式で選ぶと、ここに見込みが出ます。`}
+        </p>
+      </div>
+    )
   const rNow = curve.points[0].r
   const atDue = dueIn > 0 ? recallCurve(card, now, dueIn, 1)?.points[1]?.r : undefined
+  const week = recallCurve(view, now, 7, 1)?.points[1]?.r
   return (
     <div className="flex flex-col gap-3">
+      {tabs}
       <div className="grid grid-cols-3 gap-2 text-center">
         <div className="rounded-xl bg-surface-2 px-2 py-2">
           <div className="text-lg font-semibold">{pct(rNow)}</div>
           <div className="text-[11px] text-muted">今、思い出せる見込み</div>
         </div>
-        <div className="rounded-xl bg-surface-2 px-2 py-2">
-          <div className="text-lg font-semibold">{dueIn <= 0 ? '今' : md(card.due)}</div>
-          <div className="text-[11px] text-muted">次の復習</div>
-        </div>
-        <div className="rounded-xl bg-surface-2 px-2 py-2">
-          <div className="text-lg font-semibold">{atDue === undefined ? '—' : pct(atDue)}</div>
-          <div className="text-[11px] text-muted">そのときの見込み</div>
-        </div>
+        {whole ? (
+          <>
+            <div className="rounded-xl bg-surface-2 px-2 py-2">
+              <div className="text-lg font-semibold">{dueIn <= 0 ? '今' : md(card.due)}</div>
+              <div className="text-[11px] text-muted">次の復習</div>
+            </div>
+            <div className="rounded-xl bg-surface-2 px-2 py-2">
+              <div className="text-lg font-semibold">{atDue === undefined ? '—' : pct(atDue)}</div>
+              <div className="text-[11px] text-muted">そのときの見込み</div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="rounded-xl bg-surface-2 px-2 py-2">
+              <div className="text-lg font-semibold">{week === undefined ? '—' : pct(week)}</div>
+              <div className="text-[11px] text-muted">7 日後の見込み</div>
+            </div>
+            <div className="rounded-xl bg-surface-2 px-2 py-2">
+              <div className="text-lg font-semibold">{view.reps} 回</div>
+              <div className="text-[11px] text-muted">この形式での回答</div>
+            </div>
+          </>
+        )}
       </div>
       <EChart option={mainOpt} height={200} />
-      <p className="text-xs leading-relaxed text-muted">
-        復習しなかった場合の推定です。次の復習日は、見込みが目標（{pct(target)}）のあたりまで下がる日を目安に決まります。回答すると曲線は引き直されます。
-        {!fsrs7 && '（このカードは以前の記録を引き継いで学習しています）'}
-      </p>
+      {whole ? (
+        <p className="text-xs leading-relaxed text-muted">
+          復習しなかった場合の推定です。次の復習日は、見込みが目標（{pct(target)}）のあたりまで下がる日を目安に決まります。回答すると曲線は引き直されます。
+          {!fsrs7 && '（このカードは以前の記録を引き継いで学習しています）'}
+        </p>
+      ) : (
+        <p className="text-xs leading-relaxed text-muted">
+          「{SKILL_LABEL[tab as Skill]}」（{SKILL_HINT[tab as Skill]}）で答えた回答だけから出した目安です。ほかの形式での練習の効果は入らないので、あまり答えていないスキルは実際より低めに出ます。復習の予定は「全体」で決まります。
+        </p>
+      )}
       {fsrs7 && curve.slowShare !== undefined && (
         <details className="rounded-xl border border-border px-3 py-2">
           <summary className="cursor-pointer select-none text-xs text-muted">詳しい計算（FSRS-7 の 2 つの成分）</summary>
