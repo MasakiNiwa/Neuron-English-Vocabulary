@@ -17,6 +17,11 @@ type Mode = 'write' | 'speak' | null
  * 書いて答える / 話して答える / 答えを見る を選べ、ヒントは押したときだけ 1 段ずつ出す。
  * 書いた答え・話した答えは照合して評価を提案するだけで、評価は学習者が押す
  */
+/** 英語の答えとして受け付ける文字（全角の英数字は半角に直す。アルファベット・数字・空白・' ’ - . , ! ? だけ） */
+export function latinOnly(s: string): string {
+  return s.normalize('NFKC').replace(/[^A-Za-z0-9 '’\-.,!?]/g, '')
+}
+
 export function ProduceAnswer({
   entry,
   answer,
@@ -52,6 +57,14 @@ export function ProduceAnswer({
   const [typed, setTyped] = useState('')
   const [result, setResult] = useState<{ verdict: TypedVerdict; target: string; input: string } | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  // 日本語入力の変換中は消さない（確定したときに整える）
+  const composingRef = useRef(false)
+  const [notLatin, setNotLatin] = useState(false)
+  const accept = (v: string) => {
+    const c = latinOnly(v)
+    setNotLatin(c !== v.normalize('NFKC'))
+    setTyped(c)
+  }
   const canSpeak = allowSpeak && !!getSpeechRecognition()
 
   useEffect(() => {
@@ -91,27 +104,41 @@ export function ProduceAnswer({
 
       {!shown && mode === 'write' && (
         <form
-          className="flex w-full max-w-sm gap-2"
+          className="flex w-full max-w-sm flex-col gap-1"
           onSubmit={(e) => {
             e.preventDefault()
             check()
           }}
         >
-          <input
-            ref={inputRef}
-            value={typed}
-            onChange={(e) => setTyped(e.target.value)}
-            aria-label="英語で答える"
-            placeholder="英語で入力"
-            autoCapitalize="none"
-            autoCorrect="off"
-            autoComplete="off"
-            spellCheck={false}
-            className="font-en h-11 min-w-0 flex-1 rounded-xl border border-border bg-surface px-3 text-base outline-none focus:border-accent"
-          />
-          <Button type="submit" variant="primary" className="h-11">
-            <Check className="size-4" /> 答え合わせ
-          </Button>
+          <div className="flex gap-2">
+            {/* 英語の解答欄: アルファベットだけを受け付ける（訳を書いてしまわないように）。メモ欄とは見た目を分ける */}
+            <label className="flex h-11 min-w-0 flex-1 items-center gap-2 rounded-xl border-2 border-accent/50 bg-surface px-2.5 focus-within:border-accent">
+              <span className="shrink-0 rounded-md bg-accent px-1.5 py-0.5 text-[10px] font-bold tracking-wider text-accent-fg">ABC</span>
+              <input
+                ref={inputRef}
+                value={typed}
+                onChange={(e) => (composingRef.current ? setTyped(e.target.value) : accept(e.target.value))}
+                onCompositionStart={() => (composingRef.current = true)}
+                onCompositionEnd={(e) => {
+                  composingRef.current = false
+                  accept(e.currentTarget.value)
+                }}
+                aria-label="英語で答える（アルファベット）"
+                placeholder="英語（アルファベット）で入力"
+                lang="en"
+                inputMode="email"
+                autoCapitalize="none"
+                autoCorrect="off"
+                autoComplete="off"
+                spellCheck={false}
+                className="font-en h-full min-w-0 flex-1 bg-transparent text-base outline-none placeholder:font-sans placeholder:text-sm placeholder:text-muted"
+              />
+            </label>
+            <Button type="submit" variant="primary" className="h-11" disabled={!typed.trim()}>
+              <Check className="size-4" /> 答え合わせ
+            </Button>
+          </div>
+          {notLatin && <p className="text-left text-[11px] text-warn">英語の答えはアルファベットで入力してください（日本語は消しました。メモは下の欄に書けます）</p>}
         </form>
       )}
 

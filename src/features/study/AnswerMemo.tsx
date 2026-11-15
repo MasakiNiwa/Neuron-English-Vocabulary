@@ -61,14 +61,14 @@ export function MemoField({
         onSubmit?.()
       }}
     >
-      <label className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 focus-within:border-accent">
+      <label className="flex items-center gap-2 rounded-xl border border-dashed border-border bg-surface-2/60 px-3 focus-within:border-muted">
         <NotebookPen className="size-4 shrink-0 text-muted" />
         <input
           ref={ref}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           aria-label="回答メモ"
-          placeholder={primary ? '思い浮かんだ意味をメモ（任意）' : 'メモ（任意）'}
+          placeholder={primary ? '思い浮かんだ意味をメモ（任意）' : 'メモ（任意・日本語でも OK）'}
           autoComplete="off"
           enterKeyHint={onSubmit ? 'done' : undefined}
           className="h-10 min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted"

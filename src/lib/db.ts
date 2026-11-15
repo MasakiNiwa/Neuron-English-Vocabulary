@@ -159,6 +159,8 @@ export interface RootLesson {
   total: number
   /** これまでの最高の正解数 */
   best: number
+  /** レッスンで正解したことのある語（v2.7 から。図鑑の段階に使う） */
+  correctKeys?: string[]
   /** 挑戦した回数 */
   plays: number
 }

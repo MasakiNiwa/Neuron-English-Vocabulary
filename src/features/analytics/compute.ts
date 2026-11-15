@@ -461,7 +461,9 @@ export function computeAnalytics(input: {
     })
   }
   const reflect: Reflection = {
+    // 形式が記録されていない回答（以前の版）は出さない
     formats: [...fmtCounts]
+      .filter(([id]) => id in FORMAT_LABEL)
       .map(([id, counts]) => ({ id, label: FORMAT_LABEL[id as ConcreteFormat] ?? '不明', counts, total: counts.reduce((a, b) => a + b, 0) }))
       .sort((a, b) => b.total - a.total),
     spacing: (

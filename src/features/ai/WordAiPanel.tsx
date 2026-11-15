@@ -5,7 +5,8 @@ import { ChevronLeft, ChevronRight, Loader2, Plus, Sparkles, Square, Trash2 } fr
 import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { db, type ExtraNote } from '@/lib/db'
-import { LinkedText } from '@/features/dictionary/components/links'
+import { LinkedText, SpeakButton } from '@/features/dictionary/components/links'
+import { SpeakableRow } from '@/features/speech/SpeakCheck'
 import { headword } from '@/features/dictionary/data'
 import { resolveRoute, useAiConfig } from './config'
 import { addExtra, extractJson, extraPrompt, moveExtra, removeExtra, sanitizeExtra } from './extras'
@@ -53,10 +54,13 @@ function ExtraBody({ x }: { x: ExtraNote }) {
           <div className="text-xs font-medium text-accent">例文</div>
           {examples.map((ex, i) => (
             <div key={i} className="rounded-xl bg-surface-2 p-2">
-              <p className="font-en">
-                <Text v={ex.en} />
-              </p>
-              {typeof ex.ja === 'string' && <p className="text-muted">{ex.ja}</p>}
+              {/* 辞書の例文と同じく、読み上げと発音チェックができる */}
+              <SpeakableRow target={ex.en} actions={<SpeakButton text={ex.en} size="sm" />}>
+                <p className="font-en">
+                  <Text v={ex.en} />
+                </p>
+                {typeof ex.ja === 'string' && <p className="text-muted">{ex.ja}</p>}
+              </SpeakableRow>
             </div>
           ))}
         </div>

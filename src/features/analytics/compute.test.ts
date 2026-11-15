@@ -107,7 +107,8 @@ describe('振り返り', () => {
     })
     expect(res.reflect.spacing.map((s) => [s.kind, s.total, s.recalled])).toEqual([['first', 1, 1], ['same', 1, 0], ['other', 2, 2]])
     expect(res.reflect.formats.find((f) => f.id === 'en2ja')!.counts).toEqual([0, 0, 2, 0])
-    expect(res.reflect.formats.find((f) => f.id === 'bogus')!.label).toBe('不明')
+    // 形式の分からない回答は出さない
+    expect(res.reflect.formats.some((f) => f.id === 'bogus')).toBe(false)
     expect(res.reflect.calibrationN).toBe(3)
     const high = res.reflect.calibration.find((b) => b.label === '95%〜')!
     expect([high.n, high.actual]).toEqual([1, 0])
