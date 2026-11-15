@@ -27,6 +27,8 @@ export default function StudyAdvice({ about, title, prompt }: { about: string; t
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [incomplete, setIncomplete] = useState<string | undefined>()
+  // AI に聞きたいこと（任意）。「〜との違いが分からない」など
+  const [question, setQuestion] = useState('')
   const abortRef = useRef<AbortController | null>(null)
   // このスレッドに AI の答えが入ったか（失敗したときのやり直しで同じスレッドを使うため）
   const answeredRef = useRef(false)
@@ -51,12 +53,13 @@ export default function StudyAdvice({ about, title, prompt }: { about: string; t
     setBusy(true)
     const ac = new AbortController()
     abortRef.current = ac
-    const content = prompt()
+    const q = question.trim()
+    const content = q ? `${prompt()}\n\n# 特に聞きたいこと\n${q}\nこの質問に、まずはっきり答えてください。` : prompt()
     let partial = ''
     let tid: string | null = null
     try {
-      // 前回が失敗して答えがないなら、同じスレッドでやり直す（履歴に空のチャットを増やさない）
-      const reuse = threadId && !answeredRef.current ? await db.threads.get(threadId) : undefined
+      // 前回が失敗して答えがないなら、同じスレッドでやり直す（履歴に空のチャットを増やさない）。質問を書き直したときは新しく
+      const reuse = threadId && !answeredRef.current && !q ? await db.threads.get(threadId) : undefined
       const t = reuse ?? (await createThread(title, about))
       tid = t.id
       setThreadId(t.id)
@@ -99,6 +102,18 @@ export default function StudyAdvice({ about, title, prompt }: { about: string; t
         </>
       ) : (
         <>
+          <label className="flex flex-col gap-1">
+            <span className="text-[11px] text-muted">AI に聞きたいこと（任意）</span>
+            <textarea
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              disabled={busy}
+              rows={2}
+              maxLength={500}
+              placeholder="例: ○○との使い分けが分からない／なぜこの訳になるの？"
+              className="min-h-14 resize-y rounded-lg border border-border bg-surface px-2.5 py-1.5 text-sm outline-none placeholder:text-muted focus:border-accent"
+            />
+          </label>
           <div className="flex flex-wrap items-center gap-1">
             {busy ? (
               <Button size="sm" onClick={() => abortRef.current?.abort()}>
@@ -128,7 +143,7 @@ export default function StudyAdvice({ about, title, prompt }: { about: string; t
               <MessageCircle className="size-3.5" /> AI チャットで続きを聞く（履歴に保存しました）
             </Link>
           )}
-          <p className="text-[10px] text-muted">問題・正解・あなたの答え（メモを含む）を AI に送ります。AI の回答は間違うことがあります。</p>
+          <p className="text-[10px] text-muted">問題・正解・あなたの答え（メモを含む）と、聞きたいことを AI に送ります。AI の回答は間違うことがあります。</p>
         </>
       )}
     </div>
