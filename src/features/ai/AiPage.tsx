@@ -32,7 +32,7 @@ import { cn } from '@/lib/cn'
 import { db, type ChatRecord, type ChatThread } from '@/lib/db'
 import { getSpeechRecognition, type SpeechRecognitionLike } from '@/lib/speech'
 import { takeInternalAsk } from './internalAsk'
-import { headword } from '@/features/dictionary/data'
+import { aboutLabel, morphIdOf } from './about'
 import { useAiConfig } from './config'
 import { Markdown } from './Markdown'
 import { ModelSelect } from './ModelSelect'
@@ -480,7 +480,7 @@ function ChatView() {
     let partial = ''
     try {
       // 単語について話しているチャット（単語ページの「AI に聞く」から始めたもの）は分けて数える
-      trackEvent(about ? 'ai-word-ask' : 'ai-chat')
+      trackEvent(!about ? 'ai-chat' : morphIdOf(about) !== null ? 'ai-root-ask' : 'ai-word-ask')
       const res = await runTask({
         messages: history.slice(-20),
         about,
@@ -554,7 +554,7 @@ function ChatView() {
       // アプリ内のボタンから来たときだけ自動送信する。URL だけで来た場合（外部リンクなど）は入力欄への下書きにとどめ、
       // 本人が送信ボタンを押すまで AI には何も送らない（API の費用や学習情報の送信を、リンクを開くだけで起こさない。レビュー S01）
       const internal = takeInternalAsk(search.about, search.q)
-      const title = search.about ? `${headword(search.about)}について` : '新しいチャット'
+      const title = search.about ? `${aboutLabel(search.about)}について` : '新しいチャット'
       const t = await createThread(title, search.about)
       setCurrent(t.id)
       void navigate({ to: '/ai', search: {}, replace: true })
@@ -626,7 +626,7 @@ function ChatView() {
         onChange={setInput}
         onSubmit={() => void send(input)}
         id="ai-chat-input"
-        placeholder={thread?.about ? `${headword(thread.about)} について質問する` : 'メッセージを入力'}
+        placeholder={thread?.about ? `${aboutLabel(thread.about)} について質問する` : 'メッセージを入力'}
         className="max-h-[200px] min-h-7 px-1 text-base leading-relaxed"
       />
       <div className="mt-2 flex items-center gap-1">
@@ -700,8 +700,11 @@ function ChatView() {
               <>
                 <span className="font-medium">{thread.title}</span>
                 {thread.about && (
-                  <Link to="/e/$key" params={{ key: thread.about }} className="font-en ml-2 rounded-full bg-surface-2 px-2 py-0.5 text-xs hover:text-accent">
-                    {headword(thread.about)}
+                  <Link
+                    {...(morphIdOf(thread.about) !== null ? { to: '/m/$id', params: { id: morphIdOf(thread.about)! } } : { to: '/e/$key', params: { key: thread.about } })}
+                    className="font-en ml-2 rounded-full bg-surface-2 px-2 py-0.5 text-xs hover:text-accent"
+                  >
+                    {aboutLabel(thread.about)}
                   </Link>
                 )}
               </>
@@ -721,7 +724,7 @@ function ChatView() {
             <div className="w-full max-w-2xl">
               <div className="mb-2 text-center text-4xl">{castPeople.map((p) => p.emoji).join(' ') || '🤖'}</div>
               <h2 className="mb-6 text-center text-xl font-semibold md:text-2xl">
-                {thread?.about ? `${headword(thread.about)} について話しましょう` : '何について話しましょう？'}
+                {thread?.about ? `${aboutLabel(thread.about)} について話しましょう` : '何について話しましょう？'}
               </h2>
               {composer}
               {!thread?.about && (

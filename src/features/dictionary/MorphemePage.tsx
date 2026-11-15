@@ -7,6 +7,7 @@ import { Card, SectionTitle } from '@/components/ui/Card'
 import { Page } from '@/components/ui/Page'
 import { PageSpinner } from '@/components/ui/Spinner'
 import { addManyToStudy } from '@/features/study/cards'
+import { MorphAiPanel } from '@/features/ai/MorphAiPanel'
 import { MORPH_TYPE_LABEL, MorphemeLink, morphLabel } from './components/links'
 import { EntryRow } from './components/EntryRow'
 import { useDictionary } from './hooks'
@@ -124,6 +125,7 @@ function MorphemeView({ id }: { id: string }) {
       <MorphList title="この語源を含む語源" ids={m.partOf} />
       <MorphList title="祖語（さらに古い祖先）" ids={m.family} />
       <MorphList title="この祖語から生まれた語根" ids={m.members} />
+      <MorphAiPanel m={m} />
 
       {words.length > 0 && (
         <>
