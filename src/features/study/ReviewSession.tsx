@@ -14,6 +14,7 @@ import { useDictionary, useEntry, recordView } from '@/features/dictionary/hooks
 import { formatInterval, previewIntervals, Rating, retrievability, review, type Grade } from './cards'
 import { ChoicePrompt, ClozePrompt, findCloze, JaPrompt, pickFormat, type ConcreteFormat } from './formats'
 import { strengthDays } from './srs'
+import { logsOfRun, skillRecall, type Skill } from './skills'
 import { ListenPrompt } from './ListenPrompt'
 import { ProduceAnswer } from './ProduceAnswer'
 import { MemoField, MemoResult, type Attempt } from './AnswerMemo'
@@ -135,7 +136,10 @@ export function ReviewSession({
   const autoSpeak = useSettings((s) => s.autoSpeak)
   const [idx, setIdx] = useState(initialIdx)
   const [shown, setShown] = useState(false)
-  const [card, setCard] = useState<StudyCard | null>(queue[0] ?? null)
+  const [card, setCard] = useState<StudyCard | null>(queue[initialIdx] ?? null)
+  const [skills, setSkills] = useState<Record<Skill, number | null> | undefined>()
+  // 今の番号のカードを DB から読み終えたか
+  const [loadedIdx, setLoadedIdx] = useState(-1)
   const startRef = useRef(Date.now())
   // 回答の連打で同じカードを 2 回評価しないためのロック（state だと次の描画まで反映されないので ref）
   const ratingRef = useRef(false)
@@ -157,7 +161,15 @@ export function ReviewSession({
     const c = queue[idx]
     if (!c) return
     // 最新の状態を DB から取得（同セッション内で「もう一度」になったカードの再出題に対応）
-    void db.cards.get(c.entryId).then((x) => setCard(x ?? c))
+    // おまかせの出題で使う、スキル別の見込みも一緒に読む（カードの表面は両方そろってから出す）
+    let alive = true
+    void Promise.all([db.cards.get(c.entryId), db.reviews.where('entryId').equals(c.entryId).toArray()]).then(([x, logs]) => {
+      if (!alive) return
+      const cur = x ?? c
+      setCard(cur)
+      setSkills(cur.state === 0 ? undefined : skillRecall(cur, logsOfRun(cur, logs)))
+      setLoadedIdx(idx)
+    })
     setShown(false)
     setSuggested(null)
     setFmt(null)
@@ -172,6 +184,9 @@ export function ReviewSession({
         ],
         { duration: 220, easing: 'ease-out' },
       )
+    return () => {
+      alive = false
+    }
   }, [idx, queue])
 
   // 表面に英語が出る形式だけ最初に読み上げる。日→英・穴埋めでは答えになるので、答えを見たときに読む（B13）
@@ -264,6 +279,7 @@ export function ReviewSession({
             {ie && ` ・ ${ie.type === 'p' ? '熟語' : '#' + ie.rank}`}
           </span>
           <Suspense fallback={<PageSpinner />}>
+            {loadedIdx === idx && (
             <CardFace
               key={`${idx}-${card.entryId}`}
               entryKey={card.entryId}
@@ -276,7 +292,9 @@ export function ReviewSession({
               onSuggest={setSuggested}
               backRef={backRef}
               focus={mode === 'focus'}
+              skills={skills}
             />
+            )}
           </Suspense>
         </Card>
       </div>
@@ -338,6 +356,7 @@ function CardFace({
   onSuggest,
   backRef,
   focus = false,
+  skills,
 }: {
   entryKey: string
   card: StudyCard
@@ -349,11 +368,12 @@ function CardFace({
   onSuggest: (g: Grade | null) => void
   backRef: React.RefObject<HTMLDivElement | null>
   focus?: boolean
+  skills?: Record<Skill, number | null>
 }) {
   const entry = useEntry(entryKey)
   // カードごとに 1 回だけ選ぶ（描画のたびに変わらないように）
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fmt = useMemo(() => pickFormat(formats, auto, entry, card && { state: card.state, strength: strengthDays(card) }), [entry])
+  const fmt = useMemo(() => pickFormat(formats, auto, entry, card && { state: card.state, strength: strengthDays(card), skills }), [entry])
   useEffect(() => onFormat(fmt), [fmt, onFormat])
   const [answered, setAnswered] = useState<number | null>(null)
   // 自分の答え（メモ・書いた答え・話した答え・選んだ答え）

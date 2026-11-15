@@ -21,6 +21,7 @@ import { formatInterval, removeFromStudy, retrievability } from './cards'
 import { ReviewSession } from './ReviewSession'
 import { useStudySession } from './sessionStore'
 import { ALL_FORMATS, FORMAT_LABEL, formatSupported, type ConcreteFormat } from './formats'
+import { SKILL_HINT, SKILL_LABEL, SKILL_OF, SKILLS, type Skill } from './skills'
 import { buildFocusQueue, buildPracticeQueue, buildQueue, getStudyStats, pickFocusWords, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
 import { loadDictionary } from '@/features/dictionary/data'
 
@@ -98,7 +99,7 @@ function Steps() {
   )
 }
 
-function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
+function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string, skill?: Skill | null) => void }) {
   const dict = useDictionary()
   const startRank = useSettings((s) => s.studyStartRank)
   const setSetting = useSettings((s) => s.set)
@@ -190,7 +191,7 @@ function LearnCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => voi
 }
 
 /** 今日の学習: 復習の時期が来たカード＋追加済みでまだ学習していないカード（辞書の「学習に追加」など） */
-function ReviewCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
+function ReviewCard({ onStart }: { onStart: (q: StudyCard[], mode: string, skill?: Skill | null) => void }) {
   const tick = useMinuteTick()
   const stats = useLiveQuery(getStudyStats, [tick])
   const due = stats?.due ?? 0
@@ -244,11 +245,14 @@ function ReviewCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => vo
   )
 }
 
-function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
+function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string, skill?: Skill | null) => void }) {
   const total = useLiveQuery(() => db.cards.count(), [])
   const [mode, setMode] = usePersistentState<PracticeMode>('study:practiceMode', 'random')
   const [count, setCount] = usePersistentState('study:practiceCount', 10)
   const [ahead, setAhead] = usePersistentState('study:practiceAhead', 0)
+  const [skill, setSkill] = usePersistentState<'all' | Skill>('study:practiceSkill', 'all')
+  // 端末で出せる形式のあるスキルだけ（読み上げ・音声認識がない端末では、聞く・話すは出さない）
+  const skillOptions = SKILLS.filter((s) => ALL_FORMATS.some((f) => SKILL_OF[f] === s && formatSupported(f)))
   return (
     <Card>
       <SectionTitle className="flex items-center gap-1.5">
@@ -283,8 +287,19 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => 
                 ]}
               />
             </div>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="shrink-0 text-muted">スキル</span>
+              <div className="[&_button]:whitespace-nowrap [&_button]:px-2 sm:[&_button]:px-3">
+                <Segmented<'all' | Skill>
+                  value={skill !== 'all' && !skillOptions.includes(skill) ? 'all' : skill}
+                  onChange={setSkill}
+                  options={[{ value: 'all', label: '全体' }, ...skillOptions.map((s) => ({ value: s, label: SKILL_LABEL[s] }))]}
+                />
+              </div>
+            </div>
             <p className="text-xs text-muted">
               {ahead === 0 ? '今' : `${ahead} 日後`}に思い出せる見込み（復習しなかった場合の推定）が低い語から出します。先の日を選ぶと、早く薄れていく語を前もって練習できます。
+              {skill !== 'all' && `「${SKILL_LABEL[skill]}」を選ぶと、${SKILL_HINT[skill]}の形式だけで出題し、そのスキルの見込みが低い語（続いて、まだその形式で答えていない語）から出します。`}
             </p>
           </div>
         )}
@@ -299,8 +314,9 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => 
         <Button
           disabled={!total}
           onClick={async () => {
-            const q = await buildPracticeQueue(mode, count, ahead)
-            if (q.length) onStart(q, 'practice')
+            const sk = mode === 'low' && skill !== 'all' && skillOptions.includes(skill) ? skill : null
+            const q = await buildPracticeQueue(mode, count, ahead, sk)
+            if (q.length) onStart(q, 'practice', sk)
           }}
         >
           <Play className="size-4" /> 練習する
@@ -311,7 +327,7 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => 
 }
 
 /** 苦手な語の特訓: 何度も忘れる語・最近つまずいた語を、成り立ちと例文をじっくり見ながら練習する */
-function FocusCard({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
+function FocusCard({ onStart }: { onStart: (q: StudyCard[], mode: string, skill?: Skill | null) => void }) {
   const words = useLiveQuery(async () => {
     const { hidden } = await loadDictionary()
     const cards = (await db.cards.toArray()).filter((c) => !c.suspended && !hidden.has(c.entryId))
@@ -406,7 +422,7 @@ function FormatPicker() {
             <span className="font-medium">おまかせ</span>（覚え具合に合わせて選ぶ）
             <span className="block text-[11px] text-muted">
               {auto
-                ? '新しい語・覚えかけの語は「意味を答える」形式、覚えてきた語は「英語を答える」形式を中心に出します'
+                ? '新しい語・覚えかけの語は「意味を答える」形式を中心に、覚えてきた語は、読む・聞く・書く・話すのうち見込みの低いスキル（まだ試していないスキル）の形式を中心に出します'
                 : '選んだ形式からランダムに出します'}
             </span>
           </span>
@@ -482,7 +498,7 @@ function RootLessonCard() {
  * はじめての人向けの入口。設定を選ばずに、そのまま 1 問目まで進める（レビュー 2026-11-07 の 09）。
  * よく使う順（いまの開始レベル）で 10 語、または次の語根レッスン（6 語）
  */
-function QuickStart({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
+function QuickStart({ onStart }: { onStart: (q: StudyCard[], mode: string, skill?: Skill | null) => void }) {
   const info = useNextRoot()
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState('')
@@ -550,7 +566,7 @@ function FormatSection() {
   )
 }
 
-function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string) => void }) {
+function StudyHome({ onStart }: { onStart: (q: StudyCard[], mode: string, skill?: Skill | null) => void }) {
   const { t } = useTranslation()
   const tick = useMinuteTick()
   const stats = useLiveQuery(getStudyStats, [tick])
@@ -592,7 +608,9 @@ export function StudyPage() {
   const { t } = useTranslation()
   const formats = useSettings((s) => s.studyFormats)
   const auto = useSettings((s) => s.studyAuto)
-  const { queue, idx, count, mode, done, start, progress, finish } = useStudySession()
+  const { queue, idx, count, mode, skill, done, start, progress, finish } = useStudySession()
+  // スキルを選んだ練習では、そのスキルの形式だけで出す
+  const skillFormats = skill ? ALL_FORMATS.filter((f) => SKILL_OF[f] === skill && formatSupported(f)) : null
   return (
     <Page title={t('study.title')}>
       <Suspense fallback={<PageSpinner />}>
@@ -600,8 +618,8 @@ export function StudyPage() {
           <ReviewSession
             queue={queue}
             mode={mode}
-            formats={formats}
-            auto={auto}
+            formats={skillFormats?.length ? skillFormats : formats}
+            auto={skillFormats?.length ? false : auto}
             initialIdx={idx}
             initialCount={count}
             onProgress={progress}

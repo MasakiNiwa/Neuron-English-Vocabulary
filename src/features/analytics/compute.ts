@@ -1,6 +1,7 @@
 import type { ReviewRecord, StudyCard, ViewRecord } from '@/lib/db'
 import type { IndexRow, Morpheme } from '@/features/dictionary/types'
 import { FORMAT_LABEL, type ConcreteFormat } from '@/features/study/formatDefs'
+import { allSkillRecall, SKILL_LABEL, SKILLS, type Skill } from '@/features/study/skills'
 
 /**
  * 分析データの集計（純粋関数。Web Worker からもテストからも呼べる）
@@ -97,7 +98,22 @@ export interface Reflection {
   calibrationN: number
 }
 
+/** スキル別（読む・聞く・書く・話す）の見込みのまとめ。そのスキルの形式で答えた回答だけから出した目安 */
+export interface SkillStat {
+  skill: Skill
+  label: string
+  /** そのスキルで答えたことのある語の数 */
+  tested: number
+  /** 平均の見込み（0〜1）。答えた語がなければ null */
+  average: number | null
+  /** 見込みの低い順 */
+  lowKeys: string[]
+  /** 学習中だが、そのスキルではまだ答えていない語 */
+  untestedKeys: string[]
+}
+
 export interface AnalyticsResult {
+  skills: SkillStat[]
   reflect: Reflection
   /** 最近 7 日・28 日 */
   recent: Record<7 | 28, PeriodStats>
@@ -459,7 +475,24 @@ export function computeAnalytics(input: {
     calibrationN,
   }
 
+  // ---- スキル別の見込み
+  const skillMap = allSkillRecall(activeCards, reviews, new Date(now))
+  const learnedKeys = activeCards.filter((c) => c.state !== 0 && c.last_review != null).map((c) => c.entryId)
+  const skills: SkillStat[] = SKILLS.map((skill) => {
+    const tested = learnedKeys.map((k) => ({ k, r: skillMap.get(k)?.[skill] })).filter((x): x is { k: string; r: number } => typeof x.r === 'number')
+    tested.sort((a, b) => a.r - b.r)
+    return {
+      skill,
+      label: SKILL_LABEL[skill],
+      tested: tested.length,
+      average: tested.length ? tested.reduce((s, x) => s + x.r, 0) / tested.length : null,
+      lowKeys: tested.map((x) => x.k),
+      untestedKeys: learnedKeys.filter((k) => skillMap.get(k)?.[skill] == null),
+    }
+  })
+
   return {
+    skills,
     reflect,
     recent: { 7: period(7), 28: period(28) },
     stumbles: { 7: stumblesIn(7), 28: stumblesIn(28) },
