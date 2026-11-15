@@ -165,6 +165,18 @@ export interface RootLesson {
   plays: number
 }
 
+/** 語源ドリルの回答（語源ごと。単語の復習ログとは別） */
+export interface EtyReview {
+  id?: number
+  /** 形態素 ID */
+  entryId: string
+  rating: number
+  /** 問題の種類（e2m / m2e / word / similar / family） */
+  kind: string
+  correct: boolean
+  reviewedAt: number
+}
+
 export class NeuronDB extends Dexie {
   views!: EntityTable<ViewRecord, 'id'>
   cards!: EntityTable<StudyCard, 'entryId'>
@@ -177,6 +189,9 @@ export class NeuronDB extends Dexie {
   extras!: EntityTable<ExtraNote, 'id'>
   rootLessons!: EntityTable<RootLesson, 'id'>
   analysisNotes!: EntityTable<AnalysisNote, 'id'>
+  /** 語源ドリルの復習カード（entryId は形態素 ID。単語のカードとは別の枠） */
+  etyCards!: EntityTable<StudyCard, 'entryId'>
+  etyReviews!: EntityTable<EtyReview, 'id'>
 
   constructor(name = 'neuron-english-vocabulary') {
     super(name)
@@ -227,6 +242,8 @@ export class NeuronDB extends Dexie {
     this.version(5).stores({ rootLessons: 'id, completedAt' })
     // v6: 分析ページの AI のアドバイス
     this.version(6).stores({ analysisNotes: 'id, createdAt' })
+    // v7: 語源ドリル（単語とは別枠の復習）
+    this.version(7).stores({ etyCards: 'entryId, due', etyReviews: '++id, entryId, reviewedAt' })
   }
 }
 

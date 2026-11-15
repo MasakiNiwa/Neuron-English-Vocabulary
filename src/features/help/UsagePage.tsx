@@ -21,6 +21,7 @@ const SECTIONS: [string, string][] = [
   ['/morpheme', '語根ページ'],
   ['/lesson', '語根レッスン'],
   ['/roots', '語根図鑑'],
+  ['/drill', '語源ドリル'],
   ['/history', '履歴'],
   ['/settings', '設定'],
   ['/help', 'ヘルプ'],

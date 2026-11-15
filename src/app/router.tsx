@@ -56,6 +56,8 @@ const routeTree = rootRoute.addChildren([
   page('/study', () => import('@/features/study/StudyPage'), 'StudyPage'),
   page('/lesson/$id', () => import('@/features/lesson/LessonPage'), 'LessonPage'),
   page('/roots', () => import('@/features/lesson/RootsPage'), 'RootsPage'),
+  page('/drill', () => import('@/features/drill/DrillPage'), 'DrillPage'),
+  page('/drill/$id', () => import('@/features/drill/DrillPage'), 'DrillMorphPage'),
   page('/analytics', () => import('@/features/analytics/AnalyticsPage'), 'AnalyticsPage'),
   createRoute({
     getParentRoute: () => rootRoute,

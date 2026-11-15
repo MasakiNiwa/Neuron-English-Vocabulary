@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { BookOpenCheck, Sparkles } from 'lucide-react'
+import { BookOpenCheck, Brain, Sparkles } from 'lucide-react'
 import { Suspense, useMemo } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Segmented } from '@/components/ui/Form'
@@ -85,6 +85,9 @@ function RootsInner() {
           身についた＝さらにその半分以上を学習で日をあけて思い出せた。レッスンを重ねると、まだ正解していない語から出題します。
         </p>
       </Card>
+      <Link to="/drill" className="-mt-1 inline-flex items-center gap-1.5 self-start text-sm text-accent hover:underline">
+        <Brain className="size-4" /> 語源ドリル（意味から語源・似た意味の見分け・同じ祖先）
+      </Link>
       <Segmented<Filter>
         value={filter}
         onChange={setFilter}
