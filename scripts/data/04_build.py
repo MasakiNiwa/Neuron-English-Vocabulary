@@ -1015,8 +1015,8 @@ for k, e in entries.items():
 # 手で決めた除外（例文・印欧祖語の誤接続）。逆引き・件数の集計より前に適用する（data/editorial_exclusions.json）
 runpy.run_path(os.path.join(os.path.dirname(__file__), 'editorial_filters.py'))['apply_editorial_filters'](entries, REPO)
 
-# このリポジトリのオリジナル例文（data/examples_original.tsv）。Tatoeba の例文が 1 つもない語にだけ使う。
-# ID は負の数（ファイル内の順番。Tatoeba の文 ID と重ならない）、o=1 でオリジナルの印を付ける
+# このリポジトリのオリジナル例文（data/examples_original.tsv）。Tatoeba の例文が 3 つに満たない語に、足りない分だけ足す（v2.8。
+# それまでは例文が 1 つもない語にだけ 1 つ）。ID は負の数（ファイル内の順番。Tatoeba の文 ID と重ならない）、o=1 でオリジナルの印を付ける
 original_used = 0
 with open(os.path.join(REPO, 'data', 'examples_original.tsv'), encoding='utf-8') as f:
     n_orig = 0
@@ -1033,9 +1033,10 @@ with open(os.path.join(REPO, 'data', 'examples_original.tsv'), encoding='utf-8')
         toks = tok_re.findall(en.lower())
         if not any(' '.join(toks[i:i + len(f.split())]) == f for f in forms for i in range(len(toks))):
             print(f'  WARN examples_original: 見出し語を含まない {k}: {en}')
-        if e.get('ex'):
+        ex = e.setdefault('ex', [])
+        if len(ex) >= 3 or any(x['en'].lower() == en.lower() for x in ex):
             continue
-        e['ex'] = [{'en': en, 'ja': ja, 'id': -n_orig, 'o': 1}]
+        ex.append({'en': en, 'ja': ja, 'id': -n_orig, 'o': 1})
         original_used += 1
 print(f'  original examples: {original_used}')
 
