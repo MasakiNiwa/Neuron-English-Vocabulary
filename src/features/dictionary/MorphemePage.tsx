@@ -1,5 +1,5 @@
 import { Link, useParams } from '@tanstack/react-router'
-import { BookOpen, GitBranch, Network, Sparkles } from 'lucide-react'
+import { BookOpen, Brain, GitBranch, Network, Sparkles } from 'lucide-react'
 import { Suspense, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/Button'
@@ -97,6 +97,11 @@ function MorphemeView({ id }: { id: string }) {
             className="ml-3 mt-2 inline-flex items-center gap-1 text-xs text-accent hover:underline"
           >
             <Sparkles className="size-3.5" /> この語根のレッスン
+          </Link>
+        )}
+        {m.type !== 'pie' && m.type !== 'particle' && m.words.length >= 3 && (
+          <Link to="/drill/$id" params={{ id: m.id }} className="ml-3 mt-2 inline-flex items-center gap-1 text-xs text-accent hover:underline">
+            <Brain className="size-3.5" /> ドリルで練習
           </Link>
         )}
       </div>

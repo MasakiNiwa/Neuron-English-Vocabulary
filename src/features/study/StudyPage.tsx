@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useNextRoot } from '@/features/lesson/RootsPage'
 
-import { BookOpenCheck, Check, CircleCheck, Mic, Play, RotateCcw, Shuffle, Sparkles, Target, Volume2 } from 'lucide-react'
+import { BookOpenCheck, Brain, Check, CircleCheck, Mic, Play, RotateCcw, Shuffle, Sparkles, Target, Volume2 } from 'lucide-react'
 import { Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Accordion, AccordionSection } from '@/components/ui/Accordion'
@@ -467,6 +467,23 @@ function LevelPicker({ value, onChange }: { value: number; onChange: (rank: numb
   )
 }
 
+/** 語源ドリルへの入口（復習は単語とは別枠なので、件数もここに別に出す） */
+function DrillLink() {
+  const due = useLiveQuery(() => db.etyCards.where('due').belowOrEqual(Date.now()).count(), [])
+  const have = useLiveQuery(() => db.etyCards.count(), [])
+  return (
+    <Link to="/drill" className="flex items-center gap-2 rounded-xl bg-surface-2 px-3 py-2.5 text-sm hover:bg-accent-soft">
+      <Brain className="size-4 text-accent" />
+      <span className="flex-1">
+        <span className="font-medium">語源ドリル</span>
+        <span className="ml-1 text-xs text-muted">語源そのものを覚える（復習は単語と別枠）</span>
+      </span>
+      {!!due && <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-medium tabular-nums text-accent-fg">復習 {due}</span>}
+      {!due && have === 0 && <span className="text-xs text-accent">はじめる</span>}
+    </Link>
+  )
+}
+
 /** 語根レッスンへの入口（次に学ぶとよい語根と、図鑑の進み具合） */
 function RootLessonCard() {
   const info = useNextRoot()
@@ -490,6 +507,7 @@ function RootLessonCard() {
           語根図鑑 {info && <span className="tabular-nums text-muted">{info.done} / {info.total}</span>}
         </Link>
       </div>
+      <DrillLink />
     </Card>
   )
 }

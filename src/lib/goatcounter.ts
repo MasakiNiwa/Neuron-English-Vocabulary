@@ -35,6 +35,7 @@ export function sectionOf(pathname: string): string {
     case 'network':
     case 'study':
     case 'roots':
+    case 'drill':
     case 'analytics':
     case 'ai':
     case 'settings':

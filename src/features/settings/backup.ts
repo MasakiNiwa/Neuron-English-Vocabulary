@@ -17,7 +17,7 @@ export const BACKUP_APP = 'neuron-english-vocabulary'
 export const BACKUP_SCHEMA = 3
 
 /** バックアップに含める表（この順で復元する） */
-export const BACKUP_TABLES = ['views', 'cards', 'reviews', 'threads', 'chats', 'extras', 'rootLessons', 'analysisNotes'] as const
+export const BACKUP_TABLES = ['views', 'cards', 'reviews', 'threads', 'chats', 'extras', 'rootLessons', 'analysisNotes', 'etyCards', 'etyReviews'] as const
 export type BackupTable = (typeof BACKUP_TABLES)[number]
 
 export const TABLE_LABEL: Record<BackupTable, string> = {
@@ -29,6 +29,8 @@ export const TABLE_LABEL: Record<BackupTable, string> = {
   extras: '追加の解説',
   rootLessons: '語根レッスン',
   analysisNotes: 'AI の学習アドバイス',
+  etyCards: '語源ドリルのカード',
+  etyReviews: '語源ドリルの回答',
 }
 
 export interface BackupFile {
@@ -62,30 +64,33 @@ const isCount = (v: unknown) => Number.isInteger(v) && (v as number) >= 0 && (v 
 const isTime = (v: unknown) => isNum(v) && Math.abs(v) <= 8.64e15
 
 /** 自動採番の表（id は数値。マージ時は id を付け直す） */
-const AUTO_ID: Partial<Record<BackupTable, true>> = { views: true, reviews: true, chats: true }
+const AUTO_ID: Partial<Record<BackupTable, true>> = { views: true, reviews: true, chats: true, etyReviews: true }
+
+/** 学習カードの検証（単語のカード・語源ドリルのカード共通） */
+function cleanCard(r: Row): Row | null {
+  // FSRS の状態として成り立つ値だけを受け付ける（小数の状態や不正な日付が入ると、学習画面で例外になるため。レビュー B01）
+  const nums = ['due', 'stability', 'difficulty', 'elapsed_days', 'scheduled_days', 'learning_steps', 'reps', 'lapses', 'addedAt']
+  if (!isStr(r.entryId) || !nums.every((k) => isNum(r[k])) || !isNumOrNull(r.last_review ?? null)) return null
+  if (![0, 1, 2, 3].includes(r.state as number)) return null
+  if (!['reps', 'lapses', 'learning_steps', 'elapsed_days'].every((k) => isCount(r[k]))) return null
+  // FSRS-7 は日数に小数を使う
+  if ((r.scheduled_days as number) < 0 || (r.scheduled_days as number) > 1e6 || (r.model !== 7 && !isCount(r.scheduled_days))) return null
+  if (!isTime(r.due) || !isTime(r.addedAt) || (r.last_review != null && !isTime(r.last_review))) return null
+  if ((r.stability as number) < 0 || (r.stability as number) > 1e6 || (r.difficulty as number) < 0 || (r.difficulty as number) > 10) return null
+  if (r.suspended !== undefined && r.suspended !== 0 && r.suspended !== 1) return null
+  // FSRS-7 のカードは速い記憶の成分も揃っていること（揃っていなければ取り込まない。FSRS-6 と取り違えないように）
+  if (r.model !== undefined && r.model !== 7) return null
+  if (r.model === 7 && !(isNum(r.stabilityFast) && (r.stabilityFast as number) >= 0 && (r.stabilityFast as number) <= 1e6)) return null
+  if (!optStr(r.run) || (r.migration !== undefined && r.migration !== 'kept') || !(r.migratedAt === undefined || isTime(r.migratedAt))) return null
+  const out = pick(r, ['entryId', ...nums, 'state', 'last_review', 'suspended', 'run', 'migration', 'migratedAt'])
+  if (r.model === 7) Object.assign(out, { model: 7, stabilityFast: r.stabilityFast })
+  return out
+}
 
 /** 各表の行を検証して、保存してよい形に整える。不正なら null */
 const CLEAN: Record<BackupTable, (r: Row) => Row | null> = {
   views: (r) => (isStr(r.entryId) && isNum(r.viewedAt) && optStr(r.source) ? pick(r, ['id', 'entryId', 'viewedAt', 'source']) : null),
-  cards: (r) => {
-    // FSRS の状態として成り立つ値だけを受け付ける（小数の状態や不正な日付が入ると、学習画面で例外になるため。レビュー B01）
-    const nums = ['due', 'stability', 'difficulty', 'elapsed_days', 'scheduled_days', 'learning_steps', 'reps', 'lapses', 'addedAt']
-    if (!isStr(r.entryId) || !nums.every((k) => isNum(r[k])) || !isNumOrNull(r.last_review ?? null)) return null
-    if (![0, 1, 2, 3].includes(r.state as number)) return null
-    if (!['reps', 'lapses', 'learning_steps', 'elapsed_days'].every((k) => isCount(r[k]))) return null
-    // FSRS-7 は日数に小数を使う
-    if ((r.scheduled_days as number) < 0 || (r.scheduled_days as number) > 1e6 || (r.model !== 7 && !isCount(r.scheduled_days))) return null
-    if (!isTime(r.due) || !isTime(r.addedAt) || (r.last_review != null && !isTime(r.last_review))) return null
-    if ((r.stability as number) < 0 || (r.stability as number) > 1e6 || (r.difficulty as number) < 0 || (r.difficulty as number) > 10) return null
-    if (r.suspended !== undefined && r.suspended !== 0 && r.suspended !== 1) return null
-    // FSRS-7 のカードは速い記憶の成分も揃っていること（揃っていなければ取り込まない。FSRS-6 と取り違えないように）
-    if (r.model !== undefined && r.model !== 7) return null
-    if (r.model === 7 && !(isNum(r.stabilityFast) && (r.stabilityFast as number) >= 0 && (r.stabilityFast as number) <= 1e6)) return null
-    if (!optStr(r.run) || (r.migration !== undefined && r.migration !== 'kept') || !(r.migratedAt === undefined || isTime(r.migratedAt))) return null
-    const out = pick(r, ['entryId', ...nums, 'state', 'last_review', 'suspended', 'run', 'migration', 'migratedAt'])
-    if (r.model === 7) Object.assign(out, { model: 7, stabilityFast: r.stabilityFast })
-    return out
-  },
+  cards: (r) => cleanCard(r),
   reviews: (r) =>
     isStr(r.entryId) && isNum(r.rating) && r.rating >= 1 && r.rating <= 4 && isNum(r.state) && isNum(r.reviewedAt) && optNum(r.durationMs) && optStr(r.mode) && optNum(r.stability) && optNum(r.difficulty) &&
     (r.model === undefined || r.model === 6 || r.model === 7) && (r.recall === undefined || (isNum(r.recall) && r.recall >= 0 && r.recall <= 1)) && optStr(r.run) && optStr(r.uid)
@@ -110,6 +115,11 @@ const CLEAN: Record<BackupTable, (r: Row) => Row | null> = {
     if (Array.isArray(r.correctKeys)) out.correctKeys = r.correctKeys.filter((k): k is string => isStr(k) && k.length <= 80).slice(0, 200)
     return out
   },
+  etyCards: (r) => (isStr(r.entryId) && r.entryId.length <= 64 ? cleanCard(r) : null),
+  etyReviews: (r) =>
+    isStr(r.entryId) && r.entryId.length <= 64 && isNum(r.rating) && r.rating >= 1 && r.rating <= 4 && typeof r.kind === 'string' && r.kind.length <= 20 && typeof r.correct === 'boolean' && isTime(r.reviewedAt)
+      ? pick(r, ['id', 'entryId', 'rating', 'kind', 'correct', 'reviewedAt'])
+      : null,
   analysisNotes: (r) =>
     isStr(r.id) && r.id.length <= 64 && typeof r.title === 'string' && r.title.length <= 100 && typeof r.kind === 'string' && r.kind.length <= 40 && typeof r.content === 'string' && r.content.length <= 50_000 && optStr(r.model) && optStr(r.thread) && isTime(r.createdAt)
       ? pick(r, ['id', 'title', 'kind', 'content', 'model', 'thread', 'createdAt'])
@@ -221,6 +231,7 @@ const dedupeKey: Partial<Record<BackupTable, (r: Row) => string>> = {
   // v2.0 からの回答には ID（uid）がある。同じ時刻の別の回答を取り違えないように、あればそれで見分ける
   reviews: (r) => (typeof r.uid === 'string' ? `u:${r.uid}` : `${r.entryId}|${r.reviewedAt}`),
   chats: (r) => `${r.thread}|${r.role}|${r.createdAt}`,
+  etyReviews: (r) => `${r.entryId}|${r.reviewedAt}|${r.kind}`,
 }
 
 /**
@@ -261,7 +272,7 @@ export async function restoreBackup(b: ParsedBackup, mode: 'replace' | 'merge') 
       } else if (AUTO_ID[t]) {
         const seen = new Set((await table.toArray()).map((r: Row) => dedupeKey[t]!(r)))
         rows = rows.filter((r) => !seen.has(dedupeKey[t]!(r))).map(({ id: _id, ...r }) => r)
-      } else if (t === 'cards') {
+      } else if (t === 'cards' || t === 'etyCards') {
         const cur = new Map((await table.toArray()).map((c: Row) => [c.entryId, c]))
         rows = rows.filter((r) => {
           const c = cur.get(r.entryId)

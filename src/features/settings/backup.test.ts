@@ -158,3 +158,15 @@ describe('AI の学習アドバイス（analysisNotes）', () => {
     expect(b.rows.analysisNotes).toEqual([ok])
   })
 })
+
+describe('語源ドリル（etyCards・etyReviews）', () => {
+  it('単語のカードと同じ検証で取り込み、回答は形の正しいものだけ', () => {
+    const r = { entryId: 'r:spec', rating: 3, kind: 'similar', correct: true, reviewedAt: 5 }
+    const b = parseBackup({
+      app: BACKUP_APP,
+      data: { etyCards: [{ ...card, entryId: 'r:spec' }, { ...card, entryId: 'r:x', state: 9 }], etyReviews: [r, { ...r, correct: 'yes' }, { ...r, rating: 7 }] },
+    })
+    expect(b.rows.etyCards.map((c) => c.entryId)).toEqual(['r:spec'])
+    expect(b.rows.etyReviews).toEqual([r])
+  })
+})
