@@ -13,7 +13,7 @@ import { getEntries } from '@/features/dictionary/data'
 import { useDictionary } from '@/features/dictionary/hooks'
 import type { Entry, IndexEntry, Morpheme } from '@/features/dictionary/types'
 import { addManyToStudy } from '@/features/study/cards'
-import { lessonChoices, lessonRoots, lessonWords, stars, type Choice } from './lessons'
+import { lessonChoices, lessonRoots, lessonWords, masteredKeys, recalledAfterGap, rootProgress, STAGE_LABEL, type Choice, type RootProgress } from './lessons'
 
 /** 部品の並び（語根を強調し、各部品の意味を下に出す） */
 function PartsView({ entry, rootId }: { entry: Entry; rootId: string }) {
@@ -50,23 +50,32 @@ type Step = { kind: 'intro' } | { kind: 'question'; i: number; answered: number 
 function Lesson({ root }: { root: Morpheme }) {
   const dict = useDictionary()
   const navigate = useNavigate()
-  const words = useMemo(() => lessonWords(dict, root), [dict, root])
+  // null = 記録なし、undefined = 読み込み中
+  const record = useLiveQuery(async () => (await db.rootLessons.get(root.id)) ?? null, [root.id])
+  // 出題する語は、レッスンを始めるときに決める（まだ正解していない語を先に。記録の更新で途中で変わらないように）
+  const [words, setWords] = useState<IndexEntry[] | null>(null)
   const [entries, setEntries] = useState<Map<string, Entry> | null>(null)
   const [step, setStep] = useState<Step>({ kind: 'intro' })
   const [results, setResults] = useState<boolean[]>([])
   const [added, setAdded] = useState<number | null>(null)
-  const record = useLiveQuery(() => db.rootLessons.get(root.id), [root.id])
+  const [progress, setProgress] = useState<RootProgress | null>(null)
+  useEffect(() => setWords(null), [root.id])
+  useEffect(() => {
+    if (record !== undefined && words === null) setWords(lessonWords(dict, root, masteredKeys(dict, root, record)))
+  }, [record, words, dict, root])
 
   useEffect(() => {
-    setStep({ kind: 'intro' })
+    if (!words) return
     setResults([])
     setAdded(null)
+    setEntries(null)
     void getEntries(words.map((w) => w.key)).then((es) => setEntries(new Map(es.map((e) => [e.k, e]))))
   }, [words])
+  useEffect(() => setStep({ kind: 'intro' }), [root.id])
 
   // 選択肢は問題ごとに 1 回だけ作る（再描画で並びが変わらないように）
   const choices = useMemo(
-    () => words.map((w) => lessonChoices(w, entries?.get(w.key) ?? null, words, dict.entries)),
+    () => (words ?? []).map((w) => lessonChoices(w, entries?.get(w.key) ?? null, words!, dict.entries)),
     [words, entries, dict],
   )
 
@@ -79,7 +88,7 @@ function Lesson({ root }: { root: Morpheme }) {
   }
 
   const next = async () => {
-    if (step.kind !== 'question') return
+    if (step.kind !== 'question' || !words) return
     if (step.i + 1 < words.length) {
       setStep({ kind: 'question', i: step.i + 1, answered: null })
       return
@@ -87,14 +96,20 @@ function Lesson({ root }: { root: Morpheme }) {
     // レッスン完了: 図鑑に記録する
     const correct = results.filter(Boolean).length
     const prev = await db.rootLessons.get(root.id)
-    await db.rootLessons.put({
+    const keys = masteredKeys(dict, root, prev)
+    words.forEach((w, i) => results[i] && keys.add(w.key))
+    const rec = {
       id: root.id,
       completedAt: Date.now(),
       correct,
       total: words.length,
       best: Math.max(prev?.best ?? 0, correct),
       plays: (prev?.plays ?? 0) + 1,
-    })
+      correctKeys: [...keys],
+    }
+    await db.rootLessons.put(rec)
+    const recalled = recalledAfterGap(await db.reviews.where('entryId').anyOf(dict.morphById.get(root.id)?.words ?? []).toArray())
+    setProgress(rootProgress(dict, root, rec, recalled))
     setStep({ kind: 'summary' })
   }
 
@@ -118,7 +133,7 @@ function Lesson({ root }: { root: Morpheme }) {
     return () => window.removeEventListener('keydown', onKey)
   })
 
-  if (!entries) return <PageSpinner />
+  if (!words || !entries) return <PageSpinner />
 
   if (step.kind === 'intro')
     return (
@@ -136,7 +151,7 @@ function Lesson({ root }: { root: Morpheme }) {
         </p>
         {record && (
           <p className="text-xs text-muted">
-            前回 {record.correct} / {record.total}・最高 {record.best}・{record.plays} 回目の挑戦
+            前回 {record.correct} / {record.total}・{record.plays} 回目の挑戦・この語根の単語のうち {masteredKeys(dict, root, record).size} 語をレッスンで正解済み
           </p>
         )}
         <Button variant="primary" size="lg" className="mt-2 w-full max-w-xs" onClick={() => setStep({ kind: 'question', i: 0, answered: null })}>
@@ -147,12 +162,15 @@ function Lesson({ root }: { root: Morpheme }) {
 
   if (step.kind === 'summary') {
     const correct = results.filter(Boolean).length
-    const s = stars(correct, words.length)
     const roots = lessonRoots(dict)
-    return <Summary root={root} words={words} results={results} correct={correct} s={s} added={added} onAdd={async () => setAdded(await addManyToStudy(words.map((w) => w.key)))} onRetry={() => {
+    return <Summary root={root} words={words} results={results} correct={correct} progress={progress} added={added} onAdd={async () => setAdded(await addManyToStudy(words.map((w) => w.key)))} onRetry={() => {
       setResults([])
       setStep({ kind: 'question', i: 0, answered: null })
-    }} onNext={async () => {
+    }} onContinue={progress && progress.mastered < progress.target ? () => {
+      // まだ正解していない語で、続きのレッスンを始める
+      setWords(null)
+      setStep({ kind: 'question', i: 0, answered: null })
+    } : undefined} onNext={async () => {
       const done = new Set((await db.rootLessons.toArray()).map((r) => r.id))
       const nextRoot = roots.find((m) => !done.has(m.id) && m.id !== root.id)
       if (nextRoot) void navigate({ to: '/lesson/$id', params: { id: nextRoot.id } })
@@ -230,6 +248,19 @@ function Lesson({ root }: { root: Morpheme }) {
   )
 }
 
+/** 次の段階までに何をすればよいか */
+export function StageHint({ p }: { p: RootProgress }) {
+  return (
+    <p className="max-w-sm text-xs leading-relaxed text-muted">
+      {p.stage <= 1
+        ? `この語根の単語 ${p.target} 語のうち ${p.mastered} 語をレッスンで正解しました。全部正解すると ★2「見わけられる」になります。`
+        : p.stage === 2
+          ? `学習で、日をあけて思い出せた語が ${p.recalled} / ${p.target} 語です。${p.recallNeed} 語になると ★3「身についた」になります。`
+          : `この語根の単語をレッスンですべて正解し、学習でも ${p.recalled} 語を日をあけて思い出せています。`}
+    </p>
+  )
+}
+
 function StarRow({ n, size = 'md' }: { n: number; size?: 'sm' | 'md' }) {
   return (
     <span className="inline-flex gap-0.5" aria-label={`星 ${n} つ`}>
@@ -246,26 +277,33 @@ function Summary({
   words,
   results,
   correct,
-  s,
+  progress,
   added,
   onAdd,
   onRetry,
+  onContinue,
   onNext,
 }: {
   root: Morpheme
   words: IndexEntry[]
   results: boolean[]
   correct: number
-  s: number
+  progress: RootProgress | null
   added: number | null
   onAdd: () => void
   onRetry: () => void
+  onContinue?: () => void
   onNext: () => void
 }) {
   return (
     <Card className="flex flex-col items-center gap-3 p-6 text-center">
-      <StarRow n={s} />
-      <p className="text-sm text-muted">語根図鑑に登録しました</p>
+      {progress && (
+        <>
+          <StarRow n={progress.stage} />
+          <p className="text-sm font-medium">語根図鑑：{STAGE_LABEL[progress.stage]}</p>
+          <StageHint p={progress} />
+        </>
+      )}
       <h1 className="font-en text-4xl font-semibold text-accent">{morphLabel(root)}</h1>
       <p>{root.meaning.ja}</p>
       <p className="text-lg font-semibold">
@@ -293,8 +331,13 @@ function Summary({
           <GraduationCap className="size-4" /> {added === null ? `${words.length} 語を学習カードに追加` : `追加しました（+${added}）`}
         </Button>
         <Button className="w-full sm:flex-1" onClick={onRetry}>
-          <RotateCcw className="size-4" /> もう一度
+          <RotateCcw className="size-4" /> 同じ語でもう一度
         </Button>
+        {onContinue && (
+          <Button variant="primary" className="w-full sm:flex-1" onClick={onContinue}>
+            <ArrowRight className="size-4" /> この語根の続きの語へ
+          </Button>
+        )}
       </div>
       <div className="flex w-full flex-col gap-2 sm:flex-row">
         <Button variant="primary" className="w-full sm:flex-1" onClick={onNext}>

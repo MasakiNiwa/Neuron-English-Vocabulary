@@ -1,5 +1,6 @@
 import type { Dictionary } from '@/features/dictionary/data'
 import type { Entry, IndexEntry, Morpheme } from '@/features/dictionary/types'
+import type { RootLesson } from '@/lib/db'
 import { glossWords } from '@/features/study/choices'
 
 /**
@@ -33,9 +34,71 @@ export function lessonRoots(dict: Dictionary): Morpheme[] {
   return scored.sort((a, b) => a.score - b.score || a.m.label.localeCompare(b.m.label)).map((x) => x.m)
 }
 
-/** レッスンで出題する単語（よく使う順に LESSON_SIZE 語） */
-export function lessonWords(dict: Dictionary, m: Morpheme): IndexEntry[] {
-  return rootWords(dict, m).slice(0, LESSON_SIZE)
+/** 図鑑で「この語根の単語」として数える語（よく使う順に最大 TARGET_SIZE 語） */
+export const TARGET_SIZE = 18
+
+export function targetWords(dict: Dictionary, m: Morpheme): IndexEntry[] {
+  return rootWords(dict, m).slice(0, TARGET_SIZE)
+}
+
+/**
+ * レッスンで出題する単語（LESSON_SIZE 語）。まだレッスンで正解していない語を先に（よく使う順）、
+ * 足りない分は正解したことのある語で埋める。レッスンを重ねると、語根の単語を順にめぐれる
+ */
+export function lessonWords(dict: Dictionary, m: Morpheme, mastered: ReadonlySet<string> = new Set()): IndexEntry[] {
+  const ws = targetWords(dict, m)
+  const fresh = ws.filter((e) => !mastered.has(e.key))
+  const known = ws.filter((e) => mastered.has(e.key))
+  return [...fresh, ...known].slice(0, LESSON_SIZE)
+}
+
+/** レッスンで正解したことのある語。v2.6 までの記録（correctKeys がない）で満点だったときは、そのとき出したよく使う順の語 */
+export function masteredKeys(dict: Dictionary, m: Morpheme, record: RootLesson | undefined | null): Set<string> {
+  if (!record) return new Set()
+  if (record.correctKeys) return new Set(record.correctKeys)
+  return record.best >= record.total && record.total > 0 ? new Set(rootWords(dict, m).slice(0, record.total).map((e) => e.key)) : new Set()
+}
+
+/**
+ * 語根図鑑の段階（★の数）
+ * - ★1 出会った: レッスンを 1 回終えた
+ * - ★2 見わけられる: この語根の単語（よく使う順に最大 TARGET_SIZE 語）を、すべてレッスンで正解した
+ * - ★3 身についた: ★2 に加えて、その語の半分以上を、学習で日をあけて思い出せた
+ */
+export interface RootProgress {
+  stage: 0 | 1 | 2 | 3
+  target: number
+  mastered: number
+  recalled: number
+  /** ★3 に必要な「日をあけて思い出せた」語の数 */
+  recallNeed: number
+}
+
+export function rootProgress(dict: Dictionary, m: Morpheme, record: RootLesson | undefined | null, recalledKeys: ReadonlySet<string>): RootProgress {
+  const target = targetWords(dict, m)
+  const done = masteredKeys(dict, m, record)
+  const mastered = target.filter((e) => done.has(e.key)).length
+  const recalled = target.filter((e) => recalledKeys.has(e.key)).length
+  const recallNeed = Math.ceil(target.length / 2)
+  const stage = !record ? 0 : mastered < target.length ? 1 : recalled < recallNeed ? 2 : 3
+  return { stage, target: target.length, mastered, recalled, recallNeed }
+}
+
+export const STAGE_LABEL = ['まだ', '出会った', '見わけられる', '身についた'] as const
+
+/** 日をあけて思い出せた語（最後の回答が「難しい」以上で、その語を初めて回答した日とは別の日） */
+export function recalledAfterGap(reviews: { entryId: string; rating: number; reviewedAt: number }[]): Set<string> {
+  const day = (t: number) => new Date(t).toDateString()
+  const first = new Map<string, number>()
+  const last = new Map<string, { rating: number; reviewedAt: number }>()
+  for (const r of reviews) {
+    if ((first.get(r.entryId) ?? Infinity) > r.reviewedAt) first.set(r.entryId, r.reviewedAt)
+    const l = last.get(r.entryId)
+    if (!l || l.reviewedAt <= r.reviewedAt) last.set(r.entryId, r)
+  }
+  const out = new Set<string>()
+  for (const [k, l] of last) if (l.rating >= 2 && day(l.reviewedAt) !== day(first.get(k)!)) out.add(k)
+  return out
 }
 
 export interface Choice {
@@ -71,11 +134,4 @@ export function lessonChoices(target: IndexEntry, entry: Entry | null, lesson: I
   const out = picks.map((text) => ({ text, correct: false }))
   out.splice(Math.floor(random() * (out.length + 1)), 0, { text: correct, correct: true })
   return out
-}
-
-/** 結果の段階（図鑑の表示用） */
-export function stars(correct: number, total: number): 0 | 1 | 2 | 3 {
-  if (!total) return 0
-  const r = correct / total
-  return r >= 1 ? 3 : r >= 0.65 ? 2 : 1
 }

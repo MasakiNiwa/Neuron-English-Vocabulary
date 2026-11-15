@@ -247,7 +247,7 @@ function ReviewCard({ onStart }: { onStart: (q: StudyCard[], mode: string, skill
 
 function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string, skill?: Skill | null) => void }) {
   const total = useLiveQuery(() => db.cards.count(), [])
-  const [mode, setMode] = usePersistentState<PracticeMode>('study:practiceMode', 'random')
+  const [mode, setMode] = usePersistentState<PracticeMode>('study:practiceMode', 'low')
   const [count, setCount] = usePersistentState('study:practiceCount', 10)
   const [ahead, setAhead] = usePersistentState('study:practiceAhead', 0)
   const [skill, setSkill] = usePersistentState<'all' | Skill>('study:practiceSkill', 'all')
@@ -265,10 +265,10 @@ function PracticeCard({ onStart }: { onStart: (q: StudyCard[], mode: string, ski
             value={mode}
             onChange={setMode}
             options={[
+              { value: 'low', label: '忘れそう順' },
               { value: 'random', label: 'ランダム' },
               { value: 'weak', label: '苦手順' },
               { value: 'recent', label: '最近追加' },
-              { value: 'low', label: '見込み低' },
             ]}
           />
         </div>

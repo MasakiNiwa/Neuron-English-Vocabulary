@@ -104,10 +104,12 @@ const CLEAN: Record<BackupTable, (r: Row) => Row | null> = {
     if (r.incomplete === 'length' || r.incomplete === 'filtered' || r.incomplete === 'interrupted') out.incomplete = r.incomplete
     return out
   },
-  rootLessons: (r) =>
-    isStr(r.id) && r.id.length <= 64 && isTime(r.completedAt) && isCount(r.correct) && isCount(r.total) && isCount(r.best) && isCount(r.plays) && (r.correct as number) <= (r.total as number)
-      ? pick(r, ['id', 'completedAt', 'correct', 'total', 'best', 'plays'])
-      : null,
+  rootLessons: (r) => {
+    if (!(isStr(r.id) && r.id.length <= 64 && isTime(r.completedAt) && isCount(r.correct) && isCount(r.total) && isCount(r.best) && isCount(r.plays) && (r.correct as number) <= (r.total as number))) return null
+    const out = pick(r, ['id', 'completedAt', 'correct', 'total', 'best', 'plays'])
+    if (Array.isArray(r.correctKeys)) out.correctKeys = r.correctKeys.filter((k): k is string => isStr(k) && k.length <= 80).slice(0, 200)
+    return out
+  },
   analysisNotes: (r) =>
     isStr(r.id) && r.id.length <= 64 && typeof r.title === 'string' && r.title.length <= 100 && typeof r.kind === 'string' && r.kind.length <= 40 && typeof r.content === 'string' && r.content.length <= 50_000 && optStr(r.model) && optStr(r.thread) && isTime(r.createdAt)
       ? pick(r, ['id', 'title', 'kind', 'content', 'model', 'thread', 'createdAt'])
@@ -231,6 +233,10 @@ export function mergeRootLesson(cur: Row, add: Row): Row {
     ...newer,
     best: Math.max(cur.best as number, add.best as number),
     plays: Math.max(cur.plays as number, add.plays as number),
+    // レッスンで正解した語は、どちらかで正解していれば正解とする
+    ...(cur.correctKeys || add.correctKeys
+      ? { correctKeys: [...new Set([...((cur.correctKeys as string[] | undefined) ?? []), ...((add.correctKeys as string[] | undefined) ?? [])])] }
+      : {}),
   }
 }
 
