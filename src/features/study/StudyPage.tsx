@@ -20,6 +20,7 @@ import { useMinuteTick } from '@/lib/clock'
 import { formatInterval, removeFromStudy, retrievability } from './cards'
 import { ReviewSession } from './ReviewSession'
 import { useStudySession } from './sessionStore'
+import { useDrillSession } from '@/features/drill/sessionStore'
 import { ALL_FORMATS, FORMAT_LABEL, formatSupported, type ConcreteFormat } from './formats'
 import { SKILL_HINT, SKILL_LABEL, SKILL_OF, SKILLS, type Skill } from './skills'
 import { buildFocusQueue, buildPracticeQueue, buildQueue, getStudyStats, pickFocusWords, pickNewWords, startLearning, type LearnSource, type PracticeMode } from './session'
@@ -471,6 +472,8 @@ function LevelPicker({ value, onChange }: { value: number; onChange: (rank: numb
 function DrillLink() {
   const due = useLiveQuery(() => db.etyCards.where('due').belowOrEqual(Date.now()).count(), [])
   const have = useLiveQuery(() => db.etyCards.count(), [])
+  // 途中のドリル（ページを移動しても続きから）
+  const going = useDrillSession((s) => (s.plan && s.items && !s.stopped && s.i < s.items.length ? `${s.i + 1} / ${s.items.length}` : null))
   return (
     <Link to="/drill" className="flex items-center gap-2 rounded-xl bg-surface-2 px-3 py-2.5 text-sm hover:bg-accent-soft">
       <Brain className="size-4 text-accent" />
@@ -478,8 +481,14 @@ function DrillLink() {
         <span className="font-medium">語源ドリル</span>
         <span className="ml-1 text-xs text-muted">語源そのものを覚える（復習は単語と別枠）</span>
       </span>
-      {!!due && <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-medium tabular-nums text-accent-fg">復習 {due}</span>}
-      {!due && have === 0 && <span className="text-xs text-accent">はじめる</span>}
+      {going ? (
+        <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-medium tabular-nums text-accent-fg">続きから {going}</span>
+      ) : (
+        <>
+          {!!due && <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-medium tabular-nums text-accent-fg">復習 {due}</span>}
+          {!due && have === 0 && <span className="text-xs text-accent">はじめる</span>}
+        </>
+      )}
     </Link>
   )
 }
