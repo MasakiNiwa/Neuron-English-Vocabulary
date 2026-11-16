@@ -18,4 +18,13 @@ describe('tabMemory', () => {
     expect(tabTarget('/words', '/words')).toBe('/words')
     expect(tabTarget('/study', '/ai')).toBe('/study')
   })
+
+  it('語源ドリル・語根レッスン・語根図鑑は学習タブ。途中で別のタブへ移っても、学習タブでドリルに戻れる', () => {
+    expect(tabOf('/drill')).toBe('/study')
+    expect(tabOf('/drill/r:spec')).toBe('/study')
+    expect(tabOf('/lesson/r:spec')).toBe('/study')
+    expect(tabOf('/roots')).toBe('/study')
+    rememberLocation('/drill', '/drill')
+    expect(tabTarget('/study', '/words')).toBe('/drill')
+  })
 })

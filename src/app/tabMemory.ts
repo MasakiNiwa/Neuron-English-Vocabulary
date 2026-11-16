@@ -14,9 +14,10 @@ try {
   /* noop */
 }
 
-/** パスがどのタブに属するか（/e/・/m/ は単語タブ、/history はホーム） */
+/** パスがどのタブに属するか（/e/・/m/ は単語タブ、/history はホーム、語源ドリル・語根レッスン・語根図鑑は学習タブ） */
 export function tabOf(pathname: string): Tab | null {
   if (pathname === '/' || pathname === '/history') return '/'
+  if (['/drill', '/lesson', '/roots'].some((t) => pathname === t || pathname.startsWith(t + '/'))) return '/study'
   if (pathname.startsWith('/words') || pathname.startsWith('/e/') || pathname.startsWith('/m/')) return '/words'
   for (const t of ['/network', '/study', '/analytics', '/ai', '/settings'] as const) if (pathname === t || pathname.startsWith(t + '/')) return t
   return null
