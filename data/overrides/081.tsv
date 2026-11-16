@@ -1,0 +1,47 @@
+# v2.12: 語源分解の精度向上（2026-11-16）。Wiktionary の語源と照らした修正
+# 民間語源・混同されただけの語を部品にしていた誤り
+# altar: Latin altāre 由来。altus は影響を受けただけ
+noparts	altar
+# riches: 古英語 rīċe (権力) 由来の複数形。形容詞 rich は richesse との混同
+noparts	riches
+# livelihood: 古英語 līf + lād が原形。live・-hood は後の影響による変形
+noparts	livelihood
+# tendon: ギリシャ語 tenōn 由来。tendō は連想による修正のみ
+noparts	tendon
+# excise: 中期オランダ語 excijs (accijs) 由来。Latin excisus は影響のみ
+noparts	excise
+# fanfare: フランス語借用。fan + fare は表面的解釈の影響のみ
+noparts	fanfare
+# touchy: tetchy の変形。touch は影響を受けただけ
+noparts	touchy
+# surround: round は混同されただけ。Latin super + unda（波）
+parts	surround	sur=pre:super r ound=r:und
+# 語根辞書の補強（und・circ・salv など 41 語根、既存の語根の語源判定キー）で新しく付いた分解のうち、誤っていたもの
+# sit・arm（腕）・bat（こうもり）・mill・cookie・lax（鮭）・cap: ゲルマン系、または別の語源
+exclude	r:sed	sit
+exclude	r:arm	arm
+exclude	r:bat	bat
+exclude	r:mill	mill
+exclude	r:coc	cookie
+exclude	r:lax	lax
+exclude	r:capit	cap
+# sample は exemplum（ex + emere）から。ampl とは別
+exclude	r:ampl	sample
+# essay は exagium（ex + agere「量る」）から。esse とは別
+exclude	r:ess	essay
+# improve は Anglo-Norman emprower（en + prou「利益」）から。probare とは別
+exclude	r:prob	improve
+# rival は rīvus（小川）から。rīpa（岸）とは別
+exclude	r:riv	rival
+# tornado はスペイン語 tronada（雷雨）が tornar に影響されたもの / nocturnal は nox（夜）から
+exclude	r:torn	tornado,nocturnal
+# capture・captivity・caption は capere（取る）から。caput（頭）ではない
+parts	capture	capt=r:cap ure=suf:ure
+parts	captivity	capt=r:cap iv ity=suf:ity
+parts	caption	cap=r:cap tion=suf:ation
+# case（事例・場合）は cāsus（cadere「落ちる」）から。箱の case（capsa）は別語
+parts	case	cas=r:cad e
+# consideration は consider + -ation / calculate は calculus（小石）から
+parts	consideration	consider=w:consider at ion=suf:ation
+parts	calculate	calc=r:calc ulat e
+parts	school	school=r:schol
