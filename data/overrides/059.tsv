@@ -4,7 +4,6 @@ parts	quality	qual ity=suf:ity
 parts	perhaps	per=pre:per haps
 parts	percent	per=pre:per cent=r:cent
 parts	century	cent=r:cent ury
-parts	individual	in=pre:in divid ual=suf:al
 parts	favorite	favor=w:favor ite
 parts	library	libr ary=suf:ary
 parts	profile	pro=pre:pro file
@@ -19,7 +18,6 @@ parts	appropriate	ap=pre:ad propri=r:propri ate=suf:ate
 parts	platform	plat form=r:form
 parts	discuss	dis=pre:dis cuss
 parts	holiday	holi=w:holy day=w:day
-parts	conflict	con=pre:com flict
 parts	temperature	temper=w:temper ature
 parts	ourselves	our selves=w:self
 parts	relevant	re=pre:re lev=r:lev ant=suf:ant

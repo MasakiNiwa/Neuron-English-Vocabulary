@@ -535,7 +535,6 @@ parts	technician	techn=r:tech ic=suf:ic ian
 parts	unwilling	un=pre:un will=w:will ing
 parts	constituency	con=pre:com stitu=r:sta ency=suf:ance
 parts	cyclist	cycl=w:cycle ist=suf:ist
-parts	entirety	entire=w:entire ty=suf:ity
 parts	exodus	ex=pre:ex od=r:hod us
 parts	fallout	fall=w:fall out=w:out
 parts	forestry	forest=w:forest ry
@@ -565,7 +564,6 @@ parts	heartbeat	heart=w:heart beat=w:beat
 parts	insulation	insul=r:insul ation=suf:ation
 parts	irresponsible	ir=pre:in re=pre:re spons=r:spond ible=suf:able
 parts	malicious	mal=pre:mal ic ious=suf:ous
-parts	monarchy	mon=pre:mono archy
 parts	noisy	nois=w:noise y=suf:y
 parts	riverside	river=w:river side=w:side
 parts	absorption	ab=pre:ab sorpt ion=suf:ation

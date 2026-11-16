@@ -26,7 +26,6 @@ parts	successfully	successful=w:successful ly=suf:ly
 parts	electrical	electric=w:electric al=suf:al
 parts	essentially	essential=w:essential ly=suf:ly
 parts	potentially	potential=w:potential ly=suf:ly
-parts	initiative	initiat=w:initiate ive=suf:ive
 parts	roughly	rough=w:rough ly=suf:ly
 parts	terrorist	terror=w:terror ist=suf:ist
 parts	agricultural	agricultur=w:agriculture al=suf:al
@@ -66,7 +65,6 @@ parts	inappropriate	in=pre:in appropriate=w:appropriate
 parts	quarterly	quarter=w:quarter ly=suf:ly
 parts	desperately	desperate=w:desperate ly=suf:ly
 parts	financially	financial=w:financial ly=suf:ly
-parts	configuration	configur=w:configure ation=suf:ation
 parts	fortunately	fortunate=w:fortunate ly=suf:ly
 parts	sexuality	sexual=w:sexual ity=suf:ity
 parts	architectural	architectur=w:architecture al=suf:al
@@ -89,10 +87,8 @@ parts	economically	economical=w:economical ly=suf:ly
 parts	organizational	organization=w:organization al=suf:al
 parts	wholly	whol=w:whole ly=suf:ly
 parts	assassination	assassin=w:assassin ation=suf:ation
-parts	citation	cit=w:cite ation=suf:ation
 parts	globally	global=w:global ly=suf:ly
 parts	alternatively	alternative=w:alternative ly=suf:ly
-parts	obesity	obes=w:obese ity=suf:ity
 parts	decorative	decorat=w:decorate ive=suf:ive
 parts	definitive	definit=w:definite ive=suf:ive
 parts	predominantly	predominant=w:predominant ly=suf:ly

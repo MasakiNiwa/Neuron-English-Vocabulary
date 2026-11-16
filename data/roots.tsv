@@ -319,3 +319,123 @@ gel	gel,jell,geal	gelū,gelu,gelāre,gelare,gelāta,gelata,gelātus,gelatus	凍�
 front	front	frōns,frons,frontis,frontem	額・前面	ラテン語 frons
 femin	femin,fem	fēmina,femina,fēminīnus,femininus,fēmella,femella	女性	ラテン語 femina
 sali	sal,sau	salārium,salarium,salsus,salsa,salāta,salata,salīnus,salinus	塩	ラテン語 sal
+# v2.13: 「同じ語源」とされるのにつながっていなかった単語をつなぐ語根（2 語からでも。語源判定キーは空にして、手で登録した分解だけに使う。短い綴りが無関係な語に自動で付くのを防ぐため。2026-11-16）
+platea	plac,plaz		広い道・広場	ギリシャ語 plateia
+famil	famil		家・家族	ラテン語 familia
+pan	pan		パン	ラテン語 panis
+cohort	cohort,court		囲い地・集団・宮廷	ラテン語 cohors
+aer	air,aria,aer,ari,aur		空気	ギリシャ語 aēr
+deb	deb,due,du		借りがある・負う	ラテン語 dēbēre
+shah	check,chess		王（チェスの王手）	ペルシャ語 shah
+experi	peri,pert		試す・経験する	ラテン語 experior
+stud	stud		励む・熱心	ラテン語 studium
+tax	tax,task		見積もる・課す	ラテン語 taxō
+pagina	pag,pagin		ページ	ラテン語 pāgina
+oct	oct		8	ラテン語 octō / ギリシャ語 oktō
+oliv	oil,oliv,ole		オリーブ・油	ラテン語 oleum, olīva
+codex	cod		木の幹・書物	ラテン語 cōdex
+prag	pract,pragmat		行う	ギリシャ語 prássō
+chart	chart,card,cart		紙・パピルス	ギリシャ語 khartēs
+poena	pain,pun,pen		罰・つぐない	ラテン語 poena
+chaos	chao,gas		深い裂け目・混沌	ギリシャ語 khaos
+crux	cross,cruis,cruc		十字架	ラテン語 crux
+divid	divid,divis		分ける	ラテン語 dīvidere
+imag	imag,imit		似せる・像	ラテン語 imāgō, imitor
+cancer	cancer,carcin		カニ・がん	ラテン語 cancer / ギリシャ語 karkinos
+magister	master,maestro,magistr		長・先生	ラテン語 magister
+mechan	machin,mechan		仕掛け・機械	ギリシャ語 mēchanē
+masc	mach,mal,mascul		雄・男	ラテン語 masculus
+camer	camer,comrad,chamb		丸天井の部屋	ラテン語 camera
+oik	eco,oec		家	ギリシャ語 oikos
+tempt	tempt,tent		試す	ラテン語 temptare
+canal	canal,chann		水路・管	ラテン語 canalis
+bulga	budg,bulg		革袋	ラテン語 bulga（ガリア語由来）
+metall	metal,medal		金属	ギリシャ語 metallon / ラテン語 metallum
+alesc	olesc,ult,alesc		育つ	ラテン語 alescere / adolescere
+diurn	journ,diurn		日	ラテン語 diurnus
+mappa	map,mop		布・ナプキン	ラテン語 mappa
+juv	jut,juv,aid		助ける	ラテン語 iuvare / adiutare
+mus	muse,mus,mosa		ムーサ（芸術の女神）	ギリシャ語 Mousa
+cathedra	cathedr,chair		座席	ギリシャ語 kathedra
+dra	dram,dras		行う	ギリシャ語 draō
+cand	cand,candid,chand		白く輝く	ラテン語 candere
+quiet	quiet,quit		静かな・休む	ラテン語 quietus
+flig	flict,flig		打つ	ラテン語 fligere
+blasphem	blam,blasphem		冒涜する・非難する	ギリシャ語 blasphēmein
+aestim	aim,estim,esteem		評価する・見積もる	ラテン語 aestimare
+cavea	cage,jail,gaol		おり・かご	ラテン語 cavea
+redd	rend,rent		返す・払う	ラテン語 reddere
+academ	academ		アカデメイア（プラトンの学園）	ギリシャ語 Akadēmeia
+butt	bott,butl		たる・瓶	ラテン語 buttis
+schem	schem		形・図	ギリシャ語 skhēma
+trad	tradit,trait,treason,tray,treas,trad		引き渡す	ラテン語 tradere
+uncia	inch,ounce		12分の1	ラテン語 uncia
+ton	ton,tun		張り・音	ギリシャ語 tonos
+clocca	cloak,clock		鐘	中世ラテン語 clocca
+custom	custom,costum		習慣	ラテン語 consuetudo
+disc	desk,disk,disc,dish		円盤・皿	ギリシャ語 diskos / ラテン語 discus
+adamant	adamant,diam		征服できない・最も硬い	ギリシャ語 adamas
+prec	prec,pray		祈る・頼む	ラテン語 precari / prex
+column	column,colonel		柱	ラテン語 columna
+papa	pap,pop		父（幼児語）・教皇	ギリシャ語 pappas
+fari	fab,fat,fai,fan,fa		話す・言う	ラテン語 fari
+pand	pand,pans,spawn		広げる	ラテン語 pandere
+luxus	lux,luxur		過剰・ぜいたく	ラテン語 luxus
+virtus	virtu		力・徳	ラテン語 virtus
+triplus	tripl,trebl		3倍の	ラテン語 triplus
+vas	vas,vess		器	ラテン語 vas
+fisc	fisc		かご・国庫	ラテン語 fiscus
+zel	zeal,zel,jeal		熱意・嫉妬	ギリシャ語 zelos
+discip	discip		学ぶ	ラテン語 discere
+arcus	arc,arch		弓・弧	ラテン語 arcus
+nerv	nerv,neur		神経・腱	ラテン語 nervus / ギリシャ語 neuron
+gran	gran,grain,gren		粒	ラテン語 granum
+scandal	scandal,slander		つまずき・わな	ギリシャ語 skandalon
+curv	curv,curb		曲がった	ラテン語 curvus
+helic	helic,helix		らせん	ギリシャ語 helix
+gubern	gubern,govern		かじを取る・統治する	ラテン語 gubernare / ギリシャ語 kybernan
+rabies	rab,rag		狂暴・怒り狂う	ラテン語 rabies
+ang	ang,anx,angu		締めつける・苦しめる	ラテン語 angere
+arch	arch,archi		支配・首位	ギリシャ語 arkhē / arkhi-
+fabrica	fabric,forg		工房・職人	ラテン語 fabrica
+pastor	pastor,pastur		牧する・羊飼い	ラテン語 pascere / pastor
+potio	pot,poison		飲む・飲み物	ラテン語 potio / potare
+rhythm	rhym,rhythm		リズム・流れ	ギリシャ語 rhythmos
+thes	thes		置く	ギリシャ語 tithenai / thesis
+cannabis	cannab,canv		麻	ギリシャ語 kannabis
+nepos	neph,niec,nepot		孫・甥姪	ラテン語 nepos
+cleric	cleric,clerk,clerg		聖職者・書記	ギリシャ語 klerikos / ラテン語 clericus
+chorda	chord,cord		弦・ひも	ギリシャ語 khorde / ラテン語 chorda
+praeda	pred,prey		獲物・略奪	ラテン語 praeda
+prophet	prophet,prophec		預言者・預言	ギリシャ語 prophetes
+canere	cant,chant,cent		歌う	ラテン語 canere / cantare
+tueri	tuit,tut		見守る・守る	ラテン語 tueri
+fest	fest,feast,fiest		祭り	ラテン語 festum
+dox	dox		意見・考え	ギリシャ語 doxa
+ferus	fer,fierc		野生の・どう猛な	ラテン語 ferus
+chorus	chor,choir		合唱隊・踊りの一団	ギリシャ語 khoros
+petr	petr		岩・石	ギリシャ語 petra
+cella	cell		小部屋	ラテン語 cella
+sper	sperm,spor		種・種をまく	ギリシャ語 speirein
+ed	ed,es		食べる	ラテン語 edere
+cosm	cosm		秩序・宇宙・飾り	ギリシャ語 kosmos
+lun	lun		月	ラテン語 lūna
+diplom	diplom		二つ折り・証書	ギリシャ語 diplōma
+verer	ver		畏れ敬う	ラテン語 vereor
+sort	sort		くじ・運命・分け前	ラテン語 sors
+anthrop	anthrop,anthropo		人間	ギリシャ語 anthrōpos
+rod	rod,ros		かじる・削る	ラテン語 rōdere
+mne	mnes,mnest,mne		記憶	ギリシャ語 mimnēskō
+laur	laur		月桂樹	ラテン語 laurus
+lacert	lizard,ligator		トカゲ	ラテン語 lacertus
+cast	cast,chast		清い・純粋な	ラテン語 castus
+lact	lact,lett		乳	ラテン語 lac
+tric	tric,trig		からまる・もつれ	ラテン語 tricae
+paralys	paralys,pals		麻痺	ギリシャ語 parálusis
+feder	feder		同盟・条約	ラテン語 foedus
+canis	can		犬	ラテン語 canis
+dorm	dorm		眠る	ラテン語 dormire
+ard	ard,ars		燃える	ラテン語 ardēre
+barbar	barbar		異国の・野蛮な	ギリシャ語 barbaros
+misc	misc,medl,mel,mix		混ぜる	ラテン語 miscēre
+omen	omin,omen		前兆	ラテン語 ōmen

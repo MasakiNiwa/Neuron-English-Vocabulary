@@ -265,7 +265,6 @@ parts	fully	ful=w:full ly=suf:ly
 parts	highly	high=w:high ly=suf:ly
 parts	traditional	tradition=w:tradition al=suf:al
 parts	religious	religi=w:religion ous=suf:ous
-parts	division	divi=w:divide sion
 parts	northern	north=w:north ern
 parts	southern	south=w:south ern
 parts	funny	funn=w:fun y=suf:y
@@ -277,7 +276,6 @@ parts	together	to=w:to gether=w:gather
 parts	twice	twi=w:two ce
 parts	once	on=w:one ce
 parts	exchange	ex=pre:ex change=w:change
-parts	attempt	at=pre:ad tempt=w:tempt
 parts	purpose	pur=pre:pro pose=r:pon
 parts	actual	act=r:act ual=suf:al
 parts	Christmas	Christ mas=w:mass

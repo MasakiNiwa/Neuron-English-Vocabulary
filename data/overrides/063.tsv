@@ -46,7 +46,6 @@ parts	parcel	par=r:part cel
 parts	gastric	gastr ic=suf:ic
 parts	visceral	viscer al=suf:al
 parts	viscosity	viscos ity=suf:ity
-parts	tentative	tent ative=suf:ive
 parts	tactic	tact ic=suf:ic
 parts	tactical	tact ic al=suf:al
 parts	fundamental	fund=r:fund a ment=suf:ment al=suf:al
