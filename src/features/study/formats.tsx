@@ -1,5 +1,6 @@
 import { Check, X } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useCardState } from '@/lib/cardState'
 import { SpeakButton } from '@/features/dictionary/components/links'
 import { useDictionary } from '@/features/dictionary/hooks'
 import type { Entry } from '@/features/dictionary/types'
@@ -122,7 +123,8 @@ export function ChoicePrompt({
   onAnswer: (index: number, correct: boolean, text: string) => void
 }) {
   const dict = useDictionary()
-  const options = useMemo(() => buildChoices(entry, dict.entries), [dict, entry])
+  // 4 択の並びは 1 回だけ作る（ページを移動して戻っても同じ並び）
+  const [options] = useCardState('choices', () => buildChoices(entry, dict.entries))
   // 数字キー 1〜4 で選べる（B15）
   useEffect(() => {
     if (answered !== null) return

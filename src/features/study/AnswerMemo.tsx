@@ -38,7 +38,8 @@ export function MemoField({
   onSubmit?: () => void
   primary: boolean
 }) {
-  const [open, setOpen] = useState(primary)
+  // メモを書いてあれば開いておく（ページを移動して戻ったとき）
+  const [open, setOpen] = useState(primary || !!value)
   const ref = useRef<HTMLInputElement>(null)
   useEffect(() => {
     if (open && !primary) ref.current?.focus()
