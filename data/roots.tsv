@@ -1,6 +1,6 @@
 # 語根辞書（このリポジトリのオリジナルデータ / CC BY-SA 4.0）
 # id	英単語中の綴り(カンマ区切り)	語源判定キー(語源テキストに含まれる語。カンマ区切り)	意味(ja)	由来
-act	act,ag,ig	agere,actus,agō,ago,actum,agit	行う・動かす	ラテン語 agere
+act	act,ag,ig	agere,actus,agō,ago,actum,agit,ācta,acta	行う・動かす	ラテン語 agere
 alter	alter,ali	alter,alius,alien	他の	ラテン語 alter
 am	am,im	amare,amor,amicus,amāre,amō	愛する	ラテン語 amare
 anim	anim	animus,anima	心・命・息	ラテン語 anima
@@ -10,7 +10,7 @@ bene	bene,bon	bene,bonus	よい	ラテン語 bene
 bio	bio	bios,βίος	生命	ギリシャ語 bios
 cad	cid,cas,cad	cadere,cado,cadō,casus,cāsus	落ちる・起こる	ラテン語 cadere
 caed	cid,cis	caedere,caedō,caesus,cīsus,cisus,-cidere,cīdere	切る	ラテン語 caedere
-cap	cap,cept,ceiv,ceipt,cip,cupi	capere,capiō,capio,captus,cipere,cipio,cipiō,ceptus,cepere	つかむ・取る	ラテン語 capere
+cap	cap,cept,ceiv,ceipt,cip,cupi	capere,capiō,capio,captus,cipere,cipio,cipiō,ceptus,cepere,kapiō,kapio	つかむ・取る	ラテン語 capere
 ced	ced,cess,ceed	cedere,cēdere,cessus,cēdō,cedo,cessio	行く・譲る	ラテン語 cedere
 centr	centr,center	centrum,kentron	中心	ラテン語 centrum
 cert	cert	certus,certare	確かな	ラテン語 certus
@@ -28,7 +28,7 @@ corp	corp,corps	corpus,corporis	体	ラテン語 corpus
 cred	cred,creed	credere,crēdere,credo,crēdō	信じる	ラテン語 credere
 cult	cult,col	colere,cultus,cultura,colō,colonus	耕す・育てる	ラテン語 colere
 cur	cur,cour,curs,cours,cor	currere,cursus,currō,curro,currens	走る・流れる	ラテン語 currere
-cura	cur	cura,cūra,curare,cūrāre	世話・注意	ラテン語 cura
+cura	cur	cura,cūra,curare,cūrāre,sēcūrus,securus,sēcūritās,securitas	世話・注意	ラテン語 cura
 dem	dem	demos,dēmos,δῆμος	民衆	ギリシャ語 demos
 dent	dent	dens,dentis	歯	ラテン語 dens
 dict	dict,dic,dit	dicere,dīcere,dictus,dico,dīcō,dictare,dictāre	言う	ラテン語 dicere
@@ -36,38 +36,38 @@ doc	doc,doct	docere,docēre,doctus,doceo,doceō,documentum	教える	ラテン�
 dom	dom	domus,dominus,domare	家・支配	ラテン語 domus / dominus
 duc	duc,duct,duk	ducere,dūcere,ductus,dūcō,duco,dux	導く	ラテン語 ducere
 dur	dur	durare,dūrāre,durus,dūrus	続く・堅い	ラテン語 durare
-equ	equ,iqu	aequus,aequalis,aequālis,aequare	等しい	ラテン語 aequus
-fac	fac,fact,fect,fic,fea,feit	facere,factus,faciō,facio,ficere,fectus,ficio,ficiō,facilis	作る・する	ラテン語 facere
-fer	fer	ferre,ferō,fero	運ぶ・生む	ラテン語 ferre
+equ	equ,iqu	aequus,aequalis,aequālis,aequare,aequō,aequo	等しい	ラテン語 aequus
+fac	fac,fact,fect,fic,fea,feit	facere,factus,faciō,facio,ficere,fectus,ficio,ficiō,facilis,factum	作る・する	ラテン語 facere
+fer	fer	ferre,ferō,fero,differō,differo	運ぶ・生む	ラテン語 ferre
 fid	fid,fed,fai	fides,fidēs,fidere,fīdere,fidelis	信頼	ラテン語 fides
-fin	fin	finis,fīnis,finire,fīnīre	終わり・境界	ラテン語 finis
-flect	flect,flex	flectere,flexus	曲げる	ラテン語 flectere
+fin	fin	finis,fīnis,finire,fīnīre,fīniō,finio	終わり・境界	ラテン語 finis
+flect	flect,flex	flectere,flexus,flectō,flecto	曲げる	ラテン語 flectere
 flu	flu,flux	fluere,fluxus,fluo,fluō,fluctus	流れる	ラテン語 fluere
-form	form	forma,formare	形	ラテン語 forma
+form	form	forma,formare,fōrmō,formo	形	ラテン語 forma
 fort	fort,forc	fortis	強い	ラテン語 fortis
 fract	fract,frag,frai	frangere,fractus,frāctus,fragilis	壊す	ラテン語 frangere
 fund	fund,found	fundus,fundare,fundāre	底・基礎	ラテン語 fundus
 fus	fus,fund,fut	fundere,fusus,fūsus,fundo,fundō	注ぐ・溶かす	ラテン語 fundere
 gen	gen,gener,gn	genus,gignere,genitus,generare,generāre,gens,genesis,genos,generalis,generālis,generatio,generātiō,genius,generosus,generōsus,gentilis,gentīlis,genre,genero,generō,genitalis,ingenium	生まれる・種族	ラテン語 genus / gignere
-gest	gest,ger	gerere,gestus,gestum	運ぶ・行う	ラテン語 gerere
-grad	grad,gress,gred	gradi,gradī,gradus,gressus	歩む・段階	ラテン語 gradi
+gest	gest,ger	gerere,gestus,gestum,gerō,gero	運ぶ・行う	ラテン語 gerere
+grad	grad,gress,gred	gradi,gradī,gradus,gressus,gradior,gredior	歩む・段階	ラテン語 gradi
 graph	graph,gram	graphein,gráphein,γράφειν,gramma,graphy	書く・描く	ギリシャ語 graphein
 grat	grat,grac,gree	gratus,grātus,gratia,grātia	喜ばしい・感謝	ラテン語 gratus
 grav	grav,griev,grief	gravis	重い	ラテン語 gravis
 hab	hab,hib	habere,habēre,habitus,habeo,habeō,hibere,hibēre	持つ・保つ	ラテン語 habere
-her	her,hes	haerere,haerēre,haesus	くっつく	ラテン語 haerere
-it	it	ire,īre,itus,itum,eo,iter	行く	ラテン語 ire
-ject	ject,jet	iacere,jacere,iactus,jactus,icere,iectus,jectus	投げる	ラテン語 iacere
-junct	junct,join,jug	iungere,jungere,iunctus,junctus,iugum	結ぶ	ラテン語 iungere
+her	her,hes	haerere,haerēre,haesus,haereō,haereo,haesitō,haesito,haesitāre,haesitare	くっつく	ラテン語 haerere
+it	it	ire,īre,itus,itum,eo,iter,exeō,exeo	行く	ラテン語 ire
+ject	ject,jet	iacere,jacere,iactus,jactus,icere,iectus,jectus,iaciō,iacio,jacio	投げる	ラテン語 iacere
+junct	junct,join,jug	iungere,jungere,iunctus,junctus,iugum,iungō,iungo,jungo	結ぶ	ラテン語 iungere
 jus	jus,jur	ius,jus,iurare,iūs,iūrāre,iustus,iūstus,iustitia	法・正義	ラテン語 ius
 jud	jud,judg,judic	iudex,judex,iūdex,iudicium,iūdicium,iudicare,iūdicāre,judicare	裁く	ラテン語 iudex（ius + dicere）
-labor	labor,labour	labor,labōrāre,laborare	働く・労働	ラテン語 labor
+labor	labor,labour	labor,labōrāre,laborare,labōrō,laboro	働く・労働	ラテン語 labor
 lat	lat	latus,lātus	運ばれた	ラテン語 latus（ferre の過去分詞）
 lect	lect,leg,lig	legere,lectus,lēctus,legō,lego,eligere,ligere	選ぶ・集める・読む	ラテン語 legere
-lev	lev,liev	levare,levāre,levis	持ち上げる・軽い	ラテン語 levare
+lev	lev,liev	levare,levāre,levis,levō,levo	持ち上げる・軽い	ラテン語 levare
 lex	leg,loy	lex,lēx,legalis,lēgālis,legis	法	ラテン語 lex
 liber	liber,liver	liber,liberare,līber	自由な	ラテン語 liber
-lig	lig,ly	ligare,ligāre	縛る・結ぶ	ラテン語 ligare
+lig	lig,ly	ligare,ligāre,ligō,ligo	縛る・結ぶ	ラテン語 ligare
 lingu	lingu	lingua	言語・舌	ラテン語 lingua
 liter	liter,letter	littera,litera,lītera	文字	ラテン語 littera
 loc	loc	locus,locare,locāre,localis	場所	ラテン語 locus
@@ -77,20 +77,20 @@ lud	lud,lus	ludere,lūdere,lusus,lūsus	遊ぶ・演じる	ラテン語 ludere
 lumin	lumin,lus,lux	lumen,lūmen,lux,lūx,lucere	光	ラテン語 lux / lumen
 magn	magn,maj,max,may	magnus,maior,major,maximus	大きい	ラテン語 magnus
 man	man,mani,main	manus,manu	手	ラテン語 manus
-mand	mand,mend	mandare,mandāre,commendare	命じる・委ねる	ラテン語 mandare
+mand	mand,mend	mandare,mandāre,commendare,mandō,mando,commendō,commendo	命じる・委ねる	ラテン語 mandare
 mar	mar	mare,marinus	海	ラテン語 mare
 mater	mater,matr,metr	mater,māter,matrix	母	ラテン語 mater
-med	med,rem	mederi,medērī,medicus,remedium	癒す	ラテン語 mederi
+med	med,rem	mederi,medērī,medicus,remedium,medeor	癒す	ラテン語 mederi
 medi	medi,mid	medius,medium,mediare,mediāre	中間	ラテン語 medius
 memor	memor,mem	memor,memoria,meminisse	覚えている	ラテン語 memor
 ment	ment	mens,mentis,mentalis	心・精神	ラテン語 mens
-mens	mens,meas	metiri,mensus,mensura,mētīrī,mēnsūra	測る	ラテン語 metiri
+mens	mens,meas	metiri,mensus,mensura,mētīrī,mēnsūra,mētior,metior	測る	ラテン語 metiri
 merg	merg,mers	mergere,mersus	浸す・沈む	ラテン語 mergere
 meter	meter,metr	metron,metrum	計る	ギリシャ語 metron
 migr	migr	migrare,migrāre	移る	ラテン語 migrare
 min	min	minor,minuere,minimus,minus	小さい	ラテン語 minor
 mit	mit,miss,mis	mittere,missus,mittō,mitto	送る	ラテン語 mittere
-mob	mob,mot,mov,mom	movere,movēre,motus,mōtus,mobilis,mōbilis,momentum	動く	ラテン語 movere
+mob	mob,mot,mov,mom	movere,movēre,motus,mōtus,mobilis,mōbilis,momentum,moveō,moveo	動く	ラテン語 movere
 mon	mon	monere,monēre,monitus,monstrare,monstrum	警告する・示す	ラテン語 monere
 mort	mort,mur	mors,mortis,mortalis,mortālis	死	ラテン語 mors
 mult	mult	multus	多い	ラテン語 multus
@@ -101,75 +101,75 @@ nav	nav	navis,nāvis,navigare	船	ラテン語 navis
 neg	neg,ny	negare,negāre	否定する	ラテン語 negare
 nom	nom,nomin,noun,nym	nomen,nōmen,nominare,onyma,onoma,ónoma	名前	ラテン語 nomen / ギリシャ語 onoma
 norm	norm	norma	基準	ラテン語 norma
-nov	nov,new	novus,novare,novāre	新しい	ラテン語 novus
-nunci	nounc,nunci	nuntiare,nūntiāre,nuntius,nūntius	告げる	ラテン語 nuntiare
+nov	nov,new	novus,novare,novāre,novō,novo	新しい	ラテン語 novus
+nunci	nounc,nunci	nuntiare,nūntiāre,nuntius,nūntius,nūntiō,nuntio	告げる	ラテン語 nuntiare
 numer	numer,number	numerus	数	ラテン語 numerus
 oper	oper	opus,operari,operārī,opera	仕事	ラテン語 opus
 ord	ord,ordin	ordo,ōrdō,ordinare,ordināre	順序	ラテン語 ordo
 ori	ori	oriri,orīrī,origo,orīgō,oriens	昇る・始まる	ラテン語 oriri
 par	par,peer	par,paritas	等しい	ラテン語 par
-para	par,pair,pare	parare,parāre	準備する・整える	ラテン語 parare
+para	par,pair,pare	parare,parāre,parō,paro	準備する・整える	ラテン語 parare
 parere	par,pear	parere,pārēre	見える・現れる	ラテン語 parere
-part	part,port	pars,partis,partire,partīre	部分・分ける	ラテン語 pars
+part	part,port	pars,partis,partire,partīre,particula	部分・分ける	ラテン語 pars
 pass	pass	passus,passare	歩み・通る	ラテン語 passus
 path	path,pass,pati	pathos,páthos,πάθος,pati,patī,passio,passiō	感じる・苦しむ	ギリシャ語 pathos / ラテン語 pati
 pater	pater,patr	pater,patria,patronus	父	ラテン語 pater
 ped	ped,pod	pes,pedis,pedester,pous,podos	足	ラテン語 pes / ギリシャ語 pous
 pel	pel,puls	pellere,pulsus	押す・駆り立てる	ラテン語 pellere
 pend	pend,pens,pond	pendere,pendēre,pensus,pēnsus,pensare,pēnsāre,pondus	吊るす・量る・支払う	ラテン語 pendere
-pet	pet	petere,petitus	求める・向かう	ラテン語 petere
+pet	pet	petere,petitus,petō,peto	求める・向かう	ラテン語 petere
 phon	phon	phone,phōnḗ,φωνή,phōnē	音・声	ギリシャ語 phone
 phot	phot	phos,phōs,φῶς,photos	光	ギリシャ語 phos
 pict	pict,paint,pig	pingere,pictus,pictura	描く	ラテン語 pingere
 plac	plac,plea,pleas	placere,placēre,placare	喜ばせる・なだめる	ラテン語 placere
-plaud	plaud,plaus,plod,plos	plaudere,plausus	拍手する・打つ	ラテン語 plaudere
-ple	ple,plen,plet,pli	plere,plēre,plenus,plēnus,pletus,plētus,plere	満たす	ラテン語 plere
-plic	plic,ply,plex,ploy,pli	plicare,plicāre,plexus,plectere,plicatus	折る・重ねる	ラテン語 plicare
+plaud	plaud,plaus,plod,plos	plaudere,plausus,plaudō,plaudo,explōdō,explodo,explōdere,explodere	拍手する・打つ	ラテン語 plaudere
+ple	ple,plen,plet,pli	plere,plēre,plenus,plēnus,pletus,plētus,plere,pleō,pleo,compleō,compleo	満たす	ラテン語 plere
+plic	plic,ply,plex,ploy,pli	plicare,plicāre,plexus,plectere,plicatus,plicō,plico	折る・重ねる	ラテン語 plicare
 pol	pol,polic,polit	polis,pólis,πόλις,polites,politikos	都市・国家	ギリシャ語 polis
-pon	pon,pos,pound	ponere,pōnere,positus,pono,pōnō,positio	置く	ラテン語 ponere
+pon	pon,pos,pound	ponere,pōnere,positus,pono,pōnō,positio,posita,positum	置く	ラテン語 ponere
 popul	popul,publ,peopl	populus,publicus,pūblicus	人々	ラテン語 populus
 port	port	portare,portāre,porto,portō	運ぶ	ラテン語 portare
-pot	pot,poss,pow	posse,potis,potens,potentia,possibilis	力がある・できる	ラテン語 posse
-prehend	prehend,prehens,pris,priz	prehendere,prehensus,prendere,prensus,prise	つかむ	ラテン語 prehendere
-press	press,prim,print	premere,pressus,pressare	押す	ラテン語 premere
+pot	pot,poss,pow	posse,potis,potens,potentia,possibilis,potēre,potere	力がある・できる	ラテン語 posse
+prehend	prehend,prehens,pris,priz	prehendere,prehensus,prendere,prensus,prise,prehendō,prehendo	つかむ	ラテン語 prehendere
+press	press,prim,print	premere,pressus,pressare,premō,premo,imprimō,imprimo,comprimō,comprimo,opprimō,opprimo,supprimō,supprimo,exprimō,exprimo,reprimō,reprimo	押す	ラテン語 premere
 prim	prim,prem	primus,prīmus,princeps	第一の	ラテン語 primus
 priv	priv	privus,prīvus,privatus,prīvātus	個人の・切り離された	ラテン語 privus
-prob	prob,prov,proof	probare,probāre,probus	試す・証明する	ラテン語 probare
+prob	prob,prov,proof	probare,probāre,probus,probō,probo	試す・証明する	ラテン語 probare
 psych	psych	psyche,psukhḗ,ψυχή,psukhe	心・魂	ギリシャ語 psyche
 punct	punct,poin,pung	pungere,punctus,punctum	刺す・点	ラテン語 pungere
-quer	quer,quir,quest,quis	quaerere,quaesitus,quaestio,quaestiō,quaerō,quirere	求める・尋ねる	ラテン語 quaerere
+quer	quer,quir,quest,quis	quaerere,quaesitus,quaestio,quaestiō,quaerō,quirere,inquīrō,inquiro,requīrō,requiro	求める・尋ねる	ラテン語 quaerere
 rat	rat,reas	ratio,ratiō,ratus,reri	計算・理性	ラテン語 ratio
-reg	reg,rect,rig,roy,reig	regere,rectus,rēctus,rex,rēx,regula,regula,regio,regiō	まっすぐ・支配する	ラテン語 regere
+reg	reg,rect,rig,roy,reig	regere,rectus,rēctus,rex,rēx,regula,regula,regio,regiō,regō,rego,rēgālis,regalis	まっすぐ・支配する	ラテン語 regere
 rid	rid,ris	ridere,rīdēre,risus,rīsus	笑う	ラテン語 ridere
 rog	rog	rogare,rogāre	尋ねる・求める	ラテン語 rogare
-rupt	rupt	rumpere,ruptus	破る	ラテン語 rumpere
+rupt	rupt	rumpere,ruptus,rumpō,rumpo	破る	ラテン語 rumpere
 sacr	sacr,sanct,sec	sacer,sacrare,sanctus,sacrum	聖なる	ラテン語 sacer
-sal	sal,sult,sail,saul	salire,salīre,saltare,saltāre	跳ぶ	ラテン語 salire
+sal	sal,sult,sail,saul	salire,salīre,saltare,saltāre,saliō,salio	跳ぶ	ラテン語 salire
 san	san	sanus,sānus,sanitas	健康な	ラテン語 sanus
 sat	sat	satis,satiare	十分な	ラテン語 satis
 scend	scend,scens,scal	scandere,scansus,scala	登る	ラテン語 scandere
-sci	sci	scire,scīre,scientia	知る	ラテン語 scire
+sci	sci	scire,scīre,scientia,sciō,scio,sciēns,sciens	知る	ラテン語 scire
 scope	scope,skep	skopein,skopós,σκοπός,skopos	見る	ギリシャ語 skopein
-scrib	scrib,script	scribere,scrībere,scriptus,scrīptus	書く	ラテン語 scribere
+scrib	scrib,script	scribere,scrībere,scriptus,scrīptus,scrībō,scribo	書く	ラテン語 scribere
 sect	sect,seg	secare,secāre,sectus,sectio	切る	ラテン語 secare
-sed	sed,sess,sid,sit	sedere,sedēre,sessus,sidere,sīdere,sedes	座る	ラテン語 sedere
+sed	sed,sess,sid,sit	sedere,sedēre,sessus,sidere,sīdere,sedes,sedeō,sedeo	座る	ラテン語 sedere
 sen	sen	senex,senior,senatus	年老いた	ラテン語 senex
-sens	sens,sent,scent	sentire,sentīre,sensus,sēnsus,sententia	感じる	ラテン語 sentire
-sequ	sequ,secu,sec,su	sequi,sequī,secutus,secūtus,sequens	続く・従う	ラテン語 sequi
-serv	serv	servare,servāre,servire,servīre,servus	仕える・保つ	ラテン語 servare / servire
-sign	sign,seal	signum,signare,signāre	しるし	ラテン語 signum
+sens	sens,sent,scent	sentire,sentīre,sensus,sēnsus,sententia,sentiō,sentio	感じる	ラテン語 sentire
+sequ	sequ,secu,sec,su	sequi,sequī,secutus,secūtus,sequens,sequor,sequere	続く・従う	ラテン語 sequi
+serv	serv	servare,servāre,servire,servīre,servus,servō,servo,serviō,servio	仕える・保つ	ラテン語 servare / servire
+sign	sign,seal	signum,signare,signāre,signō,signo	しるし	ラテン語 signum
 simil	simil,simul,sembl,simpl	similis,simul,simulare,simulāre	似た・同時の	ラテン語 similis
 soci	soci	socius,societas,sociare	仲間	ラテン語 socius
 sol	sol	solus,sōlus,solitarius	単独の	ラテン語 solus
-solv	solv,solu	solvere,solutus,solūtus	解く・ゆるめる	ラテン語 solvere
+solv	solv,solu	solvere,solutus,solūtus,solvō,solvo	解く・ゆるめる	ラテン語 solvere
 son	son,sound	sonus,sonare,sonāre	音	ラテン語 sonus
 spec	spec,spect,spic,spis,spy	specere,spectare,spectāre,speciō,specio,species,speciēs,spectus,speculum,specula	見る	ラテン語 specere
-spir	spir	spirare,spīrāre,spiritus,spīritus	息をする	ラテン語 spirare
+spir	spir	spirare,spīrāre,spiritus,spīritus,spīrō,spiro	息をする	ラテン語 spirare
 spond	spond,spons	spondere,spondēre,sponsus	約束する・応じる	ラテン語 spondere
-sta	sta,stat,stit,sist,st,stan,stead	stare,stāre,status,sistere,statuere,stitutus,stabilis,stō,statio	立つ	ラテン語 stare
-strict	strict,string,strain,stress	stringere,strictus	締める	ラテン語 stringere
+sta	sta,stat,stit,sist,st,stan,stead	stare,stāre,status,sistere,statuere,stitutus,stabilis,stō,statio,sistō,sisto,statuō,statuo,īnstō,insto	立つ	ラテン語 stare
+strict	strict,string,strain,stress	stringere,strictus,stringō,stringo	締める	ラテン語 stringere
 struct	struct,stru,stroy	struere,structus,strūctus,struō,struo,structura	築く・積む	ラテン語 struere
-sum	sum,sumpt	sumere,sūmere,sumptus,sūmptus	取る	ラテン語 sumere
+sum	sum,sumpt	sumere,sūmere,sumptus,sūmptus,sūmō,sumo	取る	ラテン語 sumere
 tact	tact,tang,tag,teg,tig,tain	tangere,tactus,tāctus,tango,tangō,integer	触れる	ラテン語 tangere
 tech	tech	techne,tékhnē,τέχνη,tekhne	技術	ギリシャ語 techne
 temp	temp,tempor	tempus,temporis,temporalis,temperare	時	ラテン語 tempus
@@ -178,7 +178,7 @@ tend	tend,tens,tent	tendere,tensus,tentus,tendō	伸ばす・向かう	ラテン
 termin	termin,term	terminus,terminare,terminus	境界・終わり	ラテン語 terminus
 terr	terr	terra,territorium	大地	ラテン語 terra
 test	test	testis,testari,testārī,testimonium	証人・証言	ラテン語 testis
-text	text,tex	texere,textus	織る	ラテン語 texere
+text	text,tex	texere,textus,texō,texo	織る	ラテン語 texere
 the	the	theos,theós,θεός	神	ギリシャ語 theos
 therm	therm	thermos,thermós,θερμός,therme	熱	ギリシャ語 thermos
 tort	tort,tor	torquere,torquēre,tortus	ねじる	ラテン語 torquere
@@ -187,20 +187,20 @@ trib	trib	tribuere,tribuō,tributus,tribūtus,tribus	割り当てる	ラテン�
 turb	turb,troubl	turba,turbare,turbāre	かき乱す	ラテン語 turbare
 urb	urb	urbs,urbanus	都市	ラテン語 urbs
 vac	vac,van,void	vacare,vacāre,vacuus,vanus,vānus	空の	ラテン語 vacare
-vad	vad,vas	vadere,vādere,vasus,vāsus	行く	ラテン語 vadere
-val	val,vail	valere,valēre,valor,valens	強い・価値がある	ラテン語 valere
+vad	vad,vas	vadere,vādere,vasus,vāsus,vādō,vado	行く	ラテン語 vadere
+val	val,vail	valere,valēre,valor,valens,valeō,valeo	強い・価値がある	ラテン語 valere
 ven	ven,vent,veni	venire,venīre,ventus,veniō,venio	来る	ラテン語 venire
 ver	ver	verus,vērus,veritas	真実の	ラテン語 verus
-vers	vers,vert,vorc	vertere,versus,versare,vortere,versāre	回す・向ける	ラテン語 vertere
+vers	vers,vert,vorc	vertere,versus,versare,vortere,versāre,vertō,verto,vorsus	回す・向ける	ラテン語 vertere
 via	via,vey,voy	via	道	ラテン語 via
 vid	vid,vis,vie,view,vey,vy	videre,vidēre,visus,vīsus,video,videō,visere	見る	ラテン語 videre
 vinc	vinc,vict,vanq	vincere,victus,vīnco,vincō	打ち勝つ	ラテン語 vincere
-viv	viv,vit,vig	vivere,vīvere,vita,vīta,vivus,vīvus	生きる	ラテン語 vivere
+viv	viv,vit,vig	vivere,vīvere,vita,vīta,vivus,vīvus,vīvō,vivo	生きる	ラテン語 vivere
 voc	voc,vok,vow,voic	vocare,vocāre,vox,vōx,vocis	呼ぶ・声	ラテン語 vocare / vox
 vol	vol	volo,volō,velle,voluntas,voluntās	望む・意志	ラテン語 velle
-volv	volv,volu,volt	volvere,volutus,volūtus	転がる・回る	ラテン語 volvere
+volv	volv,volu,volt	volvere,volutus,volūtus,volvō,volvo	転がる・回る	ラテン語 volvere
 dat	dat,don,dot	dare,dāre,datus,dātus,datum,dātum,donare,dōnāre,donum,dōnum,dos,dōs	与える	ラテン語 dare
-hend			つかむ	ラテン語 -hendere（単独では使われない）
+hend		hendere	つかむ	ラテン語 -hendere（単独では使われない）
 crat	crat,crac	kratos,krátos,κράτος,kratia,-kratia,krateia	力・支配	ギリシャ語 kratos
 princ	princ,princip	princeps,principium,principalis,princeps,prīnceps,prīncipium	第一の位置を取る	ラテン語 princeps（primus + capere）
 geo	geo	gē,ge,geo-,geōgraphía,geographia,geometria,geologia	大地・地球	ギリシャ語 gē
@@ -212,44 +212,44 @@ aster	astr,aster	astron,ástron,astēr,astḗr,astrum,astrologia,astronomia	星	
 em	em,empt,ampl,empl		取る・買う	ラテン語 emere
 bol	bol,bl,blem,ball		投げる	ギリシャ語 ballein
 erg	erg,urg,org		仕事・働き	ギリシャ語 ergon
-hod	hod,od		道	ギリシャ語 hodos
-mont	mont,mount		山・上がる	ラテン語 mons
-sider	sider		星	ラテン語 sidus
-cresc	cresc,creas,cret,cruit	crescere,increscere,decrescere,concrescere	育つ・増える	ラテン語 crescere
+hod	hod,od	hodós,hodos,ὁδός	道	ギリシャ語 hodos
+mont	mont,mount	mōns,mons,montis,montem,montānus,montanus,montāna,montana,amont	山・上がる	ラテン語 mons
+sider	sider	sīdus,sidus,sīderis,sideris,cōnsīderāre,considerare,dēsīderāre,desiderare	星	ラテン語 sidus
+cresc	cresc,creas,cret,cruit	crescere,increscere,decrescere,concrescere,crēscō,cresco	育つ・増える	ラテン語 crescere
 mod	mod	modus,moderari,modestus,modificare,modulus	尺度・ほどよさ	ラテン語 modus
-capit	capit,capt,chief,cap		頭	ラテン語 caput
+capit	capit,capt,chief,cap	caput,capitis,capitālis,capitalis,capitulum	頭	ラテン語 caput
 carr	carr,car,char		荷車・運ぶ	ラテン語 carrus
 cre	cre,creat	creare,creatura,creator	生み出す	ラテン語 creare
-minist	minist		仕える	ラテン語 ministrare
+minist	minist	minister,ministrāre,ministrare,ministerium	仕える	ラテン語 ministrare
 fend	fend,fens	fendere,defendere,offendere,defensa	打つ・防ぐ	ラテン語 -fendere
 stinct	stinct,sting,stingu	stinguere,distinguere,instinctus,exstinguere	印をつける・突く	ラテン語 stinguere
-merc	merc,merch,mark		商売・取引	ラテン語 merx
+merc	merc,merch,mark	merx,mercis,mercātus,mercatus,mercārī,mercari,mercor,mercātor,mercator,commercium	商売・取引	ラテン語 merx
 rot	rot,roll,round	rota,rotare,rotundus,rotulus	車輪・回る	ラテン語 rota
 insul	insul,isol	insula,isola,isolare	島	ラテン語 insula
 plan	plan,plain		平らな	ラテン語 planus
-lax	lax,leas		ゆるめる	ラテン語 laxare
+lax	lax,leas	laxō,laxo,laxāre,laxare,laxus,relaxāre,relaxare	ゆるめる	ラテン語 laxare
 veh	veh,vect	vehere,vehiculum,vector	運ぶ	ラテン語 vehere
-ess	ess,sent		ある・存在する	ラテン語 esse
+ess	ess,sent	essentia,absum,praesum,absēns,absens,praesēns,praesens	ある・存在する	ラテン語 esse
 tom	tom		切る	ギリシャ語 temnein
 mir	mir	mirari,mirabilis,miraculum,admirari	驚く・見とれる	ラテン語 mirari
 tect	tect	tegere,tectus,tegō,tego,tectum	覆う	ラテン語 tegere
 pact	pact,pinge	pangere,pactus,pactum,impingere,compingere	打ち込む・固定する	ラテン語 pangere
 fess	fess	fateri,fessus,confiteri,profiteri,profession	認める・公言する	ラテン語 fateri
-sert	sert	serere,sertus,insertus,assertus,exsertus	つなぐ・並べる	ラテン語 serere
+sert	sert	serere,sertus,insertus,assertus,exsertus,serō,sero	つなぐ・並べる	ラテン語 serere
 vot	vot,vow	vovere,votum,votus,devovere	誓う	ラテン語 vovere
 fug	fug	fugere,fuga,refugium,fugitivus	逃げる	ラテン語 fugere
-put	put	putare,computare,disputare,reputare,imputare	考える・数える	ラテン語 putare
+put	put	putare,computare,disputare,reputare,imputare,putō,puto,computō,computo	考える・数える	ラテン語 putare
 bell	bel,bell	bellum,bellicosus,belligerent,rebellare	戦争	ラテン語 bellum
 limin	limin	limen,liminis,eliminare,praeliminaris	敷居・境	ラテン語 limen
-haust	haust	haurire,haustus,exhaurire	くみ出す	ラテン語 haurire
+haust	haust	haurire,haustus,exhaurire,hauriō,haurio	くみ出す	ラテン語 haurire
 caus	caus,cuse	causa,accusare,excusare	理由・訴訟	ラテン語 causa
-nect	nect,nex	nectere,nexus,connectere	結ぶ・つなぐ	ラテン語 nectere
-surg	surg,surrect	surgere,surrectus,insurgere,resurgere	起き上がる	ラテン語 surgere
+nect	nect,nex	nectere,nexus,connectere,nectō,necto	結ぶ・つなぐ	ラテン語 nectere
+surg	surg,surrect	surgere,surrectus,insurgere,resurgere,surgō,surgo,surrigō,surrigo,subrigō,subrigo	起き上がる	ラテン語 surgere
 celer	celer	celer,celerare,accelerare	速い	ラテン語 celer
 luct	luct	luctari,reluctari	もがく・抵抗する	ラテン語 luctari
 verg	verg	vergere,convergere,divergere	傾く・向かう	ラテン語 vergere
 cumb	cumb,cub	cumbere,cubare,incumbere,succumbere,incubare	横たわる	ラテン語 cubare
-apt	apt	aptus,adaptare,aptitudo	適した	ラテン語 aptus
+apt	apt	aptus,adaptare,aptitudo,aptō,apto	適した	ラテン語 aptus
 propri	propri	proprius,appropriare,proprietas	自分の・固有の	ラテン語 proprius
 fam	fam	fama,famosus,infamis,diffamare	評判・うわさ	ラテン語 fama
 radic	radic	radix,radicis,radicalis,eradicare	根	ラテン語 radix
@@ -257,17 +257,17 @@ timid	timid	timidus,timere,intimidare	恐れる	ラテン語 timere
 later	later	latus,lateris,lateralis	側・わき	ラテン語 latus
 preci	preci,pric	pretium,pretiosus,appretiare,depretiare	値段・価値	ラテン語 pretium
 cent	cent,centi	centum,centuria,centesimus,centenarius	百	ラテン語 centum
-phys	phys,physi	physis,physikos,physika,phusis	自然	ギリシャ語 physis
+phys	phys,physi	physis,physikos,physika,phusis,physica,physicus	自然	ギリシャ語 physis
 radi	radi	radius,radiare,radiatio	光線・半径	ラテン語 radius
 coron	coron	corona,coronare,coronarius	冠	ラテン語 corona
 nutr	nutr,nutri,nurt,nurs	nutrire,nutrix,nutrimentum	養う	ラテン語 nutrire
 dynam	dynam,dynas	dynamis,dunamis,dynasthai	力	ギリシャ語 dynamis
 horr	horr	horrere,horror,horribilis,horrendus,horridus	震える・ぞっとする	ラテン語 horrere
 cit	cit	citare,excitare,incitare,recitare	動かす・呼び出す	ラテン語 citare
-aug	aug,auct	augere,augmentum,auctio,auctor,augustus	増やす	ラテン語 augere
+aug	aug,auct	augere,augmentum,auctio,auctor,augustus,augeō,augeo	増やす	ラテン語 augere
 alt	alt	altus,altitudo,altare,exaltare	高い	ラテン語 altus
 fals	fals,fallac	fallere,falsus,fallacia	だます・誤る	ラテン語 fallere
-rap	rap,rapt	rapere,rapidus,raptus,raptor	奪う・すばやい	ラテン語 rapere
+rap	rap,rapt	rapere,rapidus,raptus,raptor,rapiō,rapio	奪う・すばやい	ラテン語 rapere
 optim	optim	optimus,optimum	最良の	ラテン語 optimus
 proxim	proxim	proximus,proximitas,approximare	最も近い	ラテン語 proximus
 firm	firm	firmus,affirmare,confirmare,infirmus,firmare	固い・確かな	ラテン語 firmus
@@ -276,4 +276,46 @@ cens	cens	censere,censor,census	評価する	ラテン語 censere
 plant	plant	plantare,planta,implantare,transplantare	植える	ラテン語 plantare
 dors	dors	dorsum,dorsalis	背中	ラテン語 dorsum
 caut	caut	cavere,cautio,cautus,praecavere	用心する	ラテン語 cavere
-mane	man,main,mans		とどまる	ラテン語 manere（「手」の manus とは別の語）
+mane	man,main,mans	manēre,manere,maneō,maneo,mānsiō,mansio	とどまる	ラテン語 manere（「手」の manus とは別の語）
+# v2.12: Wiktionary の語源に出てくるのに辞書になかった語根（2026-11-16）
+und	und,ound	unda,abundō,abundo,abundāre,abundare,redundō,redundo,redundāre,redundare	波・あふれる	ラテン語 unda
+sex	sex	sexus,sexuālis,sexualis	性	ラテン語 sexus
+circ	circ,search	circus,circulus,circulāre,circulare,circāre,circare	輪・回る	ラテン語 circus
+bas	base,basic,basis	basis,básis,βάσις	土台・基礎	ギリシャ語 basis
+funct	funct	fungor,fungī,fungi,fūnctiō,functio,fūnctus,functus	果たす・働く	ラテン語 fungi
+aqu	aqu,aqua	aqua,aquārium,aquarium,aquāticus,aquaticus	水	ラテン語 aqua
+ampl	ampl	amplus,amplificāre,amplificare,amplitūdō,amplitudo	大きい・広い	ラテン語 amplus
+torn	turn,tour,torn	tornāre,tornare,tornō,torno,tornus,tórnos	回す・ろくろ	ラテン語 tornare
+salv	salv,sav,safe	salvus,salvāre,salvare,salvātiō,salvatio	安全な・救う	ラテン語 salvus
+pac	pacif,pay,peac,peas	pāx,pax,pācis,pacis,pācāre,pacare,pācō,paco,pācificus,pacificus	平和・なだめる	ラテン語 pax
+faci	face	faciēs,facies,facia	顔・表面	ラテン語 facies
+caps	caps,cash,case	capsa,capsula	箱	ラテン語 capsa
+acid	acid,acr	aceō,aceo,acidus,acētum,acetum,ācer,acer,ācris,acris	酸っぱい・鋭い	ラテン語 acer / acidus
+vin	vin	vīnum,vinum,vīnea,vinea	ぶどう酒	ラテン語 vinum
+schol	schol,schoo	schola,skholḗ,skhole,σχολή,scholē,schole	学校・余暇	ギリシャ語 skhole
+plor	plor	plōrō,ploro,plōrāre,plorare,explōrāre,explorare,dēplōrāre,deplorare	叫ぶ・嘆く	ラテン語 plorare
+mill	mill	mīlle,mille,mīllēsimus,millesimus,mīllia,millia	千	ラテン語 mille
+hosp	hospit,hospic,hostel,hot	hospes,hospitis,hospitālis,hospitalis,hospitium,hospitāle,hospitale	客・もてなす	ラテン語 hospes
+fict	fict,figur,feign,feint	fingō,fingo,fingere,fictus,fictiō,fictio,figūra,figura	形作る・こしらえる	ラテン語 fingere
+electr	electr	ēlectrum,electrum,ēlektron,elektron,ḗlektron,ēlectricus,electricus	琥珀・電気	ギリシャ語 elektron
+camp	camp,champ	campus,campiō,campio,campānia,campania	野原	ラテン語 campus
+calc	calc,chalk	calx,calcis,calculus,calculāre,calculare	小石・石灰	ラテン語 calx
+bat	batt,bat	battuō,battuo,battuere,battere,battuālia,battualia	打つ	ラテン語 battuere
+arm	arm	arma,armō,armo,armāre,armare,armātūra,armatura	武器	ラテン語 arma
+vill	vill	vīlla,villa,vīllānus,villanus,vīllāticum,villaticum	田舎の屋敷・村	ラテン語 villa
+us	use,usu,uten	ūtor,utor,ūsus,usus,ūsūra,usura,ūtēnsilis,utensilis	使う	ラテン語 uti
+tox	tox	toxicum,toxikón,toxikon,toxicus	毒	ギリシャ語 toxikon
+staur	staur,store	instaurāre,instaurare,īnstaurō,instauro,restaurāre,restaurare	修復する・蓄える	ラテン語 instaurare
+spher	spher	sphaera,sphēra,sphaîra,sphaira,σφαῖρα	球	ギリシャ語 sphaira
+sorb	sorb,sorpt	sorbeō,sorbeo,sorbēre,sorbere	吸い込む	ラテン語 sorbere
+semin	semin	sēmen,semen,sēminis,seminis,sēmināre,seminare,sēminārium,seminarium	種	ラテン語 semen
+riv	riv	rīpa,ripa,rīpārius,riparius,rīpāria,riparia,arrīpāre,arripare	岸	ラテン語 ripa
+coc	coc,cook,cuis,kitch,coct	coquō,coquo,coquere,coquus,coquīna,coquina,cocīna,cocina,coctus	料理する	ラテン語 coquere
+person	person	persōna,persona	仮面・人	ラテン語 persona
+past	pasta,paste,pastr,pastel	pasta,pastē,pastillus	練り粉	ラテン語 pasta
+parl	parl,parol	parabola,parabolē,parabolḗ,parabolāre,parabolare	話す・たとえ	ラテン語 parabola
+mor	moral,mores	mōs,mōris,moris,mōrālis,moralis,mōrēs,mores	習慣・道徳	ラテン語 mos
+gel	gel,jell,geal	gelū,gelu,gelāre,gelare,gelāta,gelata,gelātus,gelatus	凍る・固まる	ラテン語 gelu
+front	front	frōns,frons,frontis,frontem	額・前面	ラテン語 frons
+femin	femin,fem	fēmina,femina,fēminīnus,femininus,fēmella,femella	女性	ラテン語 femina
+sali	sal,sau	salārium,salarium,salsus,salsa,salāta,salata,salīnus,salinus	塩	ラテン語 sal
