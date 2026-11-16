@@ -1,6 +1,5 @@
 # 語源ネットワークの拡充: 解説で語根を説明しているのに、自動の語源分解が付いていなかった頻出語
 parts	community	com=pre:com mun=r:mun ity=suf:ity
-parts	company	com=pre:com pany
 parts	education	e=pre:ex duc=r:duc ation=suf:ation
 parts	account	ac=pre:ad count=w:count
 parts	evidence	e=pre:ex vid=r:vid ence=suf:ance
@@ -18,7 +17,6 @@ parts	display	dis=pre:dis play=r:plic
 parts	entitle	en=pre:en title=w:title
 parts	complaint	com=pre:com plain t
 parts	balance	ba=pre:bi lance
-parts	experience	ex=pre:ex peri ence=suf:ance
 parts	expect	ex=pre:ex pect=r:spec
 parts	impact	im=pre:into pact=r:pact
 parts	protect	pro=pre:pro tect=r:tect
@@ -46,7 +44,6 @@ parts	adjacent	ad=pre:ad jac ent=suf:ant
 parts	console	con=pre:com sole
 parts	combat	com=pre:com bat
 parts	surplus	sur=pre:super plus
-parts	hypothesis	hypo=pre:hypo thesis
 parts	system	sy=pre:syn stem
 parts	escape	es=pre:ex cape
 # 追加した語根の誤った自動の結びつきを外す（dessert は des + servir、put は英語本来の語、belle は bellus「美しい」）

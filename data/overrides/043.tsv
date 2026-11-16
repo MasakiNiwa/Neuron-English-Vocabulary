@@ -247,12 +247,10 @@ parts	remind	re=pre:re mind=w:mind
 parts	scary	scar=w:scare y=suf:y
 parts	achievement	achieve=w:achieve ment=suf:ment
 parts	asleep	a sleep=w:sleep
-parts	automatic	auto=pre:auto matic
 parts	headquarters	head=w:head quarters=w:quarter
 parts	residence	re=pre:re sid=r:sed ence=suf:ance
 parts	threaten	threat=w:threat en=suf:en
 parts	discount	dis=pre:dis count=w:count
-parts	expand	ex=pre:ex pand
 parts	grateful	grate=r:grat ful=suf:ful
 parts	input	in=w:in put=w:put
 parts	outcome	out=w:out come=w:come

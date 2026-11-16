@@ -11,7 +11,6 @@
 # - deluxe: luxus（ぜいたく）で、lux（光）ではない
 # - Islamic: アラビア語 islām で、amare（愛する）ではない
 noparts	menstrual,supreme,supremacy,mute,mutiny,volcanic,deluxe,Islamic
-parts	sever	se=pre:se ver
 parts	deliberate	de=pre:de liber ate
 parts	contempt	con=pre:com temp t
 parts	confidential	con=pre:com fid=r:fid ential

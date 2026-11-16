@@ -51,12 +51,10 @@ parts	sociology	soci=r:soci o log=r:log y=suf:ia
 parts	felony	felon=w:felon y=suf:ia
 parts	symphony	sym=pre:syn phon=r:phon y=suf:ia
 parts	geology	geo=r:geo log=r:log y=suf:ia
-parts	ecology	eco log=r:log y=suf:ia
 parts	jealousy	jealous=w:jealous y=suf:ia
 parts	empathy	em=pre:en path=r:path y=suf:ia
 parts	analogy	ana log=r:log y=suf:ia
 parts	terminology	termin=r:termin o log=r:log y=suf:ia
-parts	anthropology	anthropo log=r:log y=suf:ia
 parts	mythology	myth=w:myth o log=r:log y=suf:ia
 parts	query	quer=r:quer y
 parts	autobiography	auto=pre:auto bio=r:bio graph=r:graph y=suf:ia
@@ -75,7 +73,6 @@ parts	predatory	predator=w:predator y=suf:ary
 parts	astrology	astr=r:aster o log=r:log y=suf:ia
 parts	enquiry	en=pre:en quir=r:quer y=suf:ia
 parts	genealogy	gen=r:gen ea log=r:log y=suf:ia
-parts	philanthropy	phil=r:phil anthrop y=suf:ia
 parts	perjury	per=pre:per jur=r:jus y=suf:ia
 parts	topography	topo graph=r:graph y=suf:ia
 parts	apathy	a=pre:a path=r:path y=suf:ia

@@ -232,7 +232,6 @@ parts	monthly	month=w:month ly=suf:ly
 parts	neighborhood	neighbor=w:neighbor hood=suf:hood
 parts	outstanding	out=pre:out stand=w:stand ing
 parts	regulation	regul=w:regulate ation=suf:ation
-parts	tradition	tra=pre:trans dit=r:dat ion=suf:ation
 parts	celebrate	celebr ate=suf:ate
 parts	criticism	critic=w:critic ism=suf:ism
 parts	formation	form=r:form ation=suf:ation
@@ -252,7 +251,6 @@ parts	symptom	sym=pre:syn ptom
 parts	circuit	circu=pre:circum it=r:it
 parts	clothing	cloth=w:cloth ing
 parts	defend	de=pre:de fend=r:fend
-parts	divide	di=pre:dis vide
 parts	everyday	every=w:every day=w:day
 parts	immigration	im=pre:into migr=r:migr ation=suf:ation
 parts	killer	kill=w:kill er=suf:er
@@ -294,7 +292,6 @@ parts	strategic	strateg=w:strategy ic=suf:ic
 parts	afterwards	after=w:after ward=suf:ward s
 parts	architecture	archi tect ure=suf:ure
 parts	disappoint	dis=pre:dis appoint=w:appoint
-parts	prayer	pray=w:pray er=suf:er
 parts	racist	rac=w:race ist=suf:ist
 parts	rarely	rare=w:rare ly=suf:ly
 parts	sexy	sex=w:sex y=suf:y

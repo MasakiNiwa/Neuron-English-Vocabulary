@@ -98,9 +98,10 @@ describe('語源ドリルの問題', () => {
   })
 
   it('ランダム: すべての語源から、種類を混ぜて n 問（同じ語源は 1 回に 1 問）。範囲を絞ることもできる', () => {
-    const items = buildRandom(dict, 30, lcg(4))
-    expect(items).toHaveLength(30)
-    expect(new Set(items.map((x) => x.q.target)).size).toBe(30)
+    const items = buildRandom(dict, 80, lcg(4))
+    expect(items).toHaveLength(80)
+    expect(new Set(items.map((x) => x.q.target)).size).toBe(80)
+    // 種類は均等に選ぶので、80 問あれば 5 種類すべてが出る（乱数の種によらない程度の数）
     expect(new Set(items.map((x) => x.q.kind)).size).toBe(5)
     const only = new Set(['r:fac', 'r:spec', 'r:vid', 'r:port', 'r:sta', 'r:duc', 'pre:re', 'pre:ex'])
     expect(buildRandom(dict, 5, lcg(4), only).every((x) => only.has(x.q.target))).toBe(true)

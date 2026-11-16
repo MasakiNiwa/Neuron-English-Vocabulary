@@ -1,0 +1,349 @@
+# v2.13: 解説・Wiktionary で「同じ語源」「Doublet of」とされるのに、共通の語根でつながっていなかった単語の分解（2026-11-16）
+parts	place	plac=r:platea e
+parts	plaza	plaz=r:platea a
+parts	sure	sur=r:cura e
+parts	familiar	famil=r:famil iar
+parts	family	famil=r:famil y=suf:y
+parts	mint	mint=r:mon
+parts	companion	com=pre:com pan=r:pan ion=suf:ation
+parts	company	com=pre:com pan=r:pan y=suf:y
+parts	chariot	char=r:carr iot
+parts	cohort	cohort=r:cohort
+parts	court	court=r:cohort
+parts	matter	matter=r:mater
+parts	air	air=r:aer
+parts	aria	ari=r:aer a
+parts	potential	pot=r:pot ent=suf:ant ial=suf:al
+parts	debt	deb=r:deb t
+parts	due	due=r:deb
+parts	check	check=r:shah
+parts	chess	chess=r:shah
+parts	mart	mart=r:merc
+parts	plane	plan=r:plan e
+parts	exemplary	ex=pre:ex empl=r:em ary=suf:ary
+parts	sample	s ampl=r:em e
+parts	experience	ex=pre:ex peri=r:experi ence=suf:ance
+parts	expert	ex=pre:ex pert=r:experi
+parts	experiment	ex=pre:ex peri=r:experi ment=suf:ment
+parts	chance	chance=r:cad
+parts	studio	stud=r:stud io
+parts	study	stud=r:stud y=suf:y
+parts	student	stud=r:stud ent=suf:ant
+parts	clear	clear=r:clar
+parts	movement	mov=r:mob e ment=suf:ment
+parts	injection	in=pre:into ject=r:ject ion=suf:ation
+parts	role	rol=r:rot e
+parts	source	sour=r:surg ce
+parts	task	task=r:tax
+parts	tax	tax=r:tax
+parts	mold	mol=r:mod d
+parts	page	pag=r:pagina e
+parts	pageant	pag=r:pagina e ant=suf:ant
+parts	chef	chef=r:capit
+parts	October	oct=r:oct ober
+parts	octopus	oct=r:oct o pus=r:ped
+parts	oil	oil=r:oliv
+parts	olive	oliv=r:oliv e
+parts	entire	en=pre:in tir=r:tact e
+parts	code	cod=r:codex e
+parts	codex	cod=r:codex ex
+parts	configuration	con=pre:com figur=r:fict ation=suf:ation
+parts	practice	pract=r:prag ice
+parts	pragmatic	pragmat=r:prag ic=suf:ic
+parts	rule	rule=r:reg
+parts	rail	rail=r:reg
+parts	card	card=r:chart
+parts	chart	chart=r:chart
+parts	cartoon	cart=r:chart oon
+parts	charter	chart=r:chart er=suf:er
+parts	note	not=r:gno e
+parts	pain	pain=r:poena
+parts	punish	pun=r:poena ish=suf:ish
+parts	penalty	penal=r:poena ty=suf:ity
+parts	respite	re=pre:re spit=r:spec e
+parts	caricature	car=r:carr ic at ure=suf:ure
+parts	cadet	cadet=r:capit
+parts	cattle	cattle=r:capit
+parts	chaos	chaos=r:chaos
+parts	gas	gas=r:chaos
+parts	chaotic	chaot=r:chaos ic=suf:ic
+parts	normal	norm=r:norm al=suf:al
+parts	campaign	camp=r:camp aign
+parts	cross	cross=r:crux
+parts	cruise	cruis=r:crux e
+parts	crucial	cruc=r:crux ial=suf:al
+parts	divide	divid=r:divid e
+parts	individual	in=pre:in divid=r:divid ual=suf:al
+parts	division	divis=r:divid ion=suf:ation
+parts	author	auth=r:aug or=suf:er
+parts	authority	auth=r:aug or=suf:er ity=suf:ity
+parts	image	imag=r:imag e
+parts	imitate	imit=r:imag ate=suf:ate
+parts	imagine	imagin=r:imag e
+parts	cancer	cancer=r:cancer
+parts	carcinoma	carcin=r:cancer oma
+parts	maestro	maestro=r:magister
+parts	master	master=r:magister
+parts	magistrate	magistr=r:magister ate=suf:ate
+parts	cooperate	co=pre:com oper=r:oper ate=suf:ate
+parts	catch	catch=r:cap
+parts	chase	chas=r:cap e
+parts	machine	machin=r:mechan e
+parts	mechanism	mechan=r:mechan ism=suf:ism
+parts	macho	mach=r:masc o
+parts	male	mal=r:masc e
+parts	masculine	mascul=r:masc ine
+parts	clan	clan=r:plant
+parts	premier	prem=r:prim ier
+parts	agency	ag=r:act ency=suf:ance
+parts	camera	camer=r:camer a
+parts	comrade	comrad=r:camer e
+parts	chamber	chamb=r:camer er=suf:er
+parts	ecology	eco=r:oik log=r:log y=suf:ia
+parts	economy	eco=r:oik nom=r:nom y=suf:y
+parts	attempt	at=pre:ad tempt=r:tempt
+parts	tentative	tent=r:tempt ative=suf:ive
+parts	canal	canal=r:canal
+parts	channel	chann=r:canal el
+parts	engine	en=pre:en gin=r:gen e
+parts	count	co=pre:com unt=r:put
+parts	sever	se=pre:se ver=r:para
+parts	budget	budg=r:bulga et
+parts	bulge	bulg=r:bulga e
+parts	fashion	fash=r:fac ion=suf:ation
+parts	metal	metal=r:metall
+parts	adolescent	ad=pre:ad olesc=r:alesc ent=suf:ant
+parts	adult	ad=pre:ad ult=r:alesc
+parts	sprite	sprit=r:spir e
+parts	influenza	in=pre:into flu=r:flu enza
+parts	journal	journ=r:diurn al=suf:al
+parts	journey	journ=r:diurn ey
+parts	map	map=r:mappa
+parts	mop	mop=r:mappa
+parts	adjutant	ad=pre:ad jut=r:juv ant=suf:ant
+parts	aid	aid=r:juv
+parts	aide	aid=r:juv e
+parts	citation	cit=r:cit ation=suf:ation
+parts	excite	ex=pre:ex cit=r:cit e
+parts	wine	win=r:vin e
+parts	initiative	in=pre:into it=r:it iat ive=suf:ive
+parts	mosaic	mosa=r:mus ic=suf:ic
+parts	museum	muse=r:mus um
+parts	muse	muse=r:mus
+parts	cathedral	cathedr=r:cathedra al=suf:al
+parts	chair	chair=r:cathedra
+parts	debit	deb=r:deb it
+parts	ray	ray=r:radi
+parts	drama	dram=r:dra a
+parts	drastic	dras=r:dra t ic=suf:ic
+parts	candidate	candid=r:cand ate=suf:ate
+parts	candle	cand=r:cand le
+parts	equivalent	equ=r:equ i val=r:val ent=suf:ant
+parts	quiet	quiet=r:quiet
+parts	quit	quit=r:quiet
+parts	quite	quit=r:quiet e
+parts	conflict	con=pre:com flict=r:flig
+parts	inflict	in=pre:into flict=r:flig
+parts	blame	blam=r:blasphem e
+parts	blasphemy	blasphem=r:blasphem y=suf:y
+parts	coil	co=pre:com il=r:lect
+parts	aim	aim=r:aestim
+parts	estimate	estim=r:aestim ate=suf:ate
+parts	esteem	esteem=r:aestim
+parts	cage	cage=r:cavea
+parts	jail	jail=r:cavea
+parts	attitude	att=r:apt itude
+parts	conduit	con=pre:com du=r:duc it
+parts	render	rend=r:redd er=suf:er
+parts	rent	rent=r:redd
+parts	rendition	rend=r:redd ition=suf:ation
+parts	academia	academ=r:academ ia=suf:ia
+parts	academy	academ=r:academ y=suf:y
+parts	bottle	bott=r:butt le
+parts	butler	butl=r:butt er=suf:er
+parts	schema	schem=r:schem a
+parts	scheme	schem=r:schem e
+parts	crown	crown=r:coron
+parts	pattern	patt=r:pater ern
+parts	tradition	tradit=r:trad ion=suf:ation
+parts	treason	treas=r:trad on
+parts	traitor	trait=r:trad or=suf:er
+parts	betray	be tray=r:trad
+parts	inch	inch=r:uncia
+parts	ounce	ounce=r:uncia
+parts	tone	ton=r:ton e
+parts	tune	tun=r:ton e
+parts	tonic	ton=r:ton ic=suf:ic
+parts	constable	con=pre:com sta=r:sta ble=suf:able
+parts	cloak	cloak=r:clocca
+parts	clock	clock=r:clocca
+parts	custom	custom=r:custom
+parts	costume	costum=r:custom e
+parts	customer	custom=r:custom er=suf:er
+parts	desk	desk=r:disc
+parts	disk	disk=r:disc
+parts	dish	dish=r:disc
+parts	diamond	diam=r:adamant ond
+parts	adamant	adamant=r:adamant
+parts	prayer	pray=r:prec er=suf:er
+parts	precarious	prec=r:prec ari ous=suf:ous
+parts	colonel	colonel=r:column
+parts	column	column=r:column
+parts	insane	in=pre:in san=r:san e
+parts	competent	com=pre:com pet=r:pet ent=suf:ant
+parts	papa	pap=r:papa a
+parts	pope	pop=r:papa e
+parts	legacy	leg=r:lex acy=suf:cy
+parts	autism	aut=pre:auto ism=suf:ism
+parts	automatic	auto=pre:auto matic
+parts	fable	fab=r:fari le
+parts	fate	fat=r:fari e
+parts	fairy	fai=r:fari ry
+parts	infant	in=pre:in fan=r:fari t
+parts	infantry	in=pre:in fan=r:fari t ry
+parts	expand	ex=pre:ex pand=r:pand
+parts	spawn	spawn=r:pand
+parts	deluxe	de=pre:de lux=r:luxus e
+parts	luxury	luxur=r:luxus y=suf:y
+parts	virtual	virtu=r:virtus al=suf:al
+parts	virtue	virtu=r:virtus e
+parts	treble	trebl=r:triplus e
+parts	triple	tripl=r:triplus e
+parts	salad	sal=r:sali ad
+parts	vase	vas=r:vas e
+parts	vessel	vess=r:vas el
+parts	confiscate	con=pre:com fisc=r:fisc ate=suf:ate
+parts	fiscal	fisc=r:fisc al=suf:al
+parts	jealous	jeal=r:zel ous=suf:ous
+parts	zeal	zeal=r:zel
+parts	noble	nob=r:gno le
+parts	disciple	discip=r:discip le
+parts	discipline	discip=r:discip line
+parts	strait	strait=r:strict
+parts	entirety	en=pre:in tir=r:tact e ty=suf:ity
+parts	arc	arc=r:arcus
+parts	arch	arch=r:arcus
+parts	nerve	nerv=r:nerv e
+parts	neuron	neur=r:nerv on
+parts	grain	grain=r:gran
+parts	granite	gran=r:gran ite
+parts	grenade	gren=r:gran ade
+parts	scandal	scandal=r:scandal
+parts	slander	slander=r:scandal
+parts	curb	curb=r:curv
+parts	curve	curv=r:curv e
+parts	helicopter	helic=r:helic o pter
+parts	helix	helix=r:helic
+parts	govern	govern=r:gubern
+parts	gubernatorial	gubern=r:gubern at or=suf:er ial=suf:al
+parts	rabies	rab=r:rabies ies
+parts	rage	rag=r:rabies e
+parts	anguish	angu=r:ang ish=suf:ish
+parts	anxious	anx=r:ang i ous=suf:ous
+parts	archbishop	arch=r:arch bishop=w:bishop
+parts	architect	archi=r:arch tect
+parts	fabric	fabric=r:fabrica
+parts	forge	forg=r:fabrica e
+parts	pastor	pastor=r:pastor
+parts	pasture	pastur=r:pastor e
+parts	poison	poison=r:potio
+parts	potion	pot=r:potio ion=suf:ation
+parts	rhyme	rhym=r:rhythm e
+parts	rhythm	rhythm=r:rhythm
+parts	hypothesis	hypo=pre:hypo thes=r:thes is
+parts	thesis	thes=r:thes is
+parts	cannabis	cannab=r:cannabis is
+parts	canvas	canv=r:cannabis as
+parts	nephew	neph=r:nepos ew
+parts	niece	niec=r:nepos e
+parts	cleric	cleric=r:cleric
+parts	clerk	clerk=r:cleric
+parts	clergy	clerg=r:cleric y=suf:y
+parts	chord	chord=r:chorda
+parts	cord	cord=r:chorda
+parts	predator	pred=r:praeda at or=suf:er
+parts	prey	prey=r:praeda
+parts	prophecy	prophec=r:prophet y=suf:y
+parts	prophet	prophet=r:prophet
+parts	chant	chant=r:canere
+parts	incentive	in=pre:into cent=r:canere ive=suf:ive
+parts	tuition	tuit=r:tueri ion=suf:ation
+parts	tutor	tut=r:tueri or=suf:er
+parts	feast	feast=r:fest
+parts	fiesta	fiest=r:fest a
+parts	fest	fest=r:fest
+parts	soprano	sopr=pre:super ano
+parts	monastery	mon=pre:mono aster y=suf:y
+parts	monk	mon=pre:mono k
+parts	orthodox	ortho dox=r:dox
+parts	paradox	para=pre:para dox=r:dox
+parts	ferocious	fer=r:ferus oc ious=suf:ous
+parts	fierce	fierc=r:ferus e
+parts	choir	choir=r:chorus
+parts	chorus	chor=r:chorus us
+parts	petrol	petr=r:petr ol
+parts	petroleum	petr=r:petr o leum
+parts	cellar	cell=r:cella ar=suf:er
+parts	cellular	cell=r:cella ul ar=suf:er
+parts	chandelier	chand=r:cand el ier=suf:er
+parts	repeal	re=pre:re peal=r:pel
+parts	fragile	frag=r:fract ile
+parts	frail	frai=r:fract l
+parts	sperm	sperm=r:sper
+parts	spore	spor=r:sper e
+parts	edible	ed=r:ed ible=suf:able
+parts	obesity	ob=pre:ob es=r:ed ity=suf:ity
+parts	cosmetic	cosm=r:cosm et ic=suf:ic
+parts	cosmic	cosm=r:cosm ic=suf:ic
+parts	hierarchy	hier arch=r:arch y=suf:ia
+parts	monarchy	mon=pre:mono arch=r:arch y=suf:ia
+parts	lunar	lun=r:lun ar=suf:er
+parts	lunatic	lun=r:lun at ic=suf:ic
+parts	diploma	diplom=r:diplom a
+parts	diplomat	diplom=r:diplom at
+parts	insurrection	in=pre:into surrect=r:surg ion=suf:ation
+parts	reverence	re=pre:re ver=r:verer ence=suf:ance
+parts	reverend	re=pre:re ver=r:verer end
+parts	vain	vain=r:vac
+parts	vanity	van=r:vac ity=suf:ity
+parts	consort	con=pre:com sort=r:sort
+parts	consortium	con=pre:com sort=r:sort ium
+parts	manifesto	mani=r:man fest o
+parts	anthropology	anthropo=r:anthrop log=r:log y=suf:ia
+parts	philanthropy	phil=r:phil anthrop=r:anthrop y=suf:ia
+parts	erosion	e=pre:ex ros=r:rod ion=suf:ation
+parts	rodent	rod=r:rod ent=suf:ant
+parts	amnesia	a=pre:a mnes=r:mne ia=suf:ia
+parts	amnesty	a=pre:a mnest=r:mne y=suf:y
+parts	laureate	laur=r:laur e ate=suf:ate
+parts	laurel	laur=r:laur el
+parts	alligator	al ligator=r:lacert
+parts	lizard	lizard=r:lacert
+parts	caste	cast=r:cast e
+parts	chastity	chast=r:cast ity=suf:ity
+parts	discreet	dis=pre:dis creet=r:cern
+parts	lactose	lact=r:lact ose
+parts	lettuce	lett=r:lact uce
+parts	intricate	in=pre:in tric=r:tric ate=suf:ate
+parts	intrigue	in=pre:in trig=r:tric ue
+parts	aura	aur=r:aer a
+parts	palsy	pals=r:paralys y=suf:y
+parts	paralysis	paralys=r:paralys is
+parts	vortex	vort=r:vers ex
+parts	confederacy	con=pre:com feder=r:feder acy=suf:cy
+parts	confederation	con=pre:com feder=r:feder ation=suf:ation
+parts	lieu	lieu=r:loc
+parts	canary	can=r:canis ary=suf:ary
+parts	canine	can=r:canis ine
+parts	dormant	dorm=r:dorm ant=suf:ant
+parts	dormitory	dorm=r:dorm itory
+parts	ardent	ard=r:ard ent=suf:ant
+parts	arson	ars=r:ard on
+parts	barbarian	barbar=r:barbar ian
+parts	barbaric	barbar=r:barbar ic=suf:ic
+parts	medley	medl=r:misc ey
+parts	melee	mel=r:misc ee=suf:ee
+parts	ravage	rav=r:rap age
+parts	ravine	rav=r:rap ine
+parts	abomination	ab=pre:ab omin=r:omen ation=suf:ation
+parts	omen	omen=r:omen

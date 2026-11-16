@@ -6,13 +6,11 @@ parts	immigrant	im=pre:into migr=r:migr ant=suf:ant
 parts	incorporate	in=pre:into corporate=w:corporate
 parts	insect	in=pre:into sect=r:sect
 parts	initiate	in=pre:into it=r:it i ate=suf:ate
-parts	incentive	in=pre:into cent ive=suf:ive
 parts	influx	in=pre:into flux=r:flu
 parts	intuition	in=pre:into tuit ion=suf:ation
 parts	indict	in=pre:into dict=r:dict
 parts	implicate	im=pre:into plic=r:plic ate=suf:ate
 parts	illuminate	il=pre:into lumin=r:lumin ate
-parts	insurrection	in=pre:into sur rect=r:reg ion=suf:ation
 parts	increment	in=pre:into cre ment=suf:ment
 parts	infect	in=pre:into fect=r:fac
 parts	inability	in=pre:in ability=w:ability

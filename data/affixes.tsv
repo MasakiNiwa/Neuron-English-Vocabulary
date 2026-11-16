@@ -53,6 +53,16 @@ prefix	under	under	下に・不足して	古英語 under
 prefix	uni	uni,un	1つの	ラテン語 unus
 prefix	up	up	上へ	古英語 up
 prefix	with	with	後ろへ・逆らって	古英語 wiþ
+prefix	meta	meta,met	後に・変化して・超えて	ギリシャ語 meta
+prefix	pan	pan	すべての	ギリシャ語 pan
+prefix	ana	ana	上へ・再び・すっかり	ギリシャ語 ana
+prefix	ambi	amb	両側に・周りに	ラテン語 ambi-
+prefix	apo	apo	離れて	ギリシャ語 apo
+prefix	homo	homo	同じ	ギリシャ語 homos
+prefix	dys	dys	悪い・困難な	ギリシャ語 dys-
+prefix	be	be	すっかり・〜にする	古英語 be-
+prefix	kilo	kilo	千	ギリシャ語 khilioi
+prefix	infra	infra	下の	ラテン語 infra
 suffix	able	able,ible,ble	〜できる	ラテン語 -abilis
 suffix	al	al,ial,ual	〜の（形容詞）／〜すること	ラテン語 -alis
 suffix	ance	ance,ence,ancy,ency	〜の状態・性質	ラテン語 -antia
@@ -73,7 +83,7 @@ suffix	ic	ic,ical	〜の・〜的な	ギリシャ語 -ikos
 suffix	ish	ish	〜のような・〜ぎみの	古英語 -isc
 suffix	ism	ism	主義・特性	ギリシャ語 -ismos
 suffix	ist	ist	〜する人・主義者	ギリシャ語 -istes
-suffix	ity	ity,ty	〜の性質・状態	ラテン語 -itas
+suffix	ity	ity,ety,ty	〜の性質・状態	ラテン語 -itas
 suffix	ive	ive,ative	〜の性質を持つ	ラテン語 -ivus
 suffix	ize	ize,ise	〜化する	ギリシャ語 -izein
 suffix	less	less	〜のない	古英語 -leas
@@ -89,3 +99,14 @@ suffix	ward	ward,wards	〜の方へ	古英語 -weard
 suffix	wise	wise	〜の方法で・〜に関して	古英語 wise
 suffix	y	y	〜の性質を持つ・〜でいっぱいの	古英語 -ig
 suffix	ia	ia	〜の状態・性質・学問・技（名詞を作る）	ギリシャ語・ラテン語 -ia（英語では多く -y になる）
+suffix	th	th	〜の状態・性質／第〜（序数）	古英語 -þ(u)
+suffix	age	age	〜すること・状態・集合・料金	フランス語 -age
+suffix	ster	ster	〜する人	古英語 -estre
+suffix	ine	ine	〜の・〜に関する／物質・女性	ラテン語 -inus
+suffix	ium	ium	〜の場所・元素	ラテン語 -ium
+suffix	ics	ics	〜学・〜術	ギリシャ語 -ika
+suffix	ile	ile	〜できる・〜に関する	ラテン語 -ilis
+suffix	tude	itude,tude	〜の状態・性質	ラテン語 -tudo
+suffix	ade	ade	〜の行為・結果・飲み物	フランス語 -ade
+suffix	teen	teen	十〜（13〜19）	古英語 -tiene
+suffix	ing	ing	〜すること・〜したもの	古英語 -ung/-ing

@@ -248,7 +248,6 @@ parts	trespassing	tres=pre:trans pass=r:pass ing
 parts	underwriting	under=pre:under writ=w:write ing
 parts	unplanned	un=pre:un planned=w:plan
 parts	unwelcome	un=pre:un welcome=w:welcome
-parts	abomination	ab=pre:ab omin ation=suf:ation
 parts	acutely	acute=w:acute ly=suf:ly
 parts	adherent	ad=pre:ad her=r:her ent=suf:ant
 parts	allotment	allot=w:allot ment=suf:ment
@@ -303,7 +302,6 @@ parts	decisively	decisive=w:decisive ly=suf:ly
 parts	degeneration	de=pre:de gener=r:gen ation=suf:ation
 parts	democratically	democratic=w:democratic ally=suf:ly
 parts	deodorant	de=pre:de odor=w:odor ant=suf:ant
-parts	dormitory	dorm itory
 parts	emigrate	e=pre:ex migr=r:migr ate=suf:ate
 parts	eradication	e=pre:ex radic=r:radic ation=suf:ation
 parts	exhilarating	ex=pre:ex hilar ating
