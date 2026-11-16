@@ -1,6 +1,6 @@
 import { Link, useParams } from '@tanstack/react-router'
 import { BookOpen, Brain, GitBranch, Network, Sparkles } from 'lucide-react'
-import { Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/Button'
 import { Card, SectionTitle } from '@/components/ui/Card'
@@ -14,6 +14,9 @@ import { useDictionary } from './hooks'
 import { markVisited } from '@/features/network/visited'
 import type { Morpheme } from './types'
 import { usePersistentState } from '@/lib/persist'
+
+// グラフの部品は大きいので、語源のページを開いたときだけ読み込む
+const MorphMemoryPanel = lazy(() => import('@/features/drill/MorphMemoryPanel'))
 
 /** 語源の成り立ち: jud = jus（法）+ dic（言う） */
 function PartsTree({ m }: { m: Morpheme }) {
@@ -125,6 +128,14 @@ function MorphemeView({ id }: { id: string }) {
       <MorphList title="この語源を含む語源" ids={m.partOf} />
       <MorphList title="祖語（さらに古い祖先）" ids={m.family} />
       <MorphList title="この祖語から生まれた語根" ids={m.members} />
+      <h2 className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-muted">
+        <Brain className="size-4" /> 記憶の見通し
+      </h2>
+      <Card className="mb-4 p-3">
+        <Suspense fallback={<div className="h-48" />}>
+          <MorphMemoryPanel m={m} />
+        </Suspense>
+      </Card>
       <MorphAiPanel m={m} />
 
       {words.length > 0 && (

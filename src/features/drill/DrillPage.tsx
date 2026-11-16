@@ -188,6 +188,20 @@ function QuestionCard({ item, onGrade }: { item: DrillItem; onGrade: (g: Grade) 
           {q.word && <SpeakButton text={q.head} />}
         </div>
         {q.sub && !(shown && q.kind === 'family') && <p className="text-sm text-muted">{q.sub}</p>}
+        {q.parts && (
+          // 語源で推測: 部品と意味を並べる
+          <div className="mt-1 flex flex-wrap items-center justify-center gap-1.5">
+            {q.parts.map((p, k) => (
+              <div key={p.id} className="flex items-center gap-1.5">
+                {k > 0 && <span className="text-muted">+</span>}
+                <div className={cn('flex min-w-14 flex-col items-center rounded-xl px-2.5 py-1.5', p.id === q.target ? 'bg-accent-soft ring-2 ring-accent/40' : 'border border-border')}>
+                  <span className={cn('font-en text-base', p.id === q.target && 'font-semibold text-accent')}>{p.label}</span>
+                  <span className="max-w-28 text-center text-[11px] leading-tight text-muted">{p.meaning}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <p className="text-sm">{q.prompt}</p>
 
@@ -248,7 +262,7 @@ function QuestionCard({ item, onGrade }: { item: DrillItem; onGrade: (g: Grade) 
                 autoCapitalize="none"
                 spellCheck={false}
                 enterKeyHint="done"
-                className={cn('h-10 min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted', q.kind !== 'e2m' && 'font-en')}
+                className={cn('h-10 min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted', q.kind !== 'e2m' && q.kind !== 'guess' && 'font-en')}
               />
             </label>
           </form>
@@ -326,7 +340,16 @@ function Session({ onDone }: { onDone: () => void }) {
   useEffect(() => {
     if (!plan || items) return
     let alive = true
-    if (plan.random) set({ items: buildRandom(dict, plan.random, Math.random, plan.only ? new Set(plan.only) : undefined) })
+    // 語源で推測の問題は、学習中の単語を避ける（知らない語で推測する）
+    if (plan.random || plan.guess)
+      void db.cards
+        .toCollection()
+        .primaryKeys()
+        .then((ks) => {
+          if (!alive) return
+          const known = new Set(ks as string[])
+          set({ items: buildRandom(dict, plan.random ?? plan.guess!, Math.random, plan.only ? new Set(plan.only) : undefined, { known, kinds: plan.guess ? ['guess'] : undefined }) })
+        })
     else void lastKinds([...(plan.review ?? [])]).then((lk) => alive && set({ items: buildDrill(dict, plan, Math.random, lk) }))
     return () => {
       alive = false
@@ -492,6 +515,9 @@ function Hub({ onStart }: { onStart: (p: Plan) => void }) {
         <Button variant="primary" size="lg" onClick={() => onStart({ random: n, only: useSeen ? seen : undefined })}>
           <Shuffle className="size-5" /> ランダムに {n} 問
         </Button>
+        <Button size="lg" onClick={() => onStart({ guess: n, only: useSeen ? seen : undefined })}>
+          <Lightbulb className="size-5" /> 語源で推測（知らない単語）{n} 問
+        </Button>
         {review.length > 0 && (
           <Button size="lg" onClick={() => onStart({ review })}>
             <RotateCcw className="size-5" /> 復習する（{review.length} 個）
@@ -512,6 +538,9 @@ function Hub({ onStart }: { onStart: (p: Plan) => void }) {
           </li>
           <li className="flex gap-2">
             <GitBranch className="mt-0.5 size-4 shrink-0 text-accent" /> 同じ祖先（印欧祖語）から生まれた語源
+          </li>
+          <li className="flex gap-2">
+            <Lightbulb className="mt-0.5 size-4 shrink-0 text-accent" /> 語源で推測（まだ学んでいない単語を、部品の意味から当てる）
           </li>
         </ul>
         <p className="text-xs text-muted">
