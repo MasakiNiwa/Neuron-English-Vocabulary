@@ -1,5 +1,8 @@
 import type { Dictionary } from '@/features/dictionary/data'
 import type { IndexEntry, Morpheme } from '@/features/dictionary/types'
+import { matchMeanings } from '@/features/study/answer'
+
+const POS_JA: Record<string, string> = { noun: '名詞', verb: '動詞', adj: '形容詞', adv: '副詞', prep: '前置詞', conj: '接続詞', pron: '代名詞', det: '限定詞', intj: '間投詞', num: '数詞', phrase: '熟語' }
 
 /**
  * 語源ドリルの問題を作る（画面・DB に依存しない）。
@@ -11,7 +14,7 @@ import type { IndexEntry, Morpheme } from '@/features/dictionary/types'
  * - family: 同じ祖先（印欧祖語）から生まれた語源
  */
 
-export type QuestionKind = 'e2m' | 'm2e' | 'word' | 'similar' | 'family'
+export type QuestionKind = 'e2m' | 'm2e' | 'word' | 'similar' | 'family' | 'guess'
 
 export const KIND_LABEL: Record<QuestionKind, string> = {
   e2m: '語源 → 意味',
@@ -19,6 +22,7 @@ export const KIND_LABEL: Record<QuestionKind, string> = {
   word: '単語の中の語源',
   similar: '似た意味の見分け',
   family: '同じ祖先の語源',
+  guess: '語源で推測',
 }
 
 export interface DrillChoice {
@@ -48,6 +52,8 @@ export interface Question {
   ancestor?: string
   /** 似た意味の問題で、候補に共通する意味（答えたあとに見せる） */
   token?: string
+  /** 語源で推測の問題: 単語の部品（語源と意味） */
+  parts?: { id: string; label: string; meaning: string }[]
 }
 
 /** ドリルにする語源の種類 */
@@ -278,15 +284,58 @@ function family(dict: Dictionary, m: Morpheme, rand: Rand): Question | null {
   }
 }
 
+/**
+ * 語源で推測: まだ学んでいない単語を、部品（語源と意味）に分けて見せ、意味を推測する。
+ * 部品が 2 つ以上あり、語源で意味が説明できる語（よく使う語は避け、知らない語になりやすく）
+ */
+function guess(dict: Dictionary, m: Morpheme, rand: Rand, used: ReadonlySet<string>, known: ReadonlySet<string>): Question | null {
+  // 部品は綴りに現れる接頭辞・語根・接尾辞だけ（祖語は部品として見せない）
+  const partsOf = (e: IndexEntry) => e.morphs.map((id) => dict.morphById.get(id)).filter((x): x is Morpheme => !!x && DRILL_TYPES.has(x.type))
+  const ok = (e: IndexEntry) => partsOf(e).length >= 2 && !used.has(e.key) && !known.has(e.key)
+  const ws = morphWords(dict, m).filter(ok)
+  if (!ws.length) return null
+  // まだ見ていない、少し難しめの語を優先（頻度順位 3000 位より後）
+  const hard = ws.filter((w) => w.rank > 3000)
+  const from = hard.length ? hard : ws
+  const w = from[Math.floor(rand() * from.length)]
+  const gloss = (e: IndexEntry) => e.gloss.split('、').slice(0, 2).join('、')
+  // ダミー: この語源を含まない、近い頻度の単語の意味
+  const others = dict.entries.filter((e) => e.type === 'w' && e.key !== w.key && !e.morphs.includes(m.id) && Math.abs(e.rank - w.rank) < 4000 && !dict.hidden.has(e.key))
+  const ds: IndexEntry[] = []
+  for (let k = 0; k < 40 && ds.length < 3 && others.length; k++) {
+    const x = others[Math.floor(rand() * others.length)]
+    if (!ds.includes(x) && gloss(x) !== gloss(w) && ds.every((d) => gloss(d) !== gloss(x))) ds.push(x)
+  }
+  if (ds.length < 3) return null
+  return {
+    kind: 'guess',
+    target: m.id,
+    prompt: '部品の意味から、この単語の意味を推測しよう',
+    head: w.key.replace(/_/g, ' '),
+    headEn: true,
+    word: w.key,
+    parts: partsOf(w).map((x) => ({ id: x.id, label: labelOf(x), meaning: x.meaning.ja })),
+    choices: shuffle([{ text: gloss(w), correct: true }, ...ds.map((x) => ({ text: gloss(x), correct: false }))], rand),
+  }
+}
+
 /** この語源で作れる問題の種類 */
 export function kindsFor(dict: Dictionary, m: Morpheme): QuestionKind[] {
   const out: QuestionKind[] = ['e2m', 'm2e', 'word']
   if (similarMorphs(dict, m).length) out.push('similar')
   if (siblings(dict, m).length) out.push('family')
+  if (morphWords(dict, m).some((e) => e.morphs.filter((id) => DRILL_TYPES.has(dict.morphById.get(id)?.type ?? '')).length >= 2)) out.push('guess')
   return out
 }
 
-export function makeQuestion(dict: Dictionary, m: Morpheme, kind: QuestionKind, rand: Rand = Math.random, usedWords: ReadonlySet<string> = new Set()): Question | null {
+export function makeQuestion(
+  dict: Dictionary,
+  m: Morpheme,
+  kind: QuestionKind,
+  rand: Rand = Math.random,
+  usedWords: ReadonlySet<string> = new Set(),
+  known: ReadonlySet<string> = new Set(),
+): Question | null {
   switch (kind) {
     case 'e2m':
       return e2m(dict, m, rand)
@@ -298,6 +347,8 @@ export function makeQuestion(dict: Dictionary, m: Morpheme, kind: QuestionKind, 
       return similar(dict, m, rand, usedWords)
     case 'family':
       return family(dict, m, rand)
+    case 'guess':
+      return guess(dict, m, rand, usedWords, known)
   }
 }
 
@@ -308,22 +359,32 @@ export interface DrillItem {
   role: DrillItemRole
 }
 
-const KINDS: QuestionKind[] = ['e2m', 'm2e', 'word', 'similar', 'family']
+const KINDS: QuestionKind[] = ['e2m', 'm2e', 'word', 'similar', 'family', 'guess']
 
 /**
  * すべての語源からランダムに n 問。種類を先に均等に選び、その種類を作れる語源から選ぶ
  * （似た意味・同じ祖先の問題も同じくらい出るように）。同じ語源は 1 回に 1 問まで
  */
-export function buildRandom(dict: Dictionary, n: number, rand: Rand = Math.random, only?: ReadonlySet<string>): DrillItem[] {
+export function buildRandom(
+  dict: Dictionary,
+  n: number,
+  rand: Rand = Math.random,
+  only?: ReadonlySet<string>,
+  opts: { kinds?: QuestionKind[]; known?: ReadonlySet<string> } = {},
+): DrillItem[] {
+  const kinds = opts.kinds ?? KINDS
   const pool = drillData(dict).pool.filter((m) => !only || only.has(m.id))
   const items: DrillItem[] = []
   const usedM = new Set<string>()
   const usedW = new Set<string>()
+  const byKind: Partial<Record<QuestionKind, Morpheme[]>> = {}
   for (let tries = 0; items.length < n && tries < n * 30; tries++) {
-    const kind = KINDS[Math.floor(rand() * KINDS.length)]
-    const m = pool[Math.floor(rand() * pool.length)]
+    const kind = kinds[Math.floor(rand() * kinds.length)]
+    // その種類の問題を作れる語源から選ぶ（同じ祖先など、作れる語源が少ない種類も同じくらい出るように）
+    const from = (byKind[kind] ??= pool.filter((x) => kindsFor(dict, x).includes(kind)))
+    const m = from[Math.floor(rand() * from.length)]
     if (!m || usedM.has(m.id)) continue
-    const q = makeQuestion(dict, m, kind, rand, usedW)
+    const q = makeQuestion(dict, m, kind, rand, usedW, opts.known)
     if (!q) continue
     usedM.add(m.id)
     if (q.word) usedW.add(q.word)
@@ -413,6 +474,15 @@ export function drillHints(dict: Dictionary, q: Question): Hint[] {
         { label: '語源の意味', text: `「${m.meaning.ja}」を表す${typeName(m)}` },
         { label: '最初の文字', text: firstLetters(m.label) },
       ]
+    case 'guess': {
+      const known = morphWords(dict, m).find((w) => w.key !== q.word && !spell.has(normLabel(w.key)))
+      const e = q.word ? dict.byKey.get(q.word) : null
+      return [
+        ...(e ? [{ label: '品詞', text: e.pos.map((p) => POS_JA[p] ?? p).join('・') }] : []),
+        ...(known ? [{ label: '同じ語源のよく使う単語', text: `${headword(known.key)}（${known.gloss.split('、')[0]}）` }] : []),
+        ...(e ? [{ label: '意味の最初の文字', text: `${[...e.gloss][0]}…` }] : []),
+      ]
+    }
     case 'family': {
       const a = q.ancestor ? dict.morphById.get(q.ancestor) : null
       return [
@@ -464,6 +534,12 @@ export function checkMemo(dict: Dictionary, q: Question, memo: string): MemoVerd
   }
   const { pool, morphsOf } = drillData(dict)
   const all = dict.morphemes.map((x) => x.id)
+  if (q.kind === 'guess') {
+    const e = q.word ? dict.byKey.get(q.word) : null
+    if (!e) return null
+    const hit = matchMeanings(memo, e.gloss.split('、'))
+    return hit.length ? { kind: 'right', note: `「${hit.join('・')}」が合っています` } : { kind: 'wrong' }
+  }
   if (q.kind === 'family') {
     const a = q.ancestor ? dict.morphById.get(q.ancestor) : null
     const kin = new Set((a?.members ?? []).filter((id) => id !== m.id))
@@ -491,5 +567,5 @@ export function checkMemo(dict: Dictionary, q: Question, memo: string): MemoVerd
 
 /** この問題の答えを書くメモの案内 */
 export function memoPlaceholder(q: Question): string {
-  return q.kind === 'e2m' ? '思い浮かんだ意味をメモ（任意）' : '思い浮かんだ語源をメモ（任意・英字で）'
+  return q.kind === 'e2m' || q.kind === 'guess' ? '思い浮かんだ意味をメモ（任意）' : '思い浮かんだ語源をメモ（任意・英字で）'
 }

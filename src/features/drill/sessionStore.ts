@@ -4,7 +4,8 @@ import type { Answer } from './drill'
 import type { DrillItem } from './questions'
 
 /** 1 回分のドリルの出題の仕方 */
-export type Plan = { random?: number; only?: string[]; review?: string[]; practice?: string }
+/** random: すべての種類からランダム / guess: 語源で推測だけ / review: 期限の来た語源 / practice: 1 つの語源 */
+export type Plan = { random?: number; guess?: number; only?: string[]; review?: string[]; practice?: string }
 
 /**
  * 語源ドリルの 1 回分の状態。ページを移動して戻ってきても、途中から再開できるようにメモリに保持する

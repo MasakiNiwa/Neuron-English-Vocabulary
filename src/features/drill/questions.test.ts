@@ -101,8 +101,8 @@ describe('語源ドリルの問題', () => {
     const items = buildRandom(dict, 80, lcg(4))
     expect(items).toHaveLength(80)
     expect(new Set(items.map((x) => x.q.target)).size).toBe(80)
-    // 種類は均等に選ぶので、80 問あれば 5 種類すべてが出る（乱数の種によらない程度の数）
-    expect(new Set(items.map((x) => x.q.kind)).size).toBe(5)
+    // 種類は均等に選ぶので、80 問あれば 6 種類すべてが出る（乱数の種によらない程度の数）
+    expect(new Set(items.map((x) => x.q.kind)).size).toBe(6)
     const only = new Set(['r:fac', 'r:spec', 'r:vid', 'r:port', 'r:sta', 'r:duc', 'pre:re', 'pre:ex'])
     expect(buildRandom(dict, 5, lcg(4), only).every((x) => only.has(x.q.target))).toBe(true)
   })
@@ -169,5 +169,20 @@ describe('語源ドリルの問題', () => {
         else expect(hs[0].text).not.toContain(m.meaning.ja)
       }
     }
+  })
+
+  it('語源で推測: 部品が 2 つ以上ある、学習中でない単語。部品にその語源を含み、正解はその語の意味', () => {
+    const spec = dict.morphById.get('r:spec')!
+    const known = new Set(['inspect', 'respect', 'expect'])
+    for (let k = 1; k < 20; k++) {
+      const q = makeQuestion(dict, spec, 'guess', lcg(k), new Set(), known)!
+      expect(known.has(q.word!)).toBe(false)
+      expect(q.parts!.length).toBeGreaterThanOrEqual(2)
+      expect(q.parts!.some((p) => p.id === 'r:spec')).toBe(true)
+      expect(q.choices.find((c) => c.correct)!.text).toBe(dict.byKey.get(q.word!)!.gloss.split('、').slice(0, 2).join('、'))
+      expect(checkMemo(dict, q, dict.byKey.get(q.word!)!.gloss.split('、')[0])?.kind).toBe('right')
+    }
+    const only = buildRandom(dict, 10, lcg(3), undefined, { kinds: ['guess'], known })
+    expect(only.every((x) => x.q.kind === 'guess')).toBe(true)
   })
 })
