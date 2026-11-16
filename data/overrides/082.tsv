@@ -8,3 +8,12 @@ exclude	r:pol	polite
 exclude	r:form	formidable
 # cord はギリシャ語 khordē（弦）から。cor（心）とは別
 exclude	r:cor	cord
+# 接頭辞・接尾辞の追加（meta- pan- ana- ambi- apo- homo- dys- be- kilo- infra- / -th -age -ster -ine -ium -ics -ile -tude -ade -teen -ing）で付いた誤り・消えた分解
+# ambulance は ambulāre（歩く）から。ambi- とは別
+exclude	pre:ambi	ambulance
+# manage はイタリア語 maneggiare（manus 手）から。-age とは別
+parts	manage	man=r:man age
+parts	eighth	eigh=w:eight th=suf:th
+parts	eighteen	eigh=w:eight teen=suf:teen
+parts	homosexuality	homosexual=w:homosexual ity=suf:ity
+parts	semantics	semantic=w:semantic s
