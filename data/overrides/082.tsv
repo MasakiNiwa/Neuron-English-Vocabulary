@@ -1,0 +1,10 @@
+# v2.13: 語源分解の充実（2026-11-16）
+# 解説で「〜とは別語源」としているのに、その語根で分解していた語
+# intestinal は intestīnus（内部の）から。test（証人）とは別
+parts	intestinal	intestin=w:intestine al=suf:al
+# polite は polītus（磨かれた）から。polis（都市）とは別
+exclude	r:pol	polite
+# formidable は formīdō（恐怖）から。forma（形）とは別
+exclude	r:form	formidable
+# cord はギリシャ語 khordē（弦）から。cor（心）とは別
+exclude	r:cor	cord
