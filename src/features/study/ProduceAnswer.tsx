@@ -1,5 +1,6 @@
 import { Check, Eye, Lightbulb, Mic, PencilLine, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCardState } from '@/lib/cardState'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
 import { getSpeechRecognition } from '@/lib/speech'
@@ -52,10 +53,11 @@ export function ProduceAnswer({
 }) {
   const dict = useDictionary()
   const hints = useMemo(() => buildHints(answer, entry, dict), [answer, entry, dict])
-  const [hintLevel, setHintLevel] = useState(0)
-  const [mode, setMode] = useState<Mode>(initialMode)
-  const [typed, setTyped] = useState('')
-  const [result, setResult] = useState<{ verdict: TypedVerdict; target: string; input: string } | null>(null)
+  // ページを移動して戻ってきても、ヒント・答え方・書いた答え・照合の結果をそのままにする
+  const [hintLevel, setHintLevel] = useCardState('produce.hint', 0)
+  const [mode, setMode] = useCardState<Mode>('produce.mode', initialMode)
+  const [typed, setTyped] = useCardState('produce.typed', '')
+  const [result, setResult] = useCardState<{ verdict: TypedVerdict; target: string; input: string } | null>('produce.result', null)
   const inputRef = useRef<HTMLInputElement>(null)
   // 日本語入力の変換中は消さない（確定したときに整える）
   const composingRef = useRef(false)

@@ -3,6 +3,8 @@ import { SpeakPrompt, suggestFromScore } from './SpeakPrompt'
 import { SpeakCheck } from '@/features/speech/SpeakCheck'
 import { reduceMotion } from '@/lib/motion'
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { CardScopeContext, cardSnapshot, saveCardValue, useCardState, type CardScope } from '@/lib/cardState'
+import { useStudySession } from './sessionStore'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { PageSpinner } from '@/components/ui/Spinner'
@@ -149,6 +151,18 @@ export function ReviewSession({
   const [suggested, setSuggested] = useState<Grade | null>(null)
   // このカードで実際に出した形式（カードの表面が語を読み込んでから決まる）
   const [fmt, setFmt] = useState<ConcreteFormat | null>(null)
+  // 今のカード。学習ページのセッション（sessionStore）で解いているときだけ、カードの画面の状態を覚える（ページを移動して戻っても続きから）
+  const startedAt = useStudySession((s) => s.startedAt)
+  const inStore = useStudySession((s) => s.queue === queue)
+  const entryAt = queue[idx]?.entryId
+  const scope = useMemo<CardScope | null>(() => (inStore && entryAt ? { ns: 'study', key: `${startedAt}|${idx}|${entryAt}` } : null), [inStore, entryAt, startedAt, idx])
+  const suggest = useCallback(
+    (g: Grade | null) => {
+      setSuggested(g)
+      saveCardValue(scope, 'suggested', g)
+    },
+    [scope],
+  )
 
   // 学習中は画面スリープを防止（Screen Wake Lock API）
   useEffect(() => {
@@ -170,8 +184,10 @@ export function ReviewSession({
       setSkills(cur.state === 0 ? undefined : skillRecall(cur, logsOfRun(cur, logs)))
       setLoadedIdx(idx)
     })
-    setShown(false)
-    setSuggested(null)
+    // 解いている途中でページを移動して戻ってきたときは、答えを見たか・評価の提案を元に戻す
+    const snap = cardSnapshot(scope)
+    setShown(snap?.shown === true)
+    setSuggested((snap?.suggested as Grade | null | undefined) ?? null)
     setFmt(null)
     ratingRef.current = false
     startRef.current = Date.now()
@@ -187,6 +203,7 @@ export function ReviewSession({
     return () => {
       alive = false
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx, queue])
 
   // 表面に英語が出る形式だけ最初に読み上げる。日→英・穴埋めでは答えになるので、答えを見たときに読む（B13）
@@ -197,6 +214,7 @@ export function ReviewSession({
 
   const reveal = useCallback(() => {
     setShown(true)
+    saveCardValue(scope, 'shown', true)
     if (!reduceMotion())
       requestAnimationFrame(() =>
         backRef.current?.animate(
@@ -209,7 +227,7 @@ export function ReviewSession({
       )
     if (card) void recordView(card.entryId, 'study')
     if (card && autoSpeak && fmt && !SPEAK_FIRST.has(fmt) && !LISTENING.has(fmt)) speak(card.entryId.replace(/_/g, ' '))
-  }, [card, autoSpeak, fmt])
+  }, [card, autoSpeak, fmt, scope])
 
   const rate = useCallback(
     async (g: Grade) => {
@@ -280,6 +298,7 @@ export function ReviewSession({
           </span>
           <Suspense fallback={<PageSpinner />}>
             {loadedIdx === idx && (
+            <CardScopeContext.Provider value={scope}>
             <CardFace
               key={`${idx}-${card.entryId}`}
               entryKey={card.entryId}
@@ -289,11 +308,12 @@ export function ReviewSession({
               onFormat={setFmt}
               shown={shown}
               onReveal={reveal}
-              onSuggest={setSuggested}
+              onSuggest={suggest}
               backRef={backRef}
               focus={mode === 'focus'}
               skills={skills}
             />
+            </CardScopeContext.Provider>
             )}
           </Suspense>
         </Card>
@@ -371,16 +391,15 @@ function CardFace({
   skills?: Record<Skill, number | null>
 }) {
   const entry = useEntry(entryKey)
-  // カードごとに 1 回だけ選ぶ（描画のたびに変わらないように）
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fmt = useMemo(() => pickFormat(formats, auto, entry, card && { state: card.state, strength: strengthDays(card), skills }), [entry])
+  // カードごとに 1 回だけ選ぶ（描画のたびに変わらないように。ページを移動して戻っても同じ形式）
+  const [fmt] = useCardState('fmt', () => pickFormat(formats, auto, entry, card && { state: card.state, strength: strengthDays(card), skills }))
   useEffect(() => onFormat(fmt), [fmt, onFormat])
-  const [answered, setAnswered] = useState<number | null>(null)
+  const [answered, setAnswered] = useCardState<number | null>('answered', null)
   // 自分の答え（メモ・書いた答え・話した答え・選んだ答え）
-  const [attempt, setAttempt] = useState<Attempt>({ memo: '' })
+  const [attempt, setAttempt] = useCardState<Attempt>('attempt', { memo: '' })
   const addAttempt = useCallback((a: Partial<Attempt>) => setAttempt((x) => ({ ...x, ...a })), [])
   // 聞いて意味: 答えを見る か 4 択で答える
-  const [listenChoice, setListenChoice] = useState(false)
+  const [listenChoice, setListenChoice] = useCardState('listenChoice', false)
   const head = entryKey.replace(/_/g, ' ')
   const showHead = fmt === 'en2ja' || fmt === 'choice' || fmt === 'speak' || shown
   // 英語を答える問題（書く / 話す / 答えを見る）。穴埋めは例文中の形も正解にする

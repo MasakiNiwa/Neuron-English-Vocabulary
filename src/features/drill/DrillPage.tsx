@@ -1,7 +1,7 @@
 import { Link, useParams } from '@tanstack/react-router'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { BookOpenCheck, Brain, Check, Eye, GitBranch, Layers, Lightbulb, ListChecks, NotebookPen, RotateCcw, Shuffle, Sparkles, X } from 'lucide-react'
-import { Suspense, useEffect, useMemo, useState } from 'react'
+import { Suspense, useEffect, useMemo } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Segmented } from '@/components/ui/Form'
@@ -14,6 +14,8 @@ import { EntryLink, MORPH_TYPE_LABEL, SpeakButton } from '@/features/dictionary/
 import { useDictionary } from '@/features/dictionary/hooks'
 import type { Morpheme } from '@/features/dictionary/types'
 import { useSettings } from '@/stores/settings'
+import { CardScopeContext, useCardState, type CardScope } from '@/lib/cardState'
+import { useDrillSession, type Plan } from './sessionStore'
 import type { Grade } from 'ts-fsrs'
 import { dueEtyCards, lastKinds, recalled, REVIEW_LIMIT, saveDrill, type Answer } from './drill'
 import { buildDrill, buildRandom, checkMemo, drillData, drillHints, drillLabel, KIND_LABEL, memoPlaceholder, morphWords, retryItem, type DrillItem, type MemoVerdict } from './questions'
@@ -23,7 +25,6 @@ import { buildDrill, buildRandom, checkMemo, drillData, drillHints, drillLabel, 
  * #/drill/$id は 1 つの語源を、作れる種類の問題すべてで練習する
  */
 
-type Plan = { random?: number; only?: string[]; review?: string[]; practice?: string }
 
 function MorphCard({ m, compact }: { m: Morpheme; compact?: boolean }) {
   const dict = useDictionary()
@@ -120,13 +121,14 @@ function QuestionCard({ item, onGrade }: { item: DrillItem; onGrade: (g: Grade) 
   const dict = useDictionary()
   const q = item.q
   const hints = useMemo(() => drillHints(dict, q), [dict, q])
-  const [memo, setMemo] = useState('')
-  const [hintLevel, setHintLevel] = useState(0)
-  const [showChoices, setShowChoices] = useState(false)
-  const [picked, setPicked] = useState<number | null>(null)
-  const [shown, setShown] = useState(false)
-  const [verdict, setVerdict] = useState<MemoVerdict | null>(null)
-  const [suggest, setSuggest] = useState<Grade | null>(null)
+  // ページを移動して戻ってきても、解いている状態のまま（lib/cardState）
+  const [memo, setMemo] = useCardState('memo', '')
+  const [hintLevel, setHintLevel] = useCardState('hint', 0)
+  const [showChoices, setShowChoices] = useCardState('showChoices', false)
+  const [picked, setPicked] = useCardState<number | null>('picked', null)
+  const [shown, setShown] = useCardState('shown', false)
+  const [verdict, setVerdict] = useCardState<MemoVerdict | null>('verdict', null)
+  const [suggest, setSuggest] = useCardState<Grade | null>('suggest', null)
   const right = q.choices.find((c) => c.correct)!
   const rightM = right.morph ? dict.morphById.get(right.morph) : null
   // ヒントを使って正解したときは「難しい」を提案する
@@ -316,41 +318,46 @@ function QuestionCard({ item, onGrade }: { item: DrillItem; onGrade: (g: Grade) 
   )
 }
 
-function Session({ plan, onDone }: { plan: Plan; onDone: () => void }) {
+function Session({ onDone }: { onDone: () => void }) {
   const dict = useDictionary()
   const retention = useSettings((s) => s.desiredRetention)
-  const [items, setItems] = useState<DrillItem[] | null>(null)
-  const [i, setI] = useState(0)
-  const [answers, setAnswers] = useState<Answer[]>([])
-  const [saved, setSaved] = useState(false)
+  const { plan, items, i, answers, stopped, saved, startedAt, set } = useDrillSession()
+  // 問題は 1 回だけ作り、セッションに保持する（ページを移動して戻っても同じ問題の続きから）
   useEffect(() => {
+    if (!plan || items) return
     let alive = true
-    if (plan.random) setItems(buildRandom(dict, plan.random, Math.random, plan.only ? new Set(plan.only) : undefined))
-    else void lastKinds([...(plan.review ?? [])]).then((lk) => alive && setItems(buildDrill(dict, plan, Math.random, lk)))
+    if (plan.random) set({ items: buildRandom(dict, plan.random, Math.random, plan.only ? new Set(plan.only) : undefined) })
+    else void lastKinds([...(plan.review ?? [])]).then((lk) => alive && set({ items: buildDrill(dict, plan, Math.random, lk) }))
     return () => {
       alive = false
     }
-  }, [dict, plan])
+  }, [dict, plan, items, set])
 
-  const done = items !== null && i >= items.length
+  const done = items !== null && (i >= items.length || stopped)
   useEffect(() => {
     if (done && !saved) {
-      setSaved(true)
+      set({ saved: true })
       void saveDrill(answers, retention)
     }
-  }, [done, saved, answers, retention])
+  }, [done, saved, answers, retention, set])
 
   const grade = (g: Grade) => {
     if (!items) return
     const item = items[i]
-    setAnswers((a) => [...a, { q: item.q, rating: g, at: Date.now() }])
+    const next: Partial<{ items: DrillItem[]; i: number; answers: Answer[] }> = { answers: [...answers, { q: item.q, rating: g, at: Date.now() }], i: i + 1 }
     // もう一度にした語源は、最後にもう一度（違う種類の問題で。1 回だけ）
     if (g === 1 && item.role !== 'retry') {
       const again = retryItem(dict, item.q)
-      if (again) setItems([...items, again])
+      if (again) next.items = [...items, again]
     }
-    setI((n) => n + 1)
+    set(next)
   }
+  // 中断: ここまでの答えを記録して終える（答えた問題がなければそのまま戻る）
+  const stop = () => {
+    if (!answers.length) return onDone()
+    set({ stopped: true })
+  }
+  const scope = useMemo<CardScope | null>(() => (items?.[i] ? { ns: 'drill', key: `${startedAt}|${i}|${items[i].q.target}|${items[i].q.kind}` } : null), [items, i, startedAt])
 
   if (!items) return <PageSpinner />
   if (!items.length)
@@ -362,26 +369,36 @@ function Session({ plan, onDone }: { plan: Plan; onDone: () => void }) {
         </Button>
       </Card>
     )
-  if (done) return <Summary answers={answers} onDone={onDone} />
+  if (done) return <Summary answers={answers} stopped={stopped && i < items.length} onDone={onDone} />
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-1" aria-label={`${i + 1} / ${items.length} 問目`}>
-        {items.map((_, k) => (
-          <span
-            key={k}
-            className={cn(
-              'h-1.5 flex-1 rounded-full',
-              k < answers.length ? (answers[k].rating >= 3 ? 'bg-success' : answers[k].rating === 2 ? 'bg-warn' : 'bg-danger') : k === i ? 'bg-accent' : 'bg-surface-2',
-            )}
-          />
-        ))}
+      <div className="flex items-center gap-2 text-xs text-muted">
+        <div className="flex flex-1 items-center gap-1" aria-label={`${i + 1} / ${items.length} 問目`}>
+          {items.map((_, k) => (
+            <span
+              key={k}
+              className={cn(
+                'h-1.5 flex-1 rounded-full',
+                k < answers.length ? (answers[k].rating >= 3 ? 'bg-success' : answers[k].rating === 2 ? 'bg-warn' : 'bg-danger') : k === i ? 'bg-accent' : 'bg-surface-2',
+              )}
+            />
+          ))}
+        </div>
+        <span className="tabular-nums">
+          {i + 1} / {items.length}
+        </span>
+        <button type="button" onClick={stop} className="rounded-md px-1.5 py-0.5 hover:bg-surface-2 hover:text-fg" title="ここまでの答えを記録して終える">
+          中断
+        </button>
       </div>
-      <QuestionCard key={i} item={items[i]} onGrade={grade} />
+      <CardScopeContext.Provider value={scope}>
+        <QuestionCard key={`${startedAt}-${i}`} item={items[i]} onGrade={grade} />
+      </CardScopeContext.Provider>
     </div>
   )
 }
 
-function Summary({ answers, onDone }: { answers: Answer[]; onDone: () => void }) {
+function Summary({ answers, stopped, onDone }: { answers: Answer[]; stopped?: boolean; onDone: () => void }) {
   const dict = useDictionary()
   const by = new Map<string, Grade>()
   for (const a of answers) by.set(a.q.target, Math.min(by.get(a.q.target) ?? 4, a.rating) as Grade)
@@ -392,6 +409,7 @@ function Summary({ answers, onDone }: { answers: Answer[]; onDone: () => void })
       <h2 className="text-2xl font-semibold">
         {got} / {answers.length} 問 思い出せた
       </h2>
+      {stopped && <p className="text-sm text-muted">途中で中断しました。答えた問題だけを記録しています。</p>}
       <p className="max-w-sm text-sm text-muted">語源ごとに次の復習日を決めました（そのドリルでいちばん低い評価で）。思い出せた語源は間をあけて、「もう一度」の語源はすぐにまた出します。</p>
       <ul className="flex w-full max-w-md flex-col gap-1.5 text-left text-sm">
         {[...by].map(([id, g]) => {
@@ -506,10 +524,15 @@ function Hub({ onStart }: { onStart: (p: Plan) => void }) {
 }
 
 function DrillInner({ practice }: { practice?: string }) {
-  const [plan, setPlan] = useState<Plan | null>(practice ? { practice } : null)
-  useEffect(() => setPlan(practice ? { practice } : null), [practice])
-  if (plan) return <Session key={JSON.stringify(plan)} plan={plan} onDone={() => setPlan(null)} />
-  return <Hub onStart={setPlan} />
+  const plan = useDrillSession((s) => s.plan)
+  const start = useDrillSession((s) => s.start)
+  const clear = useDrillSession((s) => s.clear)
+  // 語源のページから来たときは、その語源の練習を始める（同じ語源の練習の途中なら続きから）
+  useEffect(() => {
+    if (practice && useDrillSession.getState().plan?.practice !== practice) start({ practice })
+  }, [practice, start])
+  if (plan) return <Session onDone={clear} />
+  return <Hub onStart={start} />
 }
 
 const title = (
