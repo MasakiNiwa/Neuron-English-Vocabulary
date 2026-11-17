@@ -100,7 +100,6 @@ parts	camera	camer=r:camer a
 parts	comrade	comrad=r:camer e
 parts	chamber	chamb=r:camer er=suf:er
 parts	ecology	eco=r:oik log=r:log y=suf:ia
-parts	economy	eco=r:oik nom=r:nom y=suf:y
 parts	attempt	at=pre:ad tempt=r:tempt
 parts	tentative	tent=r:tempt ative=suf:ive
 parts	canal	canal=r:canal

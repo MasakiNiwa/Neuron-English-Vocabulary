@@ -1,0 +1,906 @@
+# v2.16: 語源で解釈して覚えやすい単語の追加（A1 第 1 弾。頻度 1.1 万〜6 万位。2026-11-17）
+gloss	natal	adj:出生の、生まれた時の
+parts	natal	nat=r:nat al=suf:al
+gloss	dispense	verb:分配する、調剤する、なしで済ます（with）
+parts	dispense	dis=pre:dis pens=r:pend e
+gloss	normative	adj:規範的な、標準を示す
+parts	normative	norm=r:norm ative=suf:ive
+gloss	sedimentary	adj:堆積による、堆積物の
+parts	sedimentary	sed=r:sed i ment=suf:ment ary=suf:ary
+gloss	thermodynamics	noun:熱力学
+parts	thermodynamics	thermo=r:therm dynam=r:dynam ics=suf:ics
+gloss	coherence	noun:一貫性、まとまり
+parts	coherence	co=pre:com her=r:her ence=suf:ance
+gloss	dissident	noun:反体制派、異論者|adj:反対意見の
+parts	dissident	dis=pre:dis sid=r:sed ent=suf:ant
+gloss	synchronization	noun:同期、同時化
+parts	synchronization	syn=pre:syn chron=r:chron iz ation=suf:ation
+gloss	obstruct	verb:妨げる、ふさぐ
+parts	obstruct	ob=pre:ob struct=r:struct
+gloss	scribe	noun:書記、写字生
+parts	scribe	scrib=r:scrib e
+gloss	tenacious	adj:粘り強い、しぶとい
+parts	tenacious	ten=r:ten ac ious=suf:ous
+gloss	convoluted	adj:入り組んだ、複雑な
+parts	convoluted	con=pre:com volut=r:volv ed
+gloss	belligerent	adj:好戦的な、敵対的な|noun:交戦国、交戦者
+parts	belligerent	bell=r:bell i ger=r:gest ent=suf:ant
+gloss	insurmountable	adj:乗り越えられない、克服できない
+parts	insurmountable	in=pre:in sur=pre:super mount=r:mont able=suf:able
+gloss	asterisk	noun:アスタリスク、星印（*）
+parts	asterisk	aster=r:aster isk
+gloss	photosynthesis	noun:光合成
+parts	photosynthesis	photo=r:phot syn=pre:syn thes=r:thes is
+gloss	armament	noun:軍備、兵器
+parts	armament	arm=r:arm a ment=suf:ment
+gloss	resumption	noun:再開
+parts	resumption	re=pre:re sum=r:sum p tion=suf:ation
+gloss	equinox	noun:春分、秋分、昼夜平分時
+parts	equinox	equ=r:equ i nox
+gloss	pretense	noun:ふり、見せかけ、口実
+parts	pretense	pre=pre:pre tens=r:tend e
+gloss	synchronous	adj:同時に起こる、同期した
+parts	synchronous	syn=pre:syn chron=r:chron ous=suf:ous
+gloss	introspection	noun:内省、自己観察
+parts	introspection	intro=pre:intro spect=r:spec ion=suf:ation
+gloss	fractal	noun:フラクタル、自己相似図形
+parts	fractal	fract=r:fract al=suf:al
+gloss	putative	adj:推定上の、一般にそう思われている
+parts	putative	put=r:put ative=suf:ive
+gloss	nonsensical	adj:ばかげた、意味をなさない
+parts	nonsensical	non=pre:non sens=r:sens ical=suf:ic
+gloss	juxtaposition	noun:並置、並べて置くこと
+parts	juxtaposition	juxta pos=r:pon ition=suf:ation
+gloss	optimist	noun:楽観主義者
+parts	optimist	optim=r:optim ist=suf:ist
+gloss	minuscule	adj:ごく小さい、微小な
+parts	minuscule	min=r:min uscule
+gloss	profess	verb:公言する、主張する、装う
+parts	profess	pro=pre:pro fess=r:fess
+gloss	expatriate	noun:国外居住者|adj:国外に住む
+parts	expatriate	ex=pre:ex patri=r:pater ate=suf:ate
+gloss	fortify	verb:要塞化する、強化する、栄養を強化する
+parts	fortify	fort=r:fort ify=suf:fy
+gloss	obsess	verb:思い悩む、頭から離れない、取りつく
+parts	obsess	ob=pre:ob sess=r:sed
+gloss	affront	noun:侮辱|verb:侮辱する
+parts	affront	af=pre:ad front=r:front
+gloss	cryptography	noun:暗号技術、暗号学
+parts	cryptography	crypt o graph=r:graph y=suf:y
+gloss	causality	noun:因果関係
+parts	causality	caus=r:caus al=suf:al ity=suf:ity
+gloss	asexual	adj:無性の、無性生殖の
+parts	asexual	a=pre:a sex=r:sex ual=suf:al
+gloss	generalize	verb:一般化する、概括する
+parts	generalize	gener=r:gen al=suf:al ize=suf:ize
+gloss	amiable	adj:愛想のよい、感じのよい
+parts	amiable	am=r:am i able=suf:able
+gloss	tenement	noun:安アパート、共同住宅
+parts	tenement	ten=r:ten e ment=suf:ment
+gloss	biodegradable	adj:生分解性の、微生物で分解される
+parts	biodegradable	bio=r:bio de=pre:de grad=r:grad able=suf:able
+gloss	implore	verb:懇願する、嘆願する
+parts	implore	im=pre:into plor=r:plor e
+gloss	commensurate	adj:釣り合った、相応の
+parts	commensurate	com=pre:com mens=r:mens ur ate=suf:ate
+gloss	punctual	adj:時間に正確な、時間厳守の
+parts	punctual	punct=r:punct u al=suf:al
+gloss	exclaim	verb:叫ぶ、声を上げる
+parts	exclaim	ex=pre:ex claim=r:claim
+gloss	absorbent	adj:吸収性のある
+parts	absorbent	ab=pre:ab sorb=r:sorb ent=suf:ant
+gloss	neuropathy	noun:神経障害、ニューロパチー
+parts	neuropathy	neur=r:nerv o path=r:path y=suf:y
+gloss	centrifuge	noun:遠心分離機|verb:遠心分離にかける
+parts	centrifuge	centri=r:centr fug=r:fug e
+gloss	laborious	adj:骨の折れる、面倒な、苦心の
+parts	laborious	labor=r:labor ious=suf:ous
+gloss	secede	verb:脱退する、分離独立する
+parts	secede	se=pre:se ced=r:ced e
+gloss	liberator	noun:解放者
+parts	liberator	liber=r:liber at or=suf:er
+gloss	incapacity	noun:無能力、無力、法的無資格
+parts	incapacity	in=pre:in cap=r:cap ac ity=suf:ity
+gloss	intercession	noun:とりなし、仲裁
+parts	intercession	inter=pre:inter cess=r:ced ion=suf:ation
+gloss	amorous	adj:恋愛の、恋する、好色な
+parts	amorous	am=r:am or ous=suf:ous
+gloss	apologist	noun:擁護者、弁護者
+parts	apologist	apo=pre:apo log=r:log ist=suf:ist
+gloss	propriety	noun:礼儀正しさ、適切さ、礼儀作法
+parts	propriety	propri=r:propri ety=suf:ity
+gloss	abduct	verb:誘拐する、拉致する
+parts	abduct	ab=pre:ab duct=r:duc
+gloss	procreation	noun:生殖、出産
+parts	procreation	pro=pre:pro cre=r:cre ation=suf:ation
+gloss	pacify	verb:なだめる、鎮める
+parts	pacify	pac=r:pac ify=suf:fy
+gloss	elation	noun:大喜び、高揚
+parts	elation	e=pre:ex lat=r:lat ion=suf:ation
+gloss	omniscient	adj:全知の
+parts	omniscient	omni sci=r:sci ent=suf:ant
+gloss	comprehensible	adj:理解できる、わかりやすい
+parts	comprehensible	com=pre:com prehens=r:prehend ible=suf:able
+gloss	genial	adj:愛想のよい、温和な
+parts	genial	gen=r:gen ial=suf:al
+gloss	biometrics	noun:生体認証、生体測定
+parts	biometrics	bio=r:bio metr=r:meter ics=suf:ics
+gloss	biofuel	noun:バイオ燃料
+parts	biofuel	bio=r:bio fuel=w:fuel
+gloss	abate	verb:弱まる、和らぐ、減らす
+parts	abate	a=pre:ad bat=r:bat e
+gloss	egress	noun:出口、退出
+parts	egress	e=pre:ex gress=r:grad
+gloss	inordinate	adj:過度の、法外な
+parts	inordinate	in=pre:in ordin=r:ord ate=suf:ate
+gloss	fallacious	adj:誤った、見せかけの
+parts	fallacious	fallac=r:fals ious=suf:ous
+gloss	tortuous	adj:曲がりくねった、回りくどい
+parts	tortuous	tort=r:tort u ous=suf:ous
+gloss	prescient	adj:先見の明のある、予知した
+parts	prescient	pre=pre:pre sci=r:sci ent=suf:ant
+gloss	committal	noun:収監、委託
+parts	committal	com=pre:com mit=r:mit t al=suf:al
+gloss	cartography	noun:地図作成、製図法
+parts	cartography	cart=r:chart o graph=r:graph y=suf:y
+gloss	overstate	verb:大げさに言う、誇張する
+parts	overstate	over=pre:over stat=r:sta e
+gloss	generalist	noun:ゼネラリスト、幅広い知識を持つ人
+parts	generalist	gener=r:gen al=suf:al ist=suf:ist
+gloss	vanquish	verb:打ち負かす、征服する、克服する
+parts	vanquish	vanqu=r:vinc ish
+gloss	facile	adj:安易な、うわべだけの、たやすい
+parts	facile	fac=r:fac ile=suf:ile
+gloss	levity	noun:軽率さ、不謹慎なふざけ、軽さ
+parts	levity	lev=r:lev ity=suf:ity
+gloss	constriction	noun:締めつけ、収縮、狭窄
+parts	constriction	con=pre:com strict=r:strict ion=suf:ation
+gloss	conceptualize	verb:概念化する、思い描く
+parts	conceptualize	con=pre:com cept=r:cap ual=suf:al ize=suf:ize
+gloss	assistive	adj:支援の、補助的な
+parts	assistive	as=pre:ad sist=r:sta ive=suf:ive
+gloss	orthography	noun:正書法、綴り方
+parts	orthography	ortho graph=r:graph y=suf:y
+gloss	flexion	noun:屈曲、曲げること、語形変化
+parts	flexion	flex=r:flect ion=suf:ation
+gloss	nominative	adj:主格の|noun:主格
+parts	nominative	nomin=r:nom ative=suf:ive
+gloss	underpass	noun:地下道、アンダーパス
+parts	underpass	under=pre:under pass=r:pass
+gloss	falsify	verb:改ざんする、偽造する
+parts	falsify	fals=r:fals ify=suf:fy
+gloss	selectable	adj:選択できる
+parts	selectable	se=pre:se lect=r:lect able=suf:able
+gloss	alliteration	noun:頭韻
+parts	alliteration	al=pre:ad liter=r:liter ation=suf:ation
+gloss	transpose	verb:入れ替える、置き換える
+parts	transpose	trans=pre:trans pose=r:pon
+gloss	reassemble	verb:再び組み立てる、再び集まる
+parts	reassemble	re=pre:re as=pre:ad semble=r:simil
+gloss	equalize	verb:等しくする、同点にする
+parts	equalize	equ=r:equ al=suf:al ize=suf:ize
+gloss	coronet	noun:小冠、宝冠
+parts	coronet	coron=r:coron et
+gloss	unmotivated	adj:やる気のない、動機のない
+parts	unmotivated	un=pre:un mot=r:mob ivat ed
+gloss	libertine	noun:放蕩者、自由思想家|adj:放縦な
+parts	libertine	liber=r:liber t ine=suf:ine
+gloss	collude	verb:共謀する、ぐるになる
+parts	collude	col=pre:com lud=r:lud e
+gloss	convolution	noun:複雑にからみ合った状態、渦巻き
+parts	convolution	con=pre:com volu=r:volv tion=suf:ation
+gloss	ostensible	adj:表向きの、見せかけの
+parts	ostensible	os=pre:ob tens=r:tend ible=suf:able
+gloss	centigrade	adj:摂氏の
+parts	centigrade	centi=r:cent grad=r:grad e
+gloss	suboptimal	adj:最適でない、準最適の
+parts	suboptimal	sub=pre:sub optim=r:optim al=suf:al
+gloss	psychopathology	noun:精神病理学
+parts	psychopathology	psych=r:psych o path=r:path o logy=suf:logy
+gloss	confection	noun:菓子、砂糖菓子
+parts	confection	con=pre:com fect=r:fac ion=suf:ation
+gloss	demagogue	noun:扇動政治家
+parts	demagogue	dem=r:dem ag=r:act ogue
+gloss	servile	adj:卑屈な、奴隷のような
+parts	servile	serv=r:serv ile=suf:ile
+gloss	perfunctory	adj:おざなりの、形だけの
+parts	perfunctory	per=pre:per funct=r:funct ory=suf:ary
+gloss	deplore	verb:嘆く、強く非難する
+parts	deplore	de=pre:de plor=r:plor e
+gloss	cession	noun:割譲、譲渡
+parts	cession	cess=r:ced ion=suf:ation
+gloss	speculator	noun:投機家、思索する人
+parts	speculator	spec=r:spec ul at=suf:ate or=suf:er
+gloss	biannual	adj:年2回の
+parts	biannual	bi=pre:bi ann=r:ann ual=suf:al
+gloss	lectern	noun:講演台、書見台
+parts	lectern	lect=r:lect ern
+gloss	fluvial	adj:川の、河川の
+parts	fluvial	flu=r:flu vi al=suf:al
+gloss	mutable	adj:変わりやすい、変更可能な
+parts	mutable	mut=r:mut able=suf:able
+gloss	repatriate	verb:本国へ送還する、帰国させる
+parts	repatriate	re=pre:re patr=r:pater i ate=suf:ate
+gloss	anhydrous	adj:無水の
+parts	anhydrous	an=pre:a hydr=r:hydr ous=suf:ous
+gloss	microbiologist	noun:微生物学者
+parts	microbiologist	micro=pre:micro bio=r:bio log=r:log ist=suf:ist
+gloss	resolute	adj:断固とした、決意の固い
+parts	resolute	re=pre:re solu=r:solv te
+gloss	hologram	noun:ホログラム、立体像
+parts	hologram	holo gram=r:graph
+gloss	oblige	verb:義務づける、(be obliged)〜せざるを得ない、恩恵を施す
+parts	oblige	ob=pre:ob lig=r:lig e
+gloss	semblance	noun:外見、見せかけ、わずかな～らしさ
+parts	semblance	sembl=r:simil ance=suf:ance
+gloss	assailant	noun:襲撃者、攻撃者
+parts	assailant	as=pre:ad sail=r:sal ant=suf:ant
+gloss	consonant	noun:子音|adj:調和した
+parts	consonant	con=pre:com son=r:son ant=suf:ant
+gloss	patriarchy	noun:家父長制、男性中心社会
+parts	patriarchy	patr=r:pater i arch=r:arch y=suf:y
+gloss	multilateral	adj:多国間の、多面的な
+parts	multilateral	multi=pre:multi later=r:later al=suf:al
+gloss	retrograde	adj:後退する、退歩の|verb:後戻りする
+parts	retrograde	retro grad=r:grad e
+gloss	abstain	verb:控える、慎む、棄権する
+parts	abstain	abs=pre:ab tain=r:ten
+gloss	replenish	verb:補充する、再び満たす
+parts	replenish	re=pre:re plen=r:ple ish
+gloss	counterproductive	adj:逆効果の
+parts	counterproductive	counter=pre:contra pro=pre:pro duct=r:duc ive=suf:ive
+gloss	decadent	adj:退廃的な、堕落した|noun:退廃的な人
+parts	decadent	de=pre:de cad=r:cad ent=suf:ant
+gloss	servitude	noun:隷属、奴隷状態
+parts	servitude	serv=r:serv i tude=suf:tude
+gloss	centurion	noun:百人隊長
+parts	centurion	cent=r:cent ur ion=suf:ation
+gloss	multilingual	adj:多言語の、数か国語を話す
+parts	multilingual	multi=pre:multi lingu=r:lingu al=suf:al
+gloss	unsubscribe	verb:購読を解除する、配信停止する
+parts	unsubscribe	un=pre:un sub=pre:sub scrib=r:scrib e
+gloss	impotent	adj:無力な、力のない
+parts	impotent	im=pre:in pot=r:pot ent=suf:ant
+gloss	aggressor	noun:侵略者、攻撃した側
+parts	aggressor	ag=pre:ad gress=r:grad or=suf:er
+gloss	abject	adj:惨めな、卑屈な
+parts	abject	ab=pre:ab ject=r:ject
+gloss	tenet	noun:信条、主義、教義
+parts	tenet	ten=r:ten et
+gloss	deduce	verb:推論する、演繹する
+parts	deduce	de=pre:de duce=r:duc
+gloss	radiate	verb:放射する、発する
+parts	radiate	radi=r:radi ate=suf:ate
+gloss	centrifugal	adj:遠心的な、遠心力の
+parts	centrifugal	centr=r:centr i fug=r:fug al=suf:al
+gloss	populism	noun:ポピュリズム、大衆迎合主義
+parts	populism	popul=r:popul ism=suf:ism
+gloss	overpass	noun:陸橋、高架道路
+parts	overpass	over=pre:over pass=r:pass
+gloss	manicure	noun:手の爪の手入れ、マニキュア
+parts	manicure	mani=r:man cure=r:cura
+gloss	altruism	noun:利他主義、利他的行為
+parts	altruism	altru=r:alter ism=suf:ism
+gloss	veracity	noun:真実性、正直さ
+parts	veracity	ver=r:ver acity
+gloss	concentric	adj:同心の、中心を同じくする
+parts	concentric	con=pre:com centr=r:centr ic=suf:ic
+gloss	infraction	noun:違反、反則
+parts	infraction	in=pre:into fract=r:fract ion=suf:ation
+gloss	oppress	verb:圧迫する、虐げる
+parts	oppress	op=pre:ob press=r:press
+gloss	biosphere	noun:生物圏
+parts	biosphere	bio=r:bio sphere=r:spher
+gloss	confide	verb:打ち明ける、信頼して任せる
+parts	confide	con=pre:com fide=r:fid
+gloss	clarion	adj:明快で力強い、鳴り響く|noun:ラッパ
+parts	clarion	clar=r:clar ion
+gloss	thermodynamic	adj:熱力学の
+parts	thermodynamic	therm=r:therm o dynam=r:dynam ic=suf:ic
+gloss	detest	verb:ひどく嫌う、憎む
+parts	detest	de=pre:de test=r:test
+gloss	decadence	noun:退廃、衰退
+parts	decadence	de=pre:de cad=r:cad ence=suf:ance
+gloss	impressionable	adj:感化されやすい、影響を受けやすい
+parts	impressionable	im=pre:into press=r:press ion=suf:ation able=suf:able
+gloss	contemporaneous	adj:同時代の、同時に起こる
+parts	contemporaneous	con=pre:com tempor=r:temp an eous=suf:ous
+gloss	progenitor	noun:先祖、創始者
+parts	progenitor	pro=pre:pro gen=r:gen it or=suf:er
+gloss	deformity	noun:奇形、変形
+parts	deformity	de=pre:de form=r:form ity=suf:ity
+gloss	subservient	adj:従属的な、卑屈な
+parts	subservient	sub=pre:sub serv=r:serv i ent=suf:ant
+gloss	presumptive	adj:推定の、推定上の
+parts	presumptive	pre=pre:pre sumpt=r:sum ive=suf:ive
+gloss	verity	noun:真実、真理
+parts	verity	ver=r:ver ity=suf:ity
+gloss	geopolitics	noun:地政学
+parts	geopolitics	geo=r:geo polit=r:pol ics=suf:ics
+gloss	dynamism	noun:活力、原動力、力動性
+parts	dynamism	dynam=r:dynam ism=suf:ism
+gloss	legible	adj:読みやすい、判読できる
+parts	legible	leg=r:lect ible=suf:able
+gloss	superlative	adj:最上級の、最高の|noun:最上級、最大級の賛辞
+parts	superlative	super=pre:super lat=r:lat ive=suf:ive
+gloss	ligature	noun:合字、結紮糸、縛るもの
+parts	ligature	lig=r:lig at ure=suf:ure
+gloss	insufferable	adj:耐えがたい、我慢できない
+parts	insufferable	in=pre:in suf=pre:sub fer=r:fer able=suf:able
+gloss	maleficent	adj:有害な、悪事を働く
+parts	maleficent	male=pre:mal fic=r:fac ent=suf:ant
+gloss	generative	adj:生成する、生み出す力のある
+parts	generative	gener=r:gen ative=suf:ive
+gloss	homologous	adj:相同の、対応する
+parts	homologous	homo=pre:homo log=r:log ous=suf:ous
+gloss	megaphone	noun:メガホン、拡声器
+parts	megaphone	mega phon=r:phon e
+gloss	impersonate	verb:なりすます、まねる
+parts	impersonate	im=pre:into person=r:person ate=suf:ate
+gloss	impassable	adj:通行できない、越えられない
+parts	impassable	im=pre:in pass=r:pass able=suf:able
+gloss	tangential	adj:それた、脱線した、接線の
+parts	tangential	tang=r:tact ent=suf:ant ial=suf:al
+gloss	recede	verb:退く、遠ざかる、薄れる
+parts	recede	re=pre:re ced=r:ced e
+gloss	matriarch	noun:女家長、女性の長
+parts	matriarch	matr=r:mater i arch=r:arch
+gloss	diction	noun:話し方、言葉遣い、発音
+parts	diction	dict=r:dict ion=suf:ation
+gloss	intergenerational	adj:世代間の
+parts	intergenerational	inter=pre:inter gener=r:gen ation=suf:ation al=suf:al
+gloss	reproducible	adj:再現できる
+parts	reproducible	re=pre:re pro=pre:pro duc=r:duc ible=suf:able
+gloss	petulant	adj:すねた、不機嫌な
+parts	petulant	pet=r:pet ul ant=suf:ant
+gloss	enormity	noun:途方もない大きさ、重大さ、極悪
+parts	enormity	e=pre:ex norm=r:norm ity=suf:ity
+gloss	regress	verb:後退する、退行する
+parts	regress	re=pre:re gress=r:grad
+gloss	abdicate	verb:退位する、放棄する
+parts	abdicate	ab=pre:ab dic=r:dict ate=suf:ate
+gloss	supposition	noun:推測、仮定
+parts	supposition	sup=pre:sub pos=r:pon ition=suf:ation
+gloss	conjugal	adj:夫婦の、結婚の
+parts	conjugal	con=pre:com jug=r:junct al=suf:al
+gloss	prognostic	adj:予後の、前兆の
+parts	prognostic	pro=pre:pro gnost=r:gno ic=suf:ic
+gloss	undercurrent	noun:底流、潜在的な傾向
+parts	undercurrent	under=pre:under curr=r:cur ent=suf:ant
+gloss	amoral	adj:道徳観念のない、道徳と無関係の
+parts	amoral	a=pre:a moral=r:mor
+gloss	sedimentation	noun:沈殿、堆積
+parts	sedimentation	sed=r:sed iment ation=suf:ation
+gloss	autocracy	noun:独裁政治、専制国家
+parts	autocracy	auto=pre:auto crac=r:crat y=suf:y
+gloss	magnanimous	adj:寛大な、度量の大きい
+parts	magnanimous	magn=r:magn anim=r:anim ous=suf:ous
+gloss	infirm	adj:虚弱な、体の弱った
+parts	infirm	in=pre:in firm=r:firm
+gloss	malfeasance	noun:不正行為、(公務員の)職権濫用
+parts	malfeasance	mal=pre:mal fea=r:fac s ance=suf:ance
+gloss	submerge	verb:水に沈める、潜る、水没する
+parts	submerge	sub=pre:sub merg=r:merg e
+gloss	counterculture	noun:反体制文化、対抗文化
+parts	counterculture	counter=pre:contra cult=r:cult ure=suf:ure
+gloss	empathic	adj:共感的な、感情移入の
+parts	empathic	em=pre:en path=r:path ic=suf:ic
+gloss	repaint	verb:塗り直す、再び描く
+parts	repaint	re=pre:re paint=r:pict
+gloss	numeracy	noun:計算能力、数的思考力
+parts	numeracy	numer=r:numer acy=suf:cy
+gloss	accelerometer	noun:加速度計
+parts	accelerometer	ac=pre:ad celer=r:celer o meter=r:meter
+gloss	gyroscope	noun:ジャイロスコープ、回転儀
+parts	gyroscope	gyro scope=r:scope
+gloss	subjunctive	adj:仮定法の|noun:仮定法
+parts	subjunctive	sub=pre:sub junct=r:junct ive=suf:ive
+gloss	expletive	noun:罵り言葉、間投詞|adj:意味を補うだけの
+parts	expletive	ex=pre:ex plet=r:ple ive=suf:ive
+gloss	vacuous	adj:空虚な、中身のない
+parts	vacuous	vac=r:vac u ous=suf:ous
+gloss	recuse	verb:（裁判官などが）自ら担当を外れる、忌避する
+parts	recuse	re=pre:re cuse=r:caus
+gloss	firmament	noun:天空、大空
+parts	firmament	firm=r:firm ament
+gloss	pseudoscience	noun:疑似科学
+parts	pseudoscience	pseudo sci=r:sci ence=suf:ance
+gloss	levitate	verb:空中に浮く、浮揚させる
+parts	levitate	lev=r:lev it ate=suf:ate
+gloss	luminescence	noun:発光、冷光
+parts	luminescence	lumin=r:lumin esc ence=suf:ance
+gloss	autocrat	noun:独裁者、専制君主
+parts	autocrat	auto=pre:auto crat=r:crat
+gloss	exaltation	noun:高揚、称賛、昇進
+parts	exaltation	ex=pre:ex alt=r:alt ation=suf:ation
+gloss	deform	verb:変形させる、醜くする
+parts	deform	de=pre:de form=r:form
+gloss	microgravity	noun:微小重力
+parts	microgravity	micro=pre:micro grav=r:grav ity=suf:ity
+gloss	monotheism	noun:一神教
+parts	monotheism	mono=pre:mono the=r:the ism=suf:ism
+gloss	hydrophilic	adj:親水性の
+parts	hydrophilic	hydr=r:hydr o phil=r:phil ic=suf:ic
+gloss	survivalist	noun:サバイバル主義者
+parts	survivalist	sur=pre:super viv=r:viv al=suf:al ist=suf:ist
+gloss	consign	verb:委託する、引き渡す、追いやる
+parts	consign	con=pre:com sign=r:sign
+gloss	soliloquy	noun:独白、独り言
+parts	soliloquy	sol=r:sol i loqu=r:loqu y=suf:y
+gloss	necropolis	noun:大きな墓地、古代の墓地遺跡
+parts	necropolis	necro pol=r:pol is
+gloss	indent	verb:字下げする、へこみを付ける
+parts	indent	in=pre:into dent=r:dent
+gloss	sessile	adj:固着性の、柄のない
+parts	sessile	sess=r:sed ile=suf:ile
+gloss	centralize	verb:中央に集める、集権化する
+parts	centralize	centr=r:centr al=suf:al ize=suf:ize
+gloss	telegraphy	noun:電信、電報通信
+parts	telegraphy	tele=pre:tele graph=r:graph y=suf:y
+gloss	thermoelectric	adj:熱電の、熱電気の
+parts	thermoelectric	therm=r:therm o electr=r:electr ic=suf:ic
+gloss	emote	verb:感情を大げさに表す
+parts	emote	e=pre:ex mot=r:mob e
+gloss	equanimity	noun:平静、落ち着き
+parts	equanimity	equ=r:equ anim=r:anim ity=suf:ity
+gloss	constrictor	noun:締めつけて殺す大蛇、収縮筋
+parts	constrictor	con=pre:com strict=r:strict or=suf:er
+gloss	commercialize	verb:商業化する、営利目的にする
+parts	commercialize	com=pre:com merc=r:merc ial=suf:al ize=suf:ize
+gloss	salient	adj:顕著な、目立つ
+parts	salient	sal=r:sal i ent=suf:ant
+gloss	immunology	noun:免疫学
+parts	immunology	im=pre:in mun=r:mun o logy=suf:logy
+gloss	plenary	adj:全員出席の、完全な
+parts	plenary	plen=r:ple ary=suf:ary
+gloss	subtract	verb:引く、差し引く
+parts	subtract	sub=pre:sub tract=r:tract
+gloss	benefactor	noun:恩人、後援者
+parts	benefactor	bene=r:bene fact=r:fac or=suf:er
+gloss	cursor	noun:カーソル
+parts	cursor	curs=r:cur or=suf:er
+gloss	horoscope	noun:星占い、ホロスコープ
+parts	horoscope	horo scope=r:scope
+gloss	orient	verb:方向づける、慣れさせる|noun:東洋
+parts	orient	ori=r:ori ent=suf:ant
+gloss	credence	noun:信用、信憑性
+parts	credence	cred=r:cred ence=suf:ance
+gloss	commendable	adj:称賛に値する、立派な
+parts	commendable	com=pre:com mend=r:mand able=suf:able
+gloss	incognito	adj:匿名の、身分を隠した|adv:匿名で、お忍びで
+parts	incognito	in=pre:in cogn=r:cogn ito
+gloss	desist	verb:やめる、思いとどまる
+parts	desist	de=pre:de sist=r:sta
+gloss	disseminate	verb:広める、普及させる
+parts	disseminate	dis=pre:dis semin=r:semin ate=suf:ate
+gloss	hydrate	verb:水分を補給する、水和させる
+parts	hydrate	hydr=r:hydr ate=suf:ate
+gloss	agnostic	adj:不可知論の|noun:不可知論者
+parts	agnostic	a=pre:a gnos=r:gno t ic=suf:ic
+gloss	uniformity	noun:一様性、画一性
+parts	uniformity	uni=pre:uni form=r:form ity=suf:ity
+gloss	hydrocarbon	noun:炭化水素
+parts	hydrocarbon	hydr=r:hydr o carbon=w:carbon
+gloss	apprehend	verb:逮捕する、理解する
+parts	apprehend	ap=pre:ad prehend=r:prehend
+gloss	ambivalent	adj:相反する感情を抱いた、両面価値の
+parts	ambivalent	amb=pre:ambi i val=r:val ent=suf:ant
+gloss	commendation	noun:称賛、表彰
+parts	commendation	com=pre:com mend=r:mand ation=suf:ation
+gloss	ingestion	noun:摂取、取り込み
+parts	ingestion	in=pre:into gest=r:gest ion=suf:ation
+gloss	demented	adj:正気を失った、錯乱した
+parts	demented	de=pre:de ment=r:ment ed
+gloss	tensile	adj:引っ張りの、伸ばせる
+parts	tensile	tens=r:tend ile=suf:ile
+gloss	hypothermia	noun:低体温症
+parts	hypothermia	hypo=pre:hypo therm=r:therm ia=suf:ia
+gloss	astrophysics	noun:天体物理学
+parts	astrophysics	astr=r:aster o phys=r:phys ics=suf:ics
+gloss	sumptuous	adj:豪華な、ぜいたくな
+parts	sumptuous	sumpt=r:sum uous=suf:ous
+gloss	phonetic	adj:音声の、発音の
+parts	phonetic	phon=r:phon et ic=suf:ic
+gloss	censure	noun:非難、譴責|verb:厳しく非難する
+parts	censure	cens=r:cens ure=suf:ure
+gloss	aqueduct	noun:水道橋、導水路
+parts	aqueduct	aqu=r:aqu e duct=r:duc
+gloss	malevolent	adj:悪意のある、邪悪な
+parts	malevolent	male=pre:mal vol=r:vol ent=suf:ant
+gloss	introspective	adj:内省的な、自己を省みる
+parts	introspective	intro=pre:intro spect=r:spec ive=suf:ive
+gloss	immaterial	adj:重要でない、関係のない、無形の
+parts	immaterial	im=pre:in mater=r:mater ial=suf:al
+gloss	locomotion	noun:移動、移動能力
+parts	locomotion	loc=r:loc o mot=r:mob ion=suf:ation
+gloss	cursive	adj:筆記体の|noun:筆記体
+parts	cursive	curs=r:cur ive=suf:ive
+gloss	telephony	noun:電話技術、電話通信
+parts	telephony	tele=pre:tele phon=r:phon y=suf:y
+gloss	symbiotic	adj:共生の、相互依存の
+parts	symbiotic	sym=pre:syn bio=r:bio t ic=suf:ic
+gloss	populate	verb:住む、人を住まわせる
+parts	populate	popul=r:popul ate=suf:ate
+gloss	infamy	noun:悪名、不名誉
+parts	infamy	in=pre:in fam=r:fam y=suf:y
+gloss	indisputable	adj:議論の余地のない、明白な
+parts	indisputable	in=pre:in dis=pre:dis put=r:put able=suf:able
+gloss	demography	noun:人口統計学
+parts	demography	dem=r:dem o graph=r:graph y=suf:y
+gloss	subliminal	adj:潜在意識の、意識下の
+parts	subliminal	sub=pre:sub limin=r:limin al=suf:al
+gloss	insulate	verb:断熱する、隔離する
+parts	insulate	insul=r:insul ate=suf:ate
+gloss	volition	noun:意志、決意
+parts	volition	vol=r:vol i tion=suf:ation
+gloss	repress	verb:抑える、抑圧する
+parts	repress	re=pre:re press=r:press
+gloss	crescendo	noun:クレッシェンド、盛り上がり
+parts	crescendo	cresc=r:cresc endo
+gloss	overreact	verb:過剰反応する
+parts	overreact	over=pre:over re=pre:re act=r:act
+gloss	aggravate	verb:悪化させる、怒らせる
+parts	aggravate	ag=pre:ad grav=r:grav ate=suf:ate
+gloss	lingual	adj:舌の、舌側の
+parts	lingual	lingu=r:lingu al=suf:al
+gloss	accretion	noun:付着による増大、堆積、降着
+parts	accretion	ac=pre:ad cret=r:cresc ion=suf:ation
+gloss	principality	noun:公国、君主の統治する国
+parts	principality	princip=r:princ al=suf:al ity=suf:ity
+gloss	infidel	noun:不信心者、異教徒
+parts	infidel	in=pre:in fid=r:fid el
+gloss	precipice	noun:断崖、絶壁、危機の瀬戸際
+parts	precipice	pre=pre:pre cip=r:capit ice
+gloss	numeral	noun:数字、数詞|adj:数の
+parts	numeral	numer=r:numer al=suf:al
+gloss	sensuous	adj:感覚に訴える、五感を楽しませる
+parts	sensuous	sens=r:sens uous=suf:ous
+gloss	supercomputer	noun:スーパーコンピューター
+parts	supercomputer	super=pre:super com=pre:com put=r:put er=suf:er
+gloss	postscript	noun:追伸、後書き
+parts	postscript	post=pre:post script=r:scrib
+gloss	misnomer	noun:誤称、不適切な名称
+parts	misnomer	mis=pre:mis nom=r:nom er
+gloss	antipathy	noun:反感、嫌悪
+parts	antipathy	anti=pre:anti path=r:path y=suf:y
+gloss	synchronize	verb:同時に動かす、同期させる
+parts	synchronize	syn=pre:syn chron=r:chron ize=suf:ize
+gloss	modicum	noun:少量、わずか
+parts	modicum	mod=r:mod icum
+gloss	psychotherapist	noun:心理療法士
+parts	psychotherapist	psych=r:psych o therap ist=suf:ist
+gloss	interconnect	verb:相互に接続する、つなぎ合わせる
+parts	interconnect	inter=pre:inter con=pre:com nect=r:nect
+gloss	animus	noun:敵意、憎しみ
+parts	animus	anim=r:anim us
+gloss	dissociative	adj:分離の、解離性の
+parts	dissociative	dis=pre:dis soci=r:soci ative=suf:ive
+gloss	perspiration	noun:発汗、汗
+parts	perspiration	per=pre:per spir=r:spir ation=suf:ation
+gloss	gravitation	noun:引力、万有引力、引き寄せられること
+parts	gravitation	grav=r:grav it ation=suf:ation
+gloss	abhor	verb:ひどく嫌う、忌み嫌う
+parts	abhor	ab=pre:ab hor=r:horr
+gloss	recur	verb:再発する、繰り返される
+parts	recur	re=pre:re cur=r:cur
+gloss	postnatal	adj:出産後の、生後の
+parts	postnatal	post=pre:post nat=r:nat al=suf:al
+gloss	repute	noun:評判、名声
+parts	repute	re=pre:re put=r:put e
+gloss	extrajudicial	adj:司法手続き外の、法廷外の
+parts	extrajudicial	extra=pre:extra judic=r:jud ial=suf:al
+gloss	impressionism	noun:印象派、印象主義
+parts	impressionism	im=pre:into press=r:press ion=suf:ation ism=suf:ism
+gloss	phonology	noun:音韻論、音韻体系
+parts	phonology	phon=r:phon o logy=suf:logy
+gloss	clamor	noun:騒ぎ、叫び声、(世論の)強い要求|verb:大声で要求する、わめく
+parts	clamor	clam=r:claim or=suf:er
+gloss	cacophony	noun:不協和音、耳障りな騒音
+parts	cacophony	caco phon=r:phon y=suf:y
+gloss	malign	adj:有害な、悪意のある|verb:中傷する、悪く言う
+parts	malign	mal=pre:mal i gn=r:gen
+gloss	predate	verb:より前に存在する、日付を早める
+parts	predate	pre=pre:pre dat=r:dat e
+gloss	disassemble	verb:分解する、解体する
+parts	disassemble	dis=pre:dis as=pre:ad semble=r:simil
+gloss	captor	noun:捕らえた人、捕獲者
+parts	captor	capt=r:cap or=suf:er
+gloss	urbanism	noun:都市計画学、都市生活
+parts	urbanism	urb=r:urb an ism=suf:ism
+gloss	proximate	adj:すぐ近くの、直接の
+parts	proximate	proxim=r:proxim ate=suf:ate
+gloss	gravitas	noun:威厳、重々しさ
+parts	gravitas	grav=r:grav itas
+gloss	intercede	verb:とりなす、仲裁する
+parts	intercede	inter=pre:inter cede=r:ced
+gloss	acrimonious	adj:とげとげしい、辛辣な
+parts	acrimonious	acr=r:acid imoni ous=suf:ous
+gloss	meritocracy	noun:実力主義社会、能力主義
+parts	meritocracy	merit=w:merit o crac=r:crat y
+gloss	subsist	verb:かろうじて生きる、生存する
+parts	subsist	sub=pre:sub sist=r:sta
+gloss	deconstruct	verb:分解して分析する、脱構築する
+parts	deconstruct	de=pre:de con=pre:com struct=r:struct
+gloss	anachronism	noun:時代錯誤
+parts	anachronism	ana=pre:ana chron=r:chron ism=suf:ism
+gloss	hypotension	noun:低血圧
+parts	hypotension	hypo=pre:hypo tens=r:tend ion=suf:ation
+gloss	genitive	adj:属格の、所有格の|noun:属格
+parts	genitive	gen=r:gen it ive=suf:ive
+gloss	phonetics	noun:音声学
+parts	phonetics	phon=r:phon et ics=suf:ics
+gloss	astringent	adj:収れん性の、辛辣な|noun:収れん剤
+parts	astringent	a=pre:ad string=r:strict ent=suf:ant
+gloss	patrimony	noun:父祖伝来の財産、遺産
+parts	patrimony	patr=r:pater i mony
+gloss	disjoint	adj:互いに素な、まとまりのない|verb:ばらばらにする
+parts	disjoint	dis=pre:dis join=r:junct t
+gloss	subjugate	verb:征服する、服従させる
+parts	subjugate	sub=pre:sub jug=r:junct ate=suf:ate
+gloss	triennial	adj:3年ごとの、3年間続く
+parts	triennial	tri=pre:tri enn=r:ann ial=suf:al
+gloss	aquamarine	noun:アクアマリン、淡い青緑色|adj:淡い青緑色の
+parts	aquamarine	aqua=r:aqu mar=r:mar ine=suf:ine
+gloss	atheistic	adj:無神論の、無神論的な
+parts	atheistic	a=pre:a the=r:the ist=suf:ist ic=suf:ic
+gloss	hydrodynamic	adj:流体力学の、水力の
+parts	hydrodynamic	hydr=r:hydr o dynam=r:dynam ic=suf:ic
+gloss	depreciate	verb:価値が下がる、価値を下げる、見くびる
+parts	depreciate	de=pre:de preci=r:preci ate=suf:ate
+gloss	dictum	noun:格言、断言、公式見解
+parts	dictum	dict=r:dict um
+gloss	odometer	noun:走行距離計
+parts	odometer	od=r:hod o meter=r:meter
+gloss	concoct	verb:調合する、でっち上げる
+parts	concoct	con=pre:com coct=r:coc
+gloss	apotheosis	noun:神格化、理想の姿、頂点
+parts	apotheosis	apo=pre:apo the=r:the osis
+gloss	epicentre	noun:震源地、中心地
+parts	epicentre	epi=pre:epi centr=r:centr e
+gloss	audiophile	noun:オーディオ愛好家
+parts	audiophile	aud=r:aud i o phil=r:phil e
+gloss	hydroponic	adj:水耕栽培の
+parts	hydroponic	hydr=r:hydr o pon ic=suf:ic
+gloss	psychometric	adj:心理測定の
+parts	psychometric	psych=r:psych o metr=r:meter ic=suf:ic
+gloss	convivial	adj:陽気な、宴会向きの、親しみやすい
+parts	convivial	con=pre:com viv=r:viv ial=suf:al
+gloss	simile	noun:直喩、たとえ
+parts	simile	simil=r:simil e
+gloss	sentient	adj:知覚力のある、感覚を持つ
+parts	sentient	sent=r:sens i ent=suf:ant
+gloss	nominally	adv:名目上は、名ばかり
+parts	nominally	nomin=r:nom al=suf:al ly=suf:ly
+gloss	pseudonym	noun:偽名、ペンネーム
+parts	pseudonym	pseudo nym=r:nom
+gloss	tactile	adj:触覚の、触れてわかる
+parts	tactile	tact=r:tact ile=suf:ile
+gloss	biographer	noun:伝記作家
+parts	biographer	bio=r:bio graph=r:graph er=suf:er
+gloss	exclamation	noun:叫び、感嘆
+parts	exclamation	ex=pre:ex clam=r:claim ation=suf:ation
+gloss	unproductive	adj:非生産的な、実りのない
+parts	unproductive	un=pre:un pro=pre:pro duct=r:duc ive=suf:ive
+gloss	hydroelectric	adj:水力発電の
+parts	hydroelectric	hydr=r:hydr o electr=r:electr ic=suf:ic
+gloss	incoherent	adj:筋が通らない、支離滅裂な
+parts	incoherent	in=pre:in co=pre:com her=r:her ent=suf:ant
+gloss	heterogeneous	adj:異種の、多様な
+parts	heterogeneous	hetero gen=r:gen e ous=suf:ous
+gloss	compress	verb:圧縮する、押し縮める
+parts	compress	com=pre:com press=r:press
+gloss	assimilate	verb:吸収する、同化する、溶け込む
+parts	assimilate	as=pre:ad simil=r:simil ate=suf:ate
+gloss	magnate	noun:大物、実力者、財界の大立者
+parts	magnate	magn=r:magn ate=suf:ate
+gloss	insular	adj:島の、視野の狭い、閉鎖的な
+parts	insular	insul=r:insul ar=suf:er
+gloss	alienate	verb:疎遠にする、遠ざける
+parts	alienate	ali=r:alter en ate=suf:ate
+gloss	aquaculture	noun:水産養殖
+parts	aquaculture	aqua=r:aqu cult=r:cult ure=suf:ure
+gloss	acupuncture	noun:鍼治療、鍼
+parts	acupuncture	acu punct=r:punct ure=suf:ure
+gloss	informatics	noun:情報科学
+parts	informatics	in=pre:into form=r:form at ics=suf:ics
+gloss	consequent	adj:結果として生じる、それに伴う
+parts	consequent	con=pre:com sequ=r:sequ ent=suf:ant
+gloss	intermission	noun:休憩、幕間
+parts	intermission	inter=pre:inter miss=r:mit ion=suf:ation
+gloss	superfluous	adj:余分な、不必要な
+parts	superfluous	super=pre:super flu=r:flu ous=suf:ous
+gloss	senile	adj:老衰した、高齢による
+parts	senile	sen=r:sen ile=suf:ile
+gloss	facsimile	noun:複製、ファクシミリ（ファクス）
+parts	facsimile	fac=r:fac simile=r:simil
+gloss	exponent	noun:提唱者、支持者、指数
+parts	exponent	ex=pre:ex pon=r:pon ent=suf:ant
+gloss	subculture	noun:サブカルチャー、下位文化
+parts	subculture	sub=pre:sub cult=r:cult ure=suf:ure
+gloss	escalator	noun:エスカレーター
+parts	escalator	e=pre:ex scal=r:scend at or=suf:er
+gloss	numeric	adj:数の、数字で表した
+parts	numeric	numer=r:numer ic=suf:ic
+gloss	consumerism	noun:消費主義、消費者保護運動
+parts	consumerism	con=pre:com sum=r:sum er=suf:er ism=suf:ism
+gloss	gratuitous	adj:不必要な、いわれのない、無料の
+parts	gratuitous	grat=r:grat uitous
+gloss	docile	adj:従順な、おとなしい
+parts	docile	doc=r:doc ile=suf:ile
+gloss	dissect	verb:解剖する、詳細に分析する
+parts	dissect	dis=pre:dis sect=r:sect
+gloss	introvert	noun:内向的な人|adj:内向的な
+parts	introvert	intro=pre:intro vert=r:vers
+gloss	amity	noun:友好、親善
+parts	amity	am=r:am ity=suf:ity
+gloss	exterminate	verb:根絶する、駆除する
+parts	exterminate	ex=pre:ex termin=r:termin ate=suf:ate
+gloss	unequivocal	adj:明白な、あいまいさのない
+parts	unequivocal	un=pre:un equi=r:equ voc=r:voc al=suf:al
+gloss	polity	noun:政治体制、国家
+parts	polity	pol=r:pol ity=suf:ity
+gloss	aerodynamics	noun:空気力学
+parts	aerodynamics	aero=r:aer dynam=r:dynam ics=suf:ics
+gloss	receptacle	noun:容器、入れ物
+parts	receptacle	re=pre:re cept=r:cap acle
+gloss	precocious	adj:早熟な、ませた
+parts	precocious	pre=pre:pre coc=r:coc ious=suf:ous
+gloss	antebellum	adj:戦前の、南北戦争前の
+parts	antebellum	ante=pre:ante bell=r:bell um
+gloss	fortification	noun:要塞、防備の強化
+parts	fortification	fort=r:fort i fic=r:fac ation=suf:ation
+gloss	absolve	verb:免除する、罪を許す
+parts	absolve	ab=pre:ab solv=r:solv e
+gloss	interconnection	noun:相互接続、相互の関連
+parts	interconnection	inter=pre:inter con=pre:com nect=r:nect ion=suf:ation
+gloss	constrain	verb:制約する、強いる
+parts	constrain	con=pre:com strain=r:strict
+gloss	abscess	noun:膿瘍、はれもの
+parts	abscess	abs=pre:ab cess=r:ced
+gloss	hydrology	noun:水文学
+parts	hydrology	hydr=r:hydr o log=r:log y=suf:y
+gloss	conspire	verb:共謀する、陰謀を企てる、重なって作用する
+parts	conspire	con=pre:com spir=r:spir e
+gloss	ambivalence	noun:相反する感情、両面価値、迷い
+parts	ambivalence	ambi=pre:ambi val=r:val ence=suf:ance
+gloss	obliterate	verb:跡形もなく消す、一掃する
+parts	obliterate	ob=pre:ob liter=r:liter ate=suf:ate
+gloss	benevolence	noun:善意、慈悲、博愛
+parts	benevolence	bene=r:bene vol=r:vol ence=suf:ance
+gloss	telescopic	adj:望遠鏡の、伸縮式の
+parts	telescopic	tele=pre:tele scop=r:scope ic=suf:ic
+gloss	digress	verb:脱線する、話がそれる
+parts	digress	di=pre:dis gress=r:grad
+gloss	transitive	adj:他動詞の、推移的な
+parts	transitive	trans=pre:trans it=r:it ive=suf:ive
+gloss	viaduct	noun:高架橋
+parts	viaduct	via=r:via duct=r:duc
+gloss	entomology	noun:昆虫学
+parts	entomology	en=pre:into tom=r:tom o logy=suf:logy
+gloss	trigonometry	noun:三角法
+parts	trigonometry	tri=pre:tri gon o metr=r:meter y=suf:y
+gloss	modulate	verb:調節する、抑揚をつける
+parts	modulate	mod=r:mod ul ate=suf:ate
+gloss	obstinate	adj:頑固な、強情な
+parts	obstinate	ob=pre:ob st=r:sta in ate=suf:ate
+gloss	allude	verb:ほのめかす、それとなく言及する
+parts	allude	al=pre:ad lud=r:lud e
+gloss	anachronistic	adj:時代錯誤の
+parts	anachronistic	ana=pre:ana chron=r:chron ist=suf:ist ic=suf:ic
+gloss	primeval	adj:原始の、太古の
+parts	primeval	prim=r:prim ev al=suf:al
+gloss	iniquity	noun:不正、邪悪
+parts	iniquity	in=pre:in iqu=r:equ ity=suf:ity
+gloss	photocopy	noun:コピー、複写|verb:コピーする
+parts	photocopy	phot=r:phot o copy=w:copy
+gloss	fugue	noun:フーガ、遁走
+parts	fugue	fug=r:fug ue
+gloss	geophysics	noun:地球物理学
+parts	geophysics	geo=r:geo phys=r:phys ics=suf:ics
+gloss	vivacious	adj:快活な、生き生きした
+parts	vivacious	viv=r:viv ac ious=suf:ous
+gloss	ordinal	adj:順序を示す、序数の
+parts	ordinal	ordin=r:ord al=suf:al
+gloss	append	verb:付け加える、添付する
+parts	append	ap=pre:ad pend=r:pend
+gloss	recursion	noun:再帰、繰り返し
+parts	recursion	re=pre:re cur=r:cur s ion=suf:ation
+gloss	corporeal	adj:肉体の、物質的な
+parts	corporeal	corp=r:corp ore al=suf:al
+gloss	purport	verb:〜と称する、趣旨とする
+parts	purport	pur=pre:pro port=r:port
+gloss	anagram	noun:アナグラム、綴り換え
+parts	anagram	ana=pre:ana gram=r:graph
+gloss	mutate	verb:突然変異する、変化する
+parts	mutate	mut=r:mut ate=suf:ate
+gloss	disconnection	noun:切断、断絶
+parts	disconnection	dis=pre:dis con=pre:com nect=r:nect ion=suf:ation
+gloss	defector	noun:亡命者、離反者
+parts	defector	de=pre:de fect=r:fac or=suf:er
+gloss	encircle	verb:取り囲む、一周する
+parts	encircle	en=pre:en circ=r:circ le
+gloss	marinate	verb:マリネにする、(調味液に)漬け込む
+parts	marinate	mar=r:mar in ate=suf:ate
+gloss	precept	noun:教訓、戒律、原則
+parts	precept	pre=pre:pre cept=r:cap
+gloss	consumable	adj:消費できる、食用の|noun:消耗品
+parts	consumable	con=pre:com sum=r:sum able=suf:able
+gloss	resistive	adj:抵抗の、抵抗性の、抵抗する
+parts	resistive	re=pre:re sist=r:sta ive=suf:ive
+gloss	theism	noun:有神論、神の存在を信じる立場
+parts	theism	the=r:the ism=suf:ism
+gloss	revisionism	noun:修正主義、歴史修正主義
+parts	revisionism	re=pre:re vis=r:vid ion=suf:ation ism=suf:ism
+gloss	inexhaustible	adj:尽きない、無尽蔵の
+parts	inexhaustible	in=pre:in ex=pre:ex haust=r:haust ible=suf:able
+gloss	supplant	verb:取って代わる、地位を奪う
+parts	supplant	sup=pre:sub plant=r:plant
+gloss	efficacious	adj:効き目のある、有効な
+parts	efficacious	ef=pre:ex fic=r:fac ac ious=suf:ous
+gloss	privatize	verb:民営化する
+parts	privatize	priv=r:priv at ize=suf:ize
+gloss	unimpressive	adj:印象に残らない、見劣りする
+parts	unimpressive	un=pre:un im=pre:into press=r:press ive=suf:ive
+gloss	defame	verb:中傷する、名誉を傷つける
+parts	defame	de=pre:dis fam=r:fam e
+gloss	counterinsurgency	noun:反乱鎮圧作戦
+parts	counterinsurgency	counter=pre:contra in=pre:into surg=r:surg ency=suf:ance
+gloss	hypersonic	adj:極超音速の
+parts	hypersonic	hyper=pre:hyper son=r:son ic=suf:ic
+gloss	denture	noun:入れ歯
+parts	denture	dent=r:dent ure=suf:ure
+gloss	perinatal	adj:周産期の
+parts	perinatal	peri=pre:peri nat=r:nat al=suf:al
+gloss	compaction	noun:圧縮、締め固め
+parts	compaction	com=pre:com pact=r:pact ion=suf:ation
+gloss	accede	verb:同意する、応じる、就任する
+parts	accede	ac=pre:ad ced=r:ced e
+gloss	ordain	verb:任命する、定める
+parts	ordain	ord=r:ord ain
+gloss	restate	verb:言い直す、再表明する
+parts	restate	re=pre:re stat=r:sta e
+gloss	altimeter	noun:高度計
+parts	altimeter	alt=r:alt i meter=r:meter
+gloss	subsonic	adj:亜音速の、可聴下の
+parts	subsonic	sub=pre:sub son=r:son ic=suf:ic
+gloss	metrology	noun:計量学、度量衡学
+parts	metrology	metr=r:meter o logy=suf:logy
+gloss	multifunctional	adj:多機能の
+parts	multifunctional	multi=pre:multi funct=r:funct ion=suf:ation al=suf:al
+gloss	actuary	noun:保険数理士
+parts	actuary	act=r:act u ary=suf:ary
+gloss	dissociate	verb:切り離す、関係を絶つ
+parts	dissociate	dis=pre:dis soci=r:soci ate=suf:ate
+gloss	equidistant	adj:等距離の
+parts	equidistant	equ=r:equ i di=pre:dis st=r:sta ant=suf:ant
+gloss	urbane	adj:洗練された、都会的で礼儀正しい
+parts	urbane	urb=r:urb ane
+gloss	dative	noun:与格
+parts	dative	dat=r:dat ive=suf:ive
+gloss	luminescent	adj:発光する、冷光を放つ
+parts	luminescent	lumin=r:lumin esc ent=suf:ant
+gloss	phoneme	noun:音素
+parts	phoneme	phon=r:phon eme
+gloss	actuation	noun:作動、起動
+parts	actuation	act=r:act u at=suf:ate ion=suf:ation
+gloss	microbiological	adj:微生物学の
+parts	microbiological	micro=pre:micro bio=r:bio log=r:log ic=suf:ic al=suf:al
+gloss	collectivist	adj:集団主義の、集産主義の
+parts	collectivist	col=pre:com lect=r:lect iv ist=suf:ist
+gloss	acclamation	noun:喝采、歓呼、満場一致の承認
+parts	acclamation	ac=pre:ad clam=r:claim ation=suf:ation
+gloss	countermeasure	noun:対抗策、対策
+parts	countermeasure	counter=pre:contra meas=r:mens ure=suf:ure
+gloss	transportable	adj:持ち運べる、輸送可能な
+parts	transportable	trans=pre:trans port=r:port able=suf:able
+# ギリシャ語 nomos（法・管理）の語。nomen（名前）の r:nom と分ける
+gloss	metronome	noun:メトロノーム
+parts	economy	eco=r:oik nom=r:nomos y=suf:y
+parts	economic	eco=r:oik nom=r:nomos ic=suf:ic
+parts	economist	eco=r:oik nom=r:nomos ist=suf:ist
+parts	autonomy	auto=pre:auto nom=r:nomos y=suf:ia
+parts	autonomous	auto=pre:auto nom=r:nomos ous=suf:ous
+parts	astronomy	astr=r:aster o nom=r:nomos y=suf:ia
+parts	astronomer	astr=r:aster o nom=r:nomos er=suf:er
+parts	astronomical	astr=r:aster o nom=r:nomos ical=suf:ic
+parts	metronome	metr=r:meter o nome=r:nomos

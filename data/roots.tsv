@@ -439,3 +439,5 @@ ard	ard,ars		燃える	ラテン語 ardēre
 barbar	barbar		異国の・野蛮な	ギリシャ語 barbaros
 misc	misc,medl,mel,mix		混ぜる	ラテン語 miscēre
 omen	omin,omen		前兆	ラテン語 ōmen
+# v2.16: ギリシャ語 nomos（法・管理）。economy の nom は nomen（名前）ではない（2026-11-17）
+nomos	nom,nomy,nome		法・管理・規則	ギリシャ語 nomos

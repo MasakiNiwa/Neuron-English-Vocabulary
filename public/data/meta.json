@@ -1,6 +1,6 @@
 {
- "version": "9758b8496f66",
- "generatedAt": "2026-11-16T12:33:05.715997+00:00",
+ "version": "b3b2526ab2c0",
+ "generatedAt": "2026-11-17T00:05:46.662762+00:00",
  "sources": {
   "files": [
    {
@@ -50,16 +50,16 @@
   }
  },
  "counts": {
-  "words": 11887,
+  "words": 12335,
   "phrases": 1331,
-  "morphemes": 659,
-  "withParts": 7194,
-  "withExamples": 13186,
+  "morphemes": 660,
+  "withParts": 7645,
+  "withExamples": 13634,
   "pieRoots": 92,
-  "withNote": 12211,
-  "manualParts": 3843,
-  "manual": 13218,
-  "withPie": 1413
+  "withNote": 12659,
+  "manualParts": 4294,
+  "manual": 13666,
+  "withPie": 1511
  },
  "shardSize": 200
 }
