@@ -13475,6 +13475,1351 @@ overrule	The referee overruled the goal after checking the video.	審判は映�
 pallet	Workers stacked the boxes on a plastic pallet.	作業員たちは、箱をプラスチックのパレットに積み上げた。
 pallet	A straw pallet on the floor served as his bed in the cabin.	小屋の床にあるわら布団が、彼のベッドの代わりだった。
 surveyor	The surveyor measured the land before the new road was built.	新しい道路を造る前に、測量士が土地を測った。
+# v2.16: 語源で解釈して覚えやすい単語の追加（A1 第 1 弾）
+natal	Natal complications can affect a baby's health later in life.	出生時の合併症は、のちのち赤ちゃんの健康に影響することがある。
+natal	Her natal village lies at the foot of the mountains.	彼女の生まれ故郷の村は山のふもとにある。
+natal	The natal chart shows the positions of the stars at birth.	出生図は生まれた時の星の位置を示している。
+dispense	The machine dispenses hot drinks for one dollar.	その機械は1ドルで温かい飲み物を出してくれる。
+dispense	The pharmacist dispenses medicine according to the doctor's order.	薬剤師は医師の指示どおりに薬を調剤する。
+dispense	We can dispense with the formalities and start the meeting.	堅苦しい手続きは省いて会議を始めよう。
+normative	The book takes a normative view of how citizens should behave.	その本は市民がどう振る舞うべきかについて規範的な見方をとっている。
+normative	Normative rules guide behavior in every society.	規範的なルールはどの社会でも行動の指針になる。
+normative	The study is descriptive rather than normative.	その研究は規範的というより記述的だ。
+sedimentary	Limestone is a common sedimentary rock.	石灰岩はよく見られる堆積岩だ。
+sedimentary	Fossils are usually found in sedimentary layers.	化石はたいてい堆積層から見つかる。
+sedimentary	Sedimentary deposits formed at the bottom of the ancient sea.	堆積物が古代の海底に形成された。
+thermodynamics	The engine is designed according to the laws of thermodynamics.	そのエンジンは熱力学の法則に従って設計されている。
+thermodynamics	He took a course in thermodynamics at university.	彼は大学で熱力学の授業を取った。
+thermodynamics	The second law of thermodynamics concerns the flow of heat.	熱力学第二法則は熱の流れに関するものだ。
+coherence	The essay lacks coherence and jumps from topic to topic.	そのエッセーは話題があちこちに飛んでまとまりがない。
+coherence	A good speech needs clear structure and coherence.	よい演説には明確な構成と一貫性が必要だ。
+coherence	The coherence of the plan impressed the committee.	その計画の一貫性は委員会に好印象を与えた。
+dissident	The dissident was arrested after criticizing the government.	その反体制派は政府を批判して逮捕された。
+dissident	Many dissidents were forced to leave the country.	多くの反体制派が国外へ出ることを余儀なくされた。
+dissident	A dissident voice in the party questioned the new policy.	党内の異論の声が新政策に疑問を呈した。
+synchronization	The synchronization of the two clocks took only a minute.	二つの時計の同期はわずか1分で済んだ。
+synchronization	Data synchronization keeps your phone and laptop up to date.	データの同期でスマホとノートPCが最新の状態に保たれる。
+synchronization	Good synchronization is key to a dance team.	ダンスチームではタイミングを合わせることが重要だ。
+obstruct	A fallen tree obstructed the road after the storm.	嵐のあと、倒れた木が道をふさいでいた。
+obstruct	He was accused of trying to obstruct the investigation.	彼は捜査を妨害しようとしたとして非難された。
+obstruct	Tall buildings obstruct our view of the sea.	高いビルのせいで海の眺めがさえぎられている。
+scribe	A scribe copied the old book by hand.	書記が、その古い本を手で書き写した。
+scribe	In ancient times, a scribe recorded the king's orders.	古代には、書記が王の命令を記録した。
+scribe	He worked as a scribe in the monastery.	彼は修道院で写字生として働いていた。
+tenacious	She is a tenacious lawyer who never gives up.	彼女は決してあきらめない、粘り強い弁護士だ。
+tenacious	The tenacious weeds came back every spring.	そのしぶとい雑草は毎年春に生えてきた。
+tenacious	His tenacious grip kept him from falling.	彼がしっかり握り続けたおかげで、落ちずにすんだ。
+convoluted	The movie has a convoluted plot that is hard to follow.	その映画は筋が入り組んでいて、追うのが難しい。
+convoluted	He gave a convoluted explanation for being late.	彼は遅刻について、回りくどい説明をした。
+convoluted	The rules are too convoluted for most people to understand.	そのルールは複雑すぎて、たいていの人には理解できない。
+belligerent	He became belligerent after drinking too much.	彼は飲みすぎて、けんか腰になった。
+belligerent	The two belligerent nations refused to talk.	交戦中の両国は、話し合いを拒んだ。
+belligerent	Her belligerent tone made everyone nervous.	彼女の敵意に満ちた口調に、全員が緊張した。
+insurmountable	The language barrier proved insurmountable.	言葉の壁は、乗り越えられないことがわかった。
+insurmountable	They faced seemingly insurmountable difficulties.	彼らは、一見乗り越えられそうにない困難に直面した。
+insurmountable	Her fear of water was not insurmountable.	彼女の水への恐怖は、克服できないものではなかった。
+asterisk	An asterisk marks the items that need extra attention.	アスタリスクは、特に注意が必要な項目を示している。
+asterisk	Please add an asterisk next to your name.	名前の横に星印をつけてください。
+asterisk	The asterisk refers to a note at the bottom of the page.	その星印は、ページ下部の注を指している。
+photosynthesis	Plants make food through photosynthesis.	植物は光合成によって養分を作る。
+photosynthesis	Photosynthesis needs light, water, and carbon dioxide.	光合成には、光と水と二酸化炭素が必要だ。
+photosynthesis	Green leaves are where photosynthesis mostly takes place.	光合成は、主に緑色の葉で行われる。
+armament	The country increased its spending on armament.	その国は軍備への支出を増やした。
+armament	The treaty limited the armament of both nations.	その条約は、両国の軍備を制限した。
+armament	Modern armament is far more powerful than before.	現代の兵器は、以前よりはるかに強力だ。
+resumption	Both sides agreed to the resumption of peace talks.	双方は、和平交渉の再開に合意した。
+resumption	The resumption of flights was delayed by snow.	雪のため、運航の再開が遅れた。
+resumption	Fans welcomed the resumption of the league season.	ファンは、リーグ戦の再開を歓迎した。
+equinox	Day and night are of equal length at the spring equinox.	春分には昼と夜の長さが等しくなる。
+equinox	The autumn equinox usually falls in late September.	秋分は通常9月下旬にあたる。
+equinox	Many old festivals were held around the equinox.	多くの古い祭りは昼夜平分の頃に行われた。
+pretense	He made no pretense of being interested in the plan.	彼はその計画に興味があるふりすらしなかった。
+pretense	She kept up the pretense of being happy.	彼女は幸せなふりを続けた。
+pretense	They entered the building under the pretense of making repairs.	彼らは修理を口実にその建物に入った。
+synchronous	The two systems must be synchronous to work properly.	その二つのシステムは正しく動くには同期していなければならない。
+synchronous	Synchronous learning takes place in real time with a teacher.	同期型学習は教師とリアルタイムで行われる。
+synchronous	The dancers made synchronous movements across the stage.	ダンサーたちは舞台上で動きをそろえて踊った。
+introspection	Long walks gave him time for introspection.	長い散歩が彼に内省の時間を与えた。
+introspection	The poem invites quiet introspection.	その詩は静かな内省を誘う。
+introspection	Deep introspection helped her understand her fears.	深い内省が彼女に自分の恐れを理解させた。
+fractal	A fractal looks similar at every scale.	フラクタルはどの縮尺で見ても似た形に見える。
+fractal	The coastline is often described as a natural fractal.	海岸線はしばしば自然のフラクタルと説明される。
+fractal	He used a fractal pattern in his computer art.	彼はコンピューターアートにフラクタル模様を使った。
+putative	The putative author of the book has never been identified.	その本の作者とされる人物は特定されていない。
+putative	The putative benefits of the drug are still debated.	その薬の効果とされるものは今も議論されている。
+putative	He is the putative father of the child.	彼はその子の父親と見なされている。
+nonsensical	The instructions were so confusing that they seemed nonsensical.	その指示は混乱していて意味不明に思えた。
+nonsensical	He gave a nonsensical answer to a simple question.	彼は簡単な質問にばかげた答えをした。
+nonsensical	The plot of the film was completely nonsensical.	その映画の筋書きはまったく筋が通っていなかった。
+juxtaposition	The juxtaposition of old and new buildings is striking.	新旧の建物が並んでいるさまは印象的だ。
+juxtaposition	The film uses the juxtaposition of joy and grief.	その映画は喜びと悲しみを並べて対比させている。
+juxtaposition	The artist liked the juxtaposition of bright and dark colors.	その画家は明るい色と暗い色を並べるのを好んだ。
+optimist	He is an optimist who always sees the bright side.	彼はいつも明るい面を見る楽観主義者だ。
+optimist	My friend is a born optimist.	私の友人は生まれつきの楽天家だ。
+optimist	Only an optimist would expect the plan to succeed.	楽観主義者だけがその計画の成功を期待するだろう。
+minuscule	The cost of the repair was minuscule.	修理の費用はごくわずかだった。
+minuscule	There is only a minuscule chance of rain today.	今日雨が降る可能性はごくわずかだ。
+minuscule	He wrote in minuscule letters on the card.	彼はカードにごく小さな文字で書いた。
+profess	She professes to know nothing about politics.	彼女は政治については何も知らないと言い張っている。
+profess	He professed his love for the old city.	彼はその古い街への愛情を公言した。
+profess	Many students profess an interest in science.	多くの学生が科学への関心を公言している。
+expatriate	My uncle is an expatriate living in Singapore.	私のおじはシンガポールに住む国外居住者だ。
+expatriate	Many expatriate workers send money home every month.	多くの国外就労者が毎月故郷へ送金している。
+expatriate	The expatriate community held a small festival.	在外居住者のコミュニティが小さな祭りを開いた。
+fortify	The soldiers worked to fortify the old castle.	兵士たちは古い城を要塞化するために働いた。
+fortify	This cereal is fortified with iron and vitamins.	このシリアルは鉄分とビタミンで強化されている。
+fortify	A good breakfast will fortify you for the day.	しっかり朝食をとれば、一日に備えて力がつく。
+obsess	Don't obsess over small mistakes you made yesterday.	昨日の小さなミスをくよくよ思い悩むな。
+obsess	He began to obsess about his weight.	彼は体重のことが頭から離れなくなった。
+obsess	Fans obsess over every detail of the new series.	ファンは新シリーズのあらゆる細部に夢中になる。
+affront	His rude remark was an affront to the guests.	彼の無礼な発言は客への侮辱だった。
+affront	She felt affronted by the silly joke.	彼女はそのくだらない冗談に侮辱された気がした。
+affront	Refusing the gift would affront our host.	贈り物を断れば主人の気を悪くするだろう。
+cryptography	Modern cryptography protects our online messages.	現代の暗号技術はネット上のメッセージを守っている。
+cryptography	He studies cryptography at the university.	彼は大学で暗号学を学んでいる。
+cryptography	Banks rely on cryptography to keep accounts safe.	銀行は口座を守るために暗号技術に頼っている。
+causality	Scientists look for causality, not just correlation.	科学者は相関だけでなく因果関係を探す。
+causality	It is hard to prove causality in this case.	この件で因果関係を証明するのは難しい。
+causality	The book discusses causality in history.	その本は歴史における因果関係を論じている。
+asexual	Some plants use asexual reproduction to spread quickly.	一部の植物は無性生殖で素早く広がる。
+asexual	Bacteria multiply by asexual division in warm water.	細菌は温かい水の中で無性的な分裂により増える。
+asexual	Many fungi spread by asexual spores.	多くの菌類は無性の胞子で広がる。
+generalize	It is unfair to generalize from one bad experience.	一度の悪い経験から一般化するのは不公平だ。
+generalize	It is unfair to generalize about all teenagers from one example.	一つの例からすべての十代を一般化するのは不公平だ。
+generalize	The sample is too small to generalize from.	その標本は小さすぎて、そこから一般化はできない。
+amiable	He is an amiable man who gets along with everyone.	彼は誰とでも仲良くなれる感じのよい男性だ。
+amiable	We had an amiable chat over coffee.	私たちはコーヒーを飲みながら和やかにおしゃべりした。
+amiable	The two rivals kept an amiable relationship after the match.	二人のライバルは試合後も良好な関係を保った。
+tenement	They lived in a crowded tenement in the city center.	彼らは都心の混み合った安アパートに住んでいた。
+tenement	The old tenement was torn down last year.	その古い共同住宅は去年取り壊された。
+tenement	Many immigrants rented rooms in a tenement.	多くの移民が共同住宅の部屋を借りた。
+biodegradable	These bags are made of biodegradable plastic.	これらの袋は生分解性プラスチックでできている。
+biodegradable	Choose biodegradable soap to protect the river.	川を守るために生分解性の石けんを選びなさい。
+biodegradable	Food scraps are biodegradable and make good compost.	生ごみは生分解性で、良い堆肥になる。
+implore	I implore you to reconsider your decision.	どうか決断を考え直してくださいとお願いします。
+implore	She implored the judge for mercy.	彼女は裁判官に慈悲を懇願した。
+implore	The children implored their father to tell another story.	子供たちは父親にもう一つ話をしてとせがんだ。
+commensurate	Salary will be commensurate with experience.	給与は経験に見合ったものとなる。
+commensurate	The punishment should be commensurate with the crime.	罰は罪に釣り合うべきだ。
+commensurate	She received a reward commensurate with her efforts.	彼女は努力に見合う報酬を受け取った。
+punctual	Our teacher is always punctual for class.	私たちの先生は授業にいつも時間通りに来る。
+punctual	Please be punctual because the train will not wait.	電車は待ってくれないので、時間を守ってください。
+punctual	She thanked him for his punctual payment.	彼女は期日通りの支払いに礼を言った。
+exclaim	"What a beautiful view!" she exclaimed.	「なんて美しい景色なの！」と彼女は叫んだ。
+exclaim	The crowd exclaimed in surprise at the magic trick.	群衆はその手品に驚きの声を上げた。
+exclaim	He exclaimed that he had won the lottery.	彼は宝くじに当たったと叫んだ。
+absorbent	Use an absorbent towel to dry the floor.	床を拭くには吸水性のあるタオルを使いなさい。
+absorbent	Cotton is more absorbent than polyester.	綿はポリエステルより吸収性が高い。
+absorbent	The absorbent pad soaked up the spilled milk.	その吸収パッドはこぼれた牛乳を吸い取った。
+neuropathy	Diabetes can lead to neuropathy in the feet.	糖尿病は足の神経障害を引き起こすことがある。
+neuropathy	The patient complained of pain from neuropathy.	その患者は神経障害による痛みを訴えた。
+neuropathy	Doctors are testing a new drug for neuropathy.	医師たちは神経障害の新薬を試験している。
+centrifuge	The technician put the blood sample into the centrifuge.	技師は血液サンプルを遠心分離機に入れた。
+centrifuge	Astronauts train in a giant centrifuge to experience strong gravity.	宇宙飛行士は強い重力を体験するため巨大な遠心機で訓練する。
+centrifuge	You can centrifuge the mixture to separate the oil from water.	その混合物を遠心分離にかければ、油と水を分けられる。
+laborious	Translating the old manuscript was a slow and laborious process.	その古い写本の翻訳は、時間のかかる骨の折れる作業だった。
+laborious	He wrote the report in a laborious style full of long sentences.	彼は長い文だらけの、ぎこちなく苦心の跡が見える文体で報告書を書いた。
+laborious	Moving all the boxes by hand was laborious work.	箱を全部手で運ぶのは骨の折れる仕事だった。
+secede	Several states threatened to secede from the union.	いくつかの州が連邦からの脱退をちらつかせた。
+secede	The region voted to secede and form its own country.	その地域は分離して独自の国を作ることを票決した。
+secede	A few members seceded from the party over the policy.	その方針をめぐり、数人の議員が党を離脱した。
+liberator	The crowd welcomed the soldiers as liberators.	群衆は兵士たちを解放者として歓迎した。
+liberator	He is remembered as the liberator of his country.	彼は祖国の解放者として記憶されている。
+liberator	The people built a statue to honor their liberator.	人々は解放者をたたえて像を建てた。
+incapacity	His incapacity to manage money led to serious debts.	彼はお金を管理できず、多額の借金を抱えることになった。
+incapacity	The doctor certified her incapacity for work.	医師は彼女が就労できない状態であると証明した。
+incapacity	The incapacity of the old system became obvious to everyone.	旧システムの能力不足は誰の目にも明らかになった。
+intercession	The prisoner was freed through the intercession of a bishop.	その囚人は司教のとりなしによって釈放された。
+intercession	Thanks to her intercession, the two sides agreed to talk.	彼女の仲裁のおかげで、双方は話し合いに同意した。
+intercession	They prayed for the saint's intercession during the drought.	彼らは干ばつの間、聖人のとりなしを祈った。
+amorous	The poet wrote amorous letters to his distant wife.	詩人は遠く離れた妻に恋の手紙を書いた。
+amorous	The novel is full of amorous adventures in Paris.	その小説にはパリでの恋の冒険がたくさん出てくる。
+amorous	She ignored his amorous glances across the room.	彼女は部屋の向こうから送られる彼の熱っぽい視線を無視した。
+apologist	He became a loud apologist for the controversial policy.	彼はその物議を醸す政策の熱心な擁護者になった。
+apologist	The professor is a well-known apologist for free trade.	その教授は自由貿易の擁護者としてよく知られている。
+apologist	Critics called her an apologist for the powerful.	批評家たちは彼女を権力者の擁護者だと呼んだ。
+propriety	He always behaved with perfect propriety at formal dinners.	彼は正式な晩餐会ではいつも非の打ちどころのない礼儀正しさで振る舞った。
+propriety	Some questioned the propriety of the mayor's decision.	市長の決定が適切かどうか疑問視する人もいた。
+propriety	She was careful to observe the proprieties of the occasion.	彼女はその場にふさわしい作法を守るよう気をつけた。
+abduct	The rebels planned to abduct the foreign diplomat.	反乱軍は外国の外交官を誘拐する計画を立てた。
+abduct	Some people claim aliens abducted them from their farm.	自分は農場からエイリアンに連れ去られたと主張する人もいる。
+abduct	The police arrested a man suspected of abducting a child.	警察は子どもを誘拐した疑いのある男を逮捕した。
+procreation	Procreation is essential for the survival of any species.	生殖はあらゆる種の存続に欠かせない。
+procreation	The old text treats procreation as the purpose of marriage.	その古い文献は、生殖を結婚の目的とみなしている。
+procreation	Scientists study procreation in animals living in extreme climates.	科学者は極限の気候に暮らす動物の生殖を研究している。
+pacify	The mother tried to pacify the crying baby.	母親は泣いている赤ん坊をなだめようとした。
+pacify	The government sent troops to pacify the region.	政府はその地域を鎮圧するために軍隊を送った。
+pacify	A small gift was not enough to pacify the angry customer.	小さな贈り物では怒った客をなだめるには足りなかった。
+elation	The team celebrated the win with great elation.	チームは大喜びで勝利を祝った。
+elation	She felt a sense of elation when she saw her exam results.	試験結果を見て、彼女は高揚感に包まれた。
+elation	His elation turned to disappointment when the news arrived.	知らせが届くと、彼の喜びは失望に変わった。
+omniscient	Many religions describe God as omniscient.	多くの宗教は神を全知の存在として描く。
+omniscient	The novel is told by an omniscient narrator.	その小説は全知の語り手によって語られている。
+omniscient	No one is omniscient, so we all need to keep learning.	全知の人などいないので、誰もが学び続ける必要がある。
+comprehensible	The instructions were clear and easily comprehensible.	その説明書は明快で、とても理解しやすかった。
+comprehensible	Her accent was strong, but still comprehensible.	彼女の訛りは強かったが、それでも理解はできた。
+comprehensible	The author makes difficult ideas comprehensible to beginners.	著者は難しい考えを初心者にもわかるように説明している。
+genial	Our host was a genial man who made everyone welcome.	主人は愛想のよい人で、誰もを歓迎してくれた。
+genial	The genial atmosphere of the party put me at ease.	パーティーの和やかな雰囲気に、私は気が楽になった。
+genial	She greeted the guests with a genial smile.	彼女は温かい笑顔で客を迎えた。
+biometrics	The airport uses biometrics to check passengers' identities.	その空港は生体認証で乗客の本人確認をしている。
+biometrics	Fingerprint biometrics are now common on smartphones.	指紋による生体認証は今やスマートフォンで一般的だ。
+biometrics	Many phones now use biometrics such as fingerprints to unlock.	今では多くの携帯電話が指紋などの生体認証でロックを解除する。
+biofuel	Corn is often used to make biofuel.	トウモロコシはしばしばバイオ燃料の原料になる。
+biofuel	Some airlines are testing biofuel on regular flights.	一部の航空会社は定期便でバイオ燃料を試している。
+biofuel	Critics say biofuel production can raise food prices.	バイオ燃料の生産は食料価格を上げかねないと批判する人もいる。
+abate	The storm began to abate after midnight.	嵐は真夜中を過ぎて弱まり始めた。
+abate	We waited for the pain to abate before moving.	痛みが和らぐのを待ってから動いた。
+abate	The government acted to abate the noise near the airport.	政府は空港周辺の騒音を減らす措置をとった。
+egress	The sign marked the emergency egress.	その表示は非常口を示していた。
+egress	The fire blocked the only egress from the building.	火事で建物の唯一の出口がふさがれた。
+egress	Keep the egress clear in case of fire.	火事に備えて、出口をふさがないようにしておく。
+inordinate	He spends an inordinate amount of time on his phone.	彼は携帯電話に異常なほど多くの時間を使う。
+inordinate	The project took an inordinate length of time.	その計画には法外に長い時間がかかった。
+inordinate	She takes an inordinate pride in her garden.	彼女は自分の庭を度を超えて自慢している。
+fallacious	The argument is fallacious and should be rejected.	その議論は誤っており退けるべきだ。
+fallacious	He used fallacious reasoning to defend his plan.	彼は自分の計画を守るのに誤った論理を使った。
+fallacious	It is fallacious to assume all cats hate water.	すべての猫が水を嫌うと考えるのは誤りだ。
+tortuous	We drove along a tortuous mountain road.	私たちは曲がりくねった山道を車で走った。
+tortuous	The negotiations were long and tortuous.	交渉は長く入り組んでいた。
+tortuous	He gave a tortuous explanation that confused everyone.	彼は回りくどい説明をして皆を混乱させた。
+prescient	Her warning about the crisis proved prescient.	危機についての彼女の警告は的中した。
+prescient	He made a prescient remark about the market.	彼は市場について先を見通した発言をした。
+prescient	The novel was prescient about modern technology.	その小説は現代の技術を予見していた。
+committal	The judge ordered the committal of the suspect to prison.	判事は容疑者の収監を命じた。
+committal	The committal of funds to the project was approved.	その事業への資金の充当が承認された。
+committal	The committal of the body to the grave followed the prayers.	祈りのあと、遺体は墓に納められた。
+cartography	He studied cartography at university.	彼は大学で地図作成学を学んだ。
+cartography	Modern cartography relies on satellite images.	現代の地図作成は衛星画像に頼っている。
+cartography	The museum displays old works of cartography.	その博物館は古い地図作成の作品を展示している。
+overstate	It is hard to overstate the importance of sleep.	睡眠の重要性は言い過ぎることがないほど大きい。
+overstate	The report overstates the risks.	その報告書は危険性を大げさに述べている。
+overstate	Critics say he tends to overstate his achievements.	批評家は彼が自分の業績を誇張しがちだと言う。
+generalist	A generalist can work in many different roles.	ゼネラリストはさまざまな役割をこなせる。
+generalist	The company hired a generalist as manager.	会社は管理職にゼネラリストを採用した。
+generalist	Doctors in small towns are often generalists.	小さな町の医師はたいてい総合医だ。
+vanquish	The army vanquished its enemy after a long war.	その軍は長い戦争の末に敵を打ち破った。
+vanquish	He finally vanquished his fear of flying.	彼はついに飛行機への恐怖を克服した。
+vanquish	The champion vanquished every challenger that year.	そのチャンピオンはその年すべての挑戦者を打ち負かした。
+facile	He gave a facile answer to a complex question.	彼は複雑な問いに安易な答えを返した。
+facile	The film offers a facile view of poverty.	その映画は貧困について浅薄な見方しか示さない。
+facile	Her facile charm hid a calculating mind.	彼女の口先だけの魅力の裏には計算高さがあった。
+levity	He tried to lighten the mood with a little levity.	彼は少しふざけて場の空気を和ませようとした。
+levity	Laughing at a funeral shows levity and a lack of respect.	葬儀で笑うのは軽率で、敬意を欠いた態度だ。
+levity	A moment of levity eased the tension in the room.	ふとした冗談が部屋の緊張をほぐした。
+constriction	She felt a constriction in her chest.	彼女は胸が締めつけられるのを感じた。
+constriction	Cold weather causes constriction of the blood vessels.	寒さは血管の収縮を引き起こす。
+constriction	The constriction of the road slowed the traffic.	道が狭くなっているため、交通が滞った。
+conceptualize	It is hard to conceptualize infinity.	無限を概念として捉えるのは難しい。
+conceptualize	The designer conceptualized the building as a bridge.	設計者はその建物を橋のようなものとして発想した。
+conceptualize	We need to conceptualize the problem before solving it.	解決する前に、問題を概念として整理する必要がある。
+assistive	The school offers assistive technology for students.	その学校は生徒向けに支援技術を提供している。
+assistive	An assistive device helped him walk again.	補助器具のおかげで彼は再び歩けるようになった。
+assistive	She uses assistive software to read documents aloud.	彼女は文書を音読させる支援ソフトを使っている。
+orthography	English orthography is full of irregular spellings.	英語の綴りは不規則な例に満ちている。
+orthography	The committee reformed the national orthography.	委員会は国の正書法を改革した。
+orthography	Children struggle with orthography in their first years.	子どもは最初の数年間、綴りに苦労する。
+flexion	Knee flexion is limited after the injury.	けがの後、膝の屈曲が制限されている。
+flexion	This simple exercise gradually improves elbow flexion after surgery.	この簡単な運動は、手術後の肘の屈曲を徐々に改善する。
+flexion	Latin shows rich flexion in its nouns and verbs.	ラテン語は名詞と動詞に豊かな語形変化がある。
+nominative	In English, "he" is the nominative form of the pronoun.	英語では he が代名詞の主格の形である。
+nominative	The teacher asked us to put the noun in the nominative case.	先生は私たちに、その名詞を主格にするよう言った。
+nominative	Latin uses the nominative for the subject of a sentence.	ラテン語では文の主語に主格を使う。
+underpass	We walked through the underpass to reach the other side of the highway.	私たちは地下道を通って幹線道路の反対側に出た。
+underpass	The underpass floods whenever it rains heavily.	その地下道は大雨のたびに冠水する。
+underpass	A cyclist was waiting at the underpass entrance.	自転車の人が地下道の入口で待っていた。
+falsify	He was fired for falsifying the sales records.	彼は販売記録を改ざんして解雇された。
+falsify	The company falsified test results to hide the defects.	その会社は欠陥を隠すために検査結果を偽造した。
+falsify	It is a crime to falsify a signature.	署名を偽造するのは犯罪だ。
+selectable	The game has five selectable characters.	そのゲームには選べるキャラクターが5人いる。
+selectable	Only selectable items appear in the menu.	メニューには選択可能な項目だけが表示される。
+selectable	The software offers several selectable languages.	そのソフトは選択可能な言語を複数備えている。
+alliteration	"Big bad wolf" is a simple example of alliteration.	「big bad wolf」は頭韻の簡単な例だ。
+alliteration	The poet uses alliteration to give the line a musical sound.	その詩人は頭韻を使って詩行に音楽的な響きを与えている。
+alliteration	Brand names often rely on alliteration to be memorable.	ブランド名は覚えやすくするために頭韻に頼ることが多い。
+transpose	I often transpose two letters when I type fast.	私は速く打つと、よく2文字を入れ替えてしまう。
+transpose	The pianist transposed the song into a lower key.	そのピアニストは曲を低い調に移調した。
+transpose	Be careful not to transpose the digits in the phone number.	電話番号の数字を入れ替えないよう気をつけて。
+reassemble	He took the clock apart and could not reassemble it.	彼は時計を分解したが元に戻せなかった。
+reassemble	The members will reassemble after lunch.	メンバーは昼食後に再び集まる。
+reassemble	Follow the manual to reassemble the bookshelf.	説明書に従って本棚を組み立て直してください。
+equalize	The law aims to equalize pay between men and women.	その法律は男女の賃金を平等にすることを目的としている。
+equalize	She scored in the last minute to equalize.	彼女は最終盤にゴールを決めて同点にした。
+equalize	Divers equalize the pressure in their ears as they go down.	ダイバーは潜るとき耳の圧力を均等にする。
+coronet	The duchess wore a diamond coronet at the ceremony.	公爵夫人は式典でダイヤの小冠をつけていた。
+coronet	A gold coronet sat on the princess's head.	王女の頭には金の小冠が載っていた。
+coronet	The museum displays a coronet from the 18th century.	その博物館には18世紀の小冠が展示されている。
+unmotivated	He felt unmotivated after failing the exam.	彼は試験に落ちてやる気をなくした。
+unmotivated	Unmotivated students rarely finish their homework.	やる気のない生徒は宿題をめったに終わらせない。
+unmotivated	The attack looked completely unmotivated to the police.	警察にはその襲撃が動機のないものに見えた。
+libertine	The novel's hero is a charming libertine who ignores every rule.	その小説の主人公は、あらゆる規則を無視する魅力的な放蕩者だ。
+libertine	In ancient Rome, a libertine was a slave who had been freed.	古代ローマで libertine とは、自由の身になった奴隷のことだった。
+libertine	Critics condemned the libertine lifestyle of the court.	批評家たちは宮廷の放縦な暮らしぶりを非難した。
+collude	The two companies were accused of colluding to fix prices.	その2社は価格を不正に決めるため共謀したとして訴えられた。
+collude	Officials colluded with the smugglers to hide the shipment.	役人たちは密輸業者とぐるになって積み荷を隠した。
+collude	I suspect the witnesses colluded before they told their stories.	証人たちは証言の前に口裏を合わせたのではないかと思う。
+convolution	I could not follow the convolutions of the plot.	私は筋の込み入った展開についていけなかった。
+convolution	The brain's surface is covered with deep convolutions.	脳の表面は深い溝やしわの渦巻きで覆われている。
+convolution	The many convolutions of the river made the trip much longer.	川が何度も曲がりくねっていたため、旅はずっと長くなった。
+ostensible	The ostensible reason for the trip was a business meeting.	その旅行の表向きの理由は商談だった。
+ostensible	Her ostensible kindness hid a selfish plan.	彼女の見せかけの親切は、利己的な計画を隠していた。
+ostensible	The ostensible leader of the group had little real power.	そのグループの名目上のリーダーには、実際の権力はほとんどなかった。
+centigrade	Water boils at one hundred degrees centigrade.	水は摂氏100度で沸騰する。
+centigrade	Yesterday's temperature reached thirty degrees centigrade.	昨日の気温は摂氏30度に達した。
+centigrade	Many countries report temperatures in centigrade.	多くの国は気温を摂氏で表す。
+suboptimal	The results were suboptimal, so we changed the method.	結果は最善とはいえなかったので、私たちは方法を変えた。
+suboptimal	Working in a dark room is suboptimal for your eyes.	暗い部屋での作業は目にとって理想的ではない。
+suboptimal	A suboptimal diet can slow down a child's growth.	最適でない食事は子どもの成長を遅らせることがある。
+psychopathology	Her research focuses on the psychopathology of anxiety.	彼女の研究は不安の精神病理に焦点を当てている。
+psychopathology	He took a university course in psychopathology.	彼は大学で精神病理学の講義を受けた。
+psychopathology	Psychopathology tries to explain why some behaviors become disorders.	精神病理学は、なぜある行動が障害になるのかを説明しようとする。
+confection	The bakery sells delicate confections decorated with sugar flowers.	そのパン屋は砂糖の花で飾った繊細な菓子を売っている。
+confection	Chocolate is my favorite sweet confection.	チョコレートは私の大好きな甘いお菓子だ。
+confection	The wedding cake was a magnificent confection of cream and fruit.	ウェディングケーキはクリームと果物でできた豪華な菓子だった。
+demagogue	The demagogue stirred up the crowd with promises he could not keep.	その扇動政治家は守れない約束で群衆をあおった。
+demagogue	Voters should be wary of a demagogue who blames everything on outsiders.	有権者は、すべてを外部の者のせいにする扇動政治家に警戒すべきだ。
+demagogue	He was dismissed as a demagogue by his critics.	彼は批判者たちから扇動政治家だと切り捨てられた。
+servile	He gave a servile smile to the manager.	彼は部長に卑屈な笑みを向けた。
+servile	The king was surrounded by servile courtiers.	王は媚びへつらう廷臣たちに囲まれていた。
+servile	She hated the servile attitude of the new staff.	彼女は新入社員の卑屈な態度が嫌だった。
+perfunctory	He gave a perfunctory nod and walked away.	彼は形だけうなずいて立ち去った。
+perfunctory	The inspection was perfunctory and missed several problems.	検査はおざなりで、いくつかの問題を見逃した。
+perfunctory	She answered with a perfunctory apology.	彼女は通り一遍の謝罪で答えた。
+deplore	We deplore the use of violence in any form.	私たちはいかなる形の暴力も強く非難する。
+deplore	She deplored the loss of the old village.	彼女は古い村が失われたことを嘆いた。
+deplore	Many people deplore the decline in manners.	多くの人が礼儀作法の衰えを嘆いている。
+cession	The treaty required the cession of the northern territory.	その条約は北部の領土の割譲を要求した。
+cession	The cession of rights to the company was legal.	会社への権利の譲渡は合法だった。
+cession	After the cession, the island became part of another country.	割譲の後、その島は別の国の一部になった。
+speculator	The speculator bought land hoping prices would rise.	その投機家は値上がりを期待して土地を買った。
+speculator	Speculators pushed up the price of oil.	投機家たちが石油価格を押し上げた。
+speculator	He was a cautious speculator who studied every market.	彼はあらゆる市場を調べる慎重な投機家だった。
+biannual	The company holds a biannual meeting in spring and autumn.	その会社は春と秋に年2回の会議を開く。
+biannual	She receives a biannual report on sales.	彼女は売上について年2回の報告を受け取る。
+biannual	The school sends biannual newsletters to parents.	学校は保護者に年2回のお便りを送る。
+lectern	The speaker placed his notes on the lectern.	話し手は講演台の上にメモを置いた。
+lectern	A large Bible lay open on the lectern.	大きな聖書が書見台の上に開かれていた。
+lectern	She walked to the lectern and began her speech.	彼女は演台へ歩いて行き、スピーチを始めた。
+fluvial	Fluvial erosion shapes valleys over thousands of years.	河川の浸食は数千年かけて谷を形作る。
+fluvial	The plain was formed by fluvial deposits.	その平野は河川の堆積物でできた。
+fluvial	Geologists study fluvial processes along the river.	地質学者は川沿いの河川作用を研究している。
+mutable	Human opinion is mutable and often shaped by the media.	人の意見は変わりやすく、しばしばメディアに左右される。
+mutable	In this language, strings are mutable, so you can edit them in place.	この言語では文字列は変更可能なので、その場で編集できる。
+mutable	Nothing in life is fixed; even the strongest bonds are mutable.	人生に固定されたものはなく、最も強い絆でさえ変わりうる。
+repatriate	The government plans to repatriate the refugees next year.	政府は来年、難民を本国へ送還する計画だ。
+repatriate	The museum agreed to repatriate the stolen statue.	博物館は盗まれた像を原産国へ返還することに同意した。
+repatriate	The company must repatriate its overseas profits to the home country.	その会社は海外利益を本国へ戻さなければならない。
+anhydrous	Anhydrous ammonia is widely used as a fertilizer.	無水アンモニアは肥料として広く使われている。
+anhydrous	The chemist stored the anhydrous salt in a sealed jar.	化学者は無水の塩を密閉した瓶に保管した。
+anhydrous	Anhydrous alcohol contains almost no water.	無水アルコールには水がほとんど含まれていない。
+microbiologist	The microbiologist studied bacteria under the microscope.	微生物学者は顕微鏡でバクテリアを観察した。
+microbiologist	My sister works as a microbiologist at a hospital.	姉は病院で微生物学者として働いている。
+microbiologist	A microbiologist helped trace the source of the outbreak.	微生物学者が集団感染の原因をたどる手助けをした。
+resolute	She remained resolute in the face of strong criticism.	彼女は厳しい批判を前にしても断固とした態度を崩さなかった。
+resolute	He gave a resolute answer and refused to change his mind.	彼は断固とした返事をし、考えを変えようとしなかった。
+resolute	The team showed resolute determination to win the final.	チームは決勝で勝つという固い決意を見せた。
+hologram	The bank card has a small hologram to prevent forgery.	その銀行カードには偽造防止の小さなホログラムが付いている。
+hologram	A hologram of the singer appeared on the stage.	ステージに歌手のホログラムが現れた。
+hologram	The museum uses a hologram to show how the ship looked.	その博物館はホログラムで船の昔の姿を見せている。
+oblige	The law obliges drivers to wear seat belts.	法律はドライバーにシートベルトの着用を義務づけている。
+oblige	I felt obliged to help my friend after all he had done.	彼にしてもらったことを思うと、友人を助けないわけにはいかなかった。
+oblige	We would be obliged if you could reply by Friday.	金曜日までにご返信いただければありがたく存じます。
+semblance	The room returned to some semblance of order after the party.	パーティーの後、部屋はいくらか片付いた状態に戻った。
+semblance	He kept a semblance of calm despite the bad news.	彼は悪い知らせにも落ち着いた様子を装っていた。
+semblance	The story has a semblance of truth, but it is false.	その話は一見本当らしいが、嘘だ。
+assailant	The police are searching for the assailant who attacked the man.	警察はその男性を襲った犯人を捜している。
+assailant	She could not describe her assailant to the officer.	彼女は襲撃者の特徴を警官に説明できなかった。
+assailant	The assailant ran away before anyone could stop him.	襲撃者は誰かが止める前に逃げ去った。
+consonant	The letter b is a consonant, not a vowel.	文字 b は母音ではなく子音だ。
+consonant	Many students find some English consonants hard to pronounce.	英語の子音には発音が難しいと感じる学生が多い。
+consonant	His actions were consonant with his stated beliefs.	彼の行動は公言した信念と調和していた。
+patriarchy	The writer criticizes patriarchy in her essays.	その作家はエッセーで家父長制を批判している。
+patriarchy	In a patriarchy, men hold most of the power.	家父長制の社会では男性が権力の大半を握る。
+patriarchy	The novel shows life in a strict patriarchy.	その小説は厳格な家父長制社会での暮らしを描いている。
+multilateral	The countries signed a multilateral trade agreement.	各国は多国間の貿易協定に署名した。
+multilateral	Multilateral talks involve several nations at the same table.	多国間協議では複数の国が同じ席につく。
+multilateral	She prefers multilateral action over acting alone.	彼女は単独行動より多国間での行動を好む。
+retrograde	Critics called the new policy a retrograde step.	批評家たちは、その新方針を時代に逆行する一歩だと評した。
+retrograde	The planet appears to move in a retrograde direction.	その惑星は逆行しているように見える。
+retrograde	Banning the program would be retrograde and harmful.	その計画を禁止するのは後退であり、有害だろう。
+abstain	Doctors told him to abstain from alcohol.	医者は彼に、酒を控えるよう言った。
+abstain	Three members chose to abstain from the vote.	3人の議員が投票を棄権した。
+abstain	She abstained from eating sweets during the month.	彼女はその1か月、甘いものを食べずに過ごした。
+replenish	We need to replenish our supply of water.	私たちは水の蓄えを補充する必要がある。
+replenish	Drink fluids to replenish what your body loses.	体から失われた分を補うため、水分をとりなさい。
+replenish	The store replenishes its shelves every morning.	その店は毎朝、棚に商品を補充する。
+counterproductive	Shouting at the children is counterproductive.	子どもたちを怒鳴りつけても逆効果だ。
+counterproductive	Such strict rules may prove counterproductive.	そんな厳しい規則は、かえって逆効果になるかもしれない。
+counterproductive	Working late every night can be counterproductive.	毎晩遅くまで働くのは、逆効果になりかねない。
+decadent	The king lived a decadent life of feasts and parties.	王は宴や遊興に明け暮れる、退廃的な生活を送った。
+decadent	The restaurant is famous for its decadent chocolate cake.	そのレストランは、極上にぜいたくなチョコレートケーキで有名だ。
+decadent	Some writers described the empire as decadent.	その帝国を退廃的だと評した作家もいた。
+servitude	The workers were kept in servitude for years.	労働者たちは何年も隷属状態に置かれていた。
+servitude	He escaped from a life of servitude.	彼は隷属の暮らしから逃げ出した。
+servitude	Abolishing servitude was a major goal of the reform.	隷属状態の廃止は、その改革の大きな目標だった。
+centurion	A Roman centurion commanded about a hundred soldiers.	ローマの百人隊長は、約百人の兵を指揮した。
+centurion	The centurion ordered his men to stand guard.	百人隊長は部下に見張りを命じた。
+centurion	The film shows a centurion who questions his orders.	その映画は、自らの命令に疑問を抱く百人隊長を描いている。
+multilingual	She grew up in a multilingual family.	彼女は多言語の家庭で育った。
+multilingual	The airport posts multilingual signs for travelers.	その空港は、旅行者のために多言語の標識を掲げている。
+multilingual	A multilingual employee is a great help in our office.	数か国語を話せる社員は、うちの職場で大いに助かる。
+unsubscribe	Click the link to unsubscribe from the newsletter.	リンクをクリックすると、メルマガの配信を停止できる。
+unsubscribe	I decided to unsubscribe from the streaming service.	私は、その動画配信サービスを解約することにした。
+unsubscribe	You can unsubscribe at any time without a fee.	いつでも無料で購読を解除できる。
+impotent	The government seemed impotent in the face of the crisis.	政府は、その危機を前にして無力に見えた。
+impotent	He felt impotent as he watched the flood rise.	彼は洪水が増していくのを見て、無力感を覚えた。
+impotent	An impotent rage filled the crowd.	どうにもならない怒りが群衆を包んだ。
+aggressor	The country was condemned as the aggressor in the war.	その国は戦争の侵略者として非難された。
+aggressor	In the dispute, he was clearly the aggressor.	その争いでは、彼が明らかに先に仕掛けた側だった。
+aggressor	The police tried to identify the aggressor in the fight.	警察はそのけんかで手を出した側を特定しようとした。
+abject	Many families lived in abject poverty.	多くの家族が極度の貧困の中で暮らしていた。
+abject	He wrote an abject apology to his boss.	彼は上司に平身低頭の謝罪文を書いた。
+abject	The team suffered an abject failure in the final.	そのチームは決勝で惨めな大敗を喫した。
+tenet	Honesty is a central tenet of our company.	誠実さは当社の中心となる信条だ。
+tenet	The tenets of the religion are taught to children.	その宗教の教義は子どもたちに教えられる。
+tenet	Equal rights are a basic tenet of democracy.	平等な権利は民主主義の基本原則だ。
+deduce	From the footprints, we deduced that someone had been here.	足跡から、誰かがここにいたと私たちは推論した。
+deduce	Can you deduce the answer from these clues?	これらの手がかりから答えを導き出せますか。
+deduce	She deduced his age from his old photographs.	彼女は古い写真から彼の年齢を推測した。
+radiate	The heater radiates warmth throughout the room.	ヒーターは部屋じゅうに暖かさを放っている。
+radiate	She radiated confidence as she walked on stage.	彼女は舞台に歩み出るとき自信にあふれていた。
+radiate	Roads radiate from the central square.	道は中央広場から放射状に延びている。
+centrifugal	A washing machine uses centrifugal force to remove water.	洗濯機は遠心力を使って水を取り除く。
+centrifugal	Centrifugal pumps move liquids by spinning blades.	遠心ポンプは回転する羽根で液体を送る。
+centrifugal	Centrifugal forces pushed the passengers outward in the turn.	カーブで遠心力が乗客を外側へ押した。
+populism	The rise of populism changed the country's politics.	ポピュリズムの台頭がその国の政治を変えた。
+populism	Critics accused the leader of cheap populism.	批評家たちはその指導者を安易な大衆迎合だと非難した。
+populism	Populism often promises simple answers to hard problems.	ポピュリズムはしばしば難問に単純な答えを約束する。
+overpass	A new overpass was built to reduce traffic jams.	渋滞を減らすために新しい陸橋が造られた。
+overpass	We drove under the overpass on the way home.	私たちは帰り道に高架の下を通った。
+overpass	Pedestrians use the overpass to cross the highway.	歩行者は陸橋を使って幹線道路を渡る。
+manicure	She went to a salon for a manicure.	彼女は爪の手入れをしにサロンへ行った。
+manicure	A professional manicure lasts about two weeks.	プロによるマニキュアは約2週間もつ。
+manicure	He gave his mother a gift card for a manicure.	彼は母に爪の手入れのギフト券を贈った。
+altruism	Her altruism led her to donate half of her salary.	彼女は利他の精神から、給料の半分を寄付した。
+altruism	Pure altruism is rare when there is money involved.	お金が絡むと、純粋な利他心はまれだ。
+altruism	Many animals show altruism by warning others of danger.	多くの動物は、仲間に危険を知らせて利他的に振る舞う。
+veracity	I doubt the veracity of his story.	彼の話が本当かどうか私は疑っている。
+veracity	The journalist checked the veracity of every quote.	その記者はすべての引用の真偽を確かめた。
+veracity	Her veracity is known to everyone in town.	彼女の誠実さは町のだれもが知っている。
+concentric	Draw two concentric circles on the paper.	紙に二つの同心円を描きなさい。
+concentric	Ripples spread out in concentric rings across the pond.	さざ波が池に同心円状に広がった。
+concentric	The old city has concentric walls around its center.	その古い都市には、中心を囲む同心円状の城壁がある。
+infraction	He was fined for a minor traffic infraction.	彼は軽い交通違反で罰金を科された。
+infraction	Any infraction of the rules will be punished.	規則違反はどんなものでも罰せられる。
+infraction	The player was sent off for a serious infraction.	その選手は重大な反則で退場させられた。
+oppress	The king used force to oppress the people.	王は力で民衆を虐げた。
+oppress	Heavy debt can oppress a family for years.	重い借金は何年も家族を苦しめることがある。
+oppress	The regime tried to oppress all opposition.	その政権はあらゆる反対勢力を弾圧しようとした。
+biosphere	The biosphere includes all living things on Earth.	生物圏には地球上のすべての生物が含まれる。
+biosphere	Air pollution can seriously damage the biosphere.	大気汚染は生物圏に深刻な損害を与えかねない。
+biosphere	Scientists study how carbon moves through the biosphere.	科学者は炭素が生物圏の中をどう移動するかを研究している。
+confide	She confided her secret to her best friend.	彼女は親友に秘密を打ち明けた。
+confide	He often confides in his older sister.	彼はよく姉に胸の内を打ち明ける。
+confide	I can confide in you, can't I?	あなたになら打ち明けても大丈夫よね。
+clarion	The leader made a clarion call for change.	指導者は変革を力強く呼びかけた。
+clarion	A clarion voice rang across the hall.	澄んだ力強い声がホールに響き渡った。
+clarion	The clarion sounded loudly at dawn over the camp.	夜明けに陣営の上でラッパが大きく鳴り響いた。
+thermodynamic	The engine follows thermodynamic laws like any other machine.	そのエンジンは他の機械と同じく熱力学の法則に従う。
+thermodynamic	He solved a thermodynamic problem on the exam.	彼は試験で熱力学の問題を解いた。
+thermodynamic	A thermodynamic model explains how heat moves.	熱力学モデルは熱がどう移動するかを説明する。
+detest	I detest waiting in long lines at the airport.	私は空港の長い行列で待たされるのがひどく嫌いだ。
+detest	She detests the smell of cigarette smoke.	彼女はタバコの煙のにおいを心底嫌っている。
+detest	My friend detested his job and quit last spring.	友人は仕事が大嫌いで、去年の春に辞めた。
+decadence	Many historians link the fall of Rome to its decadence.	多くの歴史家はローマの滅亡をその退廃と結びつける。
+decadence	The film portrays the decadence of the aristocracy.	その映画は貴族階級の退廃を描いている。
+decadence	He criticized the decadence of modern society.	彼は現代社会の退廃を批判した。
+impressionable	Young children are highly impressionable and copy what adults do.	幼い子供は非常に影響を受けやすい。
+impressionable	He met her at an impressionable age.	彼は感受性の強い年頃に彼女と出会った。
+impressionable	Advertisers often target impressionable teenagers with flashy online ads.	広告主はしばしば感化されやすい十代を狙う。
+contemporaneous	The diary is a contemporaneous record of the war.	その日記は戦争当時の記録だ。
+contemporaneous	Contemporaneous reports described the storm in detail.	同時代の報告がその嵐を詳しく伝えている。
+contemporaneous	The two events were roughly contemporaneous.	その二つの出来事はほぼ同時期だった。
+progenitor	The wolf is the progenitor of the domestic dog.	オオカミは家庭犬の祖先である。
+progenitor	He is regarded as the progenitor of modern jazz.	彼は現代ジャズの創始者とみなされている。
+progenitor	The family traced its progenitor to a 12th-century knight.	その一族は12世紀の騎士を祖先としてたどった。
+deformity	The disease caused a severe deformity of his hand.	その病気で彼の手はひどく変形した。
+deformity	The doctor treats deformity of the spine.	その医師は背骨の変形を治療している。
+deformity	She was born with a minor deformity in her foot.	彼女は生まれつき足に軽い奇形があった。
+subservient	He was too subservient to challenge his boss.	彼は卑屈すぎて上司に異を唱えられなかった。
+subservient	The old law kept women in a subservient role.	その古い法律は女性を従属的な立場に置いていた。
+subservient	The small company became subservient to its larger partner.	その小さな会社は大きな提携先に従属するようになった。
+presumptive	He is the presumptive winner of the election.	彼は選挙で当選する見込みが濃厚だ。
+presumptive	The heir presumptive may lose the title if a child is born.	推定相続人は子が生まれれば地位を失うかもしれない。
+presumptive	Doctors made a presumptive diagnosis before the test results.	医師は検査結果が出る前に推定診断を下した。
+verity	Nobody doubted the verity of her story.	彼女の話の真実性を疑う者はいなかった。
+verity	The professor questioned the verity of the old legend.	教授はその古い伝説の真偽を疑った。
+verity	He spoke of eternal verities such as justice and truth.	彼は正義や真実といった不変の真理について語った。
+geopolitics	Oil has long been central to Middle East geopolitics.	石油は長らく中東の地政学の中心にあった。
+geopolitics	The war has changed the geopolitics of the region.	その戦争は地域の地政学的な情勢を変えた。
+geopolitics	She writes a column on geopolitics for a newspaper.	彼女は新聞に地政学のコラムを書いている。
+dynamism	The young manager brought new dynamism to the company.	その若い管理職は会社に新たな活力をもたらした。
+dynamism	Critics praised the dynamism of the dancers' performance.	批評家たちはダンサーたちの演技の躍動感を称賛した。
+dynamism	The dynamism of the city attracts talented people from abroad.	その都市の活気は、海外から有能な人材を引きつけている。
+legible	Her handwriting is neat and perfectly legible.	彼女の字はきちんとしていて、完全に読み取れる。
+legible	The sign was too faded to be legible from the road.	その看板は色あせて、道路からは読み取れなかった。
+legible	Please make sure the text on the slides is legible.	スライドの文字が読みやすいようにしてください。
+superlative	The chef received superlative reviews from every critic.	そのシェフはすべての批評家から最高の評価を受けた。
+superlative	"Best" is the superlative form of "good."	「best」は「good」の最上級である。
+superlative	He described the performance in superlatives.	彼はその演奏を最大級の賛辞で語った。
+ligature	The surgeon tied a ligature around the bleeding artery.	外科医は出血している動脈に結紮糸を巻いて縛った。
+ligature	The letters f and i are joined in a ligature in this font.	このフォントでは f と i が合字としてつながっている。
+ligature	Marks on her wrist showed where the ligature had been.	彼女の手首の跡は、縛られていた箇所を示していた。
+insufferable	The heat in the room was insufferable.	その部屋の暑さは耐えがたいものだった。
+insufferable	He became insufferable after winning the award.	彼は賞を取ってから、鼻持ちならなくなった。
+insufferable	I find his constant bragging insufferable.	彼のたび重なる自慢話には我慢できない。
+maleficent	In the tale, a maleficent witch cursed the princess.	物語の中では、悪意ある魔女が王女に呪いをかけた。
+maleficent	He feared the maleficent influence of his former partner.	彼は元の仕事仲間の悪影響を恐れていた。
+maleficent	The villagers blamed a maleficent spirit for the bad harvest.	村人たちは不作を悪霊のせいだと考えた。
+generative	Generative AI can produce text and images from short prompts.	生成AIは短い指示から文章や画像を作り出せる。
+generative	The linguist studied generative grammar for many years.	その言語学者は長年、生成文法を研究した。
+generative	Open discussion is a generative process that sparks new ideas.	自由な議論は新しい発想を生み出す創造的な過程だ。
+homologous	A bat's wing and a human arm are homologous structures.	コウモリの翼と人間の腕は相同な構造である。
+homologous	Homologous chromosomes pair up during cell division.	相同染色体は細胞分裂のときに対になる。
+homologous	Mice and humans have many homologous genes.	マウスとヒトには相同な遺伝子が多くある。
+megaphone	The coach shouted through a megaphone to the whole team.	コーチはメガホンを使ってチーム全員に向かって叫んだ。
+megaphone	Protesters used a megaphone to lead the chants.	デモの参加者はメガホンを使ってシュプレヒコールを先導した。
+megaphone	Without a megaphone, nobody could hear her at the back of the crowd.	メガホンがなければ、群衆の後方の誰にも彼女の声は聞こえなかった。
+impersonate	He was arrested for impersonating a police officer.	彼は警察官になりすました罪で逮捕された。
+impersonate	The comedian can impersonate almost any famous singer.	そのコメディアンはほぼどんな有名歌手の物まねもできる。
+impersonate	Someone tried to impersonate me in an email to the bank.	誰かが銀行へのメールで私になりすまそうとした。
+impassable	Heavy snow left the mountain roads impassable.	大雪で山道は通行不能になった。
+impassable	The river became impassable after three days of rain.	3日間の雨で川は渡れなくなった。
+impassable	The bridge collapsed, leaving the road impassable.	橋が崩れ、道は通行できなくなった。
+tangential	His comments were tangential to the main issue.	彼の発言は主要な問題からそれていた。
+tangential	The teacher dismissed the question as tangential.	教師はその質問を本題と関係が薄いとして退けた。
+tangential	The tangential line touches the circle at exactly one point.	その接線は円とちょうど1点で接する。
+recede	The floodwaters began to recede after two days.	洪水の水は2日後に引き始めた。
+recede	His hairline has started to recede.	彼の生え際は後退し始めている。
+recede	As the train left, the city slowly receded into the distance.	列車が出ると、街はゆっくりと遠くへ遠ざかっていった。
+matriarch	The matriarch of the family still makes all the big decisions.	その家の女家長が今もすべての大事な決定を下す。
+matriarch	Elephant herds are led by an older matriarch.	象の群れは年長の雌が率いている。
+matriarch	My grandmother is the matriarch of our large family.	私の祖母は大家族の女家長だ。
+diction	The actor's clear diction made every word easy to hear.	その俳優は発音が明瞭で、一語一語が聞き取りやすかった。
+diction	The poet is known for his simple, elegant diction.	その詩人は簡素で優雅な言葉遣いで知られている。
+diction	She took lessons to improve her diction before the speech.	彼女は演説の前に、話し方を改善するレッスンを受けた。
+intergenerational	The program promotes intergenerational friendships.	そのプログラムは世代を超えた友情を育んでいる。
+intergenerational	Intergenerational conflict can arise over money and values.	お金や価値観をめぐり、世代間の対立が生じることがある。
+intergenerational	The study looks at intergenerational poverty in cities.	その研究は都市部の世代間にわたる貧困を調べている。
+reproducible	Good scientific results must be reproducible.	よい科学的結果は再現できなければならない。
+reproducible	The bug is reproducible every time I click this button.	このボタンを押すたびにそのバグは再現できる。
+reproducible	Other labs could not find a reproducible effect.	ほかの研究室では再現できる効果を確認できなかった。
+petulant	The petulant child threw his toy on the floor.	すねた子どもはおもちゃを床に投げつけた。
+petulant	She gave a petulant reply and left the room.	彼女はふてくされた返事をして部屋を出た。
+petulant	His petulant tone annoyed everyone at the meeting.	彼のむっとした口調は会議の全員を苛立たせた。
+enormity	Nobody understood the enormity of the crime at first.	その犯罪の重大さを最初は誰も理解していなかった。
+enormity	She felt the enormity of the task ahead.	彼女はこれからの仕事の途方もない大きさを感じた。
+enormity	The enormity of the disaster shocked the whole country.	その災害の甚大さは国中に衝撃を与えた。
+regress	Some patients regress to earlier habits under stress.	ストレスで以前の習慣に逆戻りする患者もいる。
+regress	The economy began to regress after the war.	戦後、経済は後退し始めた。
+regress	Children may regress when a new baby arrives.	弟や妹が生まれると、子どもは赤ちゃん返りすることがある。
+abdicate	The king decided to abdicate in favor of his son.	王は息子に譲って退位することを決めた。
+abdicate	The manager abdicated responsibility for the failure.	その管理者は失敗の責任を放棄した。
+abdicate	She was forced to abdicate the throne.	彼女は退位を余儀なくされた。
+supposition	The theory rests on a simple supposition.	その理論は単純な仮定の上に成り立っている。
+supposition	This is only a supposition, not a proven fact.	これは推測にすぎず、証明された事実ではない。
+supposition	His supposition about the cause was wrong.	原因についての彼の推測は間違っていた。
+conjugal	The couple enjoyed conjugal happiness for fifty years.	その夫婦は50年間、仲むつまじく暮らした。
+conjugal	Conjugal love grows deeper over many years.	夫婦の愛は長い年月の中でさらに深まる。
+conjugal	The old letters describe their conjugal life in a small village.	古い手紙には、小さな村での彼らの夫婦生活が記されている。
+prognostic	Doctors look for prognostic signs in the test results.	医師は検査結果に予後を示す徴候を探す。
+prognostic	Early treatment is a good prognostic factor.	早期の治療は良好な予後の要因となる。
+prognostic	The symptoms were prognostic of a serious illness.	その症状は重い病気の前兆だった。
+undercurrent	A strong undercurrent pulled the swimmer away.	強い底流が泳いでいた人を引き離した。
+undercurrent	There was an undercurrent of anger in his speech.	彼の話には怒りが底流にあった。
+undercurrent	The film has a political undercurrent.	その映画には政治的な底流がある。
+amoral	Science itself is amoral; it can be used well or badly.	科学そのものは道徳と無関係で、よくも悪くも使える。
+amoral	The villain was cold and amoral.	その悪役は冷酷で善悪の観念がなかった。
+amoral	Young children are essentially amoral.	幼い子どもは本質的に善悪の観念をもたない。
+sedimentation	Sedimentation turns the river water clear.	沈殿により川の水は澄んでいく。
+sedimentation	The lake is filling because of sedimentation.	沈殿物の堆積で湖が浅くなっている。
+sedimentation	Sedimentation tanks are used at water plants.	浄水場では沈殿槽が使われている。
+autocracy	The country slid into autocracy after the coup.	その国はクーデターの後、独裁政治に陥った。
+autocracy	An autocracy rarely tolerates open criticism of its leader.	独裁国家は指導者への公然たる批判をほとんど許さない。
+autocracy	Historians compare the old autocracy with modern democracies.	歴史家は旧来の専制国家を現代の民主主義国と比較する。
+magnanimous	She was magnanimous in victory and praised her rival.	彼女は勝っても寛大で、ライバルをたたえた。
+magnanimous	It was magnanimous of him to forgive the debt.	その借金を許すとは彼も度量が大きい。
+magnanimous	The magnanimous king pardoned the rebels.	寛大な王は反逆者たちを赦免した。
+infirm	My grandfather became infirm in his later years.	祖父は晩年になって体が弱くなった。
+infirm	The nurse cares for the elderly and infirm.	その看護師は高齢者や病弱な人の世話をしている。
+infirm	He was too infirm to climb the stairs without help.	彼は体が弱く、助けなしには階段を上れなかった。
+malfeasance	The mayor was charged with financial malfeasance.	市長は金銭上の不正行為で起訴された。
+malfeasance	Evidence of malfeasance led to his resignation.	不正行為の証拠が出て、彼は辞任に至った。
+malfeasance	The inquiry uncovered malfeasance within the agency.	調査でその機関内部の不正が明らかになった。
+submerge	The submarine submerged to avoid detection.	潜水艦は発見を避けるため潜航した。
+submerge	Heavy rain submerged the lower streets.	大雨で低い所の道路が水没した。
+submerge	Submerge the vegetables in cold water for ten minutes.	野菜を冷水に10分間浸けてください。
+counterculture	The 1960s counterculture rejected consumerism and corporate life.	1960年代の対抗文化は消費主義や企業中心の生活を拒んだ。
+counterculture	Punk began as a youth counterculture in London.	パンクはロンドンの若者の反体制文化として始まった。
+counterculture	He grew up in the counterculture of San Francisco.	彼はサンフランシスコの対抗文化の中で育った。
+empathic	A good nurse is warm and empathic.	良い看護師は温かく、共感力がある。
+empathic	She gave an empathic response to his worries.	彼女は彼の悩みに共感のこもった言葉を返した。
+empathic	Empathic listening can help people resolve their conflicts peacefully.	共感的な傾聴は、人々が争いを穏やかに解決する助けになる。
+metronome	She practiced the piano with a metronome.	彼女はメトロノームを使ってピアノを練習した。
+metronome	The metronome ticked steadily at sixty beats.	メトロノームは毎分60拍で規則正しく刻んでいた。
+metronome	His steps kept time like a metronome.	彼の足取りはメトロノームのように正確に拍を刻んだ。
+repaint	We plan to repaint the kitchen this weekend.	私たちは今週末に台所を塗り直す予定だ。
+repaint	He had to repaint the fence after the storm.	彼は嵐の後でフェンスを塗り直さなければならなかった。
+repaint	The artist decided to repaint the entire canvas.	その画家はキャンバス全体を描き直すことにした。
+numeracy	Basic numeracy is needed for almost every job.	ほとんどどの仕事にも基本的な計算能力が必要だ。
+numeracy	The program aims to improve literacy and numeracy among children.	その計画は子どもの読み書きと計算の力を高めることを目指している。
+numeracy	Poor numeracy can make it hard to manage money.	数的思考力が低いと、お金の管理が難しくなることがある。
+accelerometer	The phone uses an accelerometer to detect when you turn it sideways.	スマホは加速度計で横向きにしたことを検知する。
+accelerometer	An accelerometer in the car triggered the airbag.	車の加速度計がエアバッグを作動させた。
+accelerometer	Runners wear a small accelerometer to measure their steps.	ランナーは歩数を測るため小型の加速度計を身につける。
+gyroscope	A gyroscope helps the drone stay level in the wind.	ジャイロスコープのおかげでドローンは風の中でも水平を保てる。
+gyroscope	The ship uses a gyroscope to keep its heading steady.	その船は進路を安定させるためにジャイロスコープを使う。
+gyroscope	My phone has a built-in gyroscope for racing games.	私のスマホにはレースゲーム用のジャイロスコープが内蔵されている。
+subjunctive	"If I were you" uses the subjunctive mood.	「If I were you」は仮定法を用いている。
+subjunctive	Students often find the subjunctive hard to master.	学生は仮定法を習得するのが難しいと感じることが多い。
+subjunctive	The verb is in the subjunctive form after "suggest that".	suggest that の後では動詞が仮定法の形になる。
+expletive	He muttered an expletive when he dropped the box.	彼は箱を落として思わず悪態をついた。
+expletive	The film was edited to remove every expletive.	その映画はすべての罵り言葉を削除するよう編集された。
+expletive	In "It is raining", the word "it" is an expletive.	「It is raining」の it は意味を補うだけの虚辞だ。
+vacuous	The politician gave a vacuous answer to the question.	その政治家は質問に中身のない答えを返した。
+vacuous	She wore a vacuous smile all through the party.	彼女はパーティーの間ずっと空虚な笑みを浮かべていた。
+vacuous	The movie is beautiful but vacuous.	その映画は美しいが中身がない。
+recuse	The judge recused herself because she knew the defendant.	その裁判官は被告と知り合いだったため、自ら審理を外れた。
+recuse	He should recuse himself from the vote.	彼はその採決から身を引くべきだ。
+recuse	Two members chose to recuse themselves from the discussion.	2人の委員は議論への参加を辞退した。
+firmament	Stars shone across the firmament that night.	その夜、大空いっぱいに星が輝いていた。
+firmament	The poet gazed up at the firmament.	詩人は天空を見上げた。
+firmament	She is a new star in the firmament of pop music.	彼女はポップ音楽界に現れた新しい星だ。
+pseudoscience	Many doctors regard astrology as pseudoscience.	多くの医師は占星術を疑似科学とみなしている。
+pseudoscience	The ad relied on pseudoscience to sell the product.	その広告は疑似科学を使って商品を売っていた。
+pseudoscience	It is hard to tell real research from pseudoscience online.	ネット上では本物の研究と疑似科学を見分けにくい。
+levitate	The magician seemed to levitate above the stage.	そのマジシャンは舞台の上に浮いているように見えた。
+levitate	Some trains levitate magnetically and glide without touching the rails.	磁力で浮上し、線路に触れずに滑るように走る列車もある。
+levitate	The monk claimed he could levitate while he meditated.	その僧は瞑想中に宙に浮けると主張した。
+luminescence	The luminescence of the jellyfish lit up the dark water.	クラゲの発する光が暗い水中を照らした。
+luminescence	Fireflies produce luminescence through a chemical reaction.	ホタルは化学反応によって光を出す。
+luminescence	A faint luminescence glowed from the watch dial at night.	夜、腕時計の文字盤からかすかな光がぼんやり浮かんだ。
+autocrat	The autocrat ruled the country for thirty years without elections.	その独裁者は選挙を行わず30年間国を支配した。
+autocrat	My boss is a petty autocrat who never listens to us.	私の上司は、私たちの話を聞かない小さな独裁者だ。
+autocrat	The people finally rose up against the cruel autocrat.	民衆はついに残酷な専制君主に対して立ち上がった。
+exaltation	The crowd cheered in exaltation when the team won.	チームが勝つと、観衆は高揚して歓声を上げた。
+exaltation	The poem is an exaltation of the beauty of nature.	その詩は自然の美しさを称賛するものだ。
+exaltation	His exaltation to the rank of general surprised everyone.	彼が将軍の地位に昇進したことは皆を驚かせた。
+deform	Heat can deform plastic containers.	熱はプラスチックの容器を変形させることがある。
+deform	The disease slowly deformed his hands.	その病気は次第に彼の手を変形させた。
+deform	The heavy snow deformed the roof of the old barn.	大雪で古い納屋の屋根がゆがんだ。
+microgravity	Astronauts live in microgravity aboard the space station.	宇宙飛行士は宇宙ステーションで微小重力の中で暮らす。
+microgravity	Experiments in microgravity help scientists study how flames burn.	微小重力での実験は、炎がどう燃えるかを科学者が調べる助けになる。
+microgravity	Muscles weaken after months in microgravity.	微小重力で数か月過ごすと筋肉は弱くなる。
+monotheism	Judaism, Christianity and Islam are forms of monotheism.	ユダヤ教、キリスト教、イスラム教は一神教の例だ。
+monotheism	Monotheism replaced the worship of many gods in the region.	その地域では一神教が多くの神々への崇拝に取って代わった。
+monotheism	The professor lectured on the history of monotheism.	教授は一神教の歴史について講義した。
+hydrophilic	Cotton is hydrophilic, so it soaks up water quickly.	綿は親水性なので、すばやく水を吸い込む。
+hydrophilic	The lens is coated with a hydrophilic layer.	そのレンズは親水性の膜でコーティングされている。
+hydrophilic	Soap molecules have a hydrophilic end that attracts water.	石けんの分子には水を引きつける親水性の端がある。
+survivalist	The survivalist stored food and water for any emergency.	そのサバイバル主義者は非常時に備えて食料と水を蓄えていた。
+survivalist	He learned to build a shelter from a survivalist.	彼はサバイバル主義者から避難小屋の作り方を学んだ。
+survivalist	A survivalist often spends weekends practicing wilderness skills.	サバイバル主義者は週末を野外技術の練習に費やすことが多い。
+consign	She decided to consign the old books to the charity shop.	彼女は古い本を慈善団体の店に委託することにした。
+consign	The goods were consigned to a warehouse near the port.	その商品は港近くの倉庫に預けられた。
+consign	I don't want to see his idea consigned to history.	彼の考えが歴史の闇に葬られるのは見たくない。
+soliloquy	Hamlet's famous soliloquy begins with "To be or not to be."	ハムレットの有名な独白は「生きるべきか死ぬべきか」で始まる。
+soliloquy	He delivered a long soliloquy on the stage.	彼は舞台で長い独白を語った。
+soliloquy	Her soliloquy in the car revealed her real worries.	車の中での彼女の独り言から本当の悩みが分かった。
+necropolis	Tourists visited the ancient necropolis outside the city.	観光客は町外れの古代の墓地遺跡を訪れた。
+necropolis	The necropolis contains thousands of stone tombs.	その墓地遺跡には数千の石の墓がある。
+necropolis	Archaeologists discovered a vast necropolis near the river.	考古学者は川の近くで広大な墓地遺跡を発見した。
+indent	Remember to indent the first line of each paragraph.	各段落の最初の行は字下げすることを忘れないように。
+indent	The hammer will indent the soft metal.	ハンマーで柔らかい金属にへこみが付く。
+indent	The coastline is deeply indented with small bays.	その海岸線は小さな湾で深く切れ込んでいる。
+sessile	Corals are sessile animals that stay fixed to rocks.	サンゴは岩に固着したまま動かない動物だ。
+sessile	A sessile leaf grows directly from the stem.	柄のない葉は茎から直接生える。
+sessile	Barnacles are sessile creatures found along the shore.	フジツボは海岸に見られる固着性の生き物だ。
+centralize	The government plans to centralize its health services.	政府は医療サービスを中央に集約する計画だ。
+centralize	The company decided to centralize all its offices in Tokyo.	その会社はすべての事務所を東京に集約することにした。
+centralize	Power was centralized in the hands of a few leaders.	権力は少数の指導者の手に集中した。
+telegraphy	Telegraphy changed how news traveled in the 1800s.	電信は1800年代のニュースの伝わり方を変えた。
+telegraphy	He learned telegraphy while serving in the navy.	彼は海軍にいる間に電信技術を学んだ。
+telegraphy	Wireless telegraphy made ship communication possible.	無線電信によって船との通信が可能になった。
+thermoelectric	A thermoelectric device turns heat into electricity.	熱電装置は熱を電気に変える。
+thermoelectric	Thermoelectric coolers are used in small portable fridges.	熱電冷却器は小型の携帯冷蔵庫に使われる。
+thermoelectric	Scientists study thermoelectric materials for clean energy.	科学者はクリーンエネルギーのために熱電材料を研究している。
+emote	The actor was criticized for trying to emote too much.	その俳優は感情を込めすぎだと批判された。
+emote	She doesn't emote much, but she feels deeply.	彼女はあまり感情を表に出さないが、深く感じている。
+emote	Online users can emote with a simple icon.	ネット利用者は簡単なアイコンで気持ちを表現できる。
+equanimity	She faced the bad news with remarkable equanimity.	彼女はその悪い知らせを驚くほど落ち着いて受け止めた。
+equanimity	Meditation helps me keep my equanimity under pressure.	瞑想のおかげで、重圧の中でも平静を保てる。
+equanimity	He accepted both success and failure with equanimity.	彼は成功も失敗も平常心で受け入れた。
+constrictor	A boa constrictor kills its prey by squeezing it.	ボア（大蛇）は獲物を締めつけて殺す。
+constrictor	This muscle acts as a constrictor of the blood vessel.	この筋肉は血管を収縮させる働きをする。
+constrictor	The keeper told us the constrictor was not dangerous to humans.	飼育員は、その大蛇は人間には危険ではないと言った。
+commercialize	The company hopes to commercialize the technology soon.	その会社はその技術を早く商業化したいと考えている。
+commercialize	Many people think we should not commercialize holidays.	祝日を商業化すべきではないと考える人は多い。
+commercialize	It took years to commercialize the new drug.	その新薬を商品化するのに何年もかかった。
+salient	The report highlights the most salient points of the study.	その報告書は研究の最も重要な点を強調している。
+salient	One salient feature of the city is its old stone bridge.	その街の顕著な特徴の一つは古い石橋だ。
+salient	She quickly grasped the salient facts of the case.	彼女はその事件の要点をすぐに理解した。
+immunology	She is studying immunology to develop new vaccines.	彼女は新しいワクチンを開発するため免疫学を学んでいる。
+immunology	Advances in immunology have changed how we treat cancer.	免疫学の進歩はがんの治療法を変えた。
+immunology	He is a professor of immunology at a medical school.	彼は医学部の免疫学の教授だ。
+plenary	The plenary session will begin at nine o'clock tomorrow.	全体会議は明日の9時に始まる。
+plenary	The committee was given plenary power to settle the dispute.	委員会は紛争を解決する全権を与えられた。
+plenary	All members attended the plenary meeting of the union.	組合の全員集会に全メンバーが出席した。
+subtract	Subtract five from ten and you get five.	10から5を引くと5になる。
+subtract	The bank will subtract the fee from your account.	銀行は手数料をあなたの口座から差し引く。
+subtract	You must subtract the cost of materials from the profit.	利益から材料費を差し引かねばならない。
+benefactor	A wealthy benefactor donated money to build the library.	裕福な後援者が図書館を建てるために寄付した。
+benefactor	The school thanked its benefactor at the ceremony.	学校は式典で恩人に感謝した。
+benefactor	She was a generous benefactor of young artists.	彼女は若い芸術家たちの気前のよい支援者だった。
+cursor	Move the cursor over the icon and click it.	カーソルをアイコンの上に動かしてクリックしなさい。
+cursor	The cursor blinked at the end of the line.	カーソルが行末で点滅していた。
+cursor	I lost the cursor on my screen and could not find it.	画面上のカーソルを見失って見つけられなかった。
+horoscope	I read my horoscope every morning in the newspaper.	私は毎朝新聞で自分の星占いを読む。
+horoscope	According to the horoscope, today is a lucky day.	星占いによると、今日は運のいい日だ。
+horoscope	The astrologer drew a horoscope based on her birth time.	占星術師は彼女の生まれた時刻をもとにホロスコープを作った。
+orient	The guide helped us orient ourselves on the map.	ガイドは私たちが地図で現在地を確認するのを助けてくれた。
+orient	The program is designed to orient new employees.	そのプログラムは新入社員に職場に慣れてもらう目的で作られている。
+orient	The company is oriented toward young customers.	その会社は若い顧客に向けた方針をとっている。
+credence	New evidence lent credence to her story.	新しい証拠が、彼女の話の信憑性を裏づけた。
+credence	I give no credence to such wild rumors.	そんな突拍子もない噂は信用しない。
+credence	The theory gained credence among scientists.	その理論は科学者の間で信頼を得た。
+commendable	Her honesty in that situation was commendable.	その状況での彼女の誠実さは称賛に値した。
+commendable	The team showed commendable courage under pressure.	そのチームは重圧のもとで立派な勇気を見せた。
+commendable	It is commendable that he admitted his mistake.	彼が自分の過ちを認めたのは立派だ。
+incognito	The famous singer traveled incognito to avoid the crowds.	その有名な歌手は、人混みを避けてお忍びで旅をした。
+incognito	He visited the shop incognito to check the service.	彼はサービスを確かめるため、身分を隠してその店を訪れた。
+incognito	Open a window in incognito mode to hide your history.	閲覧履歴を残したくなければ、シークレットモードで開きなさい。
+desist	The court ordered the company to desist from using the name.	裁判所は、その会社にその名称の使用をやめるよう命じた。
+desist	I asked him to desist, but he kept talking.	私はやめるよう頼んだが、彼は話し続けた。
+desist	She desisted from further attempts to persuade them.	彼女はそれ以上彼らを説得しようとするのをやめた。
+disseminate	The group works to disseminate information about health.	そのグループは、健康に関する情報を広めるために活動している。
+disseminate	Social media can disseminate news within minutes.	SNSは数分でニュースを広めることができる。
+disseminate	Scientists disseminate their findings through journals.	科学者は学術誌を通じて研究成果を広める。
+hydrate	Athletes need to hydrate well before a long race.	運動選手は長いレースの前に十分に水分を補給する必要がある。
+hydrate	This cream will hydrate your dry skin.	このクリームは、乾燥した肌に潤いを与える。
+hydrate	Athletes need to hydrate before a long race.	選手は長いレースの前に、水分を補給する必要がある。
+agnostic	He describes himself as agnostic, not atheist.	彼は自分を無神論者ではなく不可知論者だと言っている。
+agnostic	Many scientists are agnostic about the origin of life.	多くの科学者は、生命の起源については不可知論の立場をとる。
+agnostic	She stayed agnostic on the question for years.	彼女は何年もその問題について結論を保留していた。
+uniformity	The uniformity of the houses made the street look dull.	家々が画一的で、その通りは味気なく見えた。
+uniformity	Some people fear that globalization leads to uniformity.	グローバル化が画一化を招くことを恐れる人もいる。
+uniformity	The factory checks the uniformity of each product.	その工場は、各製品の品質が均一かを検査している。
+hydrocarbon	Oil and natural gas are made mostly of hydrocarbons.	石油と天然ガスは、主に炭化水素でできている。
+hydrocarbon	Burning hydrocarbons releases carbon dioxide.	炭化水素を燃やすと、二酸化炭素が出る。
+hydrocarbon	The engine runs on a liquid hydrocarbon fuel.	そのエンジンは、液体の炭化水素燃料で動く。
+apprehend	The police managed to apprehend the suspect near the station.	警察は駅の近くで容疑者を逮捕することができた。
+apprehend	It is hard to apprehend the full scale of the disaster.	その災害の全体像を理解するのは難しい。
+apprehend	He apprehended the true meaning of her words.	彼は彼女の言葉の真意を理解した。
+ambivalent	She felt ambivalent about moving to a new city.	彼女は新しい都市への引っ越しに複雑な気持ちだった。
+ambivalent	Many voters remain ambivalent toward the proposal.	多くの有権者はその提案に対して態度を決めかねている。
+ambivalent	He was ambivalent about the job offer.	彼はその仕事の誘いに対して気持ちが揺れていた。
+commendation	The firefighter received a commendation for bravery.	その消防士は勇敢さを称えられて表彰された。
+commendation	Her work won high commendation from the committee.	彼女の仕事は委員会から高い評価を受けた。
+commendation	The soldier was given a special commendation.	その兵士は特別な表彰を受けた。
+ingestion	Accidental ingestion of the chemical can be dangerous.	その化学物質を誤って摂取すると危険なことがある。
+ingestion	The ingestion of too much sugar harms your teeth.	糖分を取りすぎると歯に悪い。
+ingestion	Doctors warned about the ingestion of contaminated water.	医師たちは汚染された水の摂取について警告した。
+demented	He gave a demented laugh and ran out of the room.	彼は正気とは思えない笑い声をあげて部屋から走り出た。
+demented	He ran around the house like a demented child.	彼は気がふれた子どものように家中を走り回った。
+demented	The demented king shouted at his servants all night.	錯乱した王は一晩中、召使いたちにどなり散らした。
+tensile	Steel has a very high tensile strength.	鋼は非常に高い引っ張り強度を持つ。
+tensile	The cable's tensile limit was tested in the lab.	そのケーブルの引っ張り限度が実験室で試された。
+tensile	Tensile fabrics are used for modern roofs.	張力を利用した布は現代的な屋根に使われる。
+hypothermia	The hikers were treated for hypothermia after the storm.	ハイカーたちは嵐のあと低体温症の治療を受けた。
+hypothermia	Falling into icy water can quickly cause hypothermia.	氷のような水に落ちるとすぐに低体温症になりうる。
+hypothermia	Elderly people are especially at risk of hypothermia.	高齢者は特に低体温症になる危険が高い。
+astrophysics	She studied astrophysics at university.	彼女は大学で天体物理学を学んだ。
+astrophysics	Astrophysics explains how stars are born and die.	天体物理学は星がどう生まれ死ぬかを説明する。
+astrophysics	The lecture on astrophysics attracted a large audience.	天体物理学の講義は多くの聴衆を集めた。
+sumptuous	The hotel served a sumptuous breakfast.	そのホテルは豪華な朝食を出した。
+sumptuous	They lived in a sumptuous house by the sea.	彼らは海辺の豪華な家に住んでいた。
+sumptuous	The palace was decorated with sumptuous furniture.	宮殿は豪華な家具で飾られていた。
+phonetic	The dictionary shows the phonetic spelling of each word.	その辞書は各語の発音表記を示している。
+phonetic	Phonetic symbols help learners pronounce new words.	発音記号は学習者が新しい語を発音するのに役立つ。
+phonetic	She studied phonetic differences between dialects.	彼女は方言間の音声の違いを研究した。
+censure	The senator faced public censure for his remarks.	その上院議員は発言で公に非難された。
+censure	The committee voted to censure the manager.	委員会はその支配人を譴責することを決めた。
+censure	The film drew harsh censure from critics.	その映画は批評家から厳しい非難を浴びた。
+aqueduct	The Romans built an aqueduct to carry water to the city.	ローマ人は都市へ水を運ぶ水道橋を造った。
+aqueduct	The old aqueduct still stands in the valley.	その古い水道橋は今も谷にそびえている。
+aqueduct	An aqueduct brings fresh water from the mountains.	導水路が山から真水を運んでくる。
+malevolent	She gave him a malevolent glare.	彼女は彼に悪意のこもった視線を向けた。
+malevolent	The story features a malevolent spirit in an old house.	その物語には古い家に潜む邪悪な霊が登場する。
+malevolent	He had no malevolent intent, only curiosity.	彼に悪意はなく、ただの好奇心だった。
+introspective	He became quiet and introspective after the trip.	旅行のあと、彼は無口になり内省的になった。
+introspective	She wrote an introspective essay about her childhood.	彼女は子供時代についての内省的なエッセイを書いた。
+introspective	An introspective person often thinks about his own feelings.	内省的な人はよく自分の気持ちについて考える。
+immaterial	Your age is immaterial to the job.	あなたの年齢はその仕事には関係ない。
+immaterial	Whether we win or lose is immaterial to him.	勝つか負けるかは彼にとってどうでもいい。
+immaterial	Ghosts are said to be immaterial beings.	幽霊は実体のない存在だと言われる。
+locomotion	Walking is the most common form of locomotion.	歩行は最も一般的な移動の形だ。
+locomotion	Birds use their wings for locomotion in the air.	鳥は空中での移動に翼を使う。
+locomotion	The robot has a new system of locomotion.	そのロボットは新しい移動システムを備えている。
+cursive	She wrote her name in cursive.	彼女は自分の名前を筆記体で書いた。
+cursive	Children in my town still learn cursive writing.	私の町の子供たちは今も筆記体を習う。
+cursive	I can't read his cursive handwriting.	私は彼の筆記体の字が読めない。
+telephony	Internet telephony is now common in offices.	ネット電話は今やオフィスで一般的だ。
+telephony	The company works in mobile telephony.	その会社は携帯電話通信の分野で事業を行っている。
+telephony	He studied telephony before moving into computer networks.	彼はコンピュータネットワークに移る前、電話通信を学んだ。
+symbiotic	Bees and flowers have a symbiotic relationship.	ミツバチと花は共生の関係にある。
+symbiotic	The two companies formed a symbiotic partnership.	その2社は相互に利益のある提携を結んだ。
+symbiotic	Some fungi live in symbiotic union with trees.	一部の菌類は木々と共生している。
+populate	Millions of people populate the coastal cities.	何百万もの人が沿岸の都市に住んでいる。
+populate	Settlers began to populate the northern valley.	入植者たちは北の谷に住み着き始めた。
+populate	The designer populated the website with colorful photos.	デザイナーはそのサイトをカラフルな写真で埋めた。
+infamy	The traitor's name lives on in infamy.	その裏切り者の名は悪名として残っている。
+infamy	The attack was remembered as a day of infamy.	その攻撃は不名誉な日として記憶された。
+infamy	She refused to bring infamy upon her family.	彼女は家族に不名誉をもたらすことを拒んだ。
+indisputable	The scientist presented indisputable evidence of the change.	その科学者は変化の議論の余地のない証拠を示した。
+indisputable	It is an indisputable fact that the earth is round.	地球が丸いのは疑いようのない事実だ。
+indisputable	Her skill as a pianist is indisputable.	ピアニストとしての彼女の腕前は疑う余地がない。
+demography	Demography studies the size and growth of populations.	人口統計学は人口の規模や増減を研究する。
+demography	She majored in demography at university.	彼女は大学で人口統計学を専攻した。
+demography	Changes in demography affect the pension system.	人口構成の変化は年金制度に影響する。
+subliminal	The ad used subliminal messages to influence viewers.	その広告は視聴者に影響を与えるため潜在意識に働きかけるメッセージを使った。
+subliminal	Music can have a subliminal effect on our mood.	音楽は私たちの気分に無意識のうちに影響を与えることがある。
+subliminal	He sensed a subliminal fear he could not explain.	彼は説明できない潜在的な恐怖を感じた。
+insulate	We insulated the attic to save on heating costs.	暖房費を節約するため、屋根裏に断熱材を入れた。
+insulate	Rubber insulates the wire from electricity.	ゴムは電線を電気から絶縁する。
+insulate	Wealthy families can insulate their children from hardship.	裕福な家庭は子供を苦労から守ってやれる。
+volition	She left the company of her own volition.	彼女は自らの意志で会社を辞めた。
+volition	The prisoner said he signed it without any volition.	その囚人は自分の意志など全くなく署名したと述べた。
+volition	Habits can act without conscious volition.	習慣は意識的な意志なしに働くことがある。
+repress	She tried to repress a laugh during the speech.	彼女はスピーチの間、笑いをこらえようとした。
+repress	The government repressed the protest by force.	政府は力でその抗議を鎮圧した。
+repress	He repressed his anger and stayed calm.	彼は怒りを抑えて落ち着いていた。
+crescendo	The music rose to a powerful crescendo.	音楽は力強いクレッシェンドへと高まった。
+crescendo	Protests reached a crescendo in the spring.	抗議運動は春に最高潮に達した。
+crescendo	The noise built to a crescendo before the show.	ショーの前に騒音がだんだん最高潮に達した。
+overreact	Don't overreact to one small mistake.	小さな一つの失敗に過剰反応してはいけない。
+overreact	The market tends to overreact to bad news.	市場は悪いニュースに過剰反応しがちだ。
+overreact	My friend overreacted when he saw the bill.	友人は請求書を見て大げさに反応した。
+aggravate	Scratching the rash will only aggravate it.	発疹をかくと、かえって悪化するだけだ。
+aggravate	His rude remarks aggravated the already tense situation.	彼の無礼な発言は、すでに張りつめた状況をさらに悪化させた。
+aggravate	It really aggravates me when people talk during a movie.	映画中に人が話していると本当にイライラする。
+lingual	The lingual artery supplies blood to the tongue.	舌動脈は舌に血液を送っている。
+lingual	A lingual nerve runs along the side of the tongue.	舌神経は舌の側面に沿って走っている。
+lingual	The dentist checked the lingual surface of the tooth.	歯科医は歯の舌側の面を調べた。
+accretion	The accretion of silt gradually narrowed the river channel.	泥の堆積により、川の流路は次第に狭くなった。
+accretion	Planets form through the accretion of dust and gas.	惑星は塵とガスが集積して形成される。
+accretion	Years of accretion left the old house crowded with junk.	長年の積み重ねで、古い家はがらくたであふれていた。
+principality	Monaco is a small principality on the Mediterranean coast.	モナコは地中海沿岸にある小さな公国だ。
+principality	The principality was ruled by a prince for centuries.	その公国は何世紀にもわたり公によって治められた。
+principality	He inherited the principality after his father died.	彼は父の死後、その公国を継いだ。
+infidel	In the medieval chronicle, the crusaders fought against the infidel.	中世の年代記では、十字軍は異教徒と戦った。
+infidel	He was branded an infidel for rejecting the established faith.	彼は既存の信仰を拒んだため、不信心者の烙印を押された。
+infidel	In old stories, the knights called their enemy an infidel.	昔の物語では、騎士たちは敵を異教徒と呼んだ。
+precipice	The hikers stopped at the edge of a steep precipice.	ハイカーたちは切り立った断崖の縁で足を止めた。
+precipice	The country stood on the precipice of financial collapse.	その国は財政破綻の瀬戸際に立っていた。
+precipice	A single misstep could send him over the precipice.	一歩踏み外せば、彼は断崖から落ちかねなかった。
+numeral	The clock face uses Roman numerals instead of digits.	その時計の文字盤には数字ではなくローマ数字が使われている。
+numeral	Write the year in Arabic numerals, not in words.	年は言葉ではなくアラビア数字で書いてください。
+numeral	In grammar, a numeral is a word that expresses a number.	文法では、数詞とは数を表す語のことである。
+sensuous	The poem is full of sensuous images of summer.	その詩は夏の感覚的なイメージに満ちている。
+sensuous	She enjoyed the sensuous texture of the silk scarf.	彼女は絹のスカーフの心地よい手ざわりを楽しんだ。
+sensuous	The painter's sensuous use of color delighted visitors.	画家の感覚に訴える色使いは来場者を魅了した。
+supercomputer	The weather forecast is calculated on a powerful supercomputer.	天気予報は高性能なスーパーコンピューターで計算されている。
+supercomputer	Researchers used a supercomputer to simulate the spread of the virus.	研究者たちはウイルスの拡散をシミュレートするのにスーパーコンピューターを使った。
+supercomputer	Only a supercomputer could solve this problem in a reasonable time.	この問題を現実的な時間で解けるのはスーパーコンピューターだけだ。
+postscript	She added a short postscript at the bottom of the letter.	彼女は手紙の下に短い追伸を書き添えた。
+postscript	The postscript of the book describes what happened afterwards.	その本の後書きには、その後に起こったことが書かれている。
+postscript	In the postscript, he asked me to send his regards to my parents.	追伸で、彼は私の両親によろしくと頼んでいた。
+misnomer	"Jellyfish" is a misnomer because these animals are not fish.	「ジェリーフィッシュ」は魚ではないので誤称だ。
+misnomer	Calling it a small problem would be a misnomer.	それを小さな問題と呼ぶのは不適切だろう。
+misnomer	The name Greenland is something of a misnomer, as most of it is ice.	グリーンランドという名は、大部分が氷なので、やや不適切な呼び名だ。
+antipathy	She felt a deep antipathy toward her rival.	彼女はライバルに対して強い反感を抱いていた。
+antipathy	There is a long history of antipathy between the two families.	両家の間には長い反目の歴史がある。
+antipathy	His antipathy to crowds keeps him away from festivals.	人混みが大嫌いな彼は、祭りには近づかない。
+synchronize	The dancers must synchronize their movements perfectly.	ダンサーたちは動きを完全に合わせなければならない。
+synchronize	Please synchronize your watches before we begin.	始める前に、時計を合わせてください。
+synchronize	The app will synchronize your files across all devices.	そのアプリはすべての端末でファイルを同期させる。
+modicum	A modicum of courtesy would have avoided the argument.	わずかな礼儀があれば、口論は避けられただろう。
+modicum	He has a modicum of talent but lacks discipline.	彼にはわずかな才能はあるが、自制心に欠ける。
+modicum	We all hope to live with at least a modicum of comfort.	私たちは誰もが、せめて多少の快適さの中で暮らしたいと願う。
+psychotherapist	She works as a psychotherapist at a hospital.	彼女は病院で心理療法士として働いている。
+psychotherapist	After the accident, he began seeing a psychotherapist.	事故の後、彼は心理療法士に通い始めた。
+psychotherapist	A good psychotherapist listens carefully and rarely judges.	よい心理療法士は注意深く聞き、めったに批判しない。
+interconnect	The new bridge will interconnect the two parts of the city.	新しい橋は街の二つの地区をつなぐ。
+interconnect	These systems interconnect through a shared network.	これらのシステムは共通のネットワークで相互に接続している。
+interconnect	Everything in nature seems to interconnect in some way.	自然界のあらゆるものは何らかの形でつながり合っているようだ。
+animus	He felt no animus toward his former rival.	彼はかつてのライバルに敵意を抱いていなかった。
+animus	The critic's review was full of personal animus.	その批評家の評論は個人的な敵意に満ちていた。
+animus	There is a long-standing animus between the two groups.	その二つの集団の間には長年の敵意がある。
+dissociative	Doctors diagnosed a dissociative disorder after the trauma.	医師はその心的外傷の後、解離性障害と診断した。
+dissociative	He described a dissociative state in which he felt unreal.	彼は現実感を失う解離状態について語った。
+dissociative	The dissociative effect of the drug lasted for several hours.	その薬の解離作用は数時間続いた。
+perspiration	Perspiration ran down his face during the match.	試合中、彼の顔を汗が流れ落ちた。
+perspiration	Excessive perspiration can be a sign of stress.	過度の発汗はストレスのサインのことがある。
+perspiration	Genius is one percent inspiration and ninety-nine percent perspiration.	天才とは1％のひらめきと99％の汗である。
+gravitation	The law of universal gravitation explains why apples fall.	万有引力の法則は、リンゴが落ちる理由を説明する。
+gravitation	The gravitation between the moon and the Earth causes tides.	月と地球の間の引力が潮の満ち引きを起こす。
+gravitation	There is a gravitation of young people toward big cities.	若者が大都市に引き寄せられる傾向がある。
+abhor	I abhor cruelty to animals.	私は動物への虐待を忌み嫌う。
+abhor	Many people abhor the idea of war.	多くの人が戦争という考えを憎んでいる。
+abhor	He abhors being late for any meeting.	彼は会議に遅れることをひどく嫌う。
+recur	The same problem may recur next year.	同じ問題が来年も再発するかもしれない。
+recur	Her dream recurs every few weeks.	彼女のその夢は数週間おきに繰り返される。
+recur	If the pain recurs, see a doctor.	痛みがぶり返したら医者にかかりなさい。
+postnatal	She attended a postnatal checkup last week.	彼女は先週、産後の健診を受けた。
+postnatal	Postnatal care is important for mothers and babies.	産後のケアは母親と赤ちゃんにとって大切だ。
+postnatal	Many hospitals offer postnatal classes for new parents.	多くの病院が新米の親向けに産後教室を開いている。
+repute	She is a doctor of high repute.	彼女は評判の高い医者だ。
+repute	The hotel is of good repute among travelers.	そのホテルは旅行者の間で評判がよい。
+repute	He is held in poor repute by his neighbors.	彼は近所の人たちに評判がよくない。
+extrajudicial	The group condemned extrajudicial killings.	その団体は法的手続きによらない殺害を非難した。
+extrajudicial	He made an extrajudicial statement to reporters.	彼は記者に法廷外で声明を出した。
+extrajudicial	Extrajudicial punishment is illegal in most countries.	超法規的な処罰はほとんどの国で違法だ。
+impressionism	Impressionism began in France in the nineteenth century.	印象派は19世紀にフランスで始まった。
+impressionism	We saw an exhibition of impressionism in Paris.	私たちはパリで印象派の展覧会を見た。
+impressionism	Impressionism focused on light and color.	印象派は光と色に注目した。
+phonology	She is studying English phonology.	彼女は英語の音韻論を研究している。
+phonology	Phonology explains how sounds form patterns.	音韻論は音がどうパターンをなすかを説明する。
+phonology	The course covers syntax and phonology.	その講義は統語論と音韻論を扱う。
+clamor	The clamor of the crowd filled the stadium.	群衆の騒ぎ声がスタジアムを満たした。
+clamor	There was a public clamor for tax reform.	税制改革を求める世論の強い声が上がった。
+clamor	There was a loud clamor for change after the election.	選挙の後、変化を求める大きな声が上がった。
+cacophony	A cacophony of horns filled the street.	クラクションの騒音が通りに響き渡った。
+cacophony	The orchestra tuning up made a cacophony.	オーケストラの音合わせは不協和音のように聞こえた。
+cacophony	The debate turned into a cacophony of angry voices.	議論は怒声が入り乱れる騒がしいものになった。
+malign	The rumor had a malign influence on the team.	そのうわさはチームに悪影響を及ぼした。
+malign	It is wrong to malign people you have never met.	会ったこともない人を中傷するのは間違っている。
+malign	Critics warned of the malign effects of the policy.	批評家たちはその政策の有害な影響を警告した。
+predate	These ruins predate the Roman Empire.	これらの遺跡はローマ帝国より古い。
+predate	The dinosaurs predate humans by millions of years.	恐竜は人類より何百万年も前に存在した。
+predate	The contract was predated to take effect from January.	その契約書は1月から有効になるよう日付をさかのぼらせた。
+disassemble	He disassembled the engine to find the fault.	彼は故障を探すためにエンジンを分解した。
+disassemble	The toy is easy to disassemble for cleaning.	そのおもちゃは掃除のために簡単に分解できる。
+disassemble	Workers disassembled the stage after the show.	作業員は公演後にステージを解体した。
+captor	The hostage escaped from her captors.	人質は監禁者たちから逃げ出した。
+captor	He tried to befriend his captor to survive.	彼は生き延びるため、自分を捕らえた者と親しくなろうとした。
+captor	The captors demanded a ransom for his release.	誘拐犯たちは彼の解放と引き換えに身代金を要求した。
+urbanism	Modern urbanism focuses on walkable neighborhoods.	現代の都市計画は歩きやすい地区づくりに重点を置く。
+urbanism	She studies urbanism at graduate school.	彼女は大学院で都市論を学んでいる。
+urbanism	The book explores how urbanism shapes daily life.	その本は都市生活が日常をどう形づくるかを探っている。
+proximate	The proximate cause of the fire was a faulty wire.	火災の直接の原因は配線の不良だった。
+proximate	The two towns are proximate to each other.	その2つの町は互いにすぐ近くにある。
+proximate	She chose a flat proximate to her office.	彼女は職場のすぐ近くのアパートを選んだ。
+gravitas	The judge spoke with great gravitas.	その裁判官は非常に威厳のある話しぶりだった。
+gravitas	He lacks the gravitas to lead such a big company.	彼にはそんな大企業を率いるだけの貫禄がない。
+gravitas	Her calm voice added gravitas to the announcement.	彼女の落ち着いた声が、その発表に重みを加えた。
+intercede	She interceded with the manager on behalf of her coworker.	彼女は同僚のために部長にとりなした。
+intercede	My friend interceded to stop the argument.	友人が間に入って口論を止めた。
+intercede	The senator agreed to intercede in the dispute.	その上院議員は紛争の仲裁に入ることに同意した。
+acrimonious	The two sides had an acrimonious debate over the budget.	両者は予算をめぐってとげとげしい議論を交わした。
+acrimonious	Their acrimonious divorce lasted for years.	二人の険悪な離婚は何年も続いた。
+acrimonious	The meeting ended on an acrimonious note.	会議はとげとげしい雰囲気のまま終わった。
+meritocracy	Many people hope to live in a true meritocracy.	真の実力主義社会に暮らしたいと願う人は多い。
+meritocracy	The firm calls itself a meritocracy, but few women are promoted.	その会社は実力主義を名乗るが、昇進する女性は少ない。
+meritocracy	Critics say a meritocracy can still favor the rich.	実力主義でも裕福な人が有利になりうると批判する人もいる。
+subsist	Many villagers subsist on rice and beans.	多くの村人は米と豆でかろうじて暮らしている。
+subsist	They subsisted on fish for the whole winter.	彼らは冬の間ずっと魚だけで食いつないだ。
+subsist	It is hard to subsist on such a low wage.	そんな低賃金で生計を立てるのは難しい。
+deconstruct	The critic tried to deconstruct the author's argument.	批評家はその著者の論を分解して分析しようとした。
+deconstruct	Chefs deconstruct classic dishes and serve them in new ways.	料理人は定番の料理を分解し、新しい形で出す。
+deconstruct	We deconstructed the old engine to see how it worked.	私たちは古いエンジンを分解して仕組みを調べた。
+anachronism	A phone in a film set in 1800 would be an anachronism.	1800年を舞台にした映画に携帯電話が出てきたら時代錯誤だ。
+anachronism	Some people see the monarchy as an anachronism.	君主制を時代遅れの遺物と見る人もいる。
+anachronism	Wearing a tie in the heat seems like an anachronism to me.	暑い中でネクタイを締めるのは時代錯誤に思える。
+hypotension	Hypotension can make you feel dizzy when you stand up.	低血圧だと立ち上がったときにめまいがすることがある。
+hypotension	The nurse checked him for signs of hypotension.	看護師は彼に低血圧の兆候がないか確認した。
+hypotension	Standing for a long time may cause hypotension in some people.	長時間立っていると低血圧になる人もいる。
+genitive	The genitive case often shows possession.	属格はしばしば所有を表す。
+genitive	In German, the genitive is used after some prepositions.	ドイツ語では、前置詞によっては後ろに属格を使う。
+genitive	English uses 's to form the genitive of most nouns.	英語はたいていの名詞の属格を 's で作る。
+phonetics	She studied phonetics to improve her pronunciation.	彼女は発音を良くするため音声学を学んだ。
+phonetics	Phonetics describes how speech sounds are made.	音声学は話し言葉の音がどう作られるかを説明する。
+phonetics	She teaches phonetics at a language school.	彼女は語学学校で音声学を教えている。
+astringent	She dabbed an astringent lotion on her oily skin.	彼女は脂性の肌に収れん性のローションをたたいた。
+astringent	The unripe persimmon had an astringent taste that dried my mouth.	未熟な柿は口の中が乾くような渋い味がした。
+astringent	His astringent review made the director furious.	彼の辛辣な批評は監督を激怒させた。
+patrimony	He refused to sell the farm, which was his family's patrimony.	彼は家に代々伝わる財産である農場の売却を拒んだ。
+patrimony	The cathedral is part of the nation's cultural patrimony.	その大聖堂は国の文化的遺産の一部だ。
+patrimony	She squandered her patrimony within a few years.	彼女は数年のうちに父祖伝来の財産を使い果たした。
+disjoint	His speech was disjoint and hard to follow.	彼の話はまとまりがなく、理解しにくかった。
+disjoint	In mathematics, two disjoint sets share no elements.	数学では、互いに素な2つの集合は共通の要素を持たない。
+disjoint	Years of rain had begun to disjoint the old wooden steps.	長年の雨で、古い木の階段は継ぎ目が外れ始めていた。
+subjugate	The empire sought to subjugate the neighboring tribes.	その帝国は近隣の部族を征服しようとした。
+subjugate	The dictator tried to subjugate the press.	独裁者は報道機関を服従させようとした。
+subjugate	The empire tried to subjugate the small nations around it.	その帝国は周囲の小国を征服しようとした。
+triennial	The art festival is a triennial event held in the spring.	その芸術祭は春に開かれる3年に1度の行事だ。
+triennial	The committee conducts a triennial review of its rules.	委員会は規則の見直しを3年ごとに行う。
+triennial	Members are elected for a triennial term.	委員は3年の任期で選出される。
+aquamarine	She wore an aquamarine ring that matched the color of the sea.	彼女は海の色に似たアクアマリンの指輪をつけていた。
+aquamarine	The walls of the bedroom were painted aquamarine.	寝室の壁は淡い青緑色に塗られていた。
+aquamarine	The tropical lagoon was a glittering aquamarine.	その熱帯のラグーンはきらめく淡い青緑色だった。
+atheistic	He was raised in an atheistic family.	彼は無神論者の家庭で育った。
+atheistic	The author takes an atheistic view of the universe.	その作者は宇宙について無神論的な見方をしている。
+atheistic	The government promoted atheistic education in schools.	政府は学校で無神論的な教育を推し進めた。
+hydrodynamic	The boat's hydrodynamic shape reduces resistance in the water.	その船の流体力学に基づいた形は、水の抵抗を減らす。
+hydrodynamic	Engineers tested the hydrodynamic properties of the new hull.	技術者たちは新しい船体の流体力学的特性を試験した。
+hydrodynamic	Fish have a hydrodynamic body that lets them swim fast.	魚は速く泳げる流線形の体をしている。
+depreciate	Cars usually depreciate quickly in the first few years.	車は最初の数年で急速に価値が下がるのが普通だ。
+depreciate	A weak economy can depreciate the value of the currency.	景気が弱いと通貨の価値が下がることがある。
+depreciate	Don't depreciate your own efforts; they matter.	自分の努力を見くびってはいけない。それは大切なものだ。
+dictum	The old dictum says that honesty is the best policy.	正直は最善の策、という古い格言がある。
+dictum	The judge's dictum was quoted in later cases.	その裁判官の意見は後の裁判で引用された。
+dictum	He lives by the dictum "never give up."	彼は「決してあきらめるな」という格言を信条に生きている。
+odometer	The odometer showed that the car had run 80,000 kilometers.	走行距離計はその車が8万キロ走ったことを示していた。
+odometer	He checked the odometer before buying the used car.	彼は中古車を買う前に走行距離計を確認した。
+odometer	Someone had tampered with the odometer.	誰かが走行距離計に細工をしていた。
+concoct	She concocted a delicious soup from leftovers.	彼女は残り物でおいしいスープを作り上げた。
+concoct	He concocted an excuse for being late.	彼は遅刻の言い訳をでっち上げた。
+concoct	The chemist concocted a new mixture in the lab.	その化学者は研究室で新しい混合物を調合した。
+apotheosis	The film is the apotheosis of the director's career.	その映画は監督のキャリアの頂点だ。
+apotheosis	The emperor's apotheosis was celebrated after his death.	皇帝の神格化は死後に祝われた。
+apotheosis	This building is the apotheosis of modern design.	この建物は現代デザインの極致だ。
+epicentre	The epicentre of the earthquake was under the sea.	地震の震源地は海底にあった。
+epicentre	The city became the epicentre of the crisis.	その都市は危機の中心地になった。
+epicentre	Damage was worst near the epicentre.	被害は震源地付近が最も大きかった。
+audiophile	My brother is an audiophile who owns expensive speakers.	兄は高価なスピーカーを持つオーディオ愛好家だ。
+audiophile	Audiophiles often prefer vinyl records.	オーディオ愛好家はレコードを好むことが多い。
+audiophile	She became an audiophile after hearing a live concert.	彼女はライブを聴いてオーディオ愛好家になった。
+hydroponic	Hydroponic tomatoes are grown in water with nutrients.	水耕栽培のトマトは栄養を含んだ水で育てられる。
+hydroponic	The farm uses a hydroponic system indoors.	その農場は屋内で水耕栽培システムを使っている。
+hydroponic	Hydroponic lettuce needs no soil.	水耕栽培のレタスは土を必要としない。
+psychometric	The school uses a psychometric test to assess ability.	その学校は能力を評価するため心理測定テストを使う。
+psychometric	Psychometric methods measure personality traits.	心理測定の手法は性格特性を測る。
+psychometric	She works as a psychometric researcher at a university.	彼女は大学で心理測定の研究者として働いている。
+convivial	The restaurant has a warm and convivial atmosphere.	そのレストランは温かく陽気な雰囲気だ。
+convivial	We spent a convivial evening with old friends.	私たちは旧友たちと楽しい宴の夜を過ごした。
+convivial	My uncle is a convivial host who loves cooking for guests.	おじは客に料理をふるまうのが好きな、気さくな主人だ。
+simile	"As brave as a lion" is a common simile.	「ライオンのように勇敢」はよくある直喩だ。
+simile	The poet uses a simile to compare the moon to a coin.	その詩人は月を硬貨にたとえるのに直喩を用いている。
+simile	Students were asked to find a simile in the story.	生徒たちは物語の中から直喩を見つけるよう求められた。
+sentient	Some people argue that animals are sentient beings.	動物は感覚を持つ存在だと主張する人もいる。
+sentient	The film is about a sentient robot that learns to feel.	その映画は感情を学んでいく意識を持つロボットの話だ。
+sentient	Scientists debate whether fish are truly sentient creatures.	魚が本当に感覚を持つ生き物かどうか科学者は議論している。
+nominally	He is nominally in charge, but his deputy makes the decisions.	彼は名目上は責任者だが、決定を下すのは副官だ。
+nominally	The country is nominally independent but depends on its neighbor.	その国は名目上は独立しているが、隣国に依存している。
+nominally	The tickets are nominally free, though a small fee applies.	チケットは名目上は無料だが、少額の手数料がかかる。
+pseudonym	The author wrote her novels under a pseudonym.	その作家は偽名で小説を書いていた。
+pseudonym	He posted comments online using a pseudonym.	彼はペンネームを使ってネット上にコメントを投稿した。
+pseudonym	Nobody knew the real person behind the pseudonym.	その偽名の裏にいる本当の人物は誰も知らなかった。
+tactile	The toy gives children a tactile experience with soft fabric.	そのおもちゃは柔らかい布で子供に触る体験を与える。
+tactile	Braille is a tactile system of reading for blind people.	点字は目の不自由な人のための触って読む方式だ。
+tactile	Babies learn about the world through tactile experiences.	赤ちゃんは触覚による体験を通して世界を学ぶ。
+biographer	The biographer spent ten years researching the poet's life.	その伝記作家は詩人の生涯の調査に10年を費やした。
+biographer	A famous biographer is writing the president's life story.	有名な伝記作家が大統領の生涯を書いている。
+biographer	His biographer interviewed many of his old friends.	彼の伝記作家は旧友の多くにインタビューした。
+exclamation	She gave an exclamation of surprise when she saw the gift.	彼女は贈り物を見て驚きの声を上げた。
+exclamation	An exclamation mark follows a strong statement.	感嘆符は強い言い方の後につく。
+exclamation	There was an exclamation of joy from the crowd.	群衆から歓声が上がった。
+unproductive	It was an unproductive meeting that lasted three hours.	3時間続いたが何も生まれない会議だった。
+unproductive	The soil here is poor and unproductive for farming.	ここの土壌はやせていて農業に向かない。
+unproductive	I was unproductive all day after a sleepless night.	眠れない夜を過ごした後、私は一日中仕事がはかどらなかった。
+hydroelectric	The country built a large hydroelectric dam on the river.	その国は川に大規模な水力発電ダムを建設した。
+hydroelectric	Hydroelectric power provides clean energy.	水力発電はクリーンなエネルギーを供給する。
+hydroelectric	The village gets its power from a small hydroelectric plant.	その村は小さな水力発電所から電力を得ている。
+incoherent	His incoherent answer left the whole room confused.	彼の支離滅裂な答えに、部屋中が混乱した。
+incoherent	She was so tired that her speech became incoherent.	彼女はひどく疲れて、話がまとまらなくなった。
+incoherent	The report was incoherent and full of contradictions.	その報告書は筋が通らず、矛盾だらけだった。
+heterogeneous	The city has a heterogeneous population of many cultures.	その都市には、さまざまな文化の人々が暮らしている。
+heterogeneous	The class was heterogeneous in age and ability.	そのクラスは年齢も能力もまちまちだった。
+heterogeneous	A heterogeneous mixture does not look the same throughout.	不均質な混合物は、どこを見ても同じというわけではない。
+compress	You can compress large files to save disk space.	大きなファイルは圧縮すれば、ディスク容量を節約できる。
+compress	He compressed his notes into a one-page summary.	彼はメモを1ページの要約にまとめた。
+compress	The machine compresses air into a small tank.	その機械は空気を小さなタンクに圧縮する。
+assimilate	New immigrants often assimilate into the local culture.	新しい移民は、しばしば地元の文化に溶け込む。
+assimilate	It takes time to assimilate so much information.	これほど多くの情報を消化するには時間がかかる。
+assimilate	Plants assimilate nutrients from the soil.	植物は土から養分を吸収する。
+magnate	The oil magnate donated millions to the university.	その石油王は、大学に数百万ドルを寄付した。
+magnate	A shipping magnate bought the old hotel.	ある海運王が、その古いホテルを買い取った。
+magnate	He rose from poverty to become a media magnate.	彼は貧しさから身を起こし、メディア界の大物になった。
+insular	The village has an insular community that distrusts outsiders.	その村は閉鎖的で、よそ者を信用しない。
+insular	His insular view of the world limited his career.	彼は視野が狭く、そのせいで仕事の幅が限られた。
+insular	Insular species often evolve in unusual ways.	島にすむ種は、独特な進化をとげることが多い。
+alienate	His rude remarks alienated many of his friends.	彼の失礼な発言は、多くの友人を遠ざけた。
+alienate	The new policy may alienate young voters.	その新方針は、若い有権者を遠ざけるかもしれない。
+alienate	She felt alienated from her own family.	彼女は自分の家族から疎外されていると感じた。
+aquaculture	Aquaculture now supplies much of the world's fish.	現在、水産養殖が世界の魚の多くを供給している。
+aquaculture	The coastal town makes a living from aquaculture.	その沿岸の町は、水産養殖で生計を立てている。
+aquaculture	Aquaculture can harm local waters if it is poorly managed.	水産養殖は管理が悪いと、周辺の水域に害を及ぼすことがある。
+acupuncture	She tried acupuncture to relieve her back pain.	彼女は腰痛を和らげるために鍼治療を試した。
+acupuncture	Acupuncture is used in many countries today.	鍼治療は、今日多くの国で行われている。
+acupuncture	He is training to become an acupuncture specialist.	彼は鍼の専門家になるための訓練を受けている。
+informatics	She studies informatics at a technical university.	彼女は工科大学で情報科学を学んでいる。
+informatics	Health informatics helps hospitals manage patient data.	医療情報学は、病院が患者のデータを管理するのに役立つ。
+informatics	She is studying informatics at a university in Tokyo.	彼女は東京の大学で情報学を学んでいる。
+consequent	The factory closed, with a consequent loss of many jobs.	工場が閉鎖され、その結果多くの雇用が失われた。
+consequent	He lost the key and the consequent delay annoyed everyone.	彼は鍵をなくし、それによる遅れがみんなを苛立たせた。
+consequent	Rising prices and consequent unrest worried the government.	物価上昇とそれに伴う不安が政府を悩ませた。
+intermission	The theater had a twenty-minute intermission after the second act.	劇場は第二幕のあと20分の休憩をとった。
+intermission	We bought drinks during the intermission.	私たちは休憩時間に飲み物を買った。
+intermission	The pianist rested for a short intermission between pieces.	ピアニストは曲の合間に短い休憩をとった。
+superfluous	Please delete any superfluous words from the report.	報告書から余計な言葉を削除してください。
+superfluous	The extra chairs turned out to be superfluous.	余分な椅子は結局いらなかった。
+superfluous	He felt that further explanation was superfluous.	彼はこれ以上の説明は不要だと感じた。
+senile	His grandfather became senile in his late eighties.	彼の祖父は80代後半で認知力が衰えた。
+senile	Senile dementia is a growing concern in many countries.	老年性の認知症は多くの国で問題になっている。
+senile	Doctors study the senile changes that occur in the brain.	医師たちは脳に起こる老化による変化を研究している。
+facsimile	The museum displays a facsimile of the ancient map.	博物館はその古地図の複製を展示している。
+facsimile	She sent the contract by facsimile.	彼女は契約書をファクスで送った。
+facsimile	The book is a perfect facsimile of the original.	その本は原本の完全な複製だ。
+exponent	She is a leading exponent of modern dance.	彼女は現代舞踊の第一人者だ。
+exponent	The exponent in 2 to the power of 3 is 3.	2の3乗の指数は3である。
+exponent	He is a strong exponent of free trade.	彼は自由貿易の強い支持者だ。
+subculture	Skateboarding grew into a subculture of its own.	スケートボードは独自のサブカルチャーに発展した。
+subculture	He studied a youth subculture in the city.	彼はその都市の若者のサブカルチャーを研究した。
+subculture	Online games created a new gaming subculture.	オンラインゲームは新しいゲーム文化を生んだ。
+escalator	Take the escalator to the second floor.	エスカレーターで2階へ上がってください。
+escalator	The escalator stopped during the power cut.	停電の間、エスカレーターは止まった。
+escalator	Please stand on the left side of the escalator.	エスカレーターでは左側に立ってください。
+numeric	Enter a numeric password with six digits.	6桁の数字のパスワードを入力してください。
+numeric	The program displays numeric values in a table.	そのプログラムは数値を表にして表示する。
+numeric	Numeric data can be easily compared in a chart.	数値データはグラフで簡単に比較できる。
+consumerism	Critics say modern consumerism harms the environment.	現代の消費主義が環境を害すると批評家は言う。
+consumerism	Holiday advertising encourages consumerism.	休暇シーズンの広告は消費主義をあおる。
+consumerism	He rejected consumerism and lived a simple life.	彼は消費主義を拒み、質素に暮らした。
+gratuitous	The film was criticized for its gratuitous violence.	その映画は不必要な暴力描写で批判された。
+gratuitous	He made a gratuitous remark about her age.	彼は彼女の年齢について、余計な一言を口にした。
+gratuitous	The report was full of gratuitous details that nobody needed.	その報告書には、誰も必要としない余計な細部がたくさん書かれていた。
+docile	The horse was docile and easy to ride.	その馬はおとなしく、乗りやすかった。
+docile	My friend has a docile cat that loves strangers.	友人は、見知らぬ人が大好きなおとなしい猫を飼っている。
+docile	The workers were docile and never complained.	労働者たちは従順で、決して不平を言わなかった。
+dissect	Students dissect a frog in biology class.	生徒たちは生物の授業でカエルを解剖する。
+dissect	Analysts dissect the data line by line.	分析者たちはデータを一行ずつ詳しく分析する。
+dissect	The critic loved to dissect every scene of the film.	その批評家は映画のあらゆる場面を細かく分析するのが好きだった。
+introvert	My brother is an introvert who loves reading alone.	弟は内向的で、一人で読書するのが大好きだ。
+introvert	As an introvert, she needs quiet time after parties.	内向的なので、彼女はパーティーのあとに静かな時間が必要だ。
+introvert	Not every introvert is shy or afraid of people.	内向的な人がみな恥ずかしがり屋で人を恐れるわけではない。
+amity	The two nations lived in amity for many years.	その二国は長年にわたり友好的に暮らした。
+amity	They signed a treaty of peace and amity.	両国は平和友好条約に調印した。
+amity	The neighbors greeted each other with amity.	隣人たちは親しみを込めて挨拶を交わした。
+exterminate	They hired a company to exterminate the rats.	彼らはネズミを駆除する業者を雇った。
+exterminate	The farmers tried to exterminate the pests.	農家は害虫を根絶しようとした。
+exterminate	The disease was nearly exterminated by vaccination.	その病気はワクチンでほぼ根絶された。
+unequivocal	The doctor gave an unequivocal answer.	医師は明確な答えを返した。
+unequivocal	The court gave unequivocal support to the plan.	裁判所はその計画を明確に支持した。
+unequivocal	She made an unequivocal denial of the rumor.	彼女はその噂をきっぱりと否定した。
+polity	The ancient Greek polity was built around the city.	古代ギリシャの政治体制は都市を中心に築かれた。
+polity	Each polity has its own laws and customs.	どの国家にも独自の法と習慣がある。
+polity	The book compares the polity of two empires.	その本は二つの帝国の政治体制を比較している。
+aerodynamics	Aerodynamics is important in designing fast cars.	空気力学は速い車の設計で重要だ。
+aerodynamics	He studies aerodynamics at an engineering school.	彼は工学部で空気力学を学んでいる。
+aerodynamics	The bike's aerodynamics helped the rider win.	そのバイクの空気力学的な設計が選手の勝利を助けた。
+receptacle	Please put your trash in the receptacle by the door.	ごみはドアのそばの容器に入れてください。
+receptacle	A small receptacle on the desk held paper clips.	机の上の小さな入れ物にクリップが入っていた。
+receptacle	The wall has a receptacle for charging devices.	その壁には機器を充電するためのコンセントがある。
+precocious	She was a precocious child who read novels at five.	彼女は5歳で小説を読む早熟な子供だった。
+precocious	The precocious boy solved difficult math problems easily.	その早熟な少年は難しい数学の問題を簡単に解いた。
+precocious	His precocious talent surprised the older musicians.	彼の早熟な才能は年上の音楽家たちを驚かせた。
+antebellum	The antebellum South relied heavily on cotton farming.	南北戦争前の南部は綿花栽培に大きく依存していた。
+antebellum	They toured an antebellum mansion in Georgia.	彼らはジョージア州の南北戦争前の大邸宅を見学した。
+antebellum	The novel is set in antebellum Virginia.	その小説の舞台は南北戦争前のバージニアだ。
+fortification	The castle's fortifications protected the town for centuries.	その城の要塞は何世紀も町を守った。
+fortification	Workers began the fortification of the border.	作業員たちは国境の防備強化を始めた。
+fortification	Cereal is often sold with vitamin fortification.	シリアルにはビタミン強化されたものが多く売られている。
+absolve	The court absolved him of all responsibility.	裁判所は彼にすべての責任はないとした。
+absolve	The priest absolved the man of his sins.	司祭はその男の罪を赦した。
+absolve	Nothing can absolve us from our duty to help.	助ける義務から私たちを解放するものは何もない。
+interconnection	The interconnection of the two power grids improved stability.	二つの電力網の相互接続で安定性が高まった。
+interconnection	Scientists study the interconnection between diet and health.	科学者は食事と健康の相互関係を研究している。
+interconnection	Global trade has increased the interconnection of economies.	世界貿易によって経済の相互結びつきが強まった。
+constrain	Limited funds constrain what we can build.	限られた資金が、作れるものを制約している。
+constrain	He felt constrained to tell the truth.	彼は真実を話さざるを得ないと感じた。
+constrain	Strict rules constrain the freedom of the staff.	厳しい規則が職員の自由を制限している。
+abscess	The dentist drained an abscess under the tooth.	歯科医は歯の下の膿瘍から膿を出した。
+abscess	An abscess formed around the wound.	傷の周りに膿瘍ができた。
+abscess	Untreated, the abscess can spread infection to the blood.	放置すると、膿瘍は感染を血液に広げることがある。
+hydrology	She works in hydrology and studies river flooding.	彼女は水文学の分野で働き、河川の洪水を研究している。
+hydrology	Hydrology helps engineers plan the city's water supply.	水文学は技術者が都市の水供給を計画する助けとなる。
+hydrology	Climate change has altered the hydrology of the region.	気候変動はその地域の水循環を変えた。
+conspire	Several officers conspired to overthrow the government last year.	数人の将校が昨年、政府を倒そうと共謀した。
+conspire	She suspected that her rivals were conspiring against her.	彼女はライバルたちが自分に対して陰謀を企てているのではと疑った。
+conspire	Bad weather and heavy traffic conspired to make us late.	悪天候と交通渋滞が重なって、私たちは遅刻してしまった。
+ambivalence	She felt ambivalence about moving to a new country.	彼女は新しい国へ引っ越すことに複雑な気持ちを抱いた。
+ambivalence	Voters showed deep ambivalence toward the proposed tax reform.	有権者は提案された税制改革に対して強い迷いを見せた。
+ambivalence	His ambivalence about the job made him hesitate to accept.	その仕事への迷いのせいで、彼は引き受けるのをためらった。
+obliterate	The storm obliterated every trace of the footprints on the beach.	嵐は浜辺の足跡の痕跡をすべて消し去った。
+obliterate	The bombing obliterated the entire village.	その爆撃は村全体を跡形もなく破壊した。
+obliterate	She tried to obliterate the memory of that terrible day.	彼女はあの恐ろしい日の記憶を消し去ろうとした。
+benevolence	The old man was known for his benevolence toward the poor.	その老人は貧しい人々への慈悲深さで知られていた。
+benevolence	She accepted the gift with a smile, grateful for his benevolence.	彼女は彼の厚意に感謝し、微笑んでその贈り物を受け取った。
+benevolence	The king ruled with benevolence and wisdom.	王は慈悲と知恵をもって国を治めた。
+telescopic	The astronomer used a telescopic lens to photograph the moon.	天文学者は月を撮影するのに望遠レンズを使った。
+telescopic	I bought a telescopic fishing rod that fits in my bag.	私はかばんに入る伸縮式の釣りざおを買った。
+telescopic	The telescopic antenna can extend up to one meter.	その伸縮式アンテナは1メートルまで伸ばせる。
+digress	Sorry to digress, but this reminds me of a funny story.	脱線してすみませんが、これで面白い話を思い出しました。
+digress	The speaker digressed into a long story about his childhood.	講演者は話がそれて、子供時代の長い話を始めた。
+digress	Let me digress for a moment to explain the background.	少し本題を離れて、背景を説明させてください。
+transitive	"Eat" can be used as a transitive verb or an intransitive verb.	「eat」は他動詞としても自動詞としても使える。
+transitive	My dictionary marks each verb as transitive or intransitive.	私の辞書は各動詞に他動詞か自動詞かを示している。
+transitive	A transitive verb needs an object to complete its meaning.	他動詞は意味を完成させるために目的語を必要とする。
+viaduct	The train crossed the valley on a huge stone viaduct.	列車は巨大な石造りの高架橋で谷を渡った。
+viaduct	A new viaduct will carry the highway over the river.	新しい高架橋が、高速道路を川の上に通す予定だ。
+viaduct	Tourists often photograph the old railway viaduct at sunset.	観光客は夕暮れの古い鉄道高架橋をよく撮影する。
+entomology	She studied entomology at university and now researches beetles.	彼女は大学で昆虫学を学び、今は甲虫を研究している。
+entomology	Forensic entomology uses insects to estimate the time of death.	法医昆虫学は昆虫を使って死亡時刻を推定する。
+entomology	My uncle's passion for entomology filled his house with butterflies.	おじは昆虫学への情熱で、家を蝶の標本だらけにした。
+trigonometry	We learned sine and cosine in trigonometry class.	私たちは三角法の授業で正弦と余弦を習った。
+trigonometry	Surveyors use trigonometry to measure the height of mountains.	測量士は三角法を使って山の高さを測る。
+trigonometry	My brother struggled with trigonometry but loved geometry.	兄は三角法には苦戦したが、幾何は大好きだった。
+modulate	Singers learn to modulate their voices for different songs.	歌手は曲ごとに声の調子を変えることを学ぶ。
+modulate	The thermostat modulates the temperature of the room.	サーモスタットが部屋の温度を調節している。
+modulate	He tried to modulate his tone so he would not sound angry.	彼は怒っていると思われないよう、口調を和らげようとした。
+obstinate	He is too obstinate to admit that he made a mistake.	彼は頑固すぎて自分の間違いを認めようとしない。
+obstinate	The obstinate stain would not come out of the shirt.	そのしつこい汚れはシャツから落ちなかった。
+obstinate	Her obstinate refusal to listen made the talks difficult.	彼女が頑として聞き入れないので、話し合いは難航した。
+allude	He alluded to his past problems without giving any details.	彼は詳細は言わず、過去の問題をそれとなくほのめかした。
+allude	The poem alludes to an ancient Greek myth.	その詩は古代ギリシャの神話に言及している。
+allude	She never alluded to the argument we had last week.	彼女は先週の口論には一度もそれとなく触れなかった。
+anachronistic	The film's anachronistic costumes bothered the historians.	その映画の時代錯誤な衣装は歴史家たちを悩ませた。
+anachronistic	Some people find the old dress code anachronistic.	古い服装規定は時代遅れだと感じる人もいる。
+anachronistic	A mobile phone in a medieval story would be anachronistic.	中世の物語に携帯電話が出てくれば時代錯誤だろう。
+primeval	Primeval forests once covered most of the continent.	かつて原始林がその大陸の大部分を覆っていた。
+primeval	The cave gave him a feeling of primeval fear.	その洞窟は彼に原始的な恐怖を感じさせた。
+primeval	Scientists study primeval rocks to learn about early Earth.	科学者は初期の地球を知るため太古の岩石を調べる。
+iniquity	The preacher spoke out against the iniquity of the age.	説教者は時代の不正を声高に非難した。
+iniquity	The film shows the iniquity of the old legal system.	その映画は古い司法制度の不正を描いている。
+iniquity	He was punished for his many acts of iniquity.	彼は数々の悪事のために罰せられた。
+photocopy	Please make a photocopy of your passport.	パスポートのコピーを取ってください。
+photocopy	I need to photocopy these pages for the class.	授業用にこのページをコピーする必要がある。
+photocopy	Bring the original, not a photocopy, to the office.	事務所にはコピーではなく原本を持参してください。
+fugue	She played a fugue by Bach on the organ.	彼女はオルガンでバッハのフーガを演奏した。
+fugue	The composer is famous for his skill in writing a fugue.	その作曲家はフーガを書く腕前で有名だ。
+fugue	After the shock, he entered a fugue state and wandered for days.	ショックの後、彼は遁走状態に入り、何日もさまよった。
+geophysics	She studied geophysics at university.	彼女は大学で地球物理学を学んだ。
+geophysics	Geophysics helps us understand how earthquakes happen.	地球物理学は地震がどう起こるかの理解に役立つ。
+geophysics	Oil companies use geophysics to search for hidden deposits.	石油会社は地球物理学を使って隠れた鉱床を探す。
+vivacious	She is a vivacious girl who lights up the room.	彼女は部屋を明るくする快活な少女だ。
+vivacious	His vivacious personality made him popular at work.	彼の快活な性格は職場で人気を集めた。
+vivacious	The actress gave a vivacious performance on stage.	その女優は舞台で生き生きとした演技を見せた。
+ordinal	"Third" is an ordinal number.	「third」は序数である。
+ordinal	Ordinal numbers show the position in a list.	序数は並びの中での位置を示す。
+ordinal	The teacher explained the ordinal scale in the survey.	先生は調査の順序尺度について説明した。
+append	The author appended a list of sources to the book.	著者は本に参考文献の一覧を付け加えた。
+append	He appended a short note to the contract.	彼は契約書に短い注記を付け加えた。
+append	You can append new data to the file.	ファイルに新しいデータを追加できる。
+recursion	Recursion is a key idea in computer science.	再帰はコンピュータ科学の重要な考え方だ。
+recursion	The function uses recursion to count down.	その関数は再帰を使ってカウントダウンする。
+recursion	Too much recursion can cause a program to crash.	再帰が多すぎるとプログラムが落ちることがある。
+corporeal	Ghosts have no corporeal form.	幽霊には肉体がない。
+corporeal	He cared little for corporeal pleasures.	彼は肉体的な快楽にほとんど関心がなかった。
+corporeal	The artist gave the idea a corporeal shape in stone.	その芸術家は発想を石で具体的な形にした。
+purport	The letter purports to be from the mayor.	その手紙は市長からのものだと称している。
+purport	The report purports to show the real costs.	その報告書は実際の費用を示すとうたっている。
+purport	He purported to be an expert in law.	彼は法律の専門家だと自称した。
+anagram	"Silent" is an anagram of "listen".	「silent」は「listen」のアナグラムだ。
+anagram	She loves solving anagram puzzles on the train.	彼女は電車でアナグラムのパズルを解くのが好きだ。
+anagram	The author hid his name in an anagram.	その作者は自分の名前をアナグラムに隠した。
+mutate	The virus can mutate quickly.	そのウイルスは急速に変異することがある。
+mutate	Some genes mutate under radiation.	放射線で変異する遺伝子もある。
+mutate	The company's plan mutated into something new.	会社の計画は別のものへと変わっていった。
+disconnection	The storm caused a disconnection of the power line.	嵐で送電線が切断された。
+disconnection	I felt a disconnection from my old friends.	私は昔の友人たちとの断絶を感じた。
+disconnection	Internet disconnection happens often here.	ここではネットの接続切れがよく起こる。
+defector	The defector asked for asylum at the embassy.	その亡命者は大使館で庇護を求めた。
+defector	A key defector from the party revealed its secrets.	党から離反した重要人物がその内部事情を暴露した。
+defector	She was branded a defector by her former colleagues.	彼女はかつての同僚たちから裏切り者と呼ばれた。
+encircle	Soldiers encircled the building at dawn.	兵士たちは夜明けにその建物を包囲した。
+encircle	A thick wall encircles the old town.	厚い城壁が旧市街を取り囲んでいる。
+encircle	She felt his arms encircle her shoulders.	彼女は彼の腕が自分の肩を包み込むのを感じた。
+marinate	Marinate the chicken for at least two hours.	鶏肉を少なくとも2時間は漬け込んでください。
+marinate	I like to marinate fish in lemon juice.	私は魚をレモン汁に漬け込むのが好きだ。
+marinate	The beef was marinated overnight in red wine.	牛肉は赤ワインに一晩漬けてあった。
+precept	He lived by the precept that honesty pays.	彼は正直は報われるという教えに従って生きた。
+precept	The school taught moral precepts to young pupils.	その学校は幼い生徒に道徳的な教訓を教えた。
+precept	Her actions contradicted the precepts she preached.	彼女の行動は自分が説く教えと矛盾していた。
+consumable	Ink and paper are consumable supplies.	インクと紙は消耗品だ。
+consumable	The mushrooms are not consumable raw.	そのキノコは生では食べられない。
+consumable	Printer ink is a consumable item that must be replaced often.	プリンターのインクは頻繁に取り替える必要がある消耗品だ。
+resistive	The wire is made of a resistive material that heats up easily.	その電線は熱を持ちやすい抵抗性の素材でできている。
+resistive	Most old touchscreens were resistive and needed a firm press.	昔のタッチスクリーンの多くは抵抗膜式で、しっかり押す必要があった。
+resistive	A resistive heater turns electricity into heat.	抵抗加熱器は電気を熱に変える。
+theism	Theism holds that a creator god exists.	有神論は創造主たる神が存在すると考える。
+theism	The book compares theism with atheism.	その本は有神論と無神論を比較している。
+theism	His essay defends theism against modern criticism.	彼の論文は現代の批判から有神論を擁護している。
+revisionism	Historical revisionism challenges the accepted story.	歴史修正主義は定説に異議を唱える。
+revisionism	Critics accused him of revisionism about the war.	批評家たちは彼が戦争について歴史を修正していると非難した。
+revisionism	The party was split by debates over revisionism.	党は修正主義をめぐる論争で分裂した。
+inexhaustible	The island seemed to have an inexhaustible supply of fresh water.	その島には真水が尽きることなくあるように思えた。
+inexhaustible	My little brother has inexhaustible energy.	弟はエネルギーが尽きることがない。
+inexhaustible	Some people believe the ocean's resources are inexhaustible.	海の資源は無尽蔵だと信じる人もいる。
+supplant	Digital cameras gradually supplanted film cameras.	デジタルカメラが次第にフィルムカメラに取って代わった。
+supplant	He tried to supplant his boss as head of the team.	彼は上司に代わってチームのトップに立とうとした。
+supplant	Email has largely supplanted the traditional letter.	電子メールが従来の手紙にほぼ取って代わった。
+efficacious	The doctor said the new drug was efficacious against the infection.	医師は新薬がその感染症に有効だと言った。
+efficacious	Is this herbal tea really efficacious for colds?	このハーブティーは本当に風邪に効くのだろうか。
+efficacious	They searched for a more efficacious way to teach reading.	彼らは読み方を教えるもっと効果的な方法を探した。
+privatize	The government plans to privatize the railway.	政府はその鉄道を民営化する計画だ。
+privatize	Several countries privatized their telephone companies in the 1990s.	いくつかの国は1990年代に電話会社を民営化した。
+privatize	Many voters oppose efforts to privatize water services.	多くの有権者が水道事業の民営化の動きに反対している。
+unimpressive	The team's performance was unimpressive this season.	今シーズンのチームの成績はぱっとしなかった。
+unimpressive	He gave an unimpressive speech at the ceremony.	彼は式典で印象の薄いスピーチをした。
+unimpressive	The hotel looked unimpressive from the outside.	そのホテルは外から見ると見栄えがしなかった。
+defame	The newspaper was sued for defaming the mayor.	その新聞は市長を中傷したとして訴えられた。
+defame	She said the rumors were meant to defame her.	彼女はその噂は自分の名誉を傷つけるためのものだと言った。
+defame	It is illegal to defame a person in print.	文書で人を中傷するのは違法だ。
+counterinsurgency	The army launched a counterinsurgency campaign in the region.	軍はその地域で反乱鎮圧作戦を開始した。
+counterinsurgency	Counterinsurgency requires winning the trust of local people.	反乱鎮圧には地元住民の信頼を得ることが必要だ。
+counterinsurgency	The general wrote a book about counterinsurgency.	その将軍は反乱鎮圧に関する本を書いた。
+hypersonic	The country tested a hypersonic missile last week.	その国は先週、極超音速ミサイルを試験した。
+hypersonic	Hypersonic flight could cut travel time across the ocean.	極超音速飛行は大洋横断の所要時間を短縮するかもしれない。
+hypersonic	Engineers are designing a hypersonic aircraft.	技術者たちは極超音速機を設計している。
+denture	My grandfather puts his dentures in a glass at night.	祖父は夜、入れ歯をコップに入れる。
+denture	The dentist fitted her with a new denture.	歯科医は彼女に新しい入れ歯を合わせた。
+denture	A loose denture can make eating painful.	入れ歯が合わないと食事がつらくなる。
+perinatal	Perinatal care helps both mothers and babies stay healthy.	周産期のケアは母親と赤ちゃんの健康を守る。
+perinatal	The hospital has a perinatal unit for high-risk births.	その病院にはリスクの高い出産のための周産期病棟がある。
+perinatal	She works as a nurse in perinatal medicine.	彼女は周産期医療の看護師として働いている。
+compaction	Soil compaction makes it hard for plant roots to grow.	土の締め固まりは、植物の根が育つのを難しくする。
+compaction	The truck uses compaction to squeeze the garbage into a small space.	そのトラックは圧縮でごみを小さく押し固める。
+compaction	Compaction of the snow turned it into hard ice.	雪が押し固められて硬い氷になった。
+accede	The board refused to accede to the workers' demands.	取締役会は労働者の要求に応じるのを拒んだ。
+accede	She finally acceded to her friend's request for help.	彼女はついに友人の助けてほしいという頼みに応じた。
+accede	The prince will accede to the throne next year.	王子は来年、王位に就く予定だ。
+ordain	He was ordained as a priest at the age of thirty.	彼は30歳で司祭に任命された。
+ordain	The law ordains that every citizen must be treated equally.	法はすべての市民を平等に扱うよう定めている。
+ordain	Fate seemed to have ordained their meeting.	運命が2人の出会いを定めていたかのようだった。
+restate	Could you restate the question more simply?	その質問をもっと簡単に言い直してもらえますか。
+restate	The minister restated the government's position on taxes.	大臣は税に関する政府の立場を改めて表明した。
+restate	Try to restate the main idea in your own words.	要点を自分の言葉で言い直してみなさい。
+altimeter	The pilot checked the altimeter before the plane began to descend.	パイロットは機が降下を始める前に高度計を確認した。
+altimeter	A climber's watch often includes an altimeter.	登山者用の腕時計には高度計がついていることが多い。
+altimeter	The altimeter showed that we were flying at ten thousand meters.	高度計は、私たちが1万メートルを飛行していると示していた。
+subsonic	The plane flew at subsonic speeds to save fuel.	その飛行機は燃料を節約するため亜音速で飛んだ。
+subsonic	Elephants communicate using subsonic sounds that humans cannot hear.	ゾウは人間に聞こえない低い音で意思を伝え合う。
+subsonic	Subsonic jets are slower than the speed of sound.	亜音速のジェット機は音の速さより遅い。
+metrology	Metrology ensures that a kilogram means the same everywhere.	計量学は、1キログラムがどこでも同じ重さを意味するようにする。
+metrology	She works at a laboratory specializing in metrology.	彼女は計量学を専門とする研究所で働いている。
+metrology	Modern industry depends on precise metrology.	現代の産業は精密な計量に支えられている。
+multifunctional	This multifunctional tool can cut, drill and sand.	この多機能の道具は切ったり、穴を開けたり、磨いたりできる。
+multifunctional	The room is multifunctional and serves as both office and bedroom.	その部屋は多機能で、仕事部屋と寝室を兼ねている。
+multifunctional	A multifunctional printer can also scan and copy documents.	多機能プリンターは書類のスキャンやコピーもできる。
+actuary	The actuary calculated how long the average policyholder would live.	保険数理士は契約者の平均寿命を計算した。
+actuary	She trained for years to become an actuary.	彼女は何年も訓練して保険数理士になった。
+actuary	An actuary helps the insurance company set fair premiums.	保険数理士は保険会社が適正な保険料を決めるのを助ける。
+dissociate	She tried to dissociate herself from the scandal.	彼女はそのスキャンダルとの関係を絶とうとした。
+dissociate	It is hard to dissociate the singer from her songs.	その歌手と彼女の歌を切り離して考えるのは難しい。
+dissociate	The company wants to dissociate its brand from the controversy.	その会社は論争からブランドを切り離したがっている。
+equidistant	The hotel is equidistant from the station and the beach.	そのホテルは駅と海岸から等距離にある。
+equidistant	Choose a point equidistant from both ends of the line.	線の両端から等距離にある点を選びなさい。
+equidistant	The two towns are equidistant from the capital.	その2つの町は首都から等距離にある。
+urbane	He was an urbane host who put everyone at ease.	彼は誰もくつろがせる洗練された主人役だった。
+urbane	Her urbane manner impressed the foreign guests.	彼女の洗練された物腰は外国人客に好印象を与えた。
+urbane	The urbane diplomat spoke calmly and politely.	その洗練された外交官は穏やかに丁寧に話した。
+dative	In Latin, the dative case marks the indirect object.	ラテン語では与格が間接目的語を示す。
+dative	German has a dative form for the recipient of an action.	ドイツ語には動作の受け手を表す与格がある。
+dative	The teacher explained the dative to the class.	先生はクラスに与格について説明した。
+luminescent	Some deep-sea fish are luminescent.	深海魚の中には発光するものがいる。
+luminescent	The luminescent paint glowed in the dark.	その夜光塗料は暗闇で光った。
+luminescent	Fireflies produce a luminescent glow on summer nights.	ホタルは夏の夜に冷光を放つ。
+phoneme	English has about forty-four phonemes.	英語には約44の音素がある。
+phoneme	The phonemes /p/ and /b/ distinguish "pat" from "bat."	音素 /p/ と /b/ が pat と bat を区別する。
+phoneme	Learners often struggle to hear a new phoneme.	学習者は新しい音素を聞き取るのに苦労することが多い。
+actuation	The actuation of the brake is controlled by a sensor.	ブレーキの作動はセンサーで制御されている。
+actuation	Pressing the button causes the actuation of the valve.	ボタンを押すとバルブが作動する。
+actuation	A small motor handles the actuation of the door.	小さなモーターがドアの作動を担っている。
+microbiological	Microbiological tests found bacteria in the water.	微生物学的検査で水から細菌が見つかった。
+microbiological	The lab performs microbiological analysis of food samples.	その研究所は食品サンプルの微生物学的分析を行う。
+microbiological	Strict microbiological standards protect public health.	厳しい微生物学的基準が公衆衛生を守っている。
+collectivist	Some cultures are more collectivist than individualist.	個人主義より集団主義的な文化もある。
+collectivist	He supported a collectivist approach to farming.	彼は農業に集産主義的な方法を支持した。
+collectivist	A collectivist society values the group over the person.	集団主義の社会は個人より集団を重んじる。
+acclamation	The new leader was elected by acclamation.	新しい指導者は満場一致の歓呼で選出された。
+acclamation	The singer was greeted with loud acclamation.	その歌手は大きな喝采で迎えられた。
+acclamation	The proposal won the acclamation of the whole committee.	その提案は委員会全体の称賛を得た。
+countermeasure	The firm took countermeasures against cyber attacks.	その会社はサイバー攻撃への対抗策を講じた。
+countermeasure	Strict border checks were introduced as a countermeasure against smuggling.	密輸への対策として、厳しい国境検査が導入された。
+countermeasure	Vaccines are an effective medical countermeasure to the virus.	ワクチンはそのウイルスに対する有効な医療的対策だ。
+transportable	This lightweight tent is easily transportable by one person.	この軽いテントは一人で簡単に持ち運べる。
+transportable	The patient was not stable enough to be transportable.	患者は搬送できるほど安定していなかった。
+transportable	The machine is transportable but needs a large truck.	その機械は輸送可能だが、大型トラックが必要だ。
 # 以下は data/sensitive_words.tsv の語（設定で「表示する」にしたときだけ出る）。事実を伝える落ち着いた文にする
 pedophile	The pedophile was sentenced to ten years in prison.	その小児性愛者は禁錮１０年の判決を受けた。
 rapist	The police finally arrested the rapist.	警察はついに強姦犯を逮捕した。

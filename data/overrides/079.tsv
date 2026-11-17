@@ -42,7 +42,6 @@ parts	theology	the=r:the o log=r:log y=suf:ia
 parts	biography	bio=r:bio graph=r:graph y=suf:ia
 parts	bunny	bun=w:bun n y
 parts	geometry	geo=r:geo metr=r:meter y=suf:ia
-parts	autonomy	auto=pre:auto nom y=suf:ia
 parts	trilogy	tri=pre:tri log=r:log y=suf:ia
 parts	levy	lev=r:lev y
 parts	remedy	re=pre:re med=r:med y=suf:ia
